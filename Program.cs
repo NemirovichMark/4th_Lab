@@ -962,73 +962,73 @@ namespace Task
 
         static void Main(string[] args)
         {
-            /*#region exercise 1_3
+            #region exercise 1_3
             exercise_1_3();
             #endregion
 
             #region exercise 1_6
             exercise_1_6();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 1_12
+            #region exercise 1_12
             exercise_1_12();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 1_13
+            #region exercise 1_13
             exercise_1_13();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 1_17
+            #region exercise 1_17
             exercise_1_17();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 1_29
+            #region exercise 1_29
             exercise_1_29();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 1_31
+            #region exercise 1_31
             exercise_1_31();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 2_7
+            #region exercise 2_7
             exercise_2_7();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 2_8
+            #region exercise 2_8
             exercise_2_8();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 2_9
+            #region exercise 2_9
             exercise_2_9();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 3_1
+            #region exercise 3_1
             exercise_3_1();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 3_2
+            #region exercise 3_2
             exercise_3_2();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 3_3
+            #region exercise 3_3
             exercise_3_3();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 3_4
+            #region exercise 3_4
             exercise_3_4();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 3_8
+            #region exercise 3_8
             exercise_3_8();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 3_10
+            #region exercise 3_10
             exercise_3_10();
-            #endregion*/
+            #endregion
 
-            /*#region exercise 3_11
+            #region exercise 3_11
             exercise_3_11();
-            #endregion*/
+            #endregion
 
         }
     }
