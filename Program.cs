@@ -508,10 +508,10 @@ namespace Task
         static void exercise_2_9()
         {
             string error = "ошибка 2_9";
-            int n = 6, m = 7;
+            int n = 3, m = 4;
             double[,] A = new double[n, m], B = new double[n, m];
 
-            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            Console.WriteLine($"ведите {n} строки {m} столбца ");
             for (int i = 0; i < n; ++i)
             {
                 int maxJ = 0;
@@ -524,22 +524,13 @@ namespace Task
 
                     double a = L[j];
 
-                    A[i, j] = a;
+                    A[i, m - j - 1] = a;
 
                 }
 
             }
-
-            for(int i = 0; i < n; ++i)
-            {
-                for(int j =0; j < m; ++j)
-                {
-                    B[i, j] = A[n - i - 1, m - j - 1]; 
-                }
-            }
-
             string[] S;
-            S = ArrayToString(B);
+            S = ArrayToString(A);
             Console.WriteLine("ans : ");
 
             foreach (string a in S)
@@ -858,19 +849,34 @@ namespace Task
             
             for (int i = 0; i < n; i++)
             {
+                List<double> l0 = new List<double>() , l1 = new List<double>();
                 for (int j = 0; j < m; j++)
                 {
-                    for (int k = j; k < m; k++)
+                    if (j % 2 == 0)
                     {
-                        if (A[i, j] > A[i, k] && i % 2 == 1) 
-                        {
-                            (A[i, k], A[i, j]) = (A[i, j], A[i, k]);
-                        }
-
-                        if (A[i, j] < A[i, k] && i % 2 == 0)
-                        {
-                            (A[i, k], A[i, j]) = (A[i, j], A[i, k]);
-                        }
+                        l0.Add(A[i, j]);
+                    }
+                    else
+                    {
+                        l1.Add(A[i, j]);
+                    }
+                }
+                l0.Sort();
+                l1.Sort();
+                l0.Reverse();
+                int sh0 = 0, sh1 = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    //Console.WriteLine($"{sh0} {sh1}");
+                    if (j % 2 == 0)
+                    {
+                        A[i, j] = l0[sh0];
+                        sh0++;
+                    }
+                    else
+                    {
+                        A[i, j] = l1[sh1];
+                        sh1++;
                     }
                 }
             }
@@ -962,47 +968,47 @@ namespace Task
 
         static void Main(string[] args)
         {
-            #region exercise 1_3
-            exercise_1_3();
-            #endregion
+            /* #region exercise 1_3
+             exercise_1_3();
+             #endregion
 
-            #region exercise 1_6
-            exercise_1_6();
-            #endregion
+             #region exercise 1_6
+             exercise_1_6();
+             #endregion
 
-            #region exercise 1_12
-            exercise_1_12();
-            #endregion
+             #region exercise 1_12
+             exercise_1_12();
+             #endregion
 
-            #region exercise 1_13
-            exercise_1_13();
-            #endregion
+             #region exercise 1_13
+             exercise_1_13();
+             #endregion
 
-            #region exercise 1_17
-            exercise_1_17();
-            #endregion
+             #region exercise 1_17
+             exercise_1_17();
+             #endregion
 
-            #region exercise 1_29
-            exercise_1_29();
-            #endregion
+             #region exercise 1_29
+             exercise_1_29();
+             #endregion
 
-            #region exercise 1_31
-            exercise_1_31();
-            #endregion
+             #region exercise 1_31
+             exercise_1_31();
+             #endregion
 
-            #region exercise 2_7
-            exercise_2_7();
-            #endregion
+             #region exercise 2_7
+             exercise_2_7();
+             #endregion
 
-            #region exercise 2_8
-            exercise_2_8();
-            #endregion
+             #region exercise 2_8
+             exercise_2_8();
+             #endregion*/
 
             #region exercise 2_9
             exercise_2_9();
             #endregion
 
-            #region exercise 3_1
+            /*#region exercise 3_1
             exercise_3_1();
             #endregion
 
@@ -1012,23 +1018,23 @@ namespace Task
 
             #region exercise 3_3
             exercise_3_3();
-            #endregion
+            #endregion*/
 
-            #region exercise 3_4
+            /*#region exercise 3_4
             exercise_3_4();
-            #endregion
+            #endregion*/
 
-            #region exercise 3_8
+            /*#region exercise 3_8
             exercise_3_8();
-            #endregion
+            #endregion*/
 
             #region exercise 3_10
             exercise_3_10();
             #endregion
 
-            #region exercise 3_11
+           /* #region exercise 3_11
             exercise_3_11();
-            #endregion
+            #endregion*/
 
         }
     }
