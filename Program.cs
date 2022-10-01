@@ -1,254 +1,1170 @@
 ﻿using System;
 
-namespace _4th_Lab
+namespace Task
 {
+
     class Program
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
+        static string ListToString(List<double> L)
         {
-            for (int i = 0; i < array.Length; i++)
+            string s = "";
+            foreach (double v in L)
             {
-                if (i % COLUMNS == 0)
+                s += v.ToString();
+                s += " ";
+            }
+            return s;
+        }
+        static string ArrayToString(double[] L)
+        {
+            string s = "";
+            foreach (double v in L)
+            {
+                s += v.ToString();
+                s += " ";
+            }
+            return s;
+        }
+        static string[] ArrayToString(double[,] L)
+        {
+            int n = L.GetLength(0),m = L.GetLength(1);
+            string[] S = new string[n]; 
+            for(int i = 0; i < n; i++)
+            {
+                string s = "";
+                for(int j = 0; j < m; j++)
                 {
-                    Console.WriteLine();
+                    s += L[i, j].ToString();
+                    s += " ";
                 }
-                Console.Write($"{array[i],5}");
+                S[i] = s;
+            }
+            return S;
+        }
+        static int Compare((double, int) x, (double, int) y)
+        {
+            if(x.Item1 < y.Item1)
+            {
+                return 1;
+            }
+
+            if (x.Item1 > y.Item1)
+            {
+                return -1;
+            }
+
+            return 0;
+        }
+
+        static void exercise_1_3()
+        {
+            string error = "ошибка 1_3";
+            int n = 4, m = 4;
+            double[,] A = new double[n, m];
+            double ans = 0;
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+
+            for (int i = 0; i < n; ++i)
+            {
+                int minI = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j] ;
+
+                    A[i, j] = a;
+                }
+                ans += A[i,i];
+            }
+
+            string s = "ans : ";
+
+            s += ans.ToString();
+            Console.WriteLine(s);
+        }
+        static void exercise_1_6()
+        {
+            string error = "ошибка 1_6";
+            int n = 4, m = 7;
+            double[,] A = new double[n, m];
+            double[] ans = new double[n];
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                int minI = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+                    if (a < A[i, minI])
+                    {
+                        minI = j;
+                    }
+                }
+                ans[i] = minI;
+            }
+            string s = "ans : ";
+
+            s += ArrayToString(ans);
+            Console.WriteLine(s);
+        }
+        static void exercise_1_12()
+        {
+            string error = "ошибка 1_12";
+            int n = 6, m = 7;
+            double[,] A = new double[n, m];
+            double[,] ans = new double[n - 1, m - 1];
+            int maxI = 0, maxJ = 0;
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+                    if (a > A[maxI, maxJ])
+                    {
+                        maxI = i;
+                        maxJ = j;
+                    }
+                }
+            }
+            int shi = 0, shj = 0;
+            for(int i = 0; i < n - 1; ++i)
+            {
+                if(shi == maxI)
+                {
+                    shi++;
+                }
+                shj = 0;
+                for (int j = 0; j < m - 1; ++j)
+                {
+                    if (shj == maxJ)
+                    {
+                        shj++;
+                    }
+                    ans[i, j] = A[shi, shj];
+                    shj++;
+                }
+                shi++;
+            }
+
+            string s = "ans : ";
+            Console.WriteLine(s);
+            string[] S = new string[n]; 
+            S = ArrayToString(ans);
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
             }
         }
-        static void ShowMatrix(int[,] matrix)
+        static void exercise_1_13()
         {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            string error = "ошибка 1_13";
+            int n = 5, m = 5, k = 4;
+            double[,] A = new double[n, m];
+            int maxJ = 0;
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
             {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
                 {
-                    Console.Write($"{matrix[i, j],5}");
+                    return;
                 }
+
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+                }
+
+                if (A[i, i] > A[maxJ, maxJ])
+                {
+                    maxJ = i;
+                }
+
+            }
+
+            for (int i = 0; i < n; ++i) 
+            {
+                (A[i, k], A[i, maxJ]) = (A[i, maxJ], A[i, k]);
+            }
+
+            string s = "ans : ";
+            Console.WriteLine(s);
+            string[] S = new string[n];
+            S = ArrayToString(A);
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
             }
         }
+        static void exercise_1_17()
+        {
+            string error = "ошибка 1_17";
+            int n = 5, m = 5;
+            Console.WriteLine("ведите n(n >= 0)");
+            if(!Input.CheckRead(out n, error))
+            {
+                return;
+            }
+            if(n < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+
+            Console.WriteLine("ведите m(m >= 0)");
+            if (!Input.CheckRead(out m, error))
+            {
+                return;
+            }
+            if (m < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+
+            double[,] A = new double[n, m];
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+
+            for (int i = 0; i < n; ++i)
+            {
+                int minJ = 0;
+
+                if (!Input.CheckSplitRead(out List<double> L, error, m)) 
+                {
+                    return;
+                }
+
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+                    if(a < A[i, minJ])
+                    {
+                        minJ = j;
+                    }
+                }
+
+                while(minJ > 0)
+                {
+                    (A[i, minJ], A[i, minJ - 1]) = (A[i, minJ - 1], A[i, minJ]);
+                    minJ--;
+                }
+
+            }
+
+            string s = "ans : ";
+            Console.WriteLine(s);
+            string[] S = new string[n];
+            S = ArrayToString(A);
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_1_29()
+        {
+            string error = "ошибка 1_29";
+            int n = 5, m = 3;
+            double[,] A = new double[n, m];
+            double[,] ans = new double[n , m - 1];
+            int maxI = 2, minJ = 0;
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+                    if (i == 2 && Math.Abs(a) < Math.Abs(A[maxI, minJ]))
+                    {
+                        minJ = j;
+                    }
+                }
+            }
+
+            string[] S = new string[n];
+            
+            if (minJ < m - 1)
+            {
+                int  shj = 0;
+                minJ++;
+                for (int i = 0; i < n ; ++i)
+                {
+                    shj = 0;
+                    for (int j = 0; j < m - 1; ++j)
+                    {
+                        if (shj == minJ)
+                        {
+                            shj++;
+                        }
+                        ans[i, j] = A[i, shj];
+                        shj++;
+                    }
+
+                }
+
+                S = ArrayToString(ans);
+            }
+            else
+            {
+                S = ArrayToString(A);
+            }
+
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_1_31()
+        {
+            string error = "ошибка 1_31";
+            int n = 5, m = 7;
+            double[,] A = new double[n, m];
+            double[,] ans = new double[n, m + 1];
+            int maxI = 5, minJ = 0;
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+                    if (i == 5 && a < A[maxI, minJ])
+                    {
+                        minJ = j;
+                    }
+                }
+            }
+            Console.WriteLine($"ведите {n} значений в строку ");
+            if (!Input.CheckSplitRead(out List<double> l, error, n))
+            {
+                return;
+            }
+
+            string[] S = new string[n];
+            
+            int shj = 0;
+            minJ++;
+            for (int i = 0; i < n; ++i)
+            {
+                shj = 0;
+                for (int j = 0; j < m + 1; ++j)
+                {
+                    if (j == minJ)
+                    {
+                        ans[i, j] = l[i];
+                        continue;
+                    }
+                    ans[i, j] = A[i, shj];
+                    shj++;
+                }
+
+            }
+
+            S = ArrayToString(ans);
+
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+
+        static void exercise_2_7()
+        {
+            string error = "ошибка 2_7";
+            int n = 6, m = 6;
+            double[,] A = new double[n, m];
+            int maxI = 0, maxJ = 0;
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+
+                }
+                if (A[i, i] > A[maxI, maxJ])
+                {
+                    maxI = i;
+                    maxJ = i;
+                }
+            }
+
+            for(int i = 0; i < n; ++i)
+            {
+                for (int j = i + 1; j < m; ++j)
+                {
+                    if(i < maxI)
+                    {
+                        A[i, j] = 0;
+                    }
+                }
+            }
+
+            string[] S;
+            S = ArrayToString(A);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_2_8()
+        {
+            string error = "ошибка 2_8";
+            int n = 6, m = 6;
+            double[,] A = new double[n, m];
+            int[] B = new int[n];
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                int maxJ = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+                    if(a > A[i, maxJ])
+                    {
+                        maxJ = j;
+                    }
+                }
+                B[i] = maxJ;
+
+            }
+
+            for(int i = 0; i < n; i += 2)
+            {
+                (A[i, B[i]], A[i + 1, B[i + 1]]) = (A[i + 1, B[i + 1]], A[i, B[i]]);
+            }
+
+            string[] S;
+            S = ArrayToString(A);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_2_9()
+        {
+            string error = "ошибка 2_9";
+            int n = 3, m = 4;
+            double[,] A = new double[n, m], B = new double[n, m];
+
+            Console.WriteLine($"ведите {n} строки {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                int maxJ = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, m - j - 1] = a;
+
+                }
+
+            }
+            string[] S;
+            S = ArrayToString(A);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+
+        static void exercise_3_1()
+        {
+            string error = "ошибка 3_1";
+            int n = 7, m = 5;
+            double[,] A = new double[n, m], B = new double[n, m];
+            List<(double, int)> l = new List<(double, int)>();
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                int minJ = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+                    if (a < A[i, minJ])
+                    {
+                        minJ = j;
+                    }
+                }
+                l.Add((A[i, minJ], i));
+
+            }
+            l.Sort(Compare);
+            //Console.WriteLine();
+            for (int i = 0; i < n; ++i)
+            {
+                var to = l[i];
+                //Console.WriteLine(to.Item1.ToString() + " " + to.Item2.ToString());
+                for (int j = 0; j < m; ++j)
+                {
+                    B[i, j] = A[to.Item2, j];
+                }
+            }
+
+            string[] S;
+            S = ArrayToString(B);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_3_2()
+        {
+            string error = "ошибка 3_2";
+            int n;
+            Console.WriteLine("ведите n(n >= 0)");
+            if (!Input.CheckRead(out n, error))
+            {
+                return;
+            }
+            if (n < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+
+            double[,] A = new double[n, n];
+
+            Console.WriteLine($"ведите {n} строк {n} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                int minJ = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, n))
+                {
+                    return;
+                }
+                for (int j = 0; j < n; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+                }
+
+            }
+
+            for(int i = 0; i < n; ++i)
+            {
+                A[i, n-1] = 0;
+                A[n-1, i] = 0;
+                A[0,i] = 0;
+                A[i,0] = 0;
+            }
+
+            string[] S;
+            S = ArrayToString(A);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_3_3()
+        {
+            string error = "ошибка 3_3";
+            int n;
+            Console.WriteLine("ведите n(n >= 0)");
+            if (!Input.CheckRead(out n, error))
+            {
+                return;
+            }
+            if (n < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+
+            double[,] A = new double[n, n];
+            List<double> ans = new List<double>(2 * n - 1);
+            Console.WriteLine($"ведите {n} строк {n} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                int minJ = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, n))
+                {
+                    return;
+                }
+                for (int j = 0; j < n; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+                }
+
+            }
+            for (int i = n - 1; i >= 0; --i) 
+            {
+                double sum = 0;
+                for (int j = 0; j + i< n; ++j)
+                {
+                    sum += A[i + j, j];
+                }
+                ans.Add(sum);
+            }
+
+            for (int j = 1; j < n; ++j) 
+            {
+                double sum = 0;
+                for (int i = 0; i + j < n; ++i)
+                {
+                    sum += A[i , j + i];
+                }
+                ans.Add(sum);
+            }
+
+            string S;
+            S = ListToString(ans);
+            Console.WriteLine("ans : " + S);
+        }
+        static void exercise_3_4()
+        {
+            string error = "ошибка 3_4";
+            int n;
+            Console.WriteLine("ведите n(n >= 0)");
+            if (!Input.CheckRead(out n, error))
+            {
+                return;
+            }
+            if (n < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+
+            double[,] A = new double[n, n];
+            
+            Console.WriteLine($"ведите {n} строк {n} столбца ");
+
+            for (int i = 0; i < n; ++i)
+            {
+
+                if (!Input.CheckSplitRead(out List<double> L, error, n))
+                {
+                    return;
+                }
+                for (int j = 0; j < n; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+                }
+
+            }
+
+            for (int i = n / 2; i < n; ++i) 
+            {
+                for (int j = 0; j < i; ++j) 
+                {
+                    A[i, j] = 0;
+                }
+            }
+
+            string[] S;
+            S = ArrayToString(A);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_3_8()
+        {
+            string error = "ошибка 3_8";
+            int n = 7, m = 5;
+            double[,] A = new double[n, m], B = new double[n, m];
+            List<(double, int)> l = new List<(double, int)>();
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            for (int i = 0; i < n; ++i)
+            {
+                double kol = 0;
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+                    if(a > 0)
+                    {
+                        kol++;
+                    }
+                }
+
+                l.Add((kol, i));
+
+            }
+
+            l.Sort(Compare);
+            //Console.WriteLine();
+            for (int i = 0; i < n; ++i)
+            {
+                var to = l[i];
+                //Console.WriteLine(to.Item1.ToString() + " " + to.Item2.ToString());
+                for (int j = 0; j < m; ++j)
+                {
+                    B[i, j] = A[to.Item2, j];
+                }
+            }
+
+            string[] S;
+            S = ArrayToString(B);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_3_10()
+        {
+            string error = "ошибка 3_10";
+            int n, m;
+            Console.WriteLine("ведите n(n >= 0)");
+            if (!Input.CheckRead(out n, error))
+            {
+                return;
+            }
+            if (n < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+
+            Console.WriteLine("ведите m(m >= 0)");
+            if (!Input.CheckRead(out m, error))
+            {
+                return;
+            }
+            if (m < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+            double[,] A = new double[n, m];
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+
+            for (int i = 0; i < n; ++i)
+            {
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+
+                }
+            }
+            
+            for (int i = 0; i < n; i++)
+            {
+                List<double> l0 = new List<double>() , l1 = new List<double>();
+                for (int j = 0; j < m; j++)
+                {
+                    if (j % 2 == 0)
+                    {
+                        l0.Add(A[i, j]);
+                    }
+                    else
+                    {
+                        l1.Add(A[i, j]);
+                    }
+                }
+                l0.Sort();
+                l1.Sort();
+                l0.Reverse();
+                int sh0 = 0, sh1 = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    //Console.WriteLine($"{sh0} {sh1}");
+                    if (j % 2 == 0)
+                    {
+                        A[i, j] = l0[sh0];
+                        sh0++;
+                    }
+                    else
+                    {
+                        A[i, j] = l1[sh1];
+                        sh1++;
+                    }
+                }
+            }
+
+            string[] S;
+            S = ArrayToString(A);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+        static void exercise_3_11()
+        {
+            string error = "ошибка 3_11";
+            int n, m;
+            Console.WriteLine("ведите n(n >= 0)");
+            if (!Input.CheckRead(out n, error))
+            {
+                return;
+            }
+            if (n < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+
+            Console.WriteLine("ведите m(m >= 0)");
+            if (!Input.CheckRead(out m, error))
+            {
+                return;
+            }
+            if (m < 0)
+            {
+                Console.WriteLine(error);
+                return;
+            }
+            int kolDel = 0;
+            double[,] A = new double[n, m];
+            Console.WriteLine($"ведите {n} строк {m} столбца ");
+            Dictionary<int,bool> map = new Dictionary<int,bool>();
+            for (int i = 0; i < n; ++i)
+            {
+                bool fl = true;
+                if (!Input.CheckSplitRead(out List<double> L, error, m))
+                {
+                    return;
+                }
+                for (int j = 0; j < m; ++j)
+                {
+
+                    double a = L[j];
+
+                    A[i, j] = a;
+                    if(a == 0)
+                    {
+                        fl = false;
+                    }
+
+                }
+                if (fl)
+                {
+                    kolDel++;
+                    map[i] = true;
+                }
+            }
+            double[,] B = new double[n - kolDel, m];
+            int shi = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (map.ContainsKey(i)) continue;
+                for (int j = 0; j < m; j++)
+                {
+                    B[shi, j] = A[i, j]; 
+                }
+                shi++;
+            }
+
+            string[] S;
+            S = ArrayToString(B);
+            Console.WriteLine("ans : ");
+
+            foreach (string a in S)
+            {
+                Console.WriteLine(a);
+            }
+        }
+
         static void Main(string[] args)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
-            {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
+            /* #region exercise 1_3
+             exercise_1_3();
+             #endregion
 
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
-                {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
+             #region exercise 1_6
+             exercise_1_6();
+             #endregion
 
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
+             #region exercise 1_12
+             exercise_1_12();
+             #endregion
+
+             #region exercise 1_13
+             exercise_1_13();
+             #endregion
+
+             #region exercise 1_17
+             exercise_1_17();
+             #endregion
+
+             #region exercise 1_29
+             exercise_1_29();
+             #endregion
+
+             #region exercise 1_31
+             exercise_1_31();
+             #endregion
+
+             #region exercise 2_7
+             exercise_2_7();
+             #endregion
+
+             #region exercise 2_8
+             exercise_2_8();
+             #endregion*/
+
+            #region exercise 2_9
+            exercise_2_9();
             #endregion
 
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
-                        {
-                            min = (matrix[i, j], i, j);
-                        }
-                    }
-                }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
+            /*#region exercise 3_1
+            exercise_3_1();
             #endregion
 
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
-                        {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
+            #region exercise 3_2
+            exercise_3_2();
             #endregion
 
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
-            {
-                for (int i = left; i < right; i++)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                right--;
+            #region exercise 3_3
+            exercise_3_3();
+            #endregion*/
 
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-            }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
+            /*#region exercise 3_4
+            exercise_3_4();
+            #endregion*/
 
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
+            /*#region exercise 3_8
+            exercise_3_8();
+            #endregion*/
+
+            #region exercise 3_10
+            exercise_3_10();
             #endregion
 
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
+           /* #region exercise 3_11
+            exercise_3_11();
+            #endregion*/
 
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
-            {
-                if (element == 0 || array[element] >= array[element - 1])
-                {
-                    element++;
-                }
-                else
-                {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
-                }
-            }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
-
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
-                    {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
-                    }
-                }
-                step /= 2;
-            }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
-
-            #endregion
-            
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
         }
     }
+
+    static class Input
+    {
+        const string EndString = "";
+
+        static public bool Read(out double x)
+        {
+            string s;
+            s = Console.ReadLine();
+
+            if (!double.TryParse(s, out x))
+            {
+                return false;
+            }
+            return true;
+        }
+        static public bool Read(out int x)
+        {
+            string s;
+            s = Console.ReadLine();
+
+            if (!int.TryParse(s, out x))
+            {
+                return false;
+            }
+            return true;
+        }
+        static public bool Read(out int x, out bool fl)
+        {
+            fl = false;
+            string s;
+            s = Console.ReadLine();
+            if (s == EndString) fl = true;
+            if (!int.TryParse(s, out x))
+            {
+                return fl;
+            }
+            return true;
+        }
+        static public bool Read(out double x, out bool fl)
+        {
+            fl = false;
+            string s;
+            s = Console.ReadLine();
+            if (s == EndString) fl = true;
+            if (!double.TryParse(s, out x))
+            {
+                return fl;
+            }
+            return true;
+        }
+
+        static public bool CheckRead(out double x, string Erorr = "ошибка", string? ans = null)
+        {
+            bool fl;
+            if (!Read(out x, out fl))
+            {
+                Console.WriteLine(Erorr);
+                return false;
+            }
+
+            if (fl)
+            {
+                if (ans != null)
+                {
+                    Console.WriteLine(ans);
+                }
+                return false;
+            }
+            return true;
+        }
+        static public bool CheckRead(out int x, string Erorr = "ошибка", string? ans = null)
+        {
+            bool fl;
+            if (!Read(out x, out fl))
+            {
+                Console.WriteLine(Erorr);
+                return false;
+            }
+
+            if (fl)
+            {
+                if (ans != null)
+                {
+                    Console.WriteLine(ans);
+                }
+                return false;
+            }
+            return true;
+        }
+        static public bool CheckSplitRead(out List<double> L, string Erorr = "ошибка", int? kol = null, string? ans = null)
+        {
+            List<double> l = new List<double>();
+            L = l;
+            string? s = Console.ReadLine();
+            if (s == EndString)
+            {
+                if (ans != null)
+                {
+                    Console.WriteLine(ans);
+                }
+                return false;
+            }
+            if (s == null)
+            {
+                Console.WriteLine(Erorr);
+                return false;
+            }
+            string[] S = s.Split(" ");
+            foreach (string st in S)
+            {
+                double x;
+                if (st == "") continue;
+                if (!double.TryParse(st, out x))
+                {
+                    Console.WriteLine(Erorr);
+                    return false;
+                }
+                L.Add(x);
+            }
+            if(kol != null && L.Count() != kol)
+            {
+                Console.WriteLine("не верное количество элементов в строке");
+                return false;
+            }
+            return true;
+        }
+    }
+
 }
