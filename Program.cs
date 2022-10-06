@@ -1,254 +1,1114 @@
 ﻿using System;
-
-namespace _4th_Lab
+namespace _1st_Lab
 {
     class Program
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
+        static int exercise_3_1((int, double) a, (int, double) b)
         {
-            for (int i = 0; i < array.Length; i++)
+            if (a.Item2 < b.Item2)
             {
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
+                return 1;
             }
+
+            if (a.Item2 > b.Item2)
+            {
+                return -1;
+            }
+            return 0;
         }
-        static void ShowMatrix(int[,] matrix)
+
+        static int exercise_3_8((int, int) a, (int, int) b)
         {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            if (a.Item2 < b.Item2)
             {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write($"{matrix[i, j],5}");
-                }
+                return 1;
             }
+
+            if (a.Item2 > b.Item2)
+            {
+                return -1;
+            }
+            return 0;
         }
+
         static void Main(string[] args)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
-            {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
 
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
-                {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
+            #region level 1
+            Console.WriteLine("level 1");
 
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
+            #region task 3
+            Console.WriteLine("task 3");
+            {
+                int n = 4, m = 4;
+                double[,] A = new double[n, m];
+                double ans = 0;
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+                    List<double> row = new List<double>();
+
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        row.Add(value);
+                    }
+
+                    for (int j = 0; j < m; j++)
+                    {
+                        double el = row[j];
+
+                        A[i, j] = el;
+                    }
+
+                    ans += A[i, i];
+                }
+
+                Console.WriteLine($"    answer: {ans.ToString()}");
+            }
             #endregion
 
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
+            #region task 6
+            Console.WriteLine("task 6");
             {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
+                int n = 4, m = 7;
+                double[,] A = new double[n, m];
+                double[] ans = new double[n];
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    string[] row_string = Console.ReadLine().Split(" ");
+                    double[] row = new double[m];
+
+                    int j = -1;
+                    foreach (string elem in row_string)
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
+                        double value;
+                        if (!double.TryParse(elem, out value))
                         {
-                            min = (matrix[i, j], i, j);
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        row[j] = value;
+                        j++;
+                    }
+
+                    int min_idx = Array.IndexOf(row, row.Min());
+
+                    ans[i] = min_idx;
+                }
+
+                Console.WriteLine($"    answer: {ans.ToString()}");
+            }
+            #endregion
+
+            #region task 12
+            Console.WriteLine("task 12");
+            {
+                int n = 6, m = 7;
+                double[,] A = new double[n, m];
+                double[,] ans = new double[n - 1, m - 1];
+                int i_max = 0, j_max = 0;
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                        if (value > A[i_max, j_max])
+                        {
+                            i_max = i;
+                            j_max = j;
                         }
                     }
                 }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
+
+                int ans_i = 0, ans_j = 0;
+                for (int i = 0; i < n - 1; ++i)
+                {
+                    if (ans_i == i_max)
+                    {
+                        ans_i++;
+                    }
+                    ans_j = 0;
+                    for (int j = 0; j < m - 1; ++j)
+                    {
+                        if (ans_j == j_max)
+                        {
+                            ans_j++;
+                        }
+                        ans[i, j] = A[ans_i, ans_j];
+                        ans_j++;
+                    }
+                    ans_i++;
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string answer = "";
+                    for (int j = 0; j < m; j++)
+                    {
+                        answer += ans[i, j].ToString();
+                        answer += " ";
+                    }
+                    Console.WriteLine(answer);
+                }
             }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
             #endregion
 
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
+            #region task 13
+            Console.WriteLine("task 13");
             {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
+                int n = 5, m = 5;
+                int column_max = 0;
+                double[,] A = new double[n, m];
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
+                        double value;
+                        if (!double.TryParse(elem, out value))
                         {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                    }
+
+                    if (A[i, i] > A[column_max, column_max])
+                    {
+                        column_max = i;
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    (A[i, 4], A[i, column_max]) = (A[i, column_max], A[i, 4]);
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string answer = "";
+                    for (int j = 0; j < m; j++)
+                    {
+                        answer += A[i, j].ToString();
+                        answer += " ";
+                    }
+                    Console.WriteLine(answer);
+                }
+            }
+            #endregion
+
+            #region task 17
+            Console.WriteLine("task 17");
+            {
+                int n, m;
+
+                Console.WriteLine("enter n");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 1)
+                    {
+                        Console.WriteLine("incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                Console.WriteLine("enter m");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out m) || m <= 1)
+                    {
+                        Console.WriteLine("incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                double[,] A = new double[n, m];
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1, min_column = 0;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                        if (value < A[i, min_column])
+                        {
+                            min_column = j;
                         }
                     }
-                }
-            }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
 
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
-            {
-                for (int i = left; i < right; i++)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
+                    while (min_column != 0)
                     {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
+                        (A[i, min_column], A[i, min_column - 1]) = (A[i, min_column - 1], A[i, min_column]);
+                        min_column--;
                     }
                 }
-                right--;
 
-                if (swop == 0)
+                for (int i = 0; i < n; i++)
                 {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
+                    string answer = "";
+                    for (int j = 0; j < m; j++)
                     {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
+                        answer += A[i, j].ToString();
+                        answer += " ";
                     }
+                    Console.WriteLine(answer);
                 }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-            }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
 
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
+            }
             #endregion
 
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
-
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
+            #region task 29
+            Console.WriteLine("task 29");
             {
-                if (element == 0 || array[element] >= array[element - 1])
+                int n = 5, m = 7;
+                double[,] A = new double[n, m];
+                double[,] ans = new double[n, m - 1];
+                int row_idx = 1;
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
                 {
-                    element++;
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1, min_column = 0;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                    }
+                }
+
+                int j_min = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    if (Math.Abs(A[row_idx, j]) < Math.Abs(A[row_idx, j_min]))
+                    {
+                        j_min = j;
+                    }
+                }
+
+                if (j_min == m - 1)
+                {
+                    for (int i = 0; i < n; i++)
+                    {
+                        string line = "";
+                        for (int j = 0; j < m; j++)
+                        {
+                            line += A[i, j];
+                            line += " ";
+                        }
+                        Console.WriteLine(line);
+                    }
                 }
                 else
                 {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
-                }
-            }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
+                    j_min++;
+                    int ans_j = 0;
 
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
+                    for (int i = 0; i < n; i++)
                     {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
+                        ans_j = 0;
+                        for (int j = 0; j < m - 1; j++)
+                        {
+                            if (ans_j == j_min)
+                            {
+                                ans_j++;
+                            }
+                            ans[i, j] = A[i, ans_j];
+                            ans_j++;
+                        }
+                    }
+
+                    for (int i = 0; i < n; i++)
+                    {
+                        string line = "";
+                        for (int j = 0; j < m - 1; j++)
+                        {
+                            line += ans[i, j];
+                            line += " ";
+                        }
+                        Console.WriteLine(line);
                     }
                 }
-                step /= 2;
             }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
+            #endregion
+
+            #region task 31
+            Console.WriteLine("task 31");
+            {
+                int row_idx = 4, n = 5, m = 7;
+                double[,] A = new double[n, m];
+                double[,] ans = new double[n, m + 1];
+                int j_min = 0;
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                    }
+                }
+
+                for (int j = 0; j < m; j++)
+                {
+                    if (A[row_idx, j] < A[row_idx, j_min])
+                    {
+                        j_min = j;
+                    }
+                }
+
+                Console.WriteLine($"    enter {n} values in a row");
+
+                double[] B = new double[n];
+                int iter = 0;
+
+                string[] row_b = Console.ReadLine().Split(" ");
+                foreach (string elem in row_b)
+                {
+                    double value;
+                    if (!double.TryParse(elem, out value))
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+                    B[iter] = value;
+                    iter++;
+                }
+
+                int ans_j = 0;
+                j_min++;
+
+                for (int i = 0; i < n; i++)
+                {
+                    ans_j = 0;
+                    for (int j = 0; j < m + 1; ++j)
+                    {
+                        if (j == j_min)
+                        {
+                            ans[i, j] = B[i];
+                            continue;
+                        }
+                        ans[i, j] = A[i, ans_j];
+                        ans_j++;
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m - 1; j++)
+                    {
+                        line += ans[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
 
             #endregion
-            
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
+
+            #region level 2
+            Console.WriteLine("level 2");
+
+            #region task 7
+            Console.WriteLine("task 7");
+            {
+                int n = 6, m = 6;
+                double[,] A = new double[n, m];
+                int ii = 0;
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                    }
+
+                    if (A[i, i] > A[ii, ii])
+                    {
+                        ii = i;
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = i + 1; j < m; j++)
+                    {
+                        if (i < ii)
+                        {
+                            A[i, j] = 0;
+                        }
+                    }
+                }
+
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m - 1; j++)
+                    {
+                        line += A[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #region task 8
+            Console.WriteLine("task 8");
+            {
+                int n = 6, m = 6;
+                double[,] B = new double[n, m];
+                int[] max_elems = new int[n];
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    int j_max = 0;
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        B[i, j] = value;
+
+                        if (value > B[i, j_max])
+                        {
+                            j_max = j;
+                        }
+                    }
+                    max_elems[i] = j_max;
+                }
+
+                for (int i = 0; i < n; i += 2)
+                {
+                    (B[i + 1, max_elems[i + 1]], B[i, max_elems[i]]) = (B[i, max_elems[i]], B[i + 1, max_elems[i + 1]]);
+                }
+
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m - 1; j++)
+                    {
+                        line += B[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #region task 9
+            Console.WriteLine("task 9");
+            {
+                int n = 6, m = 7;
+                double[,] A = new double[n, m];
+
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, m - j - 1] = value;
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m - 1; j++)
+                    {
+                        line += A[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #endregion
+
+            #region level 3
+            Console.WriteLine("level 3");
+
+            #region task 1
+            Console.WriteLine("task 1");
+            {
+                int n = 7, m = 5;
+                double[,] A = new double[n, m], B = new double[n, m];
+                List<(int, double)> a = new List<(int, double)>();
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+                    int j_min = 0;
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+
+                        if (value < A[i, j_min])
+                        {
+                            j_min = j;
+                        }
+                    }
+                    a.Add((i, A[i, j_min]));
+                }
+                a.Sort(exercise_3_1);
+
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        B[i, j] = A[a[i].Item1, j];
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m; j++)
+                    {
+                        line += B[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #region task 2
+            Console.WriteLine("task 2");
+            {
+                int n;
+
+                Console.WriteLine("     enter n");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
+                    {
+                        Console.WriteLine("     incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                double[,] A = new double[n, n];
+
+                for (int i = 0; i < n; i++)
+                {
+                    (A[i, 0], A[0, i]) = (0, 0);
+                    (A[n - 1, i], A[i, n - 1]) = (0, 0);
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < n; j++)
+                    {
+                        line += A[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #region task 3
+            Console.WriteLine("task 3");
+            {
+                int n;
+
+                Console.WriteLine("     enter n");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
+                    {
+                        Console.WriteLine("     incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                double[,] A = new double[n, n];
+                List<double> vector = new List<double>(2 * n - 1);
+
+                Console.WriteLine($"    enter {n} rows {n} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                    }
+                }
+
+                for (int i = n - 1; i > -1; i--)
+                {
+                    double sum = 0;
+                    for (int j = 0; j < n - i; j++)
+                    {
+                        sum += A[i + j, j];
+                    }
+                    vector.Add(sum);
+                }
+
+                for (int j = 1; j < n; j++)
+                {
+                    double sum = 0;
+                    for (int i = 0; i < n - j; i++)
+                    {
+                        sum += A[i, i + j];
+                    }
+                    vector.Add(sum);
+                }
+
+                string answer = "   answer: ";
+
+                foreach(double elem in vector)
+                {
+                    answer += elem.ToString();
+                    answer += " ";
+                }
+                Console.WriteLine(answer);
+            }
+            #endregion
+
+            #region task 4
+            Console.WriteLine("task 4");
+            {
+                int n;
+
+                Console.WriteLine("     enter n");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
+                    {
+                        Console.WriteLine("     incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                double[,] A = new double[n, n];
+
+                Console.WriteLine($"    enter {n} rows {n} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                    }
+                }
+
+                for (int i = n / 2; i < n; i++)
+                {
+                    for (int j = 0; j < i; j++)
+                    {
+                        A[i, j] = 0;
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < n; j++)
+                    {
+                        line += A[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #region task 8
+            Console.WriteLine("task 8");
+            {
+                                int n = 7, m = 5;
+                double[,] A = new double[n, m], B = new double[n, m];
+                List<(int, int)> a = new List<(int, int)>();
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+                    int counter = 0;
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+
+                        if (value > 0)
+                        {
+                            counter++;
+                        }
+                    }
+                    a.Add((i, counter));
+                }
+                a.Sort(exercise_3_8);
+
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        B[i, j] = A[a[i].Item1, j];
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m; j++)
+                    {
+                        line += B[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #region task 10
+            Console.WriteLine("task 10");
+            {
+                int n;
+
+                Console.WriteLine("     enter n");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
+                    {
+                        Console.WriteLine("     incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                int m;
+
+                Console.WriteLine("     enter m");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out m) || m <= 0)
+                    {
+                        Console.WriteLine("     incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                double[,] A = new double[n, m];
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    string[] row_string = Console.ReadLine().Split(" ");
+
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                    }
+                }
+
+                for (int j = 0; j < m; j++)
+                {
+                    List<double> even = new List<double>(), odd = new List<double>();
+                    for (int i = 0; i < n; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            even.Add(A[i, j]);
+                        }
+                        else
+                        {
+                            odd.Add(A[i, j]);
+                        }
+                    }
+
+                    even.Sort();
+                    even.Reverse();
+                    odd.Sort();
+
+                    int idx_even = 0, idx_odd = 0;
+                    for (int i = 0; i < n; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            A[i, j] = even[idx_even];
+                            idx_even++;
+                        }
+                        else
+                        {
+                            A[i, j] = odd[idx_odd];
+                            idx_odd++;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < n; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m; j++)
+                    {
+                        line += A[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #region task 11
+            Console.WriteLine("task 11");
+            {
+                int n;
+
+                Console.WriteLine("     enter n");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
+                    {
+                        Console.WriteLine("     incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+
+                int m;
+
+                Console.WriteLine("     enter m");
+                while (true)
+                {
+                    if (!int.TryParse(Console.ReadLine(), out m) || m <= 0)
+                    {
+                        Console.WriteLine("     incorrect format, try again");
+                        continue;
+                    }
+                    break;
+                }
+                double[,] A = new double[n, m];
+                int counter = 0;
+                Dictionary<int, bool> cache = new Dictionary<int, bool>();
+
+                Console.WriteLine($"    enter {n} rows {m} columns");
+
+                for (int i = 0; i < n; i++)
+                {
+                    bool flag = false;
+
+                    string[] row_string = Console.ReadLine().Split(" ");
+                    int j = -1;
+                    foreach (string elem in row_string)
+                    {
+                        double value;
+                        if (!double.TryParse(elem, out value))
+                        {
+                            Console.WriteLine("     incorrect format");
+                            return;
+                        }
+                        j++;
+
+                        A[i, j] = value;
+                        if (value == 0)
+                        {
+                            flag = true;
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        counter++;
+                        cache[i] = true;
+                    }
+                }
+
+                double[,] B = new double[n - counter, m];
+                int ans_i = 0;
+
+                for (int i = 0; i < n; i++)
+                {
+                    if (cache.ContainsKey(i))
+                    {
+                        continue;
+                    }
+                    for (int j = 0; j < m; j++)
+                    {
+                        B[ans_i, j] = A[i, j];
+                    }
+                    ans_i++;
+                }
+
+                for (int i = 0; i < n - counter; i++)
+                {
+                    string line = "";
+                    for (int j = 0; j < m; j++)
+                    {
+                        line += B[i, j];
+                        line += " ";
+                    }
+                    Console.WriteLine(line);
+                }
+            }
+            #endregion
+
+            #endregion
         }
     }
 }
