@@ -31,19 +31,15 @@ class HelloWorld
 
             }
         }
+        int min = matrix[1][0];
         for (int i = 0; i < m; i++)
         {
-            A.Add(Math.Abs(matrix[1][i]));
-        }
-        x = A.Min();
-        for (int i = 0; i < m; i++)
-        {
-            if (matrix[1][i] == x) {k = i; break; }
+            if (Math.Abs(matrix[1][i]) < min) { min = Math.Abs(matrix[1][i]); k = i; }
         }
         if (k == matrix[0].Count()) { Console.WriteLine("It is the last table!"); return 0; }
-        for (int i=0; i<n; i++)
+        for (int i = 0; i < n; i++)
         {
-            matrix[i].RemoveAt(k+1);
+            matrix[i].RemoveAt(k + 1);
         }
         Console.WriteLine("New matrix: ");
         for (int i = 0; i < matrix.Count(); i++)
