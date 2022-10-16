@@ -21,7 +21,7 @@ class HelloWorld
         int k = 0;
         int x;
         Console.WriteLine("Enter the matrix: ");
-        for (int i = 0; i < n ; i++)
+        for (int i = 0; i < n; i++)
         {
             matrix.Add(new List<int>());
             string[] line = Console.ReadLine().Split(" ");
@@ -30,21 +30,18 @@ class HelloWorld
                 matrix[i].Add(Convert.ToInt32(line[j]));
             }
         }
+        int max = matrix[0][0];
+        k = 0;
         for (int i = 0; i < n; i++)
         {
-            A.Add(matrix[i][i]);
+            if (matrix[i][i] > max) {k = i; max = matrix[i][i]; }
         }
-        x = A.Max();
-        for (int i=0; i<n; i++)
+        for (int i = 0; i < k; i++)
         {
-            if (matrix[i][i] == x) k = i;
-        }
-        for (int i=0; i<k; i++)
-        {
-            for ( int j = i+1; j<n; j++)
+            for (int j = i + 1; j < n; j++)
             {
                 matrix[i][j] = 0;
-            }    
+            }
         }
         Console.WriteLine("New matrix: ");
         for (int i = 0; i < matrix.Count(); i++)
