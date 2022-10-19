@@ -49,6 +49,13 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     List<double> row = new List<double>();
 
                     foreach (string elem in row_string)
@@ -88,6 +95,13 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     double[] row = new double[m];
 
                     int j = -1;
@@ -99,8 +113,9 @@ namespace _1st_Lab
                             Console.WriteLine("     incorrect format");
                             return;
                         }
-                        row[j] = value;
                         j++;
+                        row[j] = value;
+                        
                     }
 
                     int min_idx = Array.IndexOf(row, row.Min());
@@ -125,6 +140,12 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
 
                     int j = -1;
                     foreach (string elem in row_string)
@@ -166,10 +187,10 @@ namespace _1st_Lab
                     ans_i++;
                 }
 
-                for (int i = 0; i < n; i++)
+                for (int i = 0; i < n - 1; i++)
                 {
                     string answer = "";
-                    for (int j = 0; j < m; j++)
+                    for (int j = 0; j < m - 1; j++)
                     {
                         answer += ans[i, j].ToString();
                         answer += " ";
@@ -191,6 +212,12 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
 
                     int j = -1;
                     foreach (string elem in row_string)
@@ -265,6 +292,12 @@ namespace _1st_Lab
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
 
+                    if (row_string.Count() < m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int j = -1, min_column = 0;
                     foreach (string elem in row_string)
                     {
@@ -317,6 +350,12 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
 
                     int j = -1, min_column = 0;
                     foreach (string elem in row_string)
@@ -399,6 +438,12 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() < m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
 
                     int j = -1;
                     foreach (string elem in row_string)
@@ -488,6 +533,12 @@ namespace _1st_Lab
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
 
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int j = -1;
                     foreach (string elem in row_string)
                     {
@@ -523,7 +574,7 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string line = "";
-                    for (int j = 0; j < m - 1; j++)
+                    for (int j = 0; j < m; j++)
                     {
                         line += A[i, j];
                         line += " ";
@@ -546,6 +597,12 @@ namespace _1st_Lab
                 {
                     int j_max = 0;
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
 
                     int j = -1;
                     foreach (string elem in row_string)
@@ -600,6 +657,12 @@ namespace _1st_Lab
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
 
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int j = -1;
                     foreach (string elem in row_string)
                     {
@@ -645,6 +708,13 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int j_min = 0;
 
                     int j = -1;
@@ -752,6 +822,12 @@ namespace _1st_Lab
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
 
+                    if (row_string.Count() != n)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int j = -1;
                     foreach (string elem in row_string)
                     {
@@ -822,6 +898,12 @@ namespace _1st_Lab
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
 
+                    if (row_string.Count() != n)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int j = -1;
                     foreach (string elem in row_string)
                     {
@@ -839,9 +921,9 @@ namespace _1st_Lab
 
                 for (int i = n / 2; i < n; i++)
                 {
-                    for (int j = 0; j < i; j++)
+                    for (int j = 0; j < i + 1; j++)
                     {
-                        A[i, j] = 0;
+                        A[i, j] = 1;
                     }
                 }
 
@@ -850,7 +932,7 @@ namespace _1st_Lab
                     string line = "";
                     for (int j = 0; j < n; j++)
                     {
-                        line += A[i, j];
+                        line += A[i, j].ToString();
                         line += " ";
                     }
                     Console.WriteLine(line);
@@ -870,6 +952,13 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int counter = 0;
 
                     int j = -1;
@@ -951,6 +1040,12 @@ namespace _1st_Lab
                 for (int i = 0; i < n; i++)
                 {
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
 
                     int j = -1;
                     foreach (string elem in row_string)
@@ -1054,6 +1149,13 @@ namespace _1st_Lab
                     bool flag = false;
 
                     string[] row_string = Console.ReadLine().Split(" ");
+
+                    if (row_string.Count() != m)
+                    {
+                        Console.WriteLine("     incorrect format");
+                        return;
+                    }
+
                     int j = -1;
                     foreach (string elem in row_string)
                     {
