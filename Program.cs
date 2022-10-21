@@ -205,17 +205,11 @@ namespace _4th_Lab
                 int column = 0;
                 for (int k = 0; k < n; k++)
                 {
-                    for (int j = 0; j < m; j++)
+                    if (matrix_in_use[k, k] > biggest_value)
                     {
-                        if (k == j)
-                        {
-                            if (matrix_in_use[k, j] > biggest_value)
-                            {
-                                biggest_value = matrix_in_use[k, j];
-                                row = k;
-                                column = j;
-                            }
-                        }
+                        biggest_value = matrix_in_use[k, k];
+                        row = k;
+                        column = k;
                     }
                 }
                 for (int i = 0; i < m; i++)
@@ -226,7 +220,7 @@ namespace _4th_Lab
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
 
-            }
+            }//fixed
             static void task_1_17()
             {
                 bool flag = false;
@@ -258,9 +252,9 @@ namespace _4th_Lab
                             column = j;
                         }
                     }
-                    for (int i = column; i >0; i--)
+                    for (int i = column; i > 0; i--)
                     {
-                        matrix_in_use[k,i] = matrix_in_use[k, i-1];
+                        matrix_in_use[k, i] = matrix_in_use[k, i - 1];
                     }
                     matrix_in_use[k, 0] = smallest_value;
                 }
@@ -292,36 +286,60 @@ namespace _4th_Lab
                         column = k;
                     }
                 }
-                m -= 1;
-                for (int i = column+1; i < m; i++)
+                if (column != m - 1)
                 {
-                    for (int k = 0; k < n; k++)
-                    {
-                        matrix_in_use[k, i] = matrix_in_use[k, i + 1];
-                    }
-                }
-                show_matrix(matrix_in_use, n, m, ref flag);
 
-            }
+
+                    m -= 1;
+                    for (int i = column + 1; i < m; i++)
+                    {
+                        for (int k = 0; k < n; k++)
+                        {
+                            matrix_in_use[k, i] = matrix_in_use[k, i + 1];
+                        }
+                    }
+                    double[,] matrix_in_use_2 = new double[n, m];
+                    for (int i = 0; i < m; i++)
+                    {
+                        double[] arr = new double[n];
+                        for (int k = 0; k < n; k++)
+                        {
+                            arr[k] = matrix_in_use[i, k];
+                        }
+                        Array.Resize(ref arr, m);
+                        for (int j = 0; j < m; j++)
+                        {
+                            matrix_in_use_2[i, j] = arr[j];
+                        }
+                    }
+                    show_matrix(matrix_in_use_2, n, m, ref flag);
+                }
+                else
+                {
+
+                    show_matrix(matrix_in_use, n, m, ref flag);
+                }
+
+            }//fixed
             static void task_1_31()
             {
                 bool flag = false;
                 int n = 5;
                 int m = 8;
                 Console.WriteLine("enter b(5):");
-                string str_ =Console.ReadLine();
+                string str_ = Console.ReadLine();
                 double[] arr_in_use = double_array(str_, 5, ref flag);
                 if (flag)
                 {
                     Console.WriteLine("input error");
                     return;
                 }//i use for 8th elem in row elem that is already in this row, but this elem is not the smallest(it is important for the 5th row)
-                double[,] matrix_in_use = { { 1, 2, 3, 4, 5, 6, 7,7 }, { 1, 2, 3, 4, 5, 6, 7,7 }, { 1, 2, 3, 4, 5, 6, 7,7 }, { 1, 2, 3, 4, 5, 6, 7,7 }, { 1, 2, 3, 0, 5, 6, 7,7 } };
-                show_matrix(matrix_in_use, n, m-1, ref flag);
+                double[,] matrix_in_use = { { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 0, 5, 6, 7, 7 } };
+                show_matrix(matrix_in_use, n, m - 1, ref flag);
                 double smallest_value = matrix_in_use[4, 0];
                 int row = 0;
                 int column = 0;
-                for (int k = 1; k < m-1; k++)
+                for (int k = 1; k < m - 1; k++)
                 {
                     if (matrix_in_use[4, k] < smallest_value)
                     {
@@ -329,11 +347,11 @@ namespace _4th_Lab
                         column = k;
                     }
                 }
-                for (int i = m-2; i >column; i--)
+                for (int i = m - 2; i > column; i--)
                 {
                     for (int k = 0; k < n; k++)
                     {
-                        matrix_in_use[k, i+1] = matrix_in_use[k, i];
+                        matrix_in_use[k, i + 1] = matrix_in_use[k, i];
                     }
                 }
                 for (int i = 0; i < n; i++)
@@ -343,7 +361,7 @@ namespace _4th_Lab
                 show_matrix(matrix_in_use, n, m, ref flag);
 
             }
-            
+
 
             static void task_2_8()
             {
@@ -364,7 +382,7 @@ namespace _4th_Lab
                 {
                     double biggest_value = matrix_in_use[k, 0];
                     int index_column = 0;
-                    if (k % 2 == 0) prev_index_column = 0; 
+                    if (k % 2 == 0) prev_index_column = 0;
                     for (int j = 0; j < m; j++)
                     {
                         if (matrix_in_use[k, j] > biggest_value)
@@ -378,15 +396,15 @@ namespace _4th_Lab
                         }
                     }
                     biggest_values_array[k] = biggest_value;
-                    
+
                     if (k % 2 == 1)
                     {
                         double p = biggest_values_array[k];
                         matrix_in_use[k, index_column] = matrix_in_use[k - 1, prev_index_column];
                         matrix_in_use[k - 1, prev_index_column] = p;
                     }
-                   
-                  
+
+
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
             }
@@ -402,17 +420,17 @@ namespace _4th_Lab
                     Console.WriteLine("input error");
                     return;
                 }
-                show_matrix(matrix_in_use, n, m, ref flag);              
+                show_matrix(matrix_in_use, n, m, ref flag);
                 for (int k = 0; k < n; k++)
                 {
-                    for (int i = 0; i < m/2; i++)
+                    for (int i = 0; i < m / 2; i++)
                     {
                         double p = matrix_in_use[k, i];
                         matrix_in_use[k, i] = matrix_in_use[k, m - 1 - i];
                         matrix_in_use[k, m - 1 - i] = p;
                     }
                 }
-                
+
                 show_matrix(matrix_in_use, n, m, ref flag);
 
             }
@@ -434,35 +452,26 @@ namespace _4th_Lab
                 int row = 0;
                 for (int k = 0; k < n; k++)
                 {
-                    for (int j = 0; j < m; j++)
+                    if (matrix_in_use[k, k] > biggest_value)
                     {
-                        if (k == j)
-                        {
-                            if (matrix_in_use[k, j] > biggest_value)
-                            {
-                                biggest_value = matrix_in_use[k, j];
-                                row = k;
-                            }
-                        }
+                        biggest_value = matrix_in_use[k, k];
+                        row = k;
                     }
                 }
                 for (int k = 0; k < n; k++)
                 {
                     if (k == row) break;
-                    for (int j = 0; j < m; j++)
+
+                    for (int i = 0; i < m - k - 1; i++)
                     {
-                        if (k == j)
-                        {
-                            for (int i = 0; i < m-j-1; i++)
-                            {
-                                matrix_in_use[k, j + 1+i] = 0;
-                            }
-                        }
+                        matrix_in_use[k, k + 1 + i] = 0;
                     }
+
+
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
 
-            }
+            }//fixed
 
             static void task_3_1()
             {
@@ -478,7 +487,7 @@ namespace _4th_Lab
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
 
-                
+
                 double smallest11 = 0;
                 int smallest_row11 = 0;
 
@@ -488,11 +497,11 @@ namespace _4th_Lab
                     double smallest_row1 = t;
                     for (int k = 0; k < m; k++)
                     {
-                        if (matrix_in_use[t,k] < smallest1)
+                        if (matrix_in_use[t, k] < smallest1)
                         {
                             smallest1 = matrix_in_use[t, k];
                         }
-                        
+
                     }
                     smallest11 = smallest1;
                     smallest_row11 = t;
@@ -527,7 +536,7 @@ namespace _4th_Lab
                         }
                     }
                 }
-                
+
                 show_matrix(matrix_in_use, n, m, ref flag);
 
 
@@ -556,7 +565,7 @@ namespace _4th_Lab
                 {
                     for (int k = 0; k < m; k++)
                     {
-                        if(i==0 || i == n - 1)
+                        if (i == 0 || i == n - 1)
                         {
                             matrix_in_use[i, k] = 0;
                             continue;
@@ -572,10 +581,10 @@ namespace _4th_Lab
             {
                 bool flag = false;
                 int n;
-                                            // dificult but it is true just math
+                // dificult but it is true just math
                 Console.WriteLine("enter rows:");
                 bool res = int.TryParse(Console.ReadLine(), out n);
-                if (!(res & n > 0 )) return;
+                if (!(res & n > 0)) return;
                 Console.WriteLine("enter array data:");
                 double[,] matrix_in_use = double_matrix(n, n, ref flag);
                 if (flag)
@@ -591,13 +600,13 @@ namespace _4th_Lab
                     {
                         if (k - i < 0)
                         {
-                            vector[n-1 + Math.Abs(k - i)] += matrix_in_use[i, k];
+                            vector[n - 1 + Math.Abs(k - i)] += matrix_in_use[i, k];
                             continue;
                         }
                         vector[k - i] += matrix_in_use[i, k];
                     }
                 }
-                foreach(double elem in vector)
+                foreach (double elem in vector)
                 {
                     Console.WriteLine($"{elem}\t");
                 }
@@ -620,17 +629,17 @@ namespace _4th_Lab
                     Console.WriteLine("input error");
                     return;
                 }
-                int i=1;
+                int i = 1;
                 int x = n / 2;
                 for (int k = 0; k < n; k++)
                 {
-                    if (k == x||k>x)
+                    if (k == x || k > x)
                     {
-                        for (int j = 0; j < n/2+i ; j++)
+                        for (int j = 0; j < n / 2 + i; j++)
                         {
-                            
+
                             matrix_in_use[k, j] = 1;
-                            
+
                         }
                         i++;
                     }
@@ -662,7 +671,7 @@ namespace _4th_Lab
                     int row_1 = t;
                     for (int k = 0; k < m; k++)
                     {
-                        if (matrix_in_use[t, k] >0)
+                        if (matrix_in_use[t, k] > 0)
                         {
                             quality1++;
                         }
@@ -674,7 +683,7 @@ namespace _4th_Lab
                         int row_2 = i;
                         for (int k = 0; k < m; k++)
                         {
-                            if (matrix_in_use[i, k] >0)
+                            if (matrix_in_use[i, k] > 0)
                             {
                                 quality2++;
                             }
@@ -701,104 +710,108 @@ namespace _4th_Lab
                 }
 
                 show_matrix(matrix_in_use, n, m, ref flag);
-
-
-
             }
+
             static void task_3_10()
-            {
-                bool flag = false;
-                int n;
-                int m;
-                Console.WriteLine("enter rows:");
-                bool res = int.TryParse(Console.ReadLine(), out n);
-                Console.WriteLine("enter columns:");
-                bool res2 = int.TryParse(Console.ReadLine(), out m);
-                if (!(res & n > 0 & res2 & m > 0)) return;
-                Console.WriteLine("enter array data:");
-                double[,] matrix_in_use = double_matrix(n, m, ref flag);
-                if (flag)
                 {
-                    Console.WriteLine("input error");
-                    return;
-                }
-                show_matrix(matrix_in_use, n, m, ref flag);
+                    bool flag = false;
+                    int n;
+                    int m;
+                    Console.WriteLine("enter rows:");
+                    bool res = int.TryParse(Console.ReadLine(), out n);
+                    Console.WriteLine("enter columns:");
+                    bool res2 = int.TryParse(Console.ReadLine(), out m);
+                    if (!(res & n > 0 & res2 & m > 0)) return;
+                    Console.WriteLine("enter array data:");
+                    double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                    if (flag)
+                    {
+                        Console.WriteLine("input error");
+                        return;
+                    }
+                    show_matrix(matrix_in_use, n, m, ref flag);
 
-                for (int i = 0; i < n; i++)
-                {
-                    double[] row_array = new double[m];
-                    if (i % 2 == 0)
+                    for (int i = 0; i < n; i++)
                     {
-                       for (int j = 0; j < m; j++)
+                        double[] row_array = new double[m];
+                        if (i % 2 == 0)
                         {
-                            row_array[j]=matrix_in_use[i, j];                          
-                        }
-                        Array.Sort(row_array);
-                        Array.Reverse(row_array);
-                        for (int j = 0; j < m; j++)
-                        {
-                            matrix_in_use[i, j]= row_array[j];
-                        }
-                    }
-                    if (i % 2 != 0)
-                    {
-                        for (int j = 0; j < m; j++)
-                        {
-                            row_array[j] = matrix_in_use[i, j];
-                        }
-                        Array.Sort(row_array);
-                        for (int j = 0; j < m; j++)
-                        {
-                            matrix_in_use[i, j] = row_array[j];
-                        }
-                    }
-                }
-                show_matrix(matrix_in_use, n, m, ref flag);
-            }
-            static void task_3_11()
-            {
-                bool flag = false;
-                int n;
-                int m;
-                Console.WriteLine("enter rows:");
-                bool res = int.TryParse(Console.ReadLine(), out n);
-                Console.WriteLine("enter columns:");
-                bool res2 = int.TryParse(Console.ReadLine(), out m);
-                if (!(res & n > 0 & res2 & m > 0)) return;
-                Console.WriteLine("enter array data:");
-                double[,] matrix_in_use = double_matrix(n, m, ref flag);
-                if (flag)
-                {
-                    Console.WriteLine("input error");
-                    return;
-                }
-                Console.WriteLine("you entered:");
-                show_matrix(matrix_in_use, n, m, ref flag);
-                for (int k = 0; k < n; k++)
-                {
-                    for (int i = 0; i < m; i++)
-                    {
-                        if (matrix_in_use[k, i] == 0)
-                        {
-                            n -= 1;
-                            for (int j = k; j < n; j++)
+                            for (int j = 0; j < m; j++)
                             {
-                                for (int h = 0; h < m; h++)
-                                {
-                                    matrix_in_use[j, h] = matrix_in_use[j + 1, h];
-                                }
-
+                                row_array[j] = matrix_in_use[i, j];
                             }
-                            k = -1;
-                            break;
+                            Array.Sort(row_array);
+                            Array.Reverse(row_array);
+                            for (int j = 0; j < m; j++)
+                            {
+                                matrix_in_use[i, j] = row_array[j];
+                            }
+                        }
+                        if (i % 2 != 0)
+                        {
+                            for (int j = 0; j < m; j++)
+                            {
+                                row_array[j] = matrix_in_use[i, j];
+                            }
+                            Array.Sort(row_array);
+                            for (int j = 0; j < m; j++)
+                            {
+                                matrix_in_use[i, j] = row_array[j];
+                            }
                         }
                     }
+                    show_matrix(matrix_in_use, n, m, ref flag);
                 }
-                show_matrix(matrix_in_use, n, m, ref flag);
+            static void task_3_11()
+                {
+                    bool flag = false;
+                    int n;
+                    int m;
+                    Console.WriteLine("enter rows:");
+                    bool res = int.TryParse(Console.ReadLine(), out n);
+                    Console.WriteLine("enter columns:");
+                    bool res2 = int.TryParse(Console.ReadLine(), out m);
+                    if (!(res & n > 0 & res2 & m > 0)) return;
+                    Console.WriteLine("enter array data:");
+                    double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                    if (flag)
+                    {
+                        Console.WriteLine("input error");
+                        return;
+                    }
+                    Console.WriteLine("you entered:");
+                    show_matrix(matrix_in_use, n, m, ref flag);
+
+                    double[,] res_mat = new double[n, m];
+                    bool res1 = true;
+                    int j = 0;
+                    for (int k = 0; k < n; k++)
+                    {
+                        for (int i = 0; i < m; i++)
+                        {
+                            if (matrix_in_use[k, i] == 0)
+                            {
+                                res1 = false;
+                            }
+                        }
+                        if (res1)
+                        {
+
+                            for (int i = 0; i < m; i++)
+                            {
+                                res_mat[j, i] = matrix_in_use[k, i];
+                            }
+                            j++;
+                        }
+                        res1 = true;
+                    }
+
+                    show_matrix(res_mat, n - j, m, ref flag);
 
 
 
-            }
-            }
-       }
+                }//fixed
+            
+        }
+    }
 }
