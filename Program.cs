@@ -35,12 +35,12 @@ namespace _4_Lab
                     if (double.TryParse(Console.ReadLine(), out s))
                     {
                         A[i, j] = s;
-                        if (i == j)
-                        {
-                            k += A[i, j];
-                        }
                     }
                 }
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                k += A[i, i];
             }
         
 
@@ -159,15 +159,16 @@ namespace _4_Lab
                     if (double.TryParse(Console.ReadLine(), out s))
                     {
                         A[i, j] = s;
-                        if (i == j)
-                        {
-                            if (s > NMax)
-                            {
-                                NMax = s;
-                                IMax[0] = j;
-                            }
-                        }
                     }
+                }
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (A[i, i] > NMax)
+                {
+                    NMax = A[i, i];
+                    IMax[0] = i;
                 }
             }
             Console.WriteLine("Matrix:");
@@ -379,19 +380,19 @@ namespace _4_Lab
                     if (double.TryParse(Console.ReadLine(), out s))
                     {
                         A[i, j] = s;
-                        if (i == j)
-                        {
-                            if (s > NMax)
-                            {
-                                NMax = s;
-                                IMax[0] = i;
-                                IMax[1] = j;
-                            }
-                        }
                     }
                 }
             }
 
+            for (int i = 0; i < 6; i++)
+            {
+                if (A[i, i] > NMax)
+                {
+                    NMax = A[i, i];
+                    IMax[0] = i;
+                    IMax[1] = i;
+                }
+            }
             Console.WriteLine("Matrix:");
             for (int i = 0; i < 6; i++)
             {
