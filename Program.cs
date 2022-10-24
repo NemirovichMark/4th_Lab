@@ -1,254 +1,686 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Globalization;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace _4th_Lab
+namespace LAB4
 {
-    class Program
+    internal class Program
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-        }
-        static void ShowMatrix(int[,] matrix)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
-        }
         static void Main(string[] args)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
-            {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
-                {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
-
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
-            #endregion
-
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
-                        {
-                            min = (matrix[i, j], i, j);
-                        }
-                    }
-                }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
-                        {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
-            {
-                for (int i = left; i < right; i++)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                right--;
-
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-            }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
-            #endregion
-
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
-
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
-            {
-                if (element == 0 || array[element] >= array[element - 1])
-                {
-                    element++;
-                }
-                else
-                {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
-                }
-            }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
-
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
-                    {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
-                    }
-                }
-                step /= 2;
-            }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
-
-            #endregion
-            
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
+            task3_1();
         }
+        static void task1_3()
+        {
+            int[,] a = new int[4, 4] {{1,2,3,4},
+                                      {5,6,7,8},
+                                      {4,3,5,1},
+                                      {2,1,3,4}};
+            int n = 4, m = 4;
+            int s = 0;
+            for (int i = 0; i < n; i++)
+            {
+                s += a[i, i];
+                s += a[i, n - i - 1];
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine(s);
+
+        }
+        static void task1_6()
+        {
+            int[,] a = new int[4, 7] {{1,2,3,4,5,6,7 },
+                                      {7,8,9,10,11,12,13},
+                                      {14,15,16,1,2,3,4},
+                                      {-1,4,3,6,2,8,-3}};
+            int[] b = new int[4];
+            int n = 4, m = 7;
+            for (int i = 0; i < n; i++)
+            {
+                int amin = a[i, 0];
+                int imin = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    if (a[i, j] < amin)
+                    {
+                        amin = a[i, j];
+                        imin = j;
+                    }
+                }
+                b[i] = imin;
+            }
+            foreach (int i in b)
+            {
+                Console.Write(i);
+                Console.Write(" ");
+            }
+        }
+        static void task1_12()
+        {
+            int[,] a = new int[6, 7] {{1,2,3,4,5,6,7 },
+                                      {7,8,9,10,11,12,13},
+                                      {14,15,16,1,2,3,4},
+                                      {-1,4,3,6,2,8,-3},
+                                      {14,-15,-16,1,-2,3,4},
+                                      {-1,4,3,-6,2,8,-3}};
+            int n = 6, m = 7;
+            int maxelem = 0, maxindex1 = 0, maxindex2 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (maxelem < a[i, j])
+                    {
+                        maxelem = a[i, j];
+                        maxindex1 = i;
+                        maxindex2 = j;
+                    }
+                }
+            }
+            n--;
+            for (int i = maxindex1; i < n; i++)
+                for (int j = 0; j < m; j++)
+                    a[i, j] = a[i + 1, j];
+            m--;
+            for (int i = 0; i < n; i++)
+                for (int j = maxindex2; j < m; j++)
+                    a[i, j] = a[i, j + 1];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+
+        }
+        static void task1_13()
+        {
+            int[,] a = new int[5, 5] {{1,2,3,4,-1 },
+                                      {7,19,-9,10,11},
+                                      {14,16,15,1,2},
+                                      {14,-15,-16,1,-2},
+                                      {-1,4,3,-6,2}};
+            int n = 5, m = 5;
+            int maxelem = 0, index = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (a[i, i] > maxelem)
+                {
+                    maxelem = a[i, i];
+                    index = i;
+                }
+            }
+            int ii = 3;
+            int p = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                p = a[i, index];
+                a[i, index] = a[i, ii];
+                a[i, ii] = p;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task1_17()
+        {
+            int[,] a = new int[5, 5] {{1,2,3,4,5 },
+                                      {7,19,9,10,11},
+                                      {14,16,15,1,2},
+                                      {14,-15,-16,1,-2},
+                                      {-1,4,3,-6,2}};
+            int[] b = new int[5];
+            int[] c = new int[5];
+            int index = 0;
+            int n = 5, m = 5;
+            for (int i = 0; i < n; i++)
+            {
+                int minelem = 10000000;
+                for (int j = 0; j < m; j++)
+                {
+                    if (a[i, j] < minelem)
+                    {
+                        minelem = a[i, j];
+                        index = j;
+                    }
+                }
+                c[i] = minelem;
+                b[i] = index;
+            }
+            Array.Reverse(b);
+            int p = 0;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                for (int j = b[p]; j > 0; j--)
+                {
+                    a[i, j] = a[i, j - 1];
+                }
+                p++;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                a[i, 0] = c[i];
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task1_29()
+        {
+            int[,] a = new int[5, 7] {{1,2,3,4,5,6,7 },
+                                      {7,8,-9,12,-11,4,12},
+                                      {14,15,16,1,2,3,4},
+                                      {-1,4,3,6,2,8,-3},
+                                      {14,-15,-16,1,-2,3,4}};
+            int minelem = 1000000, index = 0;
+            int n = 5, m = 7;
+            for (int j = 0; j < m; j++)
+            {
+                if (minelem > Math.Abs(a[1, j]))
+                {
+                    minelem = Math.Abs(a[1, j]);
+                    index = j;
+                }
+            }
+            if (index != m - 1)
+            {
+                m--;
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = index + 1; j < m; j++)
+                    {
+                        a[i, j] = a[i, j + 1];
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+
+        }
+        static void task1_31()
+        {
+            int[,] a = new int[5, 8] {{1,2,3,4,5,6,7,0 },
+                                      {7,8,-9,12,-11,4,12,0},
+                                      {14,15,16,1,2,3,4,0},
+                                      {-1,4,3,6,2,8,-3,0},
+                                      {14,-15,-16,1,-2,3,4,0}};
+            int[] b = new int[5] { 1, 2, 3, 4, 5 };
+            int minelem = 100000, index = 0;
+            int n = 5, m = 8;
+            for (int j = 0; j < m - 1; j++)
+            {
+                if (minelem > a[4, j])
+                {
+                    minelem = a[4, j];
+                    index = j;
+                }
+            }
+            for (int i = n - 1; i >= 0; i--)
+            {
+                for (int j = m - 1; j > index; j--)
+                {
+                    a[i, j] = a[i, j - 1];
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                a[i, index + 1] = b[i];
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+
+        }
+        static void task2_7()
+        {
+            int[,] a = new int[6, 6] {{1,2,3,4,5,6 },
+                                      {7,19,9,10,11,12},
+                                      {14,16,15,1,2,3},
+                                      {14,-15,-16,1,-2,-5},
+                                      {-1,4,3,-6,20,14},
+                                      {1,2,3,4,5,6 } };
+            int n = 6, m = 6;
+            int maxelem = 0, index1 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (a[i, i] > maxelem)
+                {
+                    maxelem = a[i, i];
+                    index1 = i;
+                }
+            }
+            for (int i = index1 - 1; i >= 0; i--)
+            {
+                for (int j = m - 1; j > i; j--)
+                {
+                    a[i, j] = 0;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task2_8()
+        {
+            int[,] a = new int[6, 6] {{1,2,3,4,5,6 },
+                                      {7,19,9,10,11,12},
+                                      {14,16,15,1,2,3},
+                                      {14,-15,-16,1,-2,-5},
+                                      {-1,4,3,-6,20,14},
+                                      {1,2,3,4,5,6 } };
+            int n = 6, m = 6;
+            int[] b = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                int maxelem = -1000000;
+                int index = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    if (maxelem < a[i, j])
+                    {
+                        maxelem = a[i, j];
+                        index = j;
+                    }
+                }
+                b[i] = index;
+            }
+            int p = 0;
+            for (int i = 0; i < n; i++)
+            {
+                int help = a[i, b[p]];
+                a[i, b[p]] = a[i + 1, b[p + 1]];
+                a[i + 1, b[p + 1]] = help;
+                i++; ;
+                p += 2;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task2_9()
+        {
+            int[,] a = new int[6, 7] {{1,2,3,4,5,6,7},
+                                      {7,19,9,10,11,12,13},
+                                      {14,16,15,1,2,3,4},
+                                      {14,-15,-16,1,-2,-5,6},
+                                      {-1,4,3,-6,20,14,15},
+                                      {1,2,3,4,5,6 ,16} };
+            int n = 6, m = 7;
+            m--;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m / 2; j++)
+                {
+                    int help = a[i, j];
+                    a[i, j] = a[i, m - j];
+                    a[i, m - j] = help;
+                }
+            }
+            m++;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task3_1()
+        {
+            int[,] a = new int[7, 5] {{1,2,3,4,5},
+                                      {7,19,9,10,11},
+                                      {-14,16,15,1,2},
+                                      {14,-15,-16,1,-2},
+                                      {-1,4,3,-6,20},
+                                      {1,2,3,-4,5},
+                                      {2,6,4,1,-3} };
+            int[] b = new int[7];
+            int n = 7, m = 5;
+            
+            for (int i = 0; i < n; i++)
+            {
+                int minelem = 10000;
+                for (int j = 0;j < m; j++)
+                {
+                    if (a[i,j] < minelem)
+                    {
+                        minelem = a[i, j];
+                    }
+                }
+                b[i] = minelem;
+            }
+            int znach = 0;
+            for (int i = 0; i < b.Length; i++)
+            {
+                for (int j = 0; j < b.Length - 1; j++)
+                {
+                    if (b[j] < b[j + 1])
+                    {
+                        znach = b[j + 1];
+                        b[j + 1] = b[j];
+                        b[j] = znach;
+                        int[] h = new int[m];
+                        for (int k = 0; k < m; k++)
+                            h[k] = a[j, k];
+                        for (int l = 0; l < m; l++)
+                        {
+                            a[j, l] = a[j + 1, l];
+                            a[j + 1, l] = h[l];
+                        }
+
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+
+        }
+        static void task3_2()
+        {
+            int[,] a = new int[6, 6] {{1,2,3,4,5,6 },
+                                      {7,19,9,10,11,12},
+                                      {14,16,15,1,2,3},
+                                      {14,-15,-16,1,-2,-5},
+                                      {-1,4,3,-6,20,14},
+                                      {1,2,3,4,5,6 } };
+            int n = 6, m = 6;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (i == 0 || i == n - 1)
+                    {
+                        a[i, j] = 0;
+                    }
+                    a[i, 0] = 0;
+                    a[i, m - 1] = 0;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task3_3()
+        {
+            int[,] a = new int[6, 6] {{1,2,3,4,5,6 },
+                                      {7,19,9,10,11,12},
+                                      {14,16,15,1,2,3},
+                                      {14,-15,-16,1,-2,-5},
+                                      {-1,4,3,-6,20,14},
+                                      {1,2,3,4,5,6 } };
+            //int[,] a = new int[4, 4] { { 1, 2, 3, 4 },
+            //                           { 1, 2, 3, 4 },
+            //                           { 1, 2, 3, 4 },
+            //                           { 1, 2, 3, 4 }};
+            int n = 6;
+            int[] b = new int[2 * n - 1];
+            int p = 0;
+            for (int i = n - 1; i != 0; i--)
+            {
+                int s = 0;
+                for (int j = 0;j + i != n; j++)
+                {
+                    s += a[i + j, j];
+                }
+                b[p] = s;
+                p++;
+            }
+            for (int i = n - 1; i != -1; i--)
+            {
+                int s = 0;
+                for (int j = 0; j + i != n; j++)
+                {
+                    s += a[j, j + i];
+                }
+                b[p] = s;
+                p++;
+            }
+            int sum = 0;
+            foreach(int i in b)
+            {
+                sum += i;
+            }
+            Console.WriteLine(sum);
+        }
+        static void task3_4()
+        {
+            //int[,] a = new int[5, 5] {{1,2,3,4,5},
+            //                          {7,19,9,10,11},
+            //                          {14,16,15,6,2},
+            //                          {14,-15,-16,3,-2},
+            //                          {-1,4,3,-6,20}};
+            int[,] a = new int[6, 6] {{1,2,3,4,5,6 },
+                                      {7,19,9,10,11,12},
+                                      {14,16,15,6,2,3},
+                                      {14,-15,-16,1,-2,-5},
+                                      {-1,4,3,-6,20,14},
+                                      {1,2,3,4,5,6 } };
+            int n = 6;
+            for (int i = n - 1; i >= n / 2;i--)
+            {
+                for (int j = i;j >= 0;j--)
+                {
+                    a[i, j] = 1;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task3_8()
+        {
+            int[,] a = new int[7, 5] {{1,2,-3,4,5},
+                                      {7,19,9,10,11},
+                                      {14,-16,-15,1,2},
+                                      {14,-15,16,1,-2},
+                                      {-1,-4,-3,-6,-20},
+                                      {1,2,3,-4,5},
+                                      {-2,-6,-4,1,-3} };
+            int n = 7, m = 5;
+            int[] b = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                int count = 0;
+                for (int j = 0;j < m;j++)
+                {
+                    if (0 > a[i,j])
+                    {
+                        count++;
+                    }
+                }
+                b[i] = count;
+            }
+            int znach = 0;
+            for (int i = 0; i < b.Length; i++)
+            {
+                for (int j = 0; j < b.Length - 1; j++)
+                {
+                    if (b[j] > b[j + 1])
+                    {
+                        znach = b[j + 1];
+                        b[j + 1] = b[j];
+                        b[j] = znach;
+                        int[] h = new int[m];
+                        for (int k = 0; k < m; k++)
+                            h[k] = a[j, k];
+                        for (int l = 0;l < m;l++)
+                        {
+                            a[j, l] = a[j + 1, l];
+                            a[j + 1, l] = h[l];
+                        }
+                            
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task3_10()
+        {
+            int[,] a = new int[7, 5] {{1,2,-3,4,5},
+                                      {7,19,9,10,11},
+                                      {14,-16,-15,1,2},
+                                      {14,-15,16,1,-2},
+                                      {-1,-4,-3,-6,-20},
+                                      {1,2,3,-4,5},
+                                      {-2,-6,-4,1,-3} };
+            int n = 7, m = 5;
+            int znach = 0;
+            for (int k = 0; k < n * m; k++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m - 1; j++)
+                    {
+                        if (i % 2 != 0)
+                        {
+                            if (a[i, j] > a[i, j + 1])
+                            {
+                                znach = a[i, j + 1];
+                                a[i, j + 1] = a[i, j];
+                                a[i, j] = znach;
+                            }
+                        }
+                        else
+                        {
+                            if (a[i, j] < a[i, j + 1])
+                            {
+                                znach = a[i, j + 1];
+                                a[i, j + 1] = a[i, j];
+                                a[i, j] = znach;
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void task3_11()
+        {
+            int[,] a = new int[7, 5] {{1,2,-3,4,5},
+                                      {7,19,0,10,11},
+                                      {14,-16,-15,0,2},
+                                      {14,-15,16,1,-2},
+                                      {-1,0,-3,-6,-20},
+                                      {1,2,3,-4,5},
+                                      {-2,-6,-4,1,-3} };
+            int n = 7, m = 5;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0;j < m;j++)
+                {
+                    if (a[i,j] == 0)
+                    {
+                        n--;
+                        int k = i;
+                        for (int p = k; p < n; p++)
+                        {
+                            for (int l = 0; l < m; l++)
+                                a[p, l] = a[p + 1, l];
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+
     }
 }
