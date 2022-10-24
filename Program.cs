@@ -4,251 +4,1474 @@ namespace _4th_Lab
 {
     class Program
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-        }
-        static void ShowMatrix(int[,] matrix)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
-        }
         static void Main(string[] args)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
-            {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
+            #region Level I
+            Console.WriteLine("---- Level I -------------------------------\n");
 
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
+            #region Task  3
+            Console.WriteLine("Task 3:\n");
+
+            int[,] matrix = new int[4, 4]
             {
+                { 2, 8, 16, 5 },
+                { 3, 19, 0, 7 },
+                { 1, 8, 11, 3 },
+                { 5, -7, 12, -9 }
+            };
+
+            int sum = 0;
+
+            // Initial matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    Console.Write("{0,-5}", matrix[i, j]);
                 Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
-                {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
-                }
             }
 
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
-            #endregion
+            // Finding sum
+            for (int i = 0; i < matrix.GetLength(0); i++)
+                sum += matrix[i, i];
 
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
-                        {
-                            min = (matrix[i, j], i, j);
-                        }
-                    }
-                }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
+            Console.WriteLine($"\nSum: {sum}");
 
             #endregion
 
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
+            #region Task 6
+            Console.WriteLine("\nTask 6:\n");
+
+            Random random = new Random();
+            matrix = new int[4, 7];
+            int[] result = new int[matrix.GetLength(0)];
+
+            int min = 0;
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+
+            // Form an array of mins from each of matrix rows
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                min = matrix[i, 0];
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if (matrix[i, j] < min)
+                        min = matrix[i, j];
+                }
+
+                result[i] = min;
+            }
+
+            Console.Write("\nMinimums: ");
+            foreach (var num in result)
+                Console.Write($"{num} ");
+            Console.WriteLine();
+            #endregion
+
+            #region Task 12
+            Console.WriteLine("\nTask 12:\n");
+            int rows = 4;
+            int columns = 4;
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+
+            // Find maximum
+            int max = matrix[0, 0];
+            int imax = 0;
+            int jmax = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (matrix[i, j] > max)
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
-                        {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
-                        }
+                        max = matrix[i, j];
+                        imax = i;
+                        jmax = j;
                     }
                 }
             }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
 
-            // I won't accept work with such method. It has O(n^3) difficulty
+            // Delete row
+            for (int i = imax; i < rows - 1; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    matrix[i, j] = matrix[i + 1, j];
+            }
+
+            rows--;
+
+            // Delete columns
+            for (int j = jmax; j < columns - 1; j++)
+            {
+                for (int i = 0; i < rows; i++)
+                    matrix[i, j] = matrix[i, j + 1];
+            }
+
+            columns--;
+
+            // Write result
+            Console.WriteLine();
+            Console.WriteLine("Result matrix:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
 
             #endregion
 
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
-            {
-                for (int i = left; i < right; i++)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                right--;
+            #region Task 13
+            Console.WriteLine("\nTask 13:\n");
 
-                if (swop == 0)
+            matrix = new int[5, 5];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    break; // if no swops were done, than all sorted
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
                 }
-                swop = 0;
-                for (int i = right; i > left; i--)
+
+                Console.WriteLine();
+            }
+
+            // Find maximum
+            max = matrix[0, 0];
+            jmax = 0;
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
+                    if (max < matrix[i, j])
                     {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
+                        max = matrix[i, j];
+                        jmax = j;
                     }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
                 }
             }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
 
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
+            // Swap columns
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                int swap = matrix[i, 3];
+                matrix[i, 3] = matrix[i, jmax];
+                matrix[i, jmax] = swap;
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
             #endregion
 
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
+            #region Task 17
+            Console.WriteLine("\nTask 17:\n");
 
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
+            min = 0;
+            int jmin = 0;
+
+            Console.Write("Enter rows count: ");
+            if (!int.TryParse(Console.ReadLine(), out rows))
             {
-                if (element == 0 || array[element] >= array[element - 1])
+                Console.WriteLine("Value has an incorrect format!");
+                return;
+            }
+            else if (rows < 1)
+            {
+                Console.WriteLine("There must be at least one row");
+                return;
+            }
+
+            Console.Write("Enter columns count: ");
+            if (!int.TryParse(Console.ReadLine(), out columns))
+            {
+                Console.WriteLine("Value has an incorrect format!");
+                return;
+            }
+            else if (columns < 1)
+            {
+                Console.WriteLine("There must be at least one column");
+                return;
+            }
+
+            Console.WriteLine();
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
                 {
-                    element++;
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+
+            // Perform swap
+            for (int i = 0; i < rows; i++)
+            {
+                min = matrix[i, 0];
+                jmin = 0;
+
+                // Find minimum in current row
+                for (int j = 0; j < columns; j++)
+                {
+                    if (matrix[i, j] < min)
+                    {
+                        min = matrix[i, j];
+                        jmin = j;
+                    }
+                }
+
+                // Shift elements to the right
+                for (int j = jmin; j > 0; j--)
+                    matrix[i, j] = matrix[i, j - 1];
+
+                // Put min element to beginnig of current row
+                matrix[i, 0] = min;
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 29
+            Console.WriteLine("\nTask 29:\n");
+
+            rows = 5;
+            columns = 7;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Find abs minimum of 2 row
+            min = Math.Abs(matrix[1, 0]);
+            jmin = 0;
+
+            for (int j = 1; j < matrix.GetLength(1); j++)
+            {
+                int absValue = Math.Abs(matrix[1, j]);
+                if (absValue < min)
+                {
+                    min = absValue;
+                    jmin = j;
+                }
+            }
+
+            // Delete column after min index
+            for (int j = jmin + 1; j < columns - 1; j++)
+            {
+                for (int i = 0; i < rows; i++)
+                    matrix[i, j] = matrix[i, j + 1];
+            }
+
+            columns--;
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 31
+            Console.WriteLine("\nTask 31:\n");
+
+            rows = 5;
+            columns = 8;
+
+            matrix = new int[rows, columns];
+            int[] vector = new int[5] { 188, 188, 188, 188, 188 };
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns - 1; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+
+                Console.Write("{0, -5}", "( )");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Find min of 5 row
+            min = matrix[4, 0];
+            jmin = 0;
+
+            for (int j = 1; j < columns - 1; j++)
+            {
+                if (matrix[4, j] < min)
+                {
+                    min = matrix[4, j];
+                    jmin = j;
+                }
+            }
+
+            // Shift elements
+            for (int j = columns - 1; j > jmin; j--)
+            {
+                for (int i = 0; i < rows; i++)
+                    matrix[i, j] = matrix[i, j - 1];
+            }
+
+            // Put vector into matrix
+            for (int i = 0; i < rows; i++)
+                matrix[i, jmin + 1] = vector[i];
+
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #endregion
+
+            #region Level II
+            Console.WriteLine("\n---- Level II -------------------------------\n");
+
+            #region Task 7
+            Console.WriteLine("\nTask 7:\n");
+
+            rows = 6;
+            columns = 6;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Find max
+            max = matrix[0, 0];
+            imax = 0;
+
+            for (int i = 1; i < rows; i++)
+            {
+                if (matrix[i, i] > max)
+                {
+                    max = matrix[i, i];
+                    imax = i;
+                }
+            }
+
+            // Put zeros
+            for (int i = imax - 1; i >= 0; i--)
+            {
+                for (int j = i + 1; j < columns; j++)
+                    matrix[i, j] = 0;
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 8
+            Console.WriteLine("\nTask 8:\n");
+
+            rows = 6;
+            columns = 6;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            // Find max
+            int previousMax = 0;
+            int previousMaxIndex = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                max = matrix[i, 0];
+                jmax = 0;
+
+                // Find max in current row
+                for (int j = 0; j < columns; j++)
+                {
+                    if (max < matrix[i, j])
+                    {
+                        max = matrix[i, j];
+                        jmax = j;
+                    }
+                }
+
+                if ((i + 1) % 2 != 0)
+                {
+                    previousMax = max;
+                    previousMaxIndex = jmax;
                 }
                 else
                 {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
+                    int swap = matrix[i, jmax];
+                    matrix[i, jmax] = previousMax;
+                    matrix[i - 1, previousMaxIndex] = swap;
                 }
             }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
 
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
             {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
             }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
             #endregion
 
-            #region Shell sort
-            var step = array.Length / 2;
+            #region Task 9
+            Console.WriteLine("\nTask 9:\n");
 
-            while (step > 0)
+            rows = 6;
+            columns = 6;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
             {
-                for (int i = step; i < array.Length; i++)
+                for (int j = 0; j < columns; j++)
                 {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            // Invert elements in each row
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns / 2; j++)
+                {
+                    int swap = matrix[i, columns - (j + 1)];
+                    matrix[i, columns - (j + 1)] = matrix[i, j];
+                    matrix[i, j] = swap;
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #endregion
+
+            #region Level III
+            Console.WriteLine("\n---- Level III -------------------------------\n");
+
+            #region Task 1A
+            Console.WriteLine("\nTask 1A:\n");
+
+            rows = 7;
+            columns = 5;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Find mins of each row
+            int[] rowsMinimums = new int[rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                min = matrix[i, 0];
+                for (int j = 1; j < columns; j++)
+                {
+                    if (matrix[i, j] < min)
+                        min = matrix[i, j];
+                }
+
+                rowsMinimums[i] = min;
+            }
+
+            // Sort rows
+            int sortIndex = 1;
+            while (sortIndex < rowsMinimums.Length)
+            {
+                if (sortIndex == 0 || rowsMinimums[sortIndex] <= rowsMinimums[sortIndex - 1])
+                {
+                    sortIndex++;
+                }
+                else
+                {
+                    // Swap elements in array
+                    int swap = rowsMinimums[sortIndex - 1];
+                    rowsMinimums[sortIndex - 1] = rowsMinimums[sortIndex];
+                    rowsMinimums[sortIndex] = swap;
+
+                    // Swap rows in matrix
+                    for (int j = 0; j < columns; j++)
                     {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
+                        swap = matrix[sortIndex - 1, j];
+                        matrix[sortIndex - 1, j] = matrix[sortIndex, j];
+                        matrix[sortIndex, j] = swap;
+                    }
+
+                    sortIndex--;
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 1B
+            Console.WriteLine("\nTask 1B:\n");
+
+            rows = 7;
+            columns = 5;
+
+            int[] oneDimensionalMatrix = new int[rows * columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                oneDimensionalMatrix[i] = random.Next(-20, 21);
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Find mins of each row
+            rowsMinimums = new int[rows];
+
+            min = oneDimensionalMatrix[0];
+            int imin = 0;
+            for (int i = 1; i < oneDimensionalMatrix.Length; i++)
+            {
+                if (oneDimensionalMatrix[i] < min)
+                    min = oneDimensionalMatrix[i];
+
+                if ((i + 1) % columns == 0)
+                {
+                    rowsMinimums[imin] = min;
+                    min = oneDimensionalMatrix[i];
+                    imin++;
+                }
+            }
+
+            // Sort rows
+            int offset = 0;
+            sortIndex = 1;
+            while (sortIndex < rowsMinimums.Length)
+            {
+                if (sortIndex == 0 || rowsMinimums[sortIndex] <= rowsMinimums[sortIndex - 1])
+                {
+                    sortIndex++;
+                }
+                else
+                {
+                    // Swap elements in array
+                    int swap = rowsMinimums[sortIndex - 1];
+                    rowsMinimums[sortIndex - 1] = rowsMinimums[sortIndex];
+                    rowsMinimums[sortIndex] = swap;
+
+                    int previousRowIndex = (sortIndex - 1) * columns;
+                    int currentRowIndex = sortIndex * columns;
+
+                    // Swap rows in matrix
+                    for (offset = 0; offset < columns; offset++)
+                    {
+                        int previousIndex = previousRowIndex + offset;
+                        int currentIndex = currentRowIndex + offset;
+
+                        swap = oneDimensionalMatrix[previousIndex];
+                        oneDimensionalMatrix[previousIndex] = oneDimensionalMatrix[currentIndex];
+                        oneDimensionalMatrix[currentIndex] = swap;
+                    }
+
+                    sortIndex--;
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 2A
+            Console.WriteLine("\nTask 2A:\n");
+
+            rows = 8;
+            columns = 8;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Fill perimeter with zeros
+            for (int i = 0; i < columns; i++)
+            {
+                matrix[0, i] = 0;
+                matrix[i, 0] = 0;
+
+                matrix[columns - 1, i] = 0;
+                matrix[i, columns - 1] = 0;
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 2B
+            Console.WriteLine("\nTask 2B:\n");
+
+            rows = 8;
+            columns = 8;
+
+            oneDimensionalMatrix = new int[rows * columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                oneDimensionalMatrix[i] = random.Next(-20, 21);
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Fill perimeter with zeros
+            for (int i = 0; i < columns; i++)
+            {
+                oneDimensionalMatrix[i] = 0;
+                oneDimensionalMatrix[i + columns * (columns - 1)] = 0;
+
+                oneDimensionalMatrix[i * columns] = 0;
+                oneDimensionalMatrix[i * columns + columns - 1] = 0;
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 3A
+            Console.WriteLine("\nTask 3A:\n");
+
+            rows = 5;
+            columns = 5;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Summarize diagonal elements
+            int[] diagonalSums = new int[2 * columns - 1];
+            int mirrorSum;
+
+            offset = 0;
+            int middleIndex = diagonalSums.Length / 2;
+
+            while (offset < columns)
+            {
+                sum = 0;
+                mirrorSum = 0;
+
+                for (int j = 0; j < columns - offset; j++)
+                {
+                    if (offset == 0)
+                        sum += matrix[j, j];
+                    else
+                    {
+                        sum += matrix[j + offset, j];
+                        mirrorSum += matrix[j, j + offset];
                     }
                 }
-                step /= 2;
+
+                diagonalSums[middleIndex + offset] = sum;
+                if (offset != 0)
+                    diagonalSums[middleIndex - offset] = mirrorSum;
+
+                offset++;
             }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Diagonals sums:");
+
+            offset = diagonalSums.Length;
+            foreach (var num in diagonalSums)
+            {
+                for (int i = 0; i < offset - 1; i++)
+                    Console.Write("{0,-4}", " ");
+                Console.WriteLine(num);
+                offset--;
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region Task 3B
+            Console.WriteLine("\nTask 3B:\n");
+
+            rows = 5;
+            columns = 5;
+
+            oneDimensionalMatrix = new int[rows * columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                oneDimensionalMatrix[i] = random.Next(-20, 21);
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Summarize diagonal elements
+            diagonalSums = new int[2 * columns - 1];
+
+            offset = 0;
+            middleIndex = diagonalSums.Length / 2;
+
+            while (offset < columns)
+            {
+                sum = 0;
+                mirrorSum = 0;
+
+                for (int j = 0; j < columns - offset; j++)
+                {
+                    int elementIndex = j * (columns + 1);
+
+                    sum += oneDimensionalMatrix[elementIndex + offset];
+                    if (offset != 0)
+                        mirrorSum += oneDimensionalMatrix[elementIndex + offset * columns];
+                }
+
+                diagonalSums[middleIndex - offset] = sum;
+                if (offset != 0)
+                    diagonalSums[middleIndex + offset] = mirrorSum;
+
+                offset++;
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Diagonals sums:");
+
+            offset = diagonalSums.Length;
+            foreach (var num in diagonalSums)
+            {
+                for (int i = 0; i < offset - 1; i++)
+                    Console.Write("{0,-4}", " ");
+                Console.WriteLine(num);
+                offset--;
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region Task 4A
+            Console.WriteLine("\nTask 4A:\n");
+
+            rows = 7;
+            columns = 7;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Fill matrix
+            for (int i = rows / 2; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (i == j) break;
+                    matrix[i, j] = 1;
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 4B
+            Console.WriteLine("\nTask 4B:\n");
+
+            rows = 5;
+            columns = 5;
+
+            oneDimensionalMatrix = new int[rows * columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                oneDimensionalMatrix[i] = random.Next(-20, 21);
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            int length = oneDimensionalMatrix.Length;
+            int skip = columns / 2 + 1;
+
+            // Fill matrix
+            for (int i = (length - rows) / 2; i < rows * columns;)
+            {
+                if (i % (rows + 1) == 0)
+                {
+                    i += skip;
+                    skip--;
+                    continue;
+                }
+
+                oneDimensionalMatrix[i] = 1;
+                i++;
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 8A
+            Console.WriteLine("\nTask 8A:\n");
+
+            rows = 7;
+            columns = 5;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Count positive elements in each row
+
+            int[] positiveElementsCount = new int[rows];
+            int count = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (matrix[i, j] > 0)
+                        count++;
+                }
+
+                positiveElementsCount[i] = count;
+            }
+
+            // Sort rows
+            sortIndex = 1;
+            while (sortIndex < positiveElementsCount.Length)
+            {
+                if (sortIndex == 0 ||
+                    positiveElementsCount[sortIndex - 1] >= positiveElementsCount[sortIndex])
+                {
+                    sortIndex++;
+                }
+                else
+                {
+                    // Swap elements in array
+                    int swap = positiveElementsCount[sortIndex];
+                    positiveElementsCount[sortIndex] = positiveElementsCount[sortIndex - 1];
+                    positiveElementsCount[sortIndex - 1] = swap;
+
+                    // Swap rows in matrix
+                    for (int j = 0; j < columns; j++)
+                    {
+                        swap = matrix[sortIndex - 1, j];
+                        matrix[sortIndex - 1, j] = matrix[sortIndex, j];
+                        matrix[sortIndex, j] = swap;
+                    }
+
+                    sortIndex--;
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 8B
+            Console.WriteLine("\nTask 8B:\n");
+
+            rows = 7;
+            columns = 5;
+
+            oneDimensionalMatrix = new int[rows * columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                oneDimensionalMatrix[i] = random.Next(-20, 21);
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Count positive elements in each row
+            positiveElementsCount = new int[rows];
+            int index = 0;
+            count = 0;
+
+            for (int i = 1; i < oneDimensionalMatrix.Length; i++)
+            {
+                if (oneDimensionalMatrix[i] > 0)
+                    count++;
+
+                if ((i + 1) % columns == 0)
+                {
+                    positiveElementsCount[index] = count;
+                    index++;
+                    count = 0;
+                }
+            }
+
+            // Sort rows
+            sortIndex = 1;
+            offset = 0;
+
+            while (sortIndex < positiveElementsCount.Length)
+            {
+                if (sortIndex == 0 ||
+                    positiveElementsCount[sortIndex - 1] >= positiveElementsCount[sortIndex])
+                {
+                    sortIndex++;
+                }
+                else
+                {
+                    // Swap elements in array
+                    int swap = positiveElementsCount[sortIndex];
+                    positiveElementsCount[sortIndex] = positiveElementsCount[sortIndex - 1];
+                    positiveElementsCount[sortIndex - 1] = swap;
+
+                    int previousRowIndex = (sortIndex - 1) * columns;
+                    int currentRowIndex = sortIndex * columns;
+
+                    // Swap rows in matrix
+                    for (offset = 0; offset < columns; offset++)
+                    {
+                        int previousIndex = previousRowIndex + offset;
+                        int currentIndex = currentRowIndex + offset;
+
+                        swap = oneDimensionalMatrix[previousIndex];
+                        oneDimensionalMatrix[previousIndex] = oneDimensionalMatrix[currentIndex];
+                        oneDimensionalMatrix[currentIndex] = swap;
+                    }
+
+                    sortIndex--;
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 10A
+            Console.WriteLine("\nTask 10A:\n");
+
+            rows = 7;
+            columns = 5;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(-20, 21);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Sort each row
+            for (int i = 0; i < rows; i++)
+            {
+                // If odd row
+                if ((i + 1) % 2 != 0)
+                {
+                    sortIndex = 0;
+
+                    while (sortIndex < columns)
+                    {
+                        if (sortIndex == 0 || matrix[i, sortIndex - 1] <= matrix[i, sortIndex])
+                        {
+                            sortIndex++;
+                        }
+                        else
+                        {
+                            int swap = matrix[i, sortIndex];
+                            matrix[i, sortIndex] = matrix[i, sortIndex - 1];
+                            matrix[i, sortIndex - 1] = swap;
+
+                            sortIndex--;
+                        }
+                    }
+                }
+                // If even
+                else
+                {
+                    sortIndex = 0;
+
+                    while (sortIndex < columns)
+                    {
+                        if (sortIndex == 0 || matrix[i, sortIndex - 1] >= matrix[i, sortIndex])
+                        {
+                            sortIndex++;
+                        }
+                        else
+                        {
+                            int swap = matrix[i, sortIndex];
+                            matrix[i, sortIndex] = matrix[i, sortIndex - 1];
+                            matrix[i, sortIndex - 1] = swap;
+
+                            sortIndex--;
+                        }
+                    }
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 10B
+            Console.WriteLine("\nTask 10B:\n");
+
+            rows = 7;
+            columns = 5;
+
+            oneDimensionalMatrix = new int[rows * columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                oneDimensionalMatrix[i] = random.Next(-20, 21);
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            for (int i = 0; i < oneDimensionalMatrix.Length; i += columns)
+            {
+                // If odd
+                if ((i / columns + 1) % 2 != 0)
+                {
+                    sortIndex = i + 1;
+
+                    while (sortIndex < i + columns)
+                    {
+                        if (sortIndex == i ||
+                            oneDimensionalMatrix[sortIndex - 1] <= oneDimensionalMatrix[sortIndex])
+                        {
+                            sortIndex++;
+                        }
+                        else
+                        {
+                            // Swap elements in array
+                            int swap = oneDimensionalMatrix[sortIndex];
+                            oneDimensionalMatrix[sortIndex] = oneDimensionalMatrix[sortIndex - 1];
+                            oneDimensionalMatrix[sortIndex - 1] = swap;
+
+                            sortIndex--;
+                        }
+                    }
+                }
+                // If even
+                else
+                {
+                    sortIndex = i + 1;
+
+                    while (sortIndex < i + columns)
+                    {
+                        if (sortIndex == i ||
+                            oneDimensionalMatrix[sortIndex - 1] >= oneDimensionalMatrix[sortIndex])
+                        {
+                            sortIndex++;
+                        }
+                        else
+                        {
+                            // Swap elements in array
+                            int swap = oneDimensionalMatrix[sortIndex];
+                            oneDimensionalMatrix[sortIndex] = oneDimensionalMatrix[sortIndex - 1];
+                            oneDimensionalMatrix[sortIndex - 1] = swap;
+
+                            sortIndex--;
+                        }
+                    }
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 11A
+            Console.WriteLine("\nTask 11A:\n");
+
+            rows = 7;
+            columns = 5;
+
+            matrix = new int[rows, columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = random.Next(0, 9);
+                    Console.Write("{0, -5}", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            // Search for zero
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (matrix[i, j] == 0)
+                    {
+                        // Delete row
+                        for (int currentRow = i; currentRow < rows - 1; currentRow++)
+                        {
+                            for (j = 0; j < columns; j++)
+                                matrix[currentRow, j] = matrix[currentRow + 1, j]; 
+                        }
+
+                        rows--;
+                        i--;
+                        break;
+                    }
+                }
+            }
+
+            // Write result
+            Console.WriteLine();
+            Console.WriteLine("Result matrix:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                    Console.Write("{0, -5}", matrix[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region Task 11B
+            Console.WriteLine("\nTask 11B:\n");
+
+            rows = 7;
+            columns = 5;
+
+            oneDimensionalMatrix = new int[rows * columns];
+
+            // Initialize matrix
+            Console.WriteLine("Initial matrix: ");
+            for (int i = 0; i < oneDimensionalMatrix.Length; i++)
+            {
+                oneDimensionalMatrix[i] = random.Next(0, 9);
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            // Search for zero
+            for (int i = 0; i <= rows * columns - columns; i += columns)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (oneDimensionalMatrix[i + j] == 0)
+                    {
+                        // Delete row
+                        for (int currentRow = i; currentRow < rows * columns - columns; currentRow += columns)
+                        {
+                            for (j = 0; j < columns; j++)
+                                oneDimensionalMatrix[currentRow + j] = oneDimensionalMatrix[currentRow + columns + j];
+                        }
+
+                        rows--;
+                        i -= 5;
+                        break;
+                    }
+                }
+            }
+
+            // Write answer
+            Console.WriteLine();
+            Console.WriteLine("Result:");
+            for (int i = 0; i < rows * columns; i++)
+            {
+                Console.Write("{0, -5}", oneDimensionalMatrix[i]);
+
+                if ((i + 1) % columns == 0)
+                    Console.WriteLine();
+            }
+            #endregion
 
             #endregion
-            
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
         }
     }
 }
