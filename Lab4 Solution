@@ -1,0 +1,581 @@
+using System;
+using System.Collections;
+using System.Globalization;
+
+namespace Lab3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            static void Print(double[,] Ar, int n, int m)
+            {
+                for (int i = 0; i != n; i++)
+                {
+                    for (int j = 0; j != m; j++)
+                        Console.Write("{0,5}", Ar[i, j]);
+                    Console.WriteLine();
+                }
+            }
+
+            static void Task1_3()
+            {
+
+                double[,] Ar = new double[4, 4] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+                double s = 0;
+                for (int i = 0; i != 4; i++)
+                {
+
+                    s += Ar[i, i];
+                    for (int j = 0; j != 4; j++)
+                    {
+                        //Console.Write($"{Ar[i, j],8:n}");
+                        Console.Write("{0,5}", Ar[i, j]);
+                        //Console.WriteLine("{0:F5}", Ar[i, j]);
+                        //Console.WriteLine("{0:F}", Ar[i, j]);
+                        //Console.Write("{0,F:5}", Ar[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine(s);
+            }
+            static void Task1_6()
+            {
+                double[,] Ar = new double[4, 5] { { 1, 2, 3, 4, 5 }, { 5, 6, 7, 8, 9 }, { 9, 10, 11, 12, -13 }, { 13, 14, 15, -2, 0 } };
+                List<int> Index = new List<int>();
+                double mn = 10000;
+                int Ind = -1;
+                for (int i = 0; i != 4; i++)
+                {
+                    for (int j = 0; j != 5; j++)
+                    {
+                        mn = Math.Min(mn, Ar[i, j]); 
+                        if (mn > Ar[i, j])
+                        {
+                            mn = Ar[i, j];
+                            Ind = j; //int Ind = j;
+                        }
+                    }
+                    mn = 10000;
+                    Index.Add(Ind); // if i don't write this variable in 48 line, it writes me a mistake,
+                                    // because "Имя Ind не существует в данном контексте". How can i avoid this error?
+                                    // p.s This variable was declared in line 57 before.
+
+                }
+                foreach (int x in Index)
+                    Console.WriteLine(x);
+            } //QUESTIONS!
+            static void Task1_12()
+            {
+                double[,] Ar = new double[4, 5] { { 1, 2, 3, 4, 5 },
+                                                  { 5, 6, 7, 8, 9 },
+                                                  { 9, 10, 11, 12, -13 },
+                                                  { 13, 14, 15, -2, 0 } };
+                double[,] ArIsp = new double[3, 4];
+                double mx = double.MinValue;
+                int IndJ = -1;
+                int IndI = -1;
+                for (int i = 0; i != 4; i++)
+                {
+                    for (int j = 0; j != 5; j++)
+                    {
+                        if (mx < Ar[i, j])
+                        {
+                            mx = Ar[i, j];
+                            IndI = i;
+                            IndJ = j;
+                        }
+                    }
+                } // поиск макс элем
+                int m = 0;
+                int n = 0;
+                for (int i = 0; i != 4; i++)
+                {
+                    if (i == IndI)
+                        continue;
+                    for (int j = 0; j != 5; j++)
+                    {
+                        if (j == IndJ)
+                            continue;
+                        ArIsp[n, m] = Ar[i, j];
+                        m += 1;
+                    }
+                    m = 0;
+                    n += 1;
+                } //в новый массив
+                //Print(ArIsp, 3, 4);
+                for (int i = 0; i != 3; i++)
+                {
+                    for (int j = 0; j != 4; j++)
+                        Console.Write("{0,5}", ArIsp[i, j]);
+
+
+                    Console.WriteLine();
+                } //вывод
+                Console.WriteLine();
+            }
+            static void Task1_13()
+            {
+                double mx = double.MinValue;
+                int Ind = -1;
+                double[,] Ar = new double[4, 4] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 0 } };
+                for (int i = 0; i != 4; i++)
+                {
+                    if (mx < Ar[i, i])
+                    {
+                        Ind = i;
+                        mx = Ar[i, i];
+                    }
+                }
+                for (int i = 0; i != 4; i++)
+                {
+                    double temp = Ar[i, Ind];
+                    Ar[i, Ind] = Ar[i, 3];
+                    Ar[i, 3] = temp;
+                }
+                for (int i = 0; i != 4; i++)
+                {
+                    for (int j = 0; j != 4; j++)
+                        Console.Write("{0,5}", Ar[i, j]);
+                    Console.WriteLine();
+                }
+            }
+            static void Task1_17()
+            {
+                double[,] Ar = new double[4, 4] { { 10, 2, 3, 4 }, { 5.1, 6, -100, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 0 } };
+                double mn = double.MaxValue;
+                int IndJ = -1;
+                for (int i = 0; i != 4; i++)
+                {
+                    for (int j = 0; j != 4; j++)
+                    {
+                        if (mn > Ar[i, j])
+                        {
+                            mn = Ar[i, j];
+                            IndJ = j;
+                        }
+                    }
+                    for (int j = IndJ; j != 0; j--)
+                    {
+                        double temp = Ar[i, j - 1];
+                        Ar[i, j - 1] = Ar[i, j];
+                        Ar[i, j] = temp;
+
+                    }
+                    IndJ = -1;
+                    mn = double.MaxValue;
+                    for (int j = 0; j != 4; j++)
+                        Console.Write("{0,5}", Ar[i, j]);
+                    Console.WriteLine();
+                }
+            }
+            static void Task1_29()
+            {
+                double[,] Ar = new double[4, 5] { { 10,-12, 2, 3, 4 },
+                                                  { 5.1, 6, -100,-3.1, 8 },
+                                                  { 9,10, 10, 10, 10},
+                                                  { -10,13, 14, 15, -100 }};
+                double mn = double.MaxValue;
+                int IndJ = -1;
+                for (int j = 0; j != 5; j++)
+                {
+                    if (mn > Math.Abs(Ar[2, j]))
+                    {
+                        mn = Math.Abs(Ar[2, j]);
+                        IndJ = j;
+                    }
+                }
+
+                IndJ++;
+
+                if (IndJ < 4)
+                {
+                    for (int i = 0; i != 4; i++)
+                    {
+                        for (int j = IndJ; j != 5 - 1; j++)
+                        {
+                            double temp = Ar[i, j + 1];
+                            Ar[i, j + 1] = Ar[i, j];
+                            Ar[i, j] = temp;
+                        }
+                    }
+                    Print(Ar, 4, 4);
+                }
+                else if (IndJ == 4)
+                {
+                    Print(Ar, 4, 4);
+
+                }
+                else
+                    Console.WriteLine("Can't delete column");
+            }
+            static void Task1_31()
+            {
+                double[,] Ar = new double[4, 7] { { 10,-12, 2, 3, 4 ,-2,0},
+                                                  { 5.1, 6, -100,-3.1, 8 ,32,0},
+                                                  { 9,10, 13, 10, -10,42,0},
+                                                  { -10,13, 14, 15,-100, 3.9,0 }};
+                double[] Add = new double[4] { 1, 2, 3, 4 };
+                double mn = double.MaxValue;
+                int IndJ = -1;
+                for (int j = 0; j != 7; j++)
+                {
+                    if (mn > Ar[3, j])
+                    {
+                        mn = Ar[3, j];
+                        IndJ = j;
+                    }
+                }
+
+                IndJ++;
+
+                for (int i = 0; i != 4; i++)
+                {
+                    for (int j = 7 - 1; j != IndJ; j--)
+                    {
+                        double temp = Ar[i, j - 1];
+                        Ar[i, j - 1] = Ar[i, j];
+                        Ar[i, j] = temp;
+                    }
+                }
+                for (int i = 0; i != 4; i++)
+                {
+                    Ar[i, IndJ] = Add[i];
+                }
+                Print(Ar, 4, 7);
+            }
+
+            static void Task2_7()
+            {
+                int MxI = -1;
+                double Mx = double.MinValue;
+                double[,] Ar = new double[4, 4] { { 1, 2, 3, 4 },
+                                                  { 5, 6, 7, 8 },
+                                                  { 9, 10, 11, 12 },
+                                                  { 13, 14, 15, -1 } };
+                for (int i = 0; i != 4; i++)
+                {
+                    if (Mx < Ar[i, i])
+                    {
+                        Mx = Ar[i, i];
+                        MxI = i;
+                    }
+                }
+                for (int i = 0; i != 4; i++)
+                {
+                    for (int j = 0; j != 4; j++)
+                    {
+                        if (j > i | i < MxI)
+                        {
+                            Ar[i, j] = 0;
+                        }
+                    }
+                }
+                Print(Ar, 4, 4);
+            }
+            static void Task2_8()
+            {
+                double[,] Ar = new double[6, 4] { { 111, 2, 3, 0 },
+                                                  { 5, 6, 7, 6 },
+                                                  { 9, 10, 11, 12 },
+                                                  { 13, 14, 15, -1 },
+                                                  {23,-12,54,32 },
+                                                  { -1,0,-12,-124} };
+                List<int> Index = new List<int>();
+                int IndJ = -1;
+                for (int i = 0; i != 6; i++)
+                {
+                    double mx = int.MinValue;
+                    for (int j = 0; j != 4; j++)
+                    {
+                        if (mx < Ar[i, j])
+                        {
+                            mx = Ar[i, j];
+                            IndJ = j;
+                        }
+                    }
+                    Index.Add(IndJ);
+                }
+                for (int i = 0; i != 6; i += 2)
+                {
+                    double temp = Ar[i, Index[i]];
+                    Ar[i, Index[i]] = Ar[i + 1, Index[i + 1]];
+                    Ar[i + 1, Index[i + 1]] = temp;
+                }
+                Print(Ar, 6, 4);
+            }
+            static void Task2_9()
+            {
+                double[,] Ar = new double[6, 5] { { 111, 2, 3, 0 ,2},
+                                { 5, 6, 7, 6 ,-1},
+                                { 9, 10, 11, 12,23 },
+                                { 13, 14, 15, -1 ,345},
+                                { 23, -12, 54, 32,-1.2 },
+                                { -1, 0, -12, -124,2.34 } };
+
+                double temp;
+                for (int i = 0; i != Ar.GetLength(0); i++)
+                {
+                    for (int j = 0; j != Ar.GetLength(1) / 2; j++)
+                    {
+                        temp = Ar[i, j];
+                        Ar[i, j] = Ar[i, Ar.GetLength(1) - j - 1];
+                        Ar[i, Ar.GetLength(1) - j - 1] = temp;
+                    }
+                }
+                Print(Ar, Ar.GetLength(0), Ar.GetLength(1));
+                //double[,] Ar = new double[6, 4] { { 111, 2, 3, 0 },
+                //                                  { 5, 6, 7, 6 },
+                //                                  { 9, 10, 11, 12 },
+                //                                  { 13, 14, 15, -1 },
+                //                                  {23,-12,54,32 },
+                //                                  { -1,0,-12,-124} };
+                //for (int i = 0; i != 6; i++)
+                //{
+                //    double[] temp = new double[4];
+                //    for (int j = 0; j != 4; j++)
+                //    {
+                //        temp[j] = Ar[i, j];
+                //    }
+                //    temp = temp.Reverse();          WHY TEMP DOESNT REVERSE?
+                //    for (int j = 0; j != 4; j++)
+                //    {
+                //        Ar[i, j] = temp[j];
+                //    }
+                //}
+                //Print(Ar, 6, 4);
+            }
+
+            static void Task3_1()
+            {
+                double[,] Ar = new double[4, 6] { { 10,-120, 2, 3, 4 ,-2},
+                                                  { 5.1, 6, -100,-3.1, 8 ,32},
+                                                  { 9,10, 13, 10, -101,42 },
+                                                  { -10,13, 14, 15,-103, 3.9 }};
+                //double[,] Ar = new double[4, 1] { { -10 }, { 0 }, { -123 }, { 42 } };
+
+                List<double> Index = new List<double>();
+                static double Mn(double[,] Ar, int m)
+                {
+
+                    double mn = double.MaxValue;
+                    for (int j = 0; j != Ar.GetLength(1); j++)
+                    {
+                        if (mn > Ar[m, j])
+                        {
+                            mn = Ar[m, j];
+                        }
+                    }
+                    return mn;
+                }
+                for (int i = 0; i != Ar.GetLength(0); i++)
+                {
+                    Index.Add(Mn(Ar, i));
+                }
+                List<double> IndexNotSort = new List<double>(Index);
+                Index.Sort();
+
+                double[,] ArRes = new double[4, 6];
+                for (int i = 0; i != Ar.GetLength(0); i++)
+                {
+                    int TempI = IndexNotSort.IndexOf(Index[i]);
+                    for (int j = 0; j != Ar.GetLength(1); j++)
+                    {
+                        ArRes[i, j] = Ar[TempI, j];
+                    }
+                }
+                Print(ArRes, ArRes.GetLength(0), ArRes.GetLength(1));
+            }
+            static void Task3_2()
+            {
+                double[,] Ar = new double[4, 4] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+                for (int i = 0; i != 4; i++)
+                {
+                    Ar[i, 0] = 0;
+                    Ar[0, i] = 0;
+                    Ar[i, Ar.GetLength(0) - 1] = 0;
+                    Ar[ Ar.GetLength(0) - 1,i] = 0;
+                }
+                Print(Ar, 4, 4);
+            }
+            static void Task3_3()
+            {
+                double[,] Ar = new double[4, 4] { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+                List<double> Sum = new List<double>();
+                
+                for (int i = Ar.GetLength(0)-1; i !=0; i--)
+                    {
+                        double sm = 0;
+                        for (int j = 0; j + i != Ar.GetLength(0); j++)
+                        {
+                            sm += Ar[i + j, j];
+                        }
+                    Sum.Add(sm);
+                    }
+                for (int i = Ar.GetLength(0) - 1; i !=-1; i--)
+                {
+                    double sm = 0;
+                    for (int j = 0; j + i != Ar.GetLength(0); j++)
+                    {
+                        sm += Ar[j,i + j];
+                    }
+                    Sum.Add(sm);
+                }
+                double[] ArRes = Sum.ToArray();
+                foreach (double x in ArRes)
+                    Console.WriteLine(x);
+            }
+            static void Task3_4()
+            {
+                //double[,] Ar = new double[5, 5] { { 2, 2, 3, 4 ,2}, { 5, 6, 7, 8,2 }, { 9, 10, 11, 12,2 }, { 13, 14, 15, 16,2 }, { 0,0,0,0,0} };
+                double[,] Ar = new double[4, 4] { { 2, 2, 3, 4}, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 }};
+                for (int i = 5/2; i != 4; i++)
+                {
+                    for (int j = 0; j != 4; j++)
+                    {
+                        if (i == j | i > j)
+                            Ar[i, j] = 1;
+                    }
+                }
+                Print(Ar,4, 4);
+            }       
+            static void Task3_8()
+            {
+                double[,] Ar = new double[6, 4]  {{ 111, -2,-3, 0 },
+                                                  { 5, 6, 7, 6 },
+                                                  { 9, -10, 11, 12 },
+                                                  { -13, -14, -15, -1 },{ -1,0,-12,-124},
+                                                  {23,-12,54,32 }
+                                                   };
+                List<double> Index = new List<double>();
+
+                static double Count(double[,] Ar, int m)
+                {
+                    int k = 0;
+                    for (int j = 0; j != Ar.GetLength(1); j++)
+                    {
+                        if (Ar[m, j] >= 0)
+                        {
+                            k += 1; ;
+                        }
+                    }
+                    return k;
+                }
+                for (int i = 0; i != Ar.GetLength(0); i++)
+                {
+                    Index.Add(Count(Ar, i));
+
+                }
+                
+
+                double[,] ArRes = new double[6, 4];
+                for (int i = 0; i != Index.Count-1; i++)
+                {
+                    for (int j = 0; j != Index.Count-1-i; j++)
+                    {
+                        if (Index[j] < Index[j + 1])
+                        {
+                            double temp = Index[j + 1];
+                            Index[j + 1] = Index[j];
+                            Index[j] = temp;
+                            double[] tempAr = new double[Ar.GetLength(1)];
+                            for (int m = 0; m != Ar.GetLength(1); m++)
+                                tempAr[m]=Ar[j,m];
+                            for (int m = 0; m != Ar.GetLength(1); m++)
+                            {
+                                Ar[j, m] = Ar[j + 1, m];
+                                Ar[j + 1, m] = tempAr[m];
+                            }
+
+                        }
+                    }
+                }
+                Print(Ar, Ar.GetLength(0), Ar.GetLength(1));
+            }
+            static void Task3_10()
+            {
+                double[,] Ar = new double[6, 4] { { 111, -2,-3, 0 },
+                                                  { 5, 6, 7, 6 },
+                                                  { 9, -10, 11, 12 },
+                                                  { -13, -14, -15, -1 },
+                                                  {23,-12,54,32 },
+                                                  { -1,0,-12,-124} };
+                for (int i = 0; i != Ar.GetLength(0); i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        double[] temp = new double [Ar.GetLength(1)];
+                        for (int j = 0; j != Ar.GetLength(1); j++)
+                        {      
+                            temp[j] = Ar[i, j];
+                        }
+                        Array.Sort(temp);
+                        Array.Reverse(temp);
+                        for (int j = 0; j != Ar.GetLength(1); j++)
+                        {
+                            Ar[i, j]=temp[j];
+                        }
+                    }
+                    else
+                    {
+                        
+                            double[] temp = new double[Ar.GetLength(1)];
+                            for (int j = 0; j != Ar.GetLength(1) ; j++)
+                            {
+                                temp[j] = Ar[i, j];
+                            }
+                            Array.Sort(temp);
+                            for (int j = 0; j != Ar.GetLength(1) ; j++)
+                            {
+                                Ar[i, j] = temp[j];
+                            }
+                        
+                    }
+                }
+                Print(Ar, Ar.GetLength(0), Ar.GetLength(1));
+            }
+            static void Task3_11()
+            {
+                double[,] Ar = new double[6, 4] { { 111, -2,-3, 0 },
+                                                  { 5, 6, 7, 6 },
+                                                  { 9, -10, 11, 12 },
+                                                  { -13, 0, -15, -1 },
+                                                  {23,-12,54,32 },
+                                                  { -1,0,-12,-124} };
+                int[] Index = new int[6];
+                int k = 0;
+                for (int i = 0; i != Ar.GetLength(0); i++)
+                {
+                    for (int j = 0; j != Ar.GetLength(1); j++)
+                    {
+
+                        if (Ar[i, j] == 0)
+                        {
+                            Index[i] = 1;
+                            k++;
+                            break;
+                        }
+                    }
+                }
+                double[,] ArRes = new double[k, 4];
+                int IndI = 0;
+                for (int i = 0; i != Ar.GetLength(0); i++)
+                {
+                    if (Index[i] == 0) 
+                    {
+                        
+                        for (int j = 0; j != ArRes.GetLength(1); j++)
+                        {
+                            ArRes[IndI, j] = Ar[i,j];
+                        }
+                        IndI++;
+                    }
+                }
+                Print(ArRes, k, ArRes.GetLength(1));
+            }
+
+            Task2_9();          
+        }
+    }
+}
