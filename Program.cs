@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -68,6 +68,8 @@ namespace _4th_Lab
                 }
                 return fin_arr;
             }
+            
+
 
             static void task_1_3()
             {
@@ -220,7 +222,7 @@ namespace _4th_Lab
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
 
-            }//fixed
+            }
             static void task_1_17()
             {
                 bool flag = false;
@@ -320,7 +322,7 @@ namespace _4th_Lab
                     show_matrix(matrix_in_use, n, m, ref flag);
                 }
 
-            }//fixed
+            }
             static void task_1_31()
             {
                 bool flag = false;
@@ -361,7 +363,7 @@ namespace _4th_Lab
                 show_matrix(matrix_in_use, n, m, ref flag);
 
             }
-
+            task_3_8();
 
             static void task_2_8()
             {
@@ -471,7 +473,7 @@ namespace _4th_Lab
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
 
-            }//fixed
+            }
 
             static void task_3_1()
             {
@@ -486,62 +488,65 @@ namespace _4th_Lab
                     return;
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
-
-
-                double smallest11 = 0;
-                int smallest_row11 = 0;
-
-                for (int t = 0; t < n; t++)
+                Console.WriteLine();
+                double[,] mat_in_use2 = new double[n,2];
+                for (int k = 0; k < n; k++)
                 {
-                    double smallest1 = matrix_in_use[t, 0];
-                    double smallest_row1 = t;
-                    for (int k = 0; k < m; k++)
+                    double smallest_value = matrix_in_use[k,0];
+                    for (int i = 1; i < m; i++)
                     {
-                        if (matrix_in_use[t, k] < smallest1)
+                        if (matrix_in_use[k,i] < smallest_value)
                         {
-                            smallest1 = matrix_in_use[t, k];
+                            smallest_value = matrix_in_use[k, i];
+                        }
+                    }
+
+                    mat_in_use2[k,0] =k ;
+                    mat_in_use2[k,1] =smallest_value;
+
+                }
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+                Console.WriteLine();
+                for (int i = 0; i < n; i++)
+                {
+                    double big = mat_in_use2[i, 1];
+                    int row = i;
+                    for (int k = 1+i; k < m; k++)
+                    {
+                        if (mat_in_use2[k, 1] > big)
+                        {
+                            big = mat_in_use2[k, 1];
+                            row = k;
                         }
 
                     }
-                    smallest11 = smallest1;
-                    smallest_row11 = t;
-                    for (int i = 1; i < n; i++)
+
+                    double help1 = mat_in_use2[i, 0];
+                    mat_in_use2[i, 0] = row;
+                    mat_in_use2[row, 0] = help1;
+                    double help2 = mat_in_use2[i, 1];
+                    mat_in_use2[i, 1] = big;
+                    mat_in_use2[row, 1] = help2;
+                }
+                double[,] res_mat = new double[n, m];
+                for (int i = 0; i < n; i++)
+                {
+                    int row = (int)mat_in_use2[i, 0];
+                    for (int k = 0; k < m; k++)
                     {
-                        double smallest2 = matrix_in_use[i, 0];
-                        int smallest_row2 = i;
-                        for (int k = 0; k < m; k++)
-                        {
-                            if (matrix_in_use[i, k] < smallest2)
-                            {
-                                smallest2 = matrix_in_use[i, k];
-                            }
-
-                        }
-                        if (smallest2 > smallest11 & smallest_row2 > smallest_row11)
-                        {
-                            double[] p = new double[m];
-                            for (int j = 0; j < m; j++)
-                            {
-                                p[j] = matrix_in_use[smallest_row11, j];
-
-                            }
-                            for (int h = 0; h < m; h++)
-                            {
-                                matrix_in_use[smallest_row11, h] = matrix_in_use[smallest_row2, h];
-                            }
-                            for (int f = 0; f < m; f++)
-                            {
-                                matrix_in_use[smallest_row2, f] = p[f];
-                            }
-                        }
+                        
+                        res_mat[i,k] =matrix_in_use[row,k];
                     }
                 }
 
-                show_matrix(matrix_in_use, n, m, ref flag);
+
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+
+                show_matrix(res_mat, n, m, ref flag);
 
 
 
-            }
+            }//fixed2
             static void task_3_2()
             {
                 bool flag = false;
@@ -653,8 +658,8 @@ namespace _4th_Lab
             static void task_3_8()
             {
                 bool flag = false;
-                int n = 7;
-                int m = 5;
+                int n = 3;
+                int m = 3;
                 Console.WriteLine("enter array data:");
                 double[,] matrix_in_use = double_matrix(n, m, ref flag);
                 if (flag)
@@ -663,54 +668,67 @@ namespace _4th_Lab
                     return;
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
-
-
-                for (int t = 0; t < n; t++)
+                Console.WriteLine();
+                double[,] mat_in_use2 = new double[n, 2];
+                int quality = 0;
+                for (int k = 0; k < n; k++)
                 {
-                    int quality1 = 0;
-                    int row_1 = t;
-                    for (int k = 0; k < m; k++)
+                    
+                    for (int i = 0; i < m; i++)
                     {
-                        if (matrix_in_use[t, k] > 0)
+                        if (matrix_in_use[k, i] >0)
                         {
-                            quality1++;
+                            quality++;
+                        }
+                    }
+
+                    mat_in_use2[k, 0] = k;
+                    mat_in_use2[k, 1] = quality;
+                    quality = 0;
+
+                }
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+                Console.WriteLine();
+                for (int i = 0; i < n; i++)
+                {
+                    double big = mat_in_use2[i, 1];
+                    int row = i;
+                    for (int k = 1 + i; k < m; k++)
+                    {
+                        if (mat_in_use2[k, 1] > big)
+                        {
+                            big = mat_in_use2[k, 1];
+                            row = k;
                         }
 
                     }
-                    for (int i = 1; i < n; i++)
+
+                    double help1 = mat_in_use2[i, 0];
+                    mat_in_use2[i, 0] = row;
+                    mat_in_use2[row, 0] = help1;
+                    double help2 = mat_in_use2[i, 1];
+                    mat_in_use2[i, 1] = big;
+                    mat_in_use2[row, 1] = help2;
+                }
+                double[,] res_mat = new double[n, m];
+                for (int i = 0; i < n; i++)
+                {
+                    int row = (int)mat_in_use2[i, 0];
+                    for (int k = 0; k < m; k++)
                     {
-                        int quality2 = 0;
-                        int row_2 = i;
-                        for (int k = 0; k < m; k++)
-                        {
-                            if (matrix_in_use[i, k] > 0)
-                            {
-                                quality2++;
-                            }
 
-                        }
-                        if (quality2 > quality1 & row_2 > row_1)
-                        {
-                            double[] p = new double[m];
-                            for (int j = 0; j < m; j++)
-                            {
-                                p[j] = matrix_in_use[row_1, j];
-
-                            }
-                            for (int h = 0; h < m; h++)
-                            {
-                                matrix_in_use[row_1, h] = matrix_in_use[row_2, h];
-                            }
-                            for (int f = 0; f < m; f++)
-                            {
-                                matrix_in_use[row_2, f] = p[f];
-                            }
-                        }
+                        res_mat[i, k] = matrix_in_use[row, k];
                     }
                 }
 
-                show_matrix(matrix_in_use, n, m, ref flag);
-            }
+
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+
+
+
+
+                show_matrix(res_mat, n, m, ref flag);
+            }//fixed2
 
             static void task_3_10()
                 {
@@ -810,7 +828,7 @@ namespace _4th_Lab
 
 
 
-                }//fixed
+                }
             
         }
     }
