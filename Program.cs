@@ -473,7 +473,7 @@ namespace _4th_Lab
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
 
-            }
+            } //
 
             static void task_3_1()
             {
