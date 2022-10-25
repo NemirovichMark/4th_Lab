@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace _4th_Lab
 {
@@ -171,13 +172,10 @@ namespace _4th_Lab
 
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                if (max < matrix[i, i])
                 {
-                    if (max < matrix[i, j])
-                    {
-                        max = matrix[i, j];
-                        jmax = j;
-                    }
+                    max = matrix[i, i];
+                    jmax = i;
                 }
             }
 
@@ -1371,6 +1369,8 @@ namespace _4th_Lab
             columns = 5;
 
             matrix = new int[rows, columns];
+            int[,] reducedMatrix = null;
+            Queue<int> remainingRows = new Queue<int>();
 
             // Initialize matrix
             Console.WriteLine("Initial matrix: ");
@@ -1389,31 +1389,36 @@ namespace _4th_Lab
             // Search for zero
             for (int i = 0; i < rows; i++)
             {
+                bool keep = true;
                 for (int j = 0; j < columns; j++)
-                {
-                    if (matrix[i, j] == 0)
-                    {
-                        // Delete row
-                        for (int currentRow = i; currentRow < rows - 1; currentRow++)
-                        {
-                            for (j = 0; j < columns; j++)
-                                matrix[currentRow, j] = matrix[currentRow + 1, j]; 
-                        }
+                    keep = matrix[i, j] != 0;
 
-                        rows--;
-                        i--;
-                        break;
-                    }
-                }
+                if (keep)
+                    remainingRows.Enqueue(i);
+            }
+
+            // Initialize reduced matrix
+            reducedMatrix = new int[remainingRows.Count, columns];
+
+            // Fill with remaining rows
+            index = 0;
+            while (remainingRows.Count > 0)
+            {
+                int row = remainingRows.Dequeue();
+
+                for (int j = 0; j < columns; j++)
+                    reducedMatrix[index, j] = matrix[row, j];
+
+                index++;    
             }
 
             // Write result
             Console.WriteLine();
             Console.WriteLine("Result matrix:");
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < reducedMatrix.GetLength(0); i++)
             {
                 for (int j = 0; j < columns; j++)
-                    Console.Write("{0, -5}", matrix[i, j]);
+                    Console.Write("{0, -5}", reducedMatrix[i, j]);
                 Console.WriteLine();
             }
             #endregion
