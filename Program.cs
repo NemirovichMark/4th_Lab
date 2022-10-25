@@ -300,21 +300,8 @@ namespace _4th_Lab
                             matrix_in_use[k, i] = matrix_in_use[k, i + 1];
                         }
                     }
-                    double[,] matrix_in_use_2 = new double[n, m];
-                    for (int i = 0; i < m; i++)
-                    {
-                        double[] arr = new double[n];
-                        for (int k = 0; k < n; k++)
-                        {
-                            arr[k] = matrix_in_use[i, k];
-                        }
-                        Array.Resize(ref arr, m);
-                        for (int j = 0; j < m; j++)
-                        {
-                            matrix_in_use_2[i, j] = arr[j];
-                        }
-                    }
-                    show_matrix(matrix_in_use_2, n, m, ref flag);
+                    show_matrix(matrix_in_use, n, m, ref flag);
+                    
                 }
                 else
                 {
@@ -322,7 +309,7 @@ namespace _4th_Lab
                     show_matrix(matrix_in_use, n, m, ref flag);
                 }
 
-            }
+            }//fixed3
             static void task_1_31()
             {
                 bool flag = false;
@@ -363,7 +350,7 @@ namespace _4th_Lab
                 show_matrix(matrix_in_use, n, m, ref flag);
 
             }
-            task_3_8();
+            task_3_11();
 
             static void task_2_8()
             {
@@ -473,7 +460,7 @@ namespace _4th_Lab
                 }
                 show_matrix(matrix_in_use, n, m, ref flag);
 
-            } //
+            } 
 
             static void task_3_1()
             {
@@ -511,7 +498,7 @@ namespace _4th_Lab
                 {
                     double big = mat_in_use2[i, 1];
                     int row = i;
-                    for (int k = 1+i; k < m; k++)
+                    for (int k = 1+i; k < n; k++)
                     {
                         if (mat_in_use2[k, 1] > big)
                         {
@@ -546,7 +533,7 @@ namespace _4th_Lab
 
 
 
-            }//fixed2
+            }//it works on my pc
             static void task_3_2()
             {
                 bool flag = false;
@@ -659,7 +646,7 @@ namespace _4th_Lab
             {
                 bool flag = false;
                 int n = 3;
-                int m = 3;
+                int m = 4;
                 Console.WriteLine("enter array data:");
                 double[,] matrix_in_use = double_matrix(n, m, ref flag);
                 if (flag)
@@ -693,7 +680,7 @@ namespace _4th_Lab
                 {
                     double big = mat_in_use2[i, 1];
                     int row = i;
-                    for (int k = 1 + i; k < m; k++)
+                    for (int k = 1 + i; k < n; k++)
                     {
                         if (mat_in_use2[k, 1] > big)
                         {
@@ -728,7 +715,7 @@ namespace _4th_Lab
 
 
                 show_matrix(res_mat, n, m, ref flag);
-            }//fixed2
+            }
 
             static void task_3_10()
                 {
@@ -799,8 +786,20 @@ namespace _4th_Lab
                     }
                     Console.WriteLine("you entered:");
                     show_matrix(matrix_in_use, n, m, ref flag);
-
-                    double[,] res_mat = new double[n, m];
+                    int q = 0;
+                    for (int k = 0; k < n; k++)
+                    {
+                        for (int i = 0; i < m; i++)
+                        {
+                            if (matrix_in_use[k, i] == 0)
+                            {
+                            q++;
+                            }
+                        }
+                    }
+                if (q <n)
+                {
+                    double[,] res_mat = new double[n-q, m];
                     bool res1 = true;
                     int j = 0;
                     for (int k = 0; k < n; k++)
@@ -824,11 +823,11 @@ namespace _4th_Lab
                         res1 = true;
                     }
 
-                    show_matrix(res_mat, n - j, m, ref flag);
-
-
-
+                    show_matrix(res_mat, n-q, m, ref flag);
                 }
+                }//fixed3
+
+                
             
         }
     }
