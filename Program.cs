@@ -28,7 +28,7 @@ namespace lab4
             //goto task_4_lv3;
             //goto task_8_lv3;
             //goto task_10_lv3;
-            goto task_11_lv3;
+            //goto task_11_lv3;
 
 
             #region task 3 lv1
