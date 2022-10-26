@@ -1,0 +1,117 @@
+using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
+class Programm
+{
+    static void Main()
+    {
+        int m = 7, n = 5;
+        string[] row;
+
+        List<List<double>> matrix = new List<List<double>>();
+
+        for (int i = 0; i < m; i++)
+        {
+            matrix.Add(new List<double>());
+
+            while (true)
+            {
+                row = Console.ReadLine().Split(" ");
+                if (row.Length != n)
+                {
+                    Console.WriteLine(" Enter the correct data");
+                    continue;
+                }
+                break;
+            }
+
+            for (int j = 0; j < n; j++)
+            {
+                double x;
+                double.TryParse(row[j], out x);
+                matrix[i].Add(x);
+            }
+        }
+
+        List<double> min = new List<double>();
+        for (int i = 0; i < m; i++)
+        {
+            min.Add(matrix[i].Min());
+        }
+        min.Sort();
+
+        List<List<double>> new_matrix = new List<List<double>>();
+        for(int i = 0; i < m; i++)
+        {
+            new_matrix.Add(new List<double>());
+            for (int j = 0; j < n; j++)
+            {
+                new_matrix[i].Add(matrix[i][j]);
+            }
+        }
+
+        List<int> ind = new List<int>();
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (min[i] == new_matrix[j].Min())
+                {
+                    ind.Add(j);
+                    break;
+                }
+            }
+        }
+
+        int k = 0;
+        for (int i = 0; i < m; i++)
+        {
+            k = ind[i];
+            matrix[i].Clear();
+            for (int j = 0; j < n; j++)
+            {
+                matrix[i].Add(new_matrix[k][j]);
+            }
+        }
+
+        //Console.WriteLine(" Min elem");
+        //for (int i = 0; i < m; i++)
+        //{
+        //    Console.Write(min[i] + " ");
+        //}
+
+        //Console.WriteLine();
+
+        //Console.WriteLine(" Matrix:");
+        //for (int i = 0; i < m; i++)
+        //{
+        //    for (int j = 0; j < n; j++)
+        //    {
+        //        Console.Write(new_matrix[i][j] + " ");
+        //    }
+        //    Console.WriteLine();
+        //}
+
+        //Console.WriteLine();
+
+        //Console.WriteLine(" Index");
+        //for (int i = 0; i < ind.Count; i++)
+        //{
+        //    Console.Write(ind[i] + " ");
+        //}
+
+        //Console.WriteLine();
+        
+        Console.WriteLine(" Matrix:");
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                Console.Write(matrix[i][j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}

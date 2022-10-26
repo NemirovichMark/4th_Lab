@@ -1,0 +1,103 @@
+using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Security;
+
+class Programm
+{
+    static void Main()
+    {
+        int m, n;
+        string[] row;
+
+        Console.WriteLine(" Enter anount row");
+        while (true)
+        {
+            if (!int.TryParse(Console.ReadLine(), out m))
+            {
+                Console.WriteLine(" Enter the correct data");
+                continue;
+            }
+            if (m < 0)
+            {
+                Console.WriteLine(" row must be positive");
+                continue;
+            }
+            break;
+        }
+
+        Console.WriteLine(" Enter anount column");
+        while (true)
+        {
+            if (!int.TryParse(Console.ReadLine(), out n))
+            {
+                Console.WriteLine(" Enter the correct data");
+                continue;
+            }
+            if (n < 0)
+            {
+                Console.WriteLine(" column must be positive");
+                continue;
+            }
+            if (n != m)
+            {
+                Console.WriteLine(" column and row must be equal");
+                continue;
+            }
+            break;
+        }
+
+        List<List<double>> matrix = new List<List<double>>();
+
+        for (int i = 0; i < m; i++)
+        {
+            matrix.Add(new List<double>());
+
+            while (true)
+            {
+                row = Console.ReadLine().Split(" ");
+                if (row.Length != n)
+                {
+                    Console.WriteLine(" Enter the correct data");
+                    continue;
+                }
+                break;
+            }
+
+            for (int j = 0; j < n; j++)
+            {
+                double x;
+                double.TryParse(row[j], out x);
+                matrix[i].Add(x);
+            }
+        }
+
+        List<double> vector = new List<double>();
+        for (int i = n - 1; i > -1; i--)
+        {
+            double sum = 0;
+            for (int j = 0; j < n - i; j++)
+            {
+                sum += matrix[i + j][j];
+            }
+            vector.Add(sum);
+        }
+
+        for (int j = 1; j < n; j++)
+        {
+            double sum = 0;
+            for (int i = 0; i < n - j; i++)
+            {
+                sum += matrix[i][i + j];
+            }
+            vector.Add(sum);
+        }
+
+        Console.WriteLine(" Vector:");
+        for (int i = 0; i < vector.Count; i++)
+        {
+            Console.Write(vector[i] + " ");
+        }
+    }
+}

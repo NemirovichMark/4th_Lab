@@ -1,0 +1,67 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
+class Programm
+{
+    static void Main()
+    {
+        int n = 5;
+        string[] row;
+        List<List<double>> matrix = new List<List<double>>();
+
+        for (int i = 0; i < n; i++)
+        {
+            matrix.Add(new List<double>());
+
+            while (true)
+            {
+                row = Console.ReadLine().Split(" ");
+                if (row.Length != n)
+                {
+                    Console.WriteLine(" Please enter the correct data");
+                    continue;
+                }
+                break;
+            }
+
+            for(int j = 0; j < n; j++)
+            {
+                double x;
+                double.TryParse(row[j], out x);
+                matrix[i].Add(x);
+            }
+        }
+
+        double x1 = 0; 
+        double max = matrix[0][0];
+        int ind = 0;
+        int k = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if(matrix[i][k] > max)
+            {
+                max = matrix[i][k];
+                ind = i;
+            }
+            k++;
+        }
+
+        for (int i = 0; i < n; i++) 
+        {
+            x1 = matrix[i][ind];
+            matrix[i][ind] = matrix[i][3];
+            matrix[i][3] = x1;
+        }
+
+        Console.WriteLine(" Matrix");
+        for (int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                Console.Write(matrix[i][j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}

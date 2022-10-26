@@ -1,0 +1,48 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
+class Programm
+{
+    static void Main()
+    {
+        int n = 4;
+        double sum = 0;
+        double[,] A = new double[n, n];
+
+        Console.WriteLine(" Enter the matrix");
+        for (int i = 0; i < n; i++)
+        {
+            string[] row_first = Console.ReadLine().Split(" ");
+
+            if (row_first.Count() != n)
+            {
+                Console.WriteLine(" Enter the correct data");
+                return;
+            } 
+
+            List<double> row = new List<double>();
+
+            foreach(string a in row_first)
+            {
+                double x;
+                if(!double.TryParse(a, out x))
+                {
+                    Console.WriteLine(" Enter the correct data");
+                    return;
+                }
+
+                row.Add(x);
+            }
+
+            for (int j = 0; j < n; j++)
+            {
+                double elem = row[j];
+                A[i,j] = elem;
+            }
+
+            sum += A[i, i];
+        }
+        Console.WriteLine(sum);
+    }
+}
