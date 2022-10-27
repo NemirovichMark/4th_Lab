@@ -2,7 +2,7 @@
 
 namespace _4th_Lab
 {
-    class Program
+    class Treory
     {
         const int ROWS = 3;
         const int COLUMNS = 3;
