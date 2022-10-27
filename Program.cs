@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 
 namespace lab4
@@ -212,21 +212,43 @@ namespace lab4
             Console.WriteLine();
             Console.WriteLine($"The maximum value in the matrix: {max} ({max_i};{max_j}).");
 
-            for (int i = max_i; i < n - 1; i++)
+            double[,] temp_a = new double[5, 6];
+
+            for (int i = 0; i < n - 1; i++)
             {
-                for (int j = 0; j < m; j++)
+                if (i < max_i)
                 {
-                    a[i, j] = a[i + 1, j];
+                    for (int j = 0; j < m - 1; j++)
+                    {
+                        if (j < max_j)
+                        {
+                            temp_a[i, j] = a[i, j];
+                        }
+                        else
+                        {
+                            temp_a[i, j] = a[i, j + 1];
+                        }
+                    }
                 }
+
+                else
+                {
+                    for (int j = 0; j < m - 1; j++)
+                    {
+                        if (j < max_j)
+                        {
+                            temp_a[i, j] = a[i + 1, j];
+                        }
+                        else
+                        {
+                            temp_a[i, j] = a[i + 1, j + 1];
+                        }
+                    }
+                }
+
             }
 
-            for (int j = max_j; j < m - 1; j++)
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    a[i, j] = a[i, j + 1];
-                }
-            }
+            a = (double[,])temp_a.Clone();
 
             Console.WriteLine();
             Console.WriteLine("Here is your new matrix:");
@@ -239,6 +261,11 @@ namespace lab4
                 }
                 Console.WriteLine();
             }
+
+            /*foreach (double val in a)
+            {
+                Console.WriteLine(val);
+            }*/
 
             Console.ReadLine();
         #endregion
@@ -1557,7 +1584,7 @@ namespace lab4
             Console.WriteLine(count);*/
 
             temp3 = (double[,])a.Clone();
-            a = new double[n, m];
+            a = new double[count, m];
             int count2 = 0;
 
             for (int i = 0; i < n; i ++)
@@ -1584,6 +1611,11 @@ namespace lab4
                 Console.WriteLine();
             }
 
+            /*foreach (double val in a)
+            {
+                Console.WriteLine(val);
+            }*/
+
             Console.ReadLine();
         #endregion
 
@@ -1596,7 +1628,7 @@ namespace lab4
             Console.WriteLine();
 
             Random r = new Random();
-            for(int i = 0; i < 6 * 8; i++)
+            for(int i = 0; i < 8 * 7; i++)
             {
                 Console.WriteLine($"{r.Next(100)}");
             }
