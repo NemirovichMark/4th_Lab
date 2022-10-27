@@ -68,6 +68,8 @@ namespace _4th_Lab
             {
                 int x = 7, y = 6;
                 double[,] a = new double[y, x];
+                int m = x - 1, n = y - 1;
+                double[,] b = new double[n, m];
                 for (int i = 0; i < y; i++)
                 {
                     for (int j = 0; j < x; j++)
@@ -115,12 +117,19 @@ namespace _4th_Lab
                     for (int j = xmx; j < x; j++)
                         a[i, j] = a[i, j + 1];
                 }
-                Console.WriteLine();
-                for (int i = 0; i < y; i++)
+                for (int i = 0; i < n; i++)
                 {
-                    for (int j = 0; j < x; j++)
+                    for (int j = 0; j < m; j++)
                     {
-                        Console.Write(a[i, j] + "\t");
+                        b[i, j] = a[i, j];
+                    }
+                }
+                Console.WriteLine();
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        Console.Write(b[i, j] + "\t");
                     }
                     Console.WriteLine();
                 }
@@ -913,6 +922,7 @@ namespace _4th_Lab
             #region Task 3.11
             {
                 bool flag = true;
+                int co = 0;
                 Console.WriteLine("Enter y of matrix");
                 int y;
                 int.TryParse(Console.ReadLine(), out y);
@@ -921,7 +931,6 @@ namespace _4th_Lab
                 int.TryParse(Console.ReadLine(), out x);
                 double[,] a = new double[y, x];
                 int n = 0;
-                double[,] b = new double[y, x];
                 for (int i = 0; i < y; i++)
                 {
                     for (int j = 0; j < x; j++)
@@ -947,28 +956,45 @@ namespace _4th_Lab
                     {
                         if (a[i, j] == 0)
                         {
-                            flag = false;
+                            co++;
+                            break;
                         }
                     }
-                    if (flag)
-                    {
-                        for (int k = 0; k < x; k++)
-                        {
-                            b[n, k] = a[i, k];
-                        }
-                        n++;
-                    }
-                    flag = true;
                 }
-                for (int i = 0; i < n; i++)
+                if (co < y)
                 {
-                    for (int j = 0; j < x; j++)
+                    double[,] b = new double[y - co, x];
+                    for (int i = 0; i < y; i++)
                     {
-                        Console.Write(b[i, j] + "\t");
+                        for (int j = 0; j < x; j++)
+                        {
+                            if (a[i, j] == 0)
+                            {
+                                flag = false;
+                            }
+                        }
+                        if (flag)
+                        {
+                            for (int k = 0; k < x; k++)
+                            {
+                                b[n, k] = a[i, k];
+                            }
+                            n++;
+                        }
+                        flag = true;
+                    }
+                    for (int i = 0; i < n; i++)
+                    {
+                        for (int j = 0; j < x; j++)
+                        {
+                            Console.Write(b[i, j] + "\t");
+                        }
+                        Console.WriteLine();
                     }
                     Console.WriteLine();
                 }
-                Console.WriteLine();
+                else
+                    Console.WriteLine("No strings without 0");
             }
             #endregion
         }
