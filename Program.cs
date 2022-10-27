@@ -462,7 +462,7 @@ namespace _4th_Lab
 
             } 
 
-            static void task_3_1()
+            static void task_3_1() 
             {
                 bool flag = false;
                 int n = 7;
@@ -496,6 +496,7 @@ namespace _4th_Lab
                 Console.WriteLine();
                 for (int i = 0; i < n; i++)
                 {
+                    double big_ind = mat_in_use2[i, 0];
                     double big = mat_in_use2[i, 1];
                     int row = i;
                     for (int k = 1+i; k < n; k++)
@@ -503,13 +504,14 @@ namespace _4th_Lab
                         if (mat_in_use2[k, 1] > big)
                         {
                             big = mat_in_use2[k, 1];
+                            big_ind = mat_in_use2[k, 0];
                             row = k;
                         }
 
                     }
 
                     double help1 = mat_in_use2[i, 0];
-                    mat_in_use2[i, 0] = row;
+                    mat_in_use2[i, 0] = big_ind;
                     mat_in_use2[row, 0] = help1;
                     double help2 = mat_in_use2[i, 1];
                     mat_in_use2[i, 1] = big;
@@ -533,7 +535,7 @@ namespace _4th_Lab
 
 
 
-            }//it works on my pc
+            }//fixed
             static void task_3_2()
             {
                 bool flag = false;
