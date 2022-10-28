@@ -1,0 +1,671 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lab_4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string enter;
+
+            #region 1 level 3
+            Console.WriteLine("Task 3");
+            double sum = 0;
+            double[,] A = new double[4, 4] { {1, 2, 3, 4 },
+                                            { 5,6,7,8 },
+                                            { 9,0,1,2 },
+                                            { 3,4,4,6 } };
+            for (int i = 0; i < 4; i++)
+            {
+                sum += A[i,i] + A[i,4-i-1];
+            }
+            Console.WriteLine(sum);
+            #endregion
+
+            #region 1 level 6
+            Console.WriteLine("Task 6");
+            A = new double[4, 7] {          {1, 2, 3, 4,5,6,7 },
+                                            { 5,6,7,8,67,-90,3 },
+                                            { 9,0,1,2,5,7,7 },
+                                            { 3,4,4,6,1000,65, -9 } };
+            double[] C = new double[4];
+            double mini = double.MaxValue; int index = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (A[i,j] < mini) { mini = A[i, j]; index = j; };
+                }
+                C[i] = index;
+                mini = double.MaxValue;
+            }
+            enter = String.Join(" ", C);
+            Console.WriteLine(enter);
+            #endregion
+
+            #region 1 level 12
+            Console.WriteLine("Task 12");
+            const int g = 6, t = 7;
+            A = new double[g,t ] {          {1, 2, 3, 4,5,6,7 },
+                                            { 5,6,7,8,67,-90,3 },
+                                            { 9,0,1,2,5,7,7 },
+                                            { 3,4,4,6,1000,65, -9 },
+                                            { 5,6,7,8,67,-90,3 },
+                                            { 9,0,1,2,5,7,7 },};
+            double maxi = double.MinValue;
+            int x = 0, y = 0;
+            for (int i = 0; i < g; i++)
+            {
+                for (int j = 0; j < t; j++)
+                {
+                    if (A[i,j] > maxi)
+                    {
+                        maxi = A[i,j];
+                        x = i; y = j;
+                    }
+                }
+            }
+            for (int i = x; i < g-1; i++)
+            {
+                for (int j = 0; j < t; j++)
+                {
+                    A[i,j] = A[i+1,j];
+                }
+            }
+            for (int i = 0; i < g-1; i++)
+            {
+                for (int j = y; j < t-1; j++)
+                {
+                    A[i, j] = A[i, j+1];
+                }
+            }
+            for (int i = 0; i < g-1; i++)
+            {
+                for (int j = 0; j < t-1; j++)
+                {
+                    Console.Write("{0,1} ",A[i,j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region 1 level 13
+            Console.WriteLine("Task 13");
+            A = new double[5,5] { {1, 2, 3, 4 ,0},
+                                  { 5,6,7,8,-4 },
+                                  { 9,0,1,2,1000 },
+                                  { 3,4,4,6,66 },
+                                  {12,456,-89,66,54 } };
+            maxi = double.MinValue;
+            for (int i = 0; i < 5; i++)
+            {
+                if (A[i,i] > maxi) // первая (главная) диагональ 
+                {
+                    maxi = A[i,i];
+                    index = i;
+                }
+                if (A[i,5-i-1] < maxi) // вторая диагональ
+                {
+                    maxi = A[i,5-i-1];
+                    index = 5-i-1;
+                }
+            }
+            double element;
+            if (index == 4)
+            {
+                Console.WriteLine("Ничего не изменится");
+            }
+            else
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    element = A[i,4];
+                    A[i,4] = A[i,index];
+                    A[i,index] = element;
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 5; j++) Console.Write("{0,4}", A[i,j]);
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+
+            #region 1 level 17
+            Console.WriteLine("Task 17");
+            const int n = 3, m = 4;
+            double[,] B = new double[n,m] { { 1,2,3,4}, { 1029, -87, 0, 77}, { 1234, 56, -55, -11}  };
+            for (int i = 0; i < n; i++)
+            {
+                mini = double.MaxValue;
+                for (int j = 0; j < m; j++)
+                {
+                    if (B[i,j] < mini) { mini = B[i,j]; index = j; }
+                }
+                for (int j = index; j >= 1; j--)
+                {
+                    element = B[i,j-1];
+                    B[i,j-1] = B[i,j];
+                    B[i, j] = element;
+                }
+                for (int j = 0; j < m; j++) Console.Write("{0,5}", B[i,j]);
+                Console.WriteLine();
+            }
+
+            #endregion
+
+            #region 1 level 29
+            Console.WriteLine("Task 29");
+            double[,] F = new double[5,7]  { {1, 2, 3, 4 ,0, 848, 9},
+                                  { 5,1,7,8,-4, -46, 5 },
+                                  { 9,0,1,2,190,457, 10 },
+                                  { 3,4,4,6,66, -90, 4 },
+                                  {12,456,-89,66,54, 1, 4 } };
+            mini = double.MaxValue;
+            for (int j = 0; j < 7; j++)
+            {
+                if (Math.Abs(F[2,j]) < mini) { mini = Math.Abs(F[2,j]); index = j; }
+            }
+            if (index == 6) Console.WriteLine("Это последний столбец");
+            else
+            {
+                index += 1;
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = index; j < 6; j++)
+                    {
+                        F[i,j] = F[i,j+1];
+                    }
+                    for (int j = 0; j < 6; j++)
+                    {
+                        Console.Write("{0,4}", F[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            #endregion
+
+            #region 1 level 31
+            Console.WriteLine("Task 31");
+            A = new double[5, 7]  { {1, 2, 3, 4 ,0, 848, 9},
+                                  { 5,1,7,8,-4, -46, 5 },
+                                  { 9,0,1,2,190,457, 10 },
+                                  { 3,4,4,6,66, -90, 4 },
+                                  {12,456,-89,66,54, 1, -294 } };
+            double[] b = new double[5] {99,88,77,55,11};
+            mini = double.MaxValue;
+            for (int j = 0; j < 7; j++)
+            {
+                if (A[4, j] < mini) { mini = A[4, j]; index = j; }
+            }
+            double[,] A_1 = new double[5, 8];
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < index+1; j++)
+                {
+                    A_1[i,j] = A[i,j];
+                }
+                A_1[i, index + 1] = b[i];
+                for (int j = index+2; j < 8; j++)
+                {
+                    A_1[i, j] = A[i, j - 1];
+                }
+                for (int j = 0; j < 8; j++) Console.Write("{0,5}", A_1[i, j]);
+                Console.WriteLine();
+            }
+
+            #endregion
+
+            #region 2 level 7
+            Console.WriteLine("Task 7 (2 level)");
+            A = new double[6, 6] { {100, 2, 3, 4 ,0, 90},
+                                  { 5,6,7,8,-4, 88 },
+                                  { 9,0,1,2,100,6 },
+                                  { 3,4,4,6,66,-8 },
+                                  {12,456,-89,66,54,48 },
+                                  {11,23,45,678,-54,10 } };
+            maxi = double.MinValue;
+            for (int i = 0; i < 6; i++)
+            {
+                if (A[i,i] > maxi) { maxi = A[i,i]; index = i; }
+            }
+            for (int i = 0; i < index; i++)
+            {
+                for (int j = i+1; j < 6; j++) A[i,j] = 0;
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++) Console.Write("{0,4}", A[i, j]);
+                Console.WriteLine();
+            }
+
+            #endregion
+
+            #region 2 level 8
+            Console.WriteLine("Task 8 (2 level)");
+            B = new double[6, 6] { {100, 2, 3, 4 ,0, 90},
+                                  { 5,6,7,8,-4, 88 },
+                                  { 9,0,1,2,100,6 },
+                                  { 3,4,4,6,66,-8 },
+                                  {12,456,-89,66,54,48 },
+                                  {11,23,45,678,-54,10 } };
+            int index1 = 0, index2 = 0;
+            double max1 = double.MinValue, max2 = double.MinValue;
+            for (int i = 0; i < 6; i+= 2)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    if (B[i,j] > max1) { max1 = B[i,j]; index1 = j; }
+                    if (B[i + 1, j] > max2) { max2 = B[i + 1, j]; index2 = j; } 
+                }
+                B[i, index1] = max2;
+                B[i+1, index2] = max1;
+                max1 = double.MinValue; max2 = double.MinValue;
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++) Console.Write("{0,4}", B[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region 2 level 9
+            Console.WriteLine("Task 9 (2 level");
+            A = new double[6, 7] {          {1, 2, 3, 4,5,6,7 },
+                                            { 5,6,7,8,67,-90,3 },
+                                            { 9,0,1,2,5,7,7 },
+                                            { 3,4,4,6,1000,65, -9 },
+                                            { 5,6,7,8,67,-90,3 },
+                                            { 9,0,1,2,5,7,7 }};
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    element = A[i, j];
+                    A[i, j] = A[i,6-j];
+                    A[i,6-j] = element;
+                }
+                for (int j = 0; j < 7; j++) Console.Write("{0,5}", A[i, j]);
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region 1 level 3
+            Console.WriteLine("Task 1 (level 3)");
+            A = new double[7, 5];
+            B = new double[7, 5];
+            double[] minim = new double[7];
+            double[] minim_copy = new double[7];
+            int[] ind = new int[7];
+            bool p = true;
+            for (int i = 0; i < 7; i++)
+            {
+                mini = double.MaxValue;
+                Console.WriteLine($"Напишите 5 чисел в {i} строке");
+                for (int j = 0; j < 5; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out element)) { A[i, j] = element; B[i, j] = element; }
+                    else
+                    {
+                        Console.WriteLine("Попробуйте снова");
+                        p = false;
+                        break;
+                    }
+                    if (element < mini) { mini = element; index = j; }
+                }
+                if (!p) break;
+                minim[i] = mini;
+                minim_copy[i] = mini;
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                maxi = minim[i];
+                index = i;
+                for (int j = i+1; j < 7; j++)
+                {
+                    if (minim[j] > maxi) { maxi = minim[j]; index = j; }
+                }
+                ind[i] = Array.IndexOf(minim_copy, maxi);
+                minim[index] = minim[i];
+                minim[i] = maxi;
+                minim_copy[Array.IndexOf(minim_copy, maxi)] = double.MinValue;
+            }
+            for (int i = 0; i < 7; i ++)
+            {
+                for (int j = 0; j < 5; j ++)
+                {
+                    A[i, j] = B[ind[i],j];
+                }
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0,4}", A[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region 2 level 3
+            Console.WriteLine("Task 2 (3 level)");
+            Console.WriteLine("Введите размер квадратной матрицы");
+            p = true;
+            if (int.TryParse(Console.ReadLine(), out int k) && k > 0)
+            {
+                A = new double[k, k];
+                for (int i = 0; i < k; i++)
+                {
+                    Console.WriteLine($"Напишите {k} чисел в {i} строке");
+                    for (int j = 0; j < k; j++)
+                    {
+                        if (double.TryParse(Console.ReadLine(), out element)) { A[i, j] = element; }
+                        else
+                        {
+                            Console.WriteLine("Попробуйте снова");
+                            p = false;
+                            break;
+                        }
+                        A[0, j] = 0;
+                        A[k-1,j] = 0;
+                        A[i, 0] = 0;
+                        A[i,k-1] = 0;
+                    }
+                    if (!p) break;
+                }
+                for (int i = 0; i < k; i++)
+                {
+                    for (int j = 0; j < k; j++)
+                    {
+                        Console.Write("{0,4}", A[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Попробуйте снова");
+                return;
+            }
+            #endregion
+
+            #region 3 level 3
+            Console.WriteLine("Task 3 (3 level)");
+            Console.WriteLine("Введите размер квадратной матрицы");
+            p = true;
+            sum = 0;
+            if (int.TryParse(Console.ReadLine(), out k) && k > 0)
+            {
+                A = new double[k, k];
+                for (int i = 0; i < k; i++)
+                {
+                    Console.WriteLine($"Напишите {k} чисел в {i} строке");
+                    for (int j = 0; j < k; j++)
+                    {
+                        if (double.TryParse(Console.ReadLine(), out element)) { A[i, j] = element; }
+                        else
+                        {
+                            Console.WriteLine("Попробуйте снова");
+                            p = false;
+                            break;
+                        }
+                        if ((i == 0 && j == k - 1) || (i == k - 1 && j == 0)) continue;
+                        sum += A[i, j];
+                    }
+                    if (!p) break;
+                }
+                Console.WriteLine($"Ответ {2 * sum - 1}");
+            }
+            else
+            {
+                Console.WriteLine("Попробуйте снова");
+                return;
+            }
+            #endregion
+
+            #region 4 level 3
+            Console.WriteLine("Task 4 (3 level)");
+            Console.WriteLine("Введите размер квадратной матрицы");
+            p = true;
+            sum = 0;
+            if (int.TryParse(Console.ReadLine(), out k) && k > 0)
+            {
+                A = new double[k, k];
+                for (int i = 0; i < k; i++)
+                {
+                    Console.WriteLine($"Напишите {k} чисел в {i} строке");
+                    for (int j = 0; j < k; j++)
+                    {
+                        if (double.TryParse(Console.ReadLine(), out element)) { A[i, j] = element; }
+                        else
+                        {
+                            Console.WriteLine("Попробуйте снова");
+                            p = false;
+                            break;
+                        }
+                    }
+                    if (!p) break;
+                }
+                for (int i = k/2; i < k; i++)
+                {
+                    for (int j = 0; j < i; j++)
+                    {
+                        A[i, j] = 1;
+                    }
+                }
+                for (int i = 0; i < k; i++)
+                {
+                    for (int j = 0; j < k; j++)
+                    {
+                        Console.Write("{0,4}", A[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Попробуйте снова");
+                return;
+            }
+            #endregion
+
+            #region 8 level 3
+            Console.WriteLine("Task 8 (level 3)");
+            A = new double[7, 5];
+            B = new double[7, 5];
+            minim = new double[7];
+            minim_copy = new double[7];
+            ind = new int[7];
+            p = true;
+            for (int i = 0; i < 7; i++)
+            {
+                index = 0;
+                Console.WriteLine($"Напишите 5 чисел в {i} строке");
+                for (int j = 0; j < 5; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out element)) { A[i, j] = element; B[i, j] = element; }
+                    else
+                    {
+                        Console.WriteLine("Попробуйте снова");
+                        p = false;
+                        break;
+                    }
+                    if (element > 0) { index += 1; }
+                }
+                if (!p) break;
+                minim[i] = index;
+                minim_copy[i] = index;
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                maxi = minim[i];
+                index = i;
+                for (int j = i + 1; j < 7; j++)
+                {
+                    if (minim[j] > maxi) { maxi = minim[j]; index = j; }
+                }
+                ind[i] = Array.IndexOf(minim_copy, maxi);
+                minim[index] = minim[i];
+                minim[i] = maxi;
+                minim_copy[Array.IndexOf(minim_copy, maxi)] = double.MinValue;
+            }
+            enter = String.Join(" ", minim);
+            Console.WriteLine(enter);
+            enter = String.Join(" ", ind);
+            Console.WriteLine(enter);
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    A[i, j] = B[ind[i], j];
+                }
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0,4}", A[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region 10 level 3
+            Console.WriteLine("Task 10 (3 level)");
+            Console.WriteLine("Введите кол-во строк матрицы, потом столбцов");
+            p = true;
+            sum = 0;
+            if (int.TryParse(Console.ReadLine(), out k) && k > 0 && int.TryParse(Console.ReadLine(), out int h) && h > 0)
+            {
+                A = new double[k, h];
+                for (int i = 0; i < k; i++)
+                {
+                    Console.WriteLine($"Напишите {h} чисел в {i} строке");
+                    for (int j = 0; j < h; j++)
+                    {
+                        if (double.TryParse(Console.ReadLine(), out element)) { A[i, j] = element; }
+                        else
+                        {
+                            Console.WriteLine("Попробуйте снова");
+                            p = false;
+                            break;
+                        }
+                    }
+                    if (!p) break;
+                }
+                for (int i = 0; i < k; i++)
+                {
+                    double[] array = new double[h];
+                    if (i % 2 == 0)
+                    {
+                        for (int f = 0; f < h; f++)
+                        {
+                            array[f] = A[i, f];
+                        }
+                        Array.Sort(array); Array.Reverse(array);
+                        for (int f = 0; f < h; f++)
+                        {
+                            A[i,f] = array[f];
+                        }
+                    }
+                    else
+                    {
+                        for (int f = 0; f < h; f++)
+                        {
+                            array[f] = A[i, f];
+                        }
+                        Array.Sort(array);
+                        for (int f = 0; f < h; f++)
+                        {
+                            A[i, f] = array[f];
+                        }
+                    }
+                }
+                for (int i = 0; i < k; i++)
+                {
+                    for (int j = 0; j < h; j++)
+                    {
+                        Console.Write("{0,4}", A[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Попробуйте снова");
+                return;
+            }
+            #endregion
+
+            #region 11 level 3
+            Console.WriteLine("Task 11 (3 level)");
+            Console.WriteLine("Введите кол-во строк матрицы, потом столбцов");
+            p = true;
+            sum = 0;
+            if (int.TryParse(Console.ReadLine(), out k) && k > 0 && int.TryParse(Console.ReadLine(), out h) && h > 0)
+            {
+                A = new double[k, h];
+                for (int i = 0; i < k; i++)
+                {
+                    Console.WriteLine($"Напишите {h} чисел в {i} строке");
+                    for (int j = 0; j < h; j++)
+                    {
+                        if (double.TryParse(Console.ReadLine(), out element)) { A[i, j] = element; }
+                        else
+                        {
+                            Console.WriteLine("Попробуйте снова");
+                            p = false;
+                            break;
+                        }
+                    }
+                    if (!p) break;
+                }
+                index1 = 0; index2 = 0;
+                B = new double[k, h];
+                for (int i = 0; i < k; i++)
+                {
+                    p = true;
+                    for (int j = 0; j < h; j++)
+                    {
+                        if (A[i, j] == 0) { p = false; break;  }
+                    }
+                    if (!p) continue;
+                    else
+                    {
+                        for (int j = 0; j < h; j++)
+                        {
+                            
+                            B[index2, j] = A[i,j];
+                        }
+                        index2 += 1;
+                    }
+                    
+                }
+                for (int i = 0; i < index2; i++)
+                {
+                    for (int j = 0; j < h; j++)
+                    {
+                        Console.Write("{0,4}", B[i, j]);
+
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Попробуйте снова");
+                return;
+            }
+            #endregion
+        }
+    }
+}
