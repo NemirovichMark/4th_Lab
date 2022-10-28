@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace LAB4
     {
         static void Main(string[] args)
         {
-            task3_1();
+            task3_11();
         }
         static void task1_3()
         {
@@ -91,19 +92,31 @@ namespace LAB4
                     }
                 }
             }
-            n--;
-            for (int i = maxindex1; i < n; i++)
-                for (int j = 0; j < m; j++)
-                    a[i, j] = a[i + 1, j];
-            m--;
-            for (int i = 0; i < n; i++)
-                for (int j = maxindex2; j < m; j++)
-                    a[i, j] = a[i, j + 1];
+            int k = 0, l = 0;
+            int[,] b = new int[5, 6];
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < m; j++)
+                if (i != maxindex1)
                 {
-                    Console.Write(a[i, j]);
+                    for (int j = 0; j < m; j++)
+                    {
+                        if (j != maxindex2)
+                        {
+                            b[l, k] = a[i, j];
+                            k++;
+                        }
+                    }
+                }
+                else
+                    l--;
+                l++;
+                k = 0;
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < m - 1; j++)
+                {
+                    Console.Write(b[i, j]);
                     Console.Write(" ");
                 }
                 Console.WriteLine();
@@ -197,7 +210,7 @@ namespace LAB4
         static void task1_29()
         {
             int[,] a = new int[5, 7] {{1,2,3,4,5,6,7 },
-                                      {7,8,-9,12,-11,4,12},
+                                      {7,8,-9,2,-11,4,12},
                                       {14,15,16,1,2,3,4},
                                       {-1,4,3,6,2,8,-3},
                                       {14,-15,-16,1,-2,3,4}};
@@ -211,22 +224,26 @@ namespace LAB4
                     index = j;
                 }
             }
-            if (index != m - 1)
+            int[,] b = new int[5, 6];
+            for (int i = 0;i < n;i++)
             {
-                m--;
-                for (int i = 0; i < n; i++)
+                for (int j = 0;j <= index;j++)
                 {
-                    for (int j = index + 1; j < m; j++)
-                    {
-                        a[i, j] = a[i, j + 1];
-                    }
+                    b[i, j] = a[i, j];
                 }
             }
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < m; j++)
+                for (int j = index + 1; j < m - 1; j++)
                 {
-                    Console.Write(a[i, j]);
+                    b[i, j] = a[i, j + 1];
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m - 1; j++)
+                {
+                    Console.Write(b[i, j]);
                     Console.Write(" ");
                 }
                 Console.WriteLine();
@@ -282,7 +299,7 @@ namespace LAB4
                                       {-1,4,3,-6,20,14},
                                       {1,2,3,4,5,6 } };
             int n = 6, m = 6;
-            int maxelem = 0, index1 = 0;
+            int maxelem = -10000000, index1 = 0;
             for (int i = 0; i < n; i++)
             {
                 if (a[i, i] > maxelem)
@@ -657,9 +674,9 @@ namespace LAB4
             int n = 7, m = 5;
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0;j < m;j++)
+                for (int j = 0; j < m; j++)
                 {
-                    if (a[i,j] == 0)
+                    if (a[i, j] == 0)
                     {
                         n--;
                         int k = i;
@@ -671,11 +688,15 @@ namespace LAB4
                     }
                 }
             }
+            int[,] b = new int[n, m];
+            for (int i = 0;i < n; i++)
+                for (int j = 0;j < m;j++)
+                    b[i,j] = a[i,j];
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < m; j++)
                 {
-                    Console.Write(a[i, j]);
+                    Console.Write(b[i, j]);
                     Console.Write(" ");
                 }
                 Console.WriteLine();
