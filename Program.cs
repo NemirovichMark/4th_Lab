@@ -430,51 +430,42 @@ namespace TaskForLab4
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < u; j++)
                     lol[i, j] = random.Next(50);
-            for (int i = 0; i < w; i++)
+            List<int> lol1 = new List<int>();
+            static int Minimum(int[,] M, int m)
             {
-                for (int j = 0; j < u; j++)
+                int imn = int.MaxValue;
+                for (int j = 0; j < M.GetLength(1); j++)
                 {
-                    Console.Write(lol[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine("\n");
-            List<int> llo = new List<int>();
-            static int MiN(int[,] lol, int u)
-            {
-                int lmin = int.MaxValue;
-                for (int j = 0; j < lol.GetLength(0); j++)
-                {
-                    if (lmin > lol[u, j])
+                    if (imn > M[m, j])
                     {
-                        lmin = lol[u, j];
+                        imn = M[m, j];
                     }
                 }
-                return lmin;
+                return imn;
             }
-            for (int i = 0; i < w; i++)
+            for (int i = 0; i < lol.GetLength(0); i++)
             {
-                llo.Add(MiN(lol, i));
+                lol1.Add(Minimum(lol, i));
             }
-            llo.Sort();
-            List<int> llo2 = new List<int>(llo);
-            int[,] LOL = new int[w, u];
-            for (int i = 0; i < w; i++)
+            List<int> lol2 = new List<int>(lol1);
+            lol1.Sort();
+
+            int[,] LOL = new int[5, 7];
+            for (int i = 0; i < lol.GetLength(0); i++)
             {
-                int L = llo2.IndexOf(llo[i]);
-                for (int j = 0; j < u; j++)
+                int L = lol2.IndexOf(lol1[i]);
+                for (int j = 0; j < lol.GetLength(1); j++)
                 {
                     LOL[i, j] = lol[L, j];
                 }
             }
-            for (int i = 0; i < w; i++)
+            for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < u; j++)
-                {
+                for (int j = 0; j < 7; j++)
                     Console.Write(LOL[i, j] + "\t");
-                }
                 Console.WriteLine();
             }
+            Console.WriteLine();
             #endregion
 
             #region Task#3.2
@@ -647,49 +638,32 @@ namespace TaskForLab4
             for (int i = 0; i < h; i++)
                 for (int j = 0; j < h1; j++)
                     ArrA[i, j] = random.Next(0, 10);
-            int[] C = new int[h];
-            int h2 = 0;
+            int pop = 0;
             for (int i = 0; i < h; i++)
             {
                 for (int j = 0; j < h1; j++)
                 {
-
                     if (ArrA[i, j] == 0)
                     {
-                        C[i] = i;
-                        h2++;
+                        for (int k = i; k < h - 1; k++)
+                        {
+                            for (int l = 0; l < h1; l++)
+                            {
+                                ArrA[k, l] = ArrA[k + 1, l];
+                            }
+                        }
+                        pop++;
                         break;
                     }
                 }
             }
-            if (h2 > 0)
+            for (int i = 0; i < h - pop; i++)
             {
-                int[,] Arr_A = new int[h2, h1];
-                int H = 0;
-                for (int i = 0; i < h; i++)
+                for (int j = 0; j < h1; j++)
                 {
-                    for (int j = 0; j < h1; j++)
-                    {
-                        Arr_A[H, j] = ArrA[i, j];
-                        H++;
-                    }
+                    Console.Write(ArrA[i, j] + "\t");
                 }
-                for (int i = 0; i < h2; i++)
-                {
-                    for (int j = 0; j < h1; j++)
-                    {
-                        Console.Write(Arr_A[i, j] + "\t");
-                    }
-                    Console.WriteLine();
-                }
-            }
-            else if (h2 == h)
-            {
-                Console.WriteLine("Удалены все строки");
-            }
-            else
-            {
-                Console.WriteLine("Нет нулевых элементов");
+                Console.WriteLine();
             }
             #endregion
         }
