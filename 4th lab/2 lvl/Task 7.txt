@@ -36,19 +36,17 @@ class Programm
 
         double max = matrix[0][0];
         int ind = 0;
-        int k = 0;
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
-            if (matrix[i][k] > max)
+            if (matrix[i][i] > max)
             {
-                max = matrix[i][k];
+                max = matrix[i][i];
                 ind = i;
             }
-            k++;
         }
 
         //int g = 1;
-        for(int i = 0; i < ind; i++)
+        for (int i = 0; i < ind; i++)
         {
             for (int j = i + 1; j < n; j++)
             {
