@@ -1,0 +1,74 @@
+using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
+class Programm
+{
+    static void Main()
+    {
+        int m = 5, n = 8;
+        string[] row;
+
+        List<List<int>> matrix = new List<List<int>>();
+
+        Console.WriteLine(" Enter the matrix");
+        for (int i = 0; i < m; i++)
+        {
+            matrix.Add(new List<int>());
+
+            while (true)
+            {
+                row = Console.ReadLine().Split(" ");
+                if (row.Length != n - 1)
+                {
+                    Console.WriteLine(" Enter the correct data");
+                    continue;
+                }
+                break;
+            }
+
+            for (int j = 0; j < n - 1; j++)
+            {
+                int x;
+                int.TryParse(row[j], out x);
+                matrix[i].Add(x);
+            }
+        }
+
+        string[] r_vector;
+        List<int> vector = new List<int>();
+        Console.WriteLine(" Enter the vector");
+        while (true)
+        {
+            r_vector = Console.ReadLine().Split(" ");
+            if (r_vector.Length != 5)
+            {
+                Console.WriteLine(" Enter the correct data");
+                continue;
+            }
+            break;
+        }
+        for (int j = 0; j < 5; j++)
+        {
+            int y;
+            int.TryParse(r_vector[j], out y);
+            vector.Add(y);
+        }
+
+        for(int i = 0; i < m; i++)
+        {
+            matrix[i].Insert(n - 1,vector[i]);
+        }
+
+        Console.WriteLine(" Matrix:");
+        for (int i = 0; i < matrix.Count; i++)
+        {
+            for (int j = 0; j < matrix[i].Count; j++)
+            {
+                Console.Write(matrix[i][j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}

@@ -1,0 +1,94 @@
+using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Security;
+
+class Programm
+{
+    static void Main()
+    {
+        int m, n;
+        string[] row;
+
+        Console.WriteLine(" Enter anount row");
+        while (true)
+        {
+            if (!int.TryParse(Console.ReadLine(), out m))
+            {
+                Console.WriteLine(" Enter the correct data");
+                continue;
+            }
+            if (m < 0)
+            {
+                Console.WriteLine(" row must be positive");
+                continue;
+            }
+            break;
+        }
+
+        Console.WriteLine(" Enter anount column");
+        while (true)
+        {
+            if (!int.TryParse(Console.ReadLine(), out n))
+            {
+                Console.WriteLine(" Enter the correct data");
+                continue;
+            }
+            if (n < 0)
+            {
+                Console.WriteLine(" column must be positive");
+                continue;
+            }
+            break;
+        }
+
+        List<List<double>> matrix = new List<List<double>>();
+
+        for (int i = 0; i < m; i++)
+        {
+            matrix.Add(new List<double>());
+
+            while (true)
+            {
+                row = Console.ReadLine().Split(" ");
+                if (row.Length != n)
+                {
+                    Console.WriteLine(" Enter the correct data");
+                    continue;
+                }
+                break;
+            }
+
+            for (int j = 0; j < n; j++)
+            {
+                double x;
+                double.TryParse(row[j], out x);
+                matrix[i].Add(x);
+            }
+        }
+
+        for (int i = 0; i < matrix.Count; i++)
+        {
+            for (int j = 0; j < matrix[i].Count; j++)
+            {
+                if (matrix[i][j] == 0)
+                {
+                    matrix.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
+        Console.WriteLine(" Matrix:");
+        for (int i = 0; i < matrix.Count; i++)
+        {
+            for (int j = 0; j < matrix[i].Count; j++)
+            {
+                Console.Write(matrix[i][j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}

@@ -1,0 +1,126 @@
+using System;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Security;
+
+class Programm
+{
+    static void Main()
+    {
+        int m = 7, n = 5;
+        string[] row;
+
+
+        List<List<double>> matrix = new List<List<double>>();
+        Console.WriteLine(" Please enter the matrix 7 x 5");
+        for (int i = 0; i < m; i++)
+        {
+            matrix.Add(new List<double>());
+
+            while (true)
+            {
+                row = Console.ReadLine().Split(" ");
+                if (row.Length != n)
+                {
+                    Console.WriteLine(" Enter the correct data");
+                    continue;
+                }
+                break;
+            }
+
+            for (int j = 0; j < n; j++)
+            {
+                double x;
+                double.TryParse(row[j], out x);
+                matrix[i].Add(x);
+            }
+        }
+
+        List<List<double>> matrix_new = new List<List<double>>();
+        for (int i = 0; i < m; i++)
+        {
+            matrix_new.Add(new List<double>());
+            for (int j = 0; j < n; j++)
+            {
+                matrix_new[i].Add(matrix[i][j]);
+            }
+        }
+
+        int k = 0;
+        List<int> amount = new List<int>();
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (matrix[i][j] > 0)
+                {
+                    k++;
+                }
+            }
+            amount.Add(k);
+            k = 0;
+        }
+
+
+        List<int> amount_new = new List<int>();
+        for (int i = 0; i < amount.Count; i++)
+        {
+            amount_new.Add(amount[i]);
+        }
+        amount_new.Sort();
+        amount_new.Reverse();
+
+        List<int> ind = new List<int>();
+        for (int i = 0; i < amount_new.Count; i++)
+        {
+            for (int j = 0; j < amount_new.Count; j++)
+            {
+                if (amount_new[i] == amount[j])
+                {
+                    ind.Add(j);
+                    amount[j] = -1;
+                    break;
+                }
+            }
+        }
+
+        int d = 0;
+        for (int i = 0; i < ind.Count; i++)
+        {
+            d = ind[i];
+            matrix[i].Clear();
+            for (int j = 0; j < n; j++)
+            {
+                matrix[i].Add(matrix_new[d][j]);
+            }
+        }
+
+        Console.WriteLine();
+        Console.WriteLine(" Amount new");
+        for (int i = 0; i < amount.Count; i++)
+        {
+            Console.Write(amount_new[i] + " ");
+        }
+
+        Console.WriteLine();
+
+        Console.WriteLine(" Matrix:");
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                Console.Write(matrix[i][j] + " ");
+            }
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+
+        Console.WriteLine(" Ind");
+        for (int i = 0; i < ind.Count; i++)
+        {
+            Console.Write(ind[i] + " ");
+        }
+    }
+}
