@@ -11,7 +11,7 @@ class Programm
         int m = 7, n = 5;
         string[] row;
 
-       
+
         List<List<double>> matrix = new List<List<double>>();
         Console.WriteLine(" Please enter the matrix 7 x 5");
         for (int i = 0; i < m; i++)
@@ -41,7 +41,7 @@ class Programm
         for (int i = 0; i < m; i++)
         {
             matrix_new.Add(new List<double>());
-            for(int j = 0; j < n; j++)
+            for (int j = 0; j < n; j++)
             {
                 matrix_new[i].Add(matrix[i][j]);
             }
@@ -49,18 +49,19 @@ class Programm
 
         int k = 0;
         List<int> amount = new List<int>();
-        for(int i = 0; i < m; i++)
+        for (int i = 0; i < m; i++)
         {
-            for(int j = 0; j < n; j++)
+            for (int j = 0; j < n; j++)
             {
                 if (matrix[i][j] > 0)
                 {
-                    k++;   
+                    k++;
                 }
             }
             amount.Add(k);
             k = 0;
         }
+
 
         List<int> amount_new = new List<int>();
         for (int i = 0; i < amount.Count; i++)
@@ -73,17 +74,19 @@ class Programm
         List<int> ind = new List<int>();
         for (int i = 0; i < amount_new.Count; i++)
         {
-            for (int j = 0; j < amount.Count; j++)
+            for (int j = 0; j < amount_new.Count; j++)
             {
-                if (amount[j] == amount_new[i])
+                if (amount_new[i] == amount[j])
                 {
                     ind.Add(j);
+                    amount[j] = -1;
+                    break;
                 }
             }
         }
 
         int d = 0;
-        for (int i = 0; i < m; i++)
+        for (int i = 0; i < ind.Count; i++)
         {
             d = ind[i];
             matrix[i].Clear();
@@ -93,10 +96,11 @@ class Programm
             }
         }
 
-        Console.WriteLine(" Amount");
-        for(int i = 0; i < amount.Count; i++)
+        Console.WriteLine();
+        Console.WriteLine(" Amount new");
+        for (int i = 0; i < amount.Count; i++)
         {
-            Console.Write(amount[i] + " ");
+            Console.Write(amount_new[i] + " ");
         }
 
         Console.WriteLine();
