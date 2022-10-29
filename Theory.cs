@@ -95,7 +95,8 @@ namespace _4th_Lab
 
             #region 4.1.12
 
-            int i_w = 0, j_w = 0, n_w = 6, m_w = 7, imax_w = 0, jmax_w = 0;
+            int i_w = 0, j_w = 0,  imax_w = 0, jmax_w = 0;
+            const int n_w = 6, m_w = 7;
             double max_w;
             double[,] a_w = new double[n_w, m_w];
             Console.WriteLine($"enter {n_w * m_w} elements");
@@ -561,9 +562,11 @@ namespace _4th_Lab
 
             #region 4.3.1
 
-            int i_p = 0, j_p = 0, n_p = 7, m_p = 5, imin_p;
-            double min_p, p_p;
+            int i_p = 0, j_p = 0, n_p = 7, m_p = 5, imin_p=0;
+            double min_p, max_p, d_p;
             double[,] A_p = new double[n_p, m_p];
+            double[] B_p = new double[n_p];
+            double[,] C_p = new double[n_p, m_p];
             Console.WriteLine($"enter {n_p * m_p} elements");
             for (i_p = 0; i_p < n_p; i_p++)
             {
@@ -574,50 +577,58 @@ namespace _4th_Lab
             }
             Console.WriteLine();
             Console.WriteLine("array A: ");
-            min_p = A_p[0, 0];
-            imin_p = 0;
+            max_p = A_p[0, 0];
+            d_p = A_p[0, 0];
             for (i_p = 0; i_p < n_p; i_p++)
             {
+                min_p = A_p[i_p, 0];
                 for (j_p = 0; j_p < m_p; j_p++)
                 {
                     Console.Write($"{A_p[i_p, j_p]} ");
                     if (A_p[i_p, j_p] < min_p)
                     {
                         min_p = A_p[i_p, j_p];
-                        imin_p = i_p;
+                    }
+                    if (A_p[i_p, j_p] > max_p)
+                    {
+                        max_p = A_p[i_p, j_p];
                     }
                 }
+                B_p[i_p] = min_p;
                 Console.WriteLine();
             }
-            Console.WriteLine();
-            for (i_p = n_p - 1; i_p > 0; i_p--)
+            for(int k_p=0; k_p<n_p; k_p++)
             {
-                for (j_p = m_p - 1; j_p >= 0; j_p--)
+                if (B_p[k_p] < d_p)
                 {
-                    p_p = A_p[i_p, j_p];
-                    A_p[i_p, j_p] = A_p[imin_p, j_p];
-                    A_p[imin_p, j_p] = p_p;
+                    d_p = B_p[k_p];
                 }
-                min_p = A_p[i_p - 1, 0];
-                imin_p = i_p - 1;
-                for (int k_p = i_p - 1; k_p >= 0; k_p--)
+            }
+            Console.WriteLine();
+            for (i_p = 0; i_p < n_p; i_p++)
+            {
+                min_p = d_p-1;
+                for (int k_p=0; k_p < n_p; k_p++)
                 {
-                    for (int y_p = m_p - 1; y_p >= 0; y_p--)
+                    if (B_p[k_p] > min_p)
                     {
-                        if (A_p[k_p, y_p] < min_p)
-                        {
-                            min_p = A_p[k_p, y_p];
-                            imin_p = k_p;
-                        }
+                        min_p=B_p[k_p];
+                        imin_p = k_p;
                     }
                 }
+                B_p[imin_p] = d_p-1;
+                for (j_p = 0; j_p < m_p; j_p++)
+                {
+                    C_p[i_p, j_p] = A_p[imin_p, j_p];
+                }
+                
             }
             Console.WriteLine($"new array: ");
             for (i_p = 0; i_p < n_p; i_p++)
             {
                 for (j_p = 0; j_p < m_p; j_p++)
                 {
-                    Console.Write($"{A_p[i_p, j_p]} ");
+                    Console.Write($"{C_p[i_p, j_p]} ");
                 }
                 Console.WriteLine();
             }
@@ -791,9 +802,10 @@ namespace _4th_Lab
 
             #region 4.3.8
 
-            int i_h = 0, j_h = 0, n_h = 7, m_h = 5, s_h = 0, maxs = 0, imaxs = 0, ii_h;
-            double p_h;
+            int i_h = 0, j_h = 0, n_h = 7, m_h = 5, s_h = 0, maxb_h, imaxs = 0, k_h=0;
             double[,] A_h = new double[n_h, m_h];
+            int[] B_h = new int[n_h];
+            double[,] С_h = new double[n_h, m_h];
             Console.WriteLine($"enter {n_h * m_h} elements");
             for (i_h = 0; i_h < n_h; i_h++)
             {
@@ -814,40 +826,25 @@ namespace _4th_Lab
                         s_h++;
                     }
                 }
+                B_h[i_h] = s_h;
                 Console.WriteLine();
-                if (s_h > maxs)
-                {
-                    maxs = s_h;
-                    imaxs = i_h;
-                }
             }
             Console.WriteLine();
-            for (i_h = 0; i_h < n_h - 1; i_h++)
+            for (i_h = 0; i_h < n_h; i_h++)
             {
+                maxb_h = -1;
+                for(k_h=0; k_h < n_h; k_h++)
+                {
+                    if (B_h[k_h] > maxb_h)
+                    {
+                        imaxs = k_h;
+                        maxb_h = B_h[k_h];
+                    }
+                }
+                B_h[imaxs] = -1;
                 for (j_h = 0; j_h < m_h; j_h++)
                 {
-                    p_h = A_h[i_h, j_h];
-                    A_h[i_h, j_h] = A_h[imaxs, j_h];
-                    A_h[imaxs, j_h] = p_h;
-                }
-                maxs = 0;
-                for (ii_h = i_h + 1; ii_h < n_h; ii_h++)
-                {
-                    s_h = 0;
-
-                    for (j_h = 0; j_h < m_h; j_h++)
-                    {
-                        if (A_h[ii_h, j_h] > 0)
-                        {
-                            s_h++;
-                        }
-
-                    }
-                    if (s_h > maxs)
-                    {
-                        maxs = s_h;
-                        imaxs = ii_h;
-                    }
+                    С_h[i_h, j_h] = A_h[imaxs, j_h];
                 }
             }
             Console.WriteLine($"new array: ");
@@ -855,7 +852,7 @@ namespace _4th_Lab
             {
                 for (j_h = 0; j_h < m_h; j_h++)
                 {
-                    Console.Write($"{A_h[i_h, j_h]} ");
+                    Console.Write($"{С_h[i_h, j_h]} ");
                 }
                 Console.WriteLine();
             }
@@ -865,14 +862,14 @@ namespace _4th_Lab
 
             #region 4.3.10
 
-            int i_g = 0, j_g = 0, jmax_g = 0, jj_g, jmin_g = 0;
+            int i_g = 0, j_g = 0, k_g=0;
             const int n_g = 5, m_g = 6;
             double[,] A_g = new double[n_g, m_g] { { 1, 4, 3, 2, 5, 6 },
                                                    { 1, 2, 3, 4, 0, -1 },
                                                    { 1, 2, 7, 3, -1, 8 },
                                                    { -2, 1, 3, -1, 2, 7 },
                                                    { 9, 2, 1, 3, 5, 7 } };
-            double max_g = A_g[0, 0], p_g, min_g = A_g[0, 1];
+            double[] B_g = new double[m_g/2];
             Console.WriteLine("array: ");
             for (i_g = 0; i_g < n_g; i_g++)
             {
@@ -888,59 +885,30 @@ namespace _4th_Lab
             {
                 for (j_g = 0; j_g < m_g; j_g = j_g + 2)
                 {
-                    if (A_g[i_g, j_g] > max_g)
-                    {
-                        max_g = A_g[i_g, j_g];
-                        jmax_g = j_g;
-                    }
+                    B_g[k_g] = A_g[i_g, j_g];
+                    k_g++;
                 }
-                for (j_g = 0; j_g < m_g - 2; j_g = j_g + 2)
+                Array.Sort(B_g);
+                k_g--;
+                for (j_g = 0; j_g < m_g; j_g = j_g + 2)
                 {
-                    p_g = A_g[i_g, j_g];
-                    A_g[i_g, j_g] = A_g[i_g, jmax_g];
-                    A_g[i_g, jmax_g] = p_g;
-
-                    max_g = A_g[i_g, j_g + 2];
-                    jmax_g = j_g + 2;
-                    for (jj_g = j_g + 2; jj_g < m_g; jj_g = jj_g + 2)
-                    {
-                        if (A_g[i_g, jj_g] > max_g)
-                        {
-                            max_g = A_g[i_g, jj_g];
-                            jmax_g = jj_g;
-                        }
-
-                    }
+                    A_g[i_g,j_g] = B_g[k_g];
+                    k_g--;
                 }
-
-
-
+                k_g = 0;
                 for (j_g = 1; j_g < m_g; j_g = j_g + 2)
                 {
-                    if (A_g[i_g, j_g] < min_g)
-                    {
-                        min_g = A_g[i_g, j_g];
-                        jmin_g = j_g;
-                    }
+                    B_g[k_g] = A_g[i_g, j_g];
+                    k_g++;
                 }
-                for (j_g = 1; j_g < m_g - 2; j_g = j_g + 2)
+                k_g = 0;
+                Array.Sort(B_g);
+                for (j_g = 1; j_g < m_g; j_g = j_g + 2)
                 {
-                    p_g = A_g[i_g, j_g];
-                    A_g[i_g, j_g] = A_g[i_g, jmin_g];
-                    A_g[i_g, jmin_g] = p_g;
-
-                    min_g = A_g[i_g, j_g + 2];
-                    jmin_g = j_g + 2;
-                    for (jj_g = j_g + 2; jj_g < m_g; jj_g = jj_g + 2)
-                    {
-                        if (A_g[i_g, jj_g] < min_g)
-                        {
-                            min_g = A_g[i_g, jj_g];
-                            jmin_g = jj_g;
-                        }
-
-                    }
+                    A_g[i_g, j_g] = B_g[k_g];
+                    k_g++;
                 }
+                k_g = 0;
             }
             Console.WriteLine($"new array: ");
             for (i_g = 0; i_g < n_g; i_g++)
@@ -957,14 +925,13 @@ namespace _4th_Lab
 
             #region 4.3.11
 
-            int i_m = 0, j_m = 0, s_m = 0, len_m = 0;
+            int i_m = 0, j_m = 0, s_m = 0, len_m = 0, k_m = 0;
             const int n_m = 5, m_m = 6;
-            double[,] A_m = new double[n_m + 1, m_m] { { 4, 1, 1, 7,3,2 },
-                                                     { 8, 0, 3, 4,0,9 },
-                                                     { 1, 1, 7, 3,-1,7 },
-                                                     { -2, 1, 0, 0,1,7 },
-                                                     { 9, 1, 1, 1, 5, 7 },
-                                                     { 0, 0, 0, 0, 0, 0 } };
+            double[,] A_m = new double[n_m, m_m] { { 4, 2, 1, 7,3,2 },
+                                                   { 8, 0, 3, 4,0,9 },
+                                                   { 1, 1, 7, 3,-1,7 },
+                                                   { -2, 1, 0, 0,1,7 },
+                                                   { 9, 1, 1, 1, 5, 7 } };
             Console.WriteLine("array: ");
             for (i_m = 0; i_m < n_m; i_m++)
             {
@@ -984,6 +951,7 @@ namespace _4th_Lab
                 s_m = 0;
             }
             Console.WriteLine();
+            double[,] B_m = new double[len_m, m_m];
 
             for (i_m = 0; i_m < n_m; i_m++)
             {
@@ -995,44 +963,18 @@ namespace _4th_Lab
                         break;
                     }
                 }
-                if (s_m > 0)
+                if (s_m == 0)
                 {
                     for (j_m = 0; j_m < m_m; j_m++)
                     {
-                        A_m[i_m, j_m] = A_m[i_m + 1, j_m];
+                        B_m[k_m, j_m] = A_m[i_m, j_m];
+                        
                     }
-                    s_m = 0;
-                    for (int ii_m = i_m + 1; ii_m < n_m; ii_m++)
-                    {
-                        for (j_m = 0; j_m < m_m; j_m++)
-                        {
-                            if (A_m[ii_m, j_m] == 0)
-                            {
-                                s_m++;
-                                break;
-                            }
-                        }
-                        if (s_m == 0)
-                        {
-                            for (j_m = 0; j_m < m_m; j_m++)
-                            {
-                                A_m[i_m, j_m] = A_m[ii_m, j_m];
-                            }
-                            for (int iii_m = ii_m; iii_m < n_m; iii_m++)
-                            {
-                                for (j_m = 0; j_m < m_m; j_m++)
-                                {
-                                    A_m[ii_m, j_m] = A_m[iii_m, j_m];
-                                }
-                            }
-                            break;
-                        }
-                        s_m = 0;
-
-                    }
+                    k_m++;
                 }
                 s_m = 0;
             }
+            A_m = B_m;
             Console.WriteLine($"new array: ");
             for (i_m = 0; i_m < len_m; i_m++)
             {
