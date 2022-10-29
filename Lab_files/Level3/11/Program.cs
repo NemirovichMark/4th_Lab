@@ -58,7 +58,7 @@ namespace LaboratoryL3N11
                 {
                     index = 0;
                 }
-                if (i == zero_index[index])
+                else if (i == zero_index[index]) //Fix (+else for handling void list)
                 {
                     index += 1;
                     continue;

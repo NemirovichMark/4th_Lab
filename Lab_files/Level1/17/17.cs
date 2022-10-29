@@ -44,9 +44,15 @@ namespace LaboratoryL1N17
                     }
                     array[i,j] = a;
                 }
-                double temp = array[i,0];
-                array[i,0] = array[i,index];
-                array[i,index] = temp;
+                int temp_i = index - 1;
+                while (index != 0)
+                {
+                    double temp = array[i, temp_i];
+                    array[i, temp_i] = array[i, index];
+                    array[i,index] = temp;
+                    index--;
+                    temp_i--;
+                }
             }
             
 
