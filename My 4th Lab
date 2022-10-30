@@ -1,0 +1,1468 @@
+#region // level 1 task 3
+
+int[,] NewArray = new int[4, 4];
+Random r = new Random();
+for (int i = 0; i < 4; i++)
+{
+    for (int j = 0; j < 4; j++)
+    {
+        NewArray[i, j] = r.Next(50);
+        Console.Write(NewArray[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+Console.WriteLine();
+int s = 0;
+for (int i = 0; i < 4; i++)
+{
+    s += NewArray[i, i];
+}
+
+Console.WriteLine($"Sum of diagonal element is {s}");
+
+#endregion
+
+
+
+#region // level 1 task 6
+
+int[,] NewArray = new int[4, 7];
+Random r = new Random();
+for (int i = 0; i < 4; i++)
+{
+    for (int j = 0; j < 7; j++)
+    {
+        NewArray[i, j] = r.Next(50);
+        Console.Write(NewArray[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+int[] rez = new int[NewArray.GetLength(0)];
+int k = 0;
+for (int i = 0; i < 4; i++)
+{
+    int minimal = 1000;
+    for (int j = 0; j < 7; j++)
+    {
+        if (NewArray[i, j] < minimal)
+        {
+            minimal = NewArray[i, j];
+        }
+    }
+    rez[k] = minimal;
+    k++;
+}
+
+Console.WriteLine();
+Console.WriteLine($"Array with minimal elemen is");
+for (int i = 0; i < rez.Length; i++)
+{
+    Console.Write(rez[i] + "\t");
+}
+#endregion
+
+
+
+#region // level 1 task 12
+int lines = 6;
+int columns = 7;
+int[,] a = new int[lines, columns];
+Random r = new Random();
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = r.Next(50);
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+int maximum = a[0, 0];
+int imax = 0;
+int jmax = 0;
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        if (a[i, j] > maximum)
+        {
+            maximum = a[i, j];
+            imax = i;
+            jmax = j;
+        }
+    }
+}
+
+Console.WriteLine($"Maximum element is {maximum}");
+lines -= 1;
+for (int i = imax; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = a[i + 1, j];
+    }
+}
+columns -= 1;
+for (int i = 0; i < lines; i++)
+{
+    for (int j = jmax; j < columns; j++)
+    {
+        a[i, j] = a[i, j + 1];
+    }
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 1 task 13
+int lines = 5;
+int columns = 5;
+int[,] a = new int[lines, columns];
+Random r = new Random();
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = r.Next(50);
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+int maximum = a[0, 0];
+int jmax = 0;
+for (int i = 0; i < lines; i++)
+{
+    if (a[i, i] > maximum)
+    {
+        maximum = a[i, i];
+        jmax = i;
+    }
+}
+
+
+Console.WriteLine($"Maximum element is {maximum}");
+Console.WriteLine();
+
+int ChColumn = 4;
+int cur = 0;
+for (int i = 0; i < lines; i++)
+{
+    cur = a[i, jmax];
+    a[i, jmax] = a[i, ChColumn];
+    a[i, ChColumn] = cur;
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 1 task 17
+
+Console.Write("Enter numbers of lines");
+int lines = Convert.ToInt32(Console.ReadLine());
+Console.Write("Enter numbers of columns");
+int columns = Convert.ToInt32(Console.ReadLine());
+
+int[,] b = new int[lines, columns];
+Random r = new Random();
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        b[i, j] = r.Next(50);
+        Console.Write(b[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+for (int i = 0; i < lines; i++)
+{
+    int minimal = b[i, 0];
+    int jmin = 0;
+    int curmin = 0;
+    for (int j = 0; j < columns; j++)
+    {
+        if (b[i, j] < minimal)
+        {
+            minimal = b[i, j];
+            jmin = j;
+        }
+    }
+    if (jmin != 0)
+    {
+        curmin = b[i, jmin];
+        int c = jmin;
+        do
+        {
+            b[i, c] = b[i, c - 1];
+            c--;
+        } while (c - 1 >= 0);
+        b[i, 0] = curmin;
+    }
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(b[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 1 task 29
+int lines = 5;
+int columns = 7;
+
+int[,] a = new int[lines, columns];
+Random r = new Random();
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = r.Next(-50, 50);
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+int minimal = a[1, 0];
+int minj = 0;
+for (int j = 0; j < columns; j++)
+{
+    if (Math.Abs(a[1, j]) < minimal)
+    {
+        minimal = a[1, j];
+        minj = j;
+    }
+}
+Console.WriteLine($"Minimal element in second line is {minimal}");
+Console.WriteLine();
+
+columns -= 1;
+for (int i = 0; i < lines; i++)
+{
+    for (int j = minj + 1; j < columns; j++)
+    {
+        a[i, j] = a[i, j + 1];
+    }
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 1 task 31
+int lines = 5;
+int columns = 8;
+
+int[,] a = new int[lines, columns];
+Random r = new Random();
+
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns - 1; j++)
+    {
+        a[i, j] = r.Next(-50, 50);
+    }
+}
+
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+int minimal = a[4, 0];
+int minj = 0;
+for (int j = 0; j < columns - 1; j++)
+{
+    if (a[4, j] < minimal)
+    {
+        minimal = a[4, j];
+        minj = j;
+    }
+}
+Console.WriteLine($"Minimal element in 5th line is {minimal}");
+Console.WriteLine();
+
+Console.Write("Enter vector B");
+Console.WriteLine();
+int[] B = new int[5];
+for (int i = 0; i < B.Length; i++)
+{
+    B[i] = Convert.ToInt32(Console.ReadLine());
+}
+
+for (int i = 0; i < lines; i++)
+{
+    for (int j = columns - 1; j > minj + 1; j--)
+    {
+        a[i, j] = a[i, j - 1];
+    }
+}
+for (int i = 0; i < lines; i++)
+{
+    a[i, minj + 1] = B[i];
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 2 task 9
+using System.Globalization;
+
+int lines = 6;
+int columns = 6;
+
+int[,] a = new int[lines, columns];
+Random r = new Random();
+
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = r.Next(-50, 50);
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+int maximum = 0;
+int maxi = 0;
+for (int i = 0; i < lines; i++)
+{
+    if (a[i, i] > maximum)
+    {
+        maximum = a[i, i];
+        maxi = i;
+    }
+}
+Console.WriteLine();
+Console.WriteLine($"Maximum element in main diagonal is {maximum}");
+Console.WriteLine();
+
+int c = 1;
+for (int i = 0; i < maxi; i++)
+{
+    for (int j = c; j < columns; j++)
+    {
+        a[i, j] = 0;
+    }
+    c++;
+}
+
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 2 task 7
+
+int lines = 6;
+int columns = 6;
+
+int[,] a = new int[lines, columns];
+Random r = new Random();
+
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = r.Next(-50, 50);
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+
+int maximum = 0;
+int maxi = 0;
+for (int i = 0; i < lines; i++)
+{
+    if (a[i, i] > maximum)
+    {
+        maximum = a[i, i];
+        maxi = i;
+    }
+}
+Console.WriteLine();
+Console.WriteLine($"Maximum element in main diagonal is {maximum}");
+Console.WriteLine();
+
+int c = 1;
+for (int i = 0; i < maxi; i++)
+{
+    for (int j = c; j < columns; j++)
+    {
+        a[i, j] = 0;
+    }
+    c++;
+}
+
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 2 task 8
+
+int lines = 6;
+int columns = 6;
+
+int[,] a = new int[lines, columns];
+Random r = new Random();
+
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = r.Next(-50, 50);
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+int c = 0;
+while (c < lines)
+{
+    int max1 = a[c, 0];
+    int jmax1 = 0;
+    int max2 = a[c + 1, 0];
+    int jmax2 = 0;
+    int cur = 0;
+    for (int j = 0; j < columns; j++)
+    {
+        if (a[c, j] > max1)
+        {
+            max1 = a[c, j];
+            jmax1 = j;
+        }
+        if (a[c + 1, j] > max2)
+        {
+            max2 = a[c + 1, j];
+            jmax2 = j;
+        }
+    }
+    cur = a[c, jmax1];
+    a[c, jmax1] = a[c + 1, jmax2];
+    a[c + 1, jmax2] = cur;
+    c += 2;
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+#region // level 2 task 9
+
+int lines = 6;
+int columns = 7;
+
+int[,] a = new int[lines, columns];
+Random r = new Random();
+
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        a[i, j] = r.Next(50);
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns / 2; j++)
+    {
+        int cur = a[i, j];
+        a[i, j] = a[i, columns - j - 1];
+        a[i, columns - j - 1] = cur;
+    }
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < lines; i++)
+{
+    for (int j = 0; j < columns; j++)
+    {
+        Console.Write(a[i, j] + "\t");
+    }
+    Console.WriteLine();
+}
+#endregion
+
+
+
+using System;
+using System.Collections.Generic;
+
+namespace N1
+{
+    class MainClass
+    {
+        const int left = 7, right = 5;
+        static double[,] matrix = new double[left, right];
+
+        static List<List<double>> normalMatrix = new List<List<double>>();
+
+        public static void Main(string[] args)
+        {
+            bool isClear = false;
+            do
+            {
+                if (InputMatrix(left, right))
+                    isClear = true;
+
+            } while (!isClear);
+
+
+            for (int i = 0; i < left; i++)
+            {
+                List<double> row = new List<double>();
+                for (int j = 0; j < right; j++)
+                {
+                    row.Add(matrix[i, j]);
+                }
+                normalMatrix.Add(row);
+            }
+
+            // Sorting rows
+            for (int i = 0; i < left; i++)
+            {
+                normalMatrix[i] = GnomeSort(normalMatrix[i]);
+            }
+
+            for (int i = 0; i < left; i++)
+            {
+                normalMatrix = GnomeSort(normalMatrix);
+            }
+
+
+            OutputMatrix(left, right);
+
+
+            Console.Read();
+        }
+
+        //Gnome Sort
+        static List<double> GnomeSort(List<double> unsortedArray)
+        {
+            var index = 1;
+            var nextIndex = index + 1;
+
+            while (index < unsortedArray.Count)
+            {
+                if (unsortedArray[index - 1] < unsortedArray[index])
+                {
+                    index = nextIndex;
+                    nextIndex++;
+                }
+                else
+                {
+                    double item1 = unsortedArray[index - 1], item2 = unsortedArray[index];
+                    double temp = item1;
+                    unsortedArray[index - 1] = unsortedArray[index];
+                    unsortedArray[index] = temp;
+
+                    index--;
+                    if (index == 0)
+                    {
+                        index = nextIndex;
+                        nextIndex++;
+                    }
+                }
+            }
+
+            return unsortedArray;
+        }
+
+        //Gnome Sort
+        static List<List<double>> GnomeSort(List<List<double>> unsortedArray)
+        {
+            var index = 1;
+            var nextIndex = index + 1;
+
+            while (index < unsortedArray.Count)
+            {
+                if (unsortedArray[index - 1][0] < unsortedArray[index][0])
+                {
+                    index = nextIndex;
+                    nextIndex++;
+                }
+                else
+                {
+                    List<double> item1 = unsortedArray[index - 1];
+                    List<double> temp = item1;
+                    unsortedArray[index - 1] = unsortedArray[index];
+                    unsortedArray[index] = temp;
+
+                    index--;
+                    if (index == 0)
+                    {
+                        index = nextIndex;
+                        nextIndex++;
+                    }
+                }
+            }
+
+            return unsortedArray;
+        }
+
+
+        /// <summary>
+        /// Entering of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool InputMatrix(int left, int right)
+        {
+            Console.WriteLine("Input numbers to fill the matrix:");
+
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Try againg.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
+
+
+        /// <summary>
+        /// Output of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        public static void OutputMatrix(int left, int right)
+        {
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    Console.Write($"{normalMatrix[i][j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+
+namespace N2
+{
+    class Program
+    {
+        public static Random rnd = new Random();
+
+        const int n = 7;
+
+        const int left = n, right = n;
+        static double[,] matrix = new double[left, right];
+
+        static List<List<double>> normalMatrix = new List<List<double>>();
+
+        static void Main(string[] args)
+        {
+            // Filling a two-dimensional array.
+            for (int i = 0; i < n; i++)
+            {
+                List<double> row = new List<double>();
+                for (int j = 0; j < n; j++)
+                {
+                    row.Add(rnd.Next(0, 9));
+                }
+                normalMatrix.Add(row);
+            }
+
+            OutputMatrix();
+
+            // Filling the outer layers with zeroes.
+            for (int i = 0; i < n; i++)
+            {
+                normalMatrix[0][i] = 0;
+                normalMatrix[i][0] = 0;
+                normalMatrix[n - 1][i] = 0;
+                normalMatrix[i][n - 1] = 0;
+            }
+
+            OutputMatrix();
+
+            Console.Read();
+        }
+
+
+        /// <summary>
+        /// Entering of the matrix within certain limits..
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool InputMatrix(int left, int right)
+        {
+            Console.WriteLine("Input numbers to fill the matrix:");
+
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Try againg.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Output matrix.
+        /// </summary>
+        public static void OutputMatrix()
+        {
+            Console.WriteLine();
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    Console.Write($"{normalMatrix[i][j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+
+namespace N3
+{
+    class Program
+    {
+
+        public static Random rnd = new Random();
+
+        const int n = 4;
+
+        const int left = n, right = n;
+        static double[,] matrix = new double[left, right];
+
+        static List<List<double>> normalMatrix = new List<List<double>>();
+
+        static List<double> answer = new List<double>();
+
+        public static void Main(string[] args)
+        {
+            // Заполнение двумерного массив.
+            for (int i = 0; i < n; i++)
+            {
+                List<double> row = new List<double>();
+                for (int j = 0; j < n; j++)
+                {
+                    row.Add(rnd.Next(0, 5));
+                }
+                normalMatrix.Add(row);
+            }
+
+            OutputMatrix();
+
+
+
+            double resUpper = 0;
+
+
+            Console.WriteLine("Подсчет первой части");
+            for (int k = n; k >= 0; k--)
+            {
+                int j = 0;
+                resUpper = 0;
+                for (int i = k; i < n; i++)
+                {
+                    resUpper += normalMatrix[i][j];
+                    Console.Write($"\nЧисло:{normalMatrix[i][j]}, Индекс элемента массива[{i}][{j}] ");
+                    j++;
+                }
+                answer.Add(resUpper);
+            }
+
+            Console.WriteLine();
+
+
+            Console.Write("\nПодсчет второй части");
+            resUpper = 0;
+
+            //int tempIndex = 0;
+            for (int k = 1; k <= n; k++)
+            {
+                int j = 0;
+                double resLower = 0;
+                resUpper = 0;
+                for (int i = k; i < n; i++)
+                {
+
+                    resUpper += normalMatrix[j][i];
+                    //resLower += normalMatrix[i][j];
+                    Console.Write($"\nЧисло:{normalMatrix[j][i]}, Индекс элемента массива[{j}][{i}] ");
+                    j++;
+                }
+                answer.Add(resUpper);
+                //answer.Add(resLower);
+            }
+
+            Console.WriteLine("\nThis is your answer");
+            for (int i = 1; i < answer.Count - 1; i++)
+            {
+                Console.Write($"{answer[i]} ");
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Ввод матрицы в определенных пределах.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool InputMatrix(int left, int right)
+        {
+            Console.WriteLine("Input numbers to fill the matrix:");
+
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Try againg.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Вывод матрицы
+        /// </summary>
+        public static void OutputMatrix()
+        {
+            Console.WriteLine();
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    Console.Write($"{normalMatrix[i][j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+
+namespace N4
+{
+    class MainClass
+    {
+
+        const int n = 3;
+        static double[,] matrix = new double[n, n];
+
+        public static void Main(string[] args)
+        {
+            bool isClear = false;
+            do
+            {
+                if (InputMatrix(n, n))
+                    isClear = true;
+
+            } while (!isClear);
+
+            matrix = ChangeMatrix(matrix);
+
+            OutputMatrix(n, n);
+            Console.Read();
+        }
+
+        public static double[,] ChangeMatrix(double[,] matrix)
+        {
+            double[,] newMatrix = new double[n, n];
+
+            newMatrix = matrix;
+
+            int border = n / 2;
+
+            // Element's change
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i >= border)
+                    {
+                        if (j <= i)
+                        {
+                            newMatrix[i, j] = 1;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+
+
+            return newMatrix;
+        }
+
+
+        /// <summary>
+        /// Entering of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool InputMatrix(int left, int right)
+        {
+            Console.WriteLine("Input numbers to fill the matrix:");
+
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Try againg.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
+        public static void OutputMatrix(int left, int right)
+        {
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    Console.Write($"{matrix[i, j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+
+namespace N8
+{
+    class MainClass
+    {
+        const int left = 7, right = 5;
+        static double[,] matrix = new double[left, right];
+
+        static List<List<double>> normalMatrix = new List<List<double>>();
+
+        public static void Main(string[] args)
+        {
+            bool isClear = false;
+            do
+            {
+                if (InputMatrix(left, right))
+                    isClear = true;
+
+            } while (!isClear);
+
+
+            for (int i = 0; i < left; i++)
+            {
+                List<double> row = new List<double>();
+                for (int j = 0; j < right; j++)
+                {
+                    row.Add(matrix[i, j]);
+                }
+                normalMatrix.Add(row);
+            }
+
+            for (int i = 0; i < left; i++)
+            {
+                GnomeSortForPositiveElements(normalMatrix);
+            }
+
+
+            OutputMatrix(left, right);
+
+            Console.Read();
+        }
+
+
+
+        public static int GetPositiveCount(List<double> array)
+        {
+            int num = 0;
+            foreach (var item in array)
+            {
+                if (item >= 0)
+                {
+                    num += 1;
+                }
+            }
+
+            return num;
+        }
+
+        //Gnome Sort
+        static List<List<double>> GnomeSortForPositiveElements(List<List<double>> unsortedArray)
+        {
+            var index = 1;
+            var nextIndex = index + 1;
+
+            while (index < unsortedArray.Count)
+            {
+                if (GetPositiveCount(unsortedArray[index - 1]) < GetPositiveCount(unsortedArray[index]))
+                {
+                    index = nextIndex;
+                    nextIndex++;
+                }
+                else
+                {
+                    List<double> item1 = unsortedArray[index - 1];
+                    List<double> temp = item1;
+                    unsortedArray[index - 1] = unsortedArray[index];
+                    unsortedArray[index] = temp;
+
+                    index--;
+                    if (index == 0)
+                    {
+                        index = nextIndex;
+                        nextIndex++;
+                    }
+                }
+            }
+
+            return unsortedArray;
+        }
+
+
+        /// <summary>
+        /// Entering of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool InputMatrix(int left, int right)
+        {
+            Console.WriteLine("Input numbers to fill the matrix:");
+
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Try againg.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
+
+        /// <summary>
+        /// Output of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        public static void OutputMatrix(int left, int right)
+        {
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    Console.Write($"{normalMatrix[i][j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+
+namespace N10
+{
+    class MainClass
+    {
+        const int n = 7;
+        static double[,] matrix = new double[n, n];
+
+        static List<List<double>> normalMatrix = new List<List<double>>();
+
+        public static Random rnd = new Random();
+
+        public static void Main(string[] args)
+        {
+
+            for (int i = 0; i < n; i++)
+            {
+                List<double> row = new List<double>();
+                for (int j = 0; j < n; j++)
+                {
+                    row.Add(rnd.Next(1, 30));
+                }
+                normalMatrix.Add(row);
+            }
+
+            OutputMatrix(n, n);
+            Console.WriteLine();
+
+            // Ascending sort.
+            for (int i = 0; i < n; i++)
+            {
+                normalMatrix[i] = GnomeSort(normalMatrix[i]);
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                normalMatrix[i] = EvenGnomeSort(normalMatrix[i], 2);
+            }
+
+            OutputMatrix(n, n);
+            Console.Read();
+
+        }
+
+        //Gnome Sort
+        static List<double> GnomeSort(List<double> unsortedArray)
+        {
+            var index = 1;
+            var nextIndex = index + 1;
+
+            while (index < unsortedArray.Count)
+            {
+                if (unsortedArray[index - 1] < unsortedArray[index])
+                {
+                    index = nextIndex;
+                    nextIndex++;
+                }
+                else
+                {
+                    double item1 = unsortedArray[index - 1], item2 = unsortedArray[index];
+                    double temp = item1;
+                    unsortedArray[index - 1] = unsortedArray[index];
+                    unsortedArray[index] = temp;
+
+                    index--;
+                    if (index == 0)
+                    {
+                        index = nextIndex;
+                        nextIndex++;
+                    }
+                }
+            }
+
+            return unsortedArray;
+        }
+        static List<double> EvenGnomeSort(List<double> unsortedArray, int index)
+        {
+
+            var nextIndex = index + 2;
+
+            while (index < unsortedArray.Count)
+            {
+                if (unsortedArray[index - 2] > unsortedArray[index])
+                {
+                    index = nextIndex;
+                    nextIndex += 2;
+                }
+                else
+                {
+                    double item1 = unsortedArray[index - 2];
+                    double temp = item1;
+                    unsortedArray[index - 2] = unsortedArray[index];
+                    unsortedArray[index] = temp;
+
+                    index -= 2;
+                    if (index == 0)
+                    {
+                        index = nextIndex;
+                        nextIndex += 2;
+                    }
+                }
+            }
+
+            return unsortedArray;
+        }
+
+        /// <summary>
+        /// Entering of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool InputMatrix(int left, int right)
+        {
+            Console.WriteLine("Input numbers to fill the matrix:");
+
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Try againg.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
+
+        /// <summary>
+        /// Output of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        public static void OutputMatrix(int left, int right)
+        {
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    Console.Write($"{normalMatrix[i][j]} ");
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+
+namespace N11
+{
+    class MainClass
+    {
+        public static Random rnd = new Random();
+
+        const int n = 5;
+
+        const int left = n, right = n;
+        static double[,] matrix = new double[left, right];
+
+        static List<List<double>> normalMatrix = new List<List<double>>();
+
+
+        public static void Main(string[] args)
+        {
+
+            for (int i = 0; i < n; i++)
+            {
+                List<double> row = new List<double>();
+                for (int j = 0; j < n; j++)
+                {
+                    row.Add(rnd.Next(0, 10));
+                }
+                normalMatrix.Add(row);
+            }
+
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    Console.Write($"{normalMatrix[i][j]} ");
+                }
+                Console.WriteLine();
+            }
+
+            List<List<double>> newMatrix = new List<List<double>>();
+
+            bool notNull = true; ;
+
+            int rowsCount = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (normalMatrix[i][j] == 0)
+                    {
+                        notNull = false;
+                        continue;
+                    }
+                }
+
+                if (notNull)
+                {
+                    newMatrix.Add(normalMatrix[i]);
+                    rowsCount++;
+                }
+                notNull = true;
+            }
+
+
+
+            Console.WriteLine("This is your matrix");
+            for (int i = 0; i < rowsCount; i++)
+            {
+                foreach (var item in newMatrix[i])
+                {
+                    Console.Write($"{item} ");
+                }
+                Console.WriteLine();
+            }
+
+
+
+            Console.Read();
+
+        }
+
+
+        /// <summary>
+        /// Entering of the matrix within certain limits.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool InputMatrix(int left, int right)
+        {
+            Console.WriteLine("Input numbers to fill the matrix:");
+
+            for (int i = 0; i < left; i++)
+            {
+                for (int j = 0; j < right; j++)
+                {
+                    if (double.TryParse(Console.ReadLine(), out matrix[i, j]))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Try againg.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    }
+}
