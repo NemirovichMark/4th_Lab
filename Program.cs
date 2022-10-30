@@ -243,27 +243,20 @@ namespace _4nd_Lab
                         jnew++;
                     }
                 }
-                Console.WriteLine("     Answer: ");
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < m - 1; j++)
-                    {
-                        Console.Write($"{a_new[i, j]} ");
-                    }
-                    Console.WriteLine("\n");
-                }
             }
             else
             {
-                Console.WriteLine("     Answer: ");
-                for (int i = 0; i < n; i++)
+                a_new = a;
+            }
+
+            Console.WriteLine("     Answer: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
                 {
-                    for (int j = 0; j < m; j++)
-                    {
-                        Console.Write($"{a[i, j]} ");
-                    }
-                    Console.WriteLine("\n");
+                    Console.Write($"{a_new[i, j]} ");
                 }
+                Console.WriteLine("\n");
             }
             #endregion
                 
@@ -581,17 +574,7 @@ namespace _4nd_Lab
                 }
             }
 
-            for (int i = n - 1; i > -1; i--)
-            {
-                double s = 0;
-                for (int j = 0; j < n - i; j++)
-                {
-                    s += a[i + j, j];
-                }
-                b.Add(s);
-            }
-
-            for (int j = 1; j < n; j++)
+            for (int j = 0; j < n; j++)
             {
                 double s = 0;
                 for (int i = 0; i < n - j; i++)
@@ -599,7 +582,23 @@ namespace _4nd_Lab
                     s += a[i, i + j];
                 }
                 b.Add(s);
+                s = 0;
+                for (int k = 1; k < n - j; k++)
+                {
+                    s += a[j + k, k - 1];
+                }
+                b.Add(s);
             }
+
+            /*for (int j = 1; j < n; j++)
+            {
+                double s = 0;
+                for (int i = 0; i < n - j; i++)
+                {
+                    s += a[i, i + j];
+                }
+                b.Add(s);
+            }*/
 
             Console.WriteLine("     Answer: ");
             for (int i = 0; i < 2 * n - 1; i++)
@@ -659,9 +658,9 @@ namespace _4nd_Lab
                 
             #region task 3.8
             Console.WriteLine("Level 3 Task 8");
-            int n = 7, m = 5;
-            double[,] a = new double[n, m], b = new double[n, m];
-            List<(int, double)> quantities = new List<(int, double)>();
+            int n = 4, m = 4;
+            double[,] a = new double[n, m];
+            int[,] quantities = new int[n, 2];
 
             for (int i = 0; i < n; i++)
             {
@@ -680,16 +679,54 @@ namespace _4nd_Lab
                         counter++;
                     }
                 }
-                quantities.Add((i, counter));
+                quantities[i, 0] = i;
+                quantities[i, 1] = counter;
             }
 
-            quantities.Sort(FromHighToLow);
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - 1; j++)
+                {
+                    if (quantities[j, 1] < quantities[j + 1, 1])
+                    {
+                        (quantities[j, 0], quantities[j + 1, 0]) = (quantities[j + 1, 0], quantities[j, 0]);
+                        (quantities[j, 1], quantities[j + 1, 1]) = (quantities[j + 1, 1], quantities[j, 1]);
+                    }
+                }
+            }
+
+            List<(List<double>, int)> rows = new List<(List<double>, int)>();
 
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < m; j++)
+                if (i < quantities[i, 0])
                 {
-                    b[i, j] = a[quantities[i].Item1, j];
+                    List<double> row = new List<double>();
+                    for (int j = 0; j < m; j++)
+                    {
+                        row.Add(a[i, j]);
+                        a[i, j] = a[quantities[i, 0], j];
+                    }
+                    rows.Add((row, i));
+                }
+                else if (i > quantities[i, 0])
+                {
+                    List<double> row = new List<double>();
+                    for (int j = 0; j < m; j++)
+                    {
+                        row.Add(a[i, j]);
+                    }
+                    rows.Add((row, i));
+
+                    row = new List<double>();
+                    for (int k = 0; k < rows.Count; k++)
+                    {
+                        if (rows[k].Item2 == quantities[i, 0]) row = rows[k].Item1;
+                    }
+                    for (int j = 0; j < m; j++)
+                    {
+                        a[i, j] = row[j];
+                    }
                 }
             }
 
@@ -698,7 +735,7 @@ namespace _4nd_Lab
             {
                 for (int j = 0; j < m; j++)
                 {
-                    Console.Write($"{b[i, j]} ");
+                    Console.Write($"{a[i, j]} ");
                 }
                 Console.WriteLine("\n");
             }
@@ -725,8 +762,7 @@ namespace _4nd_Lab
                 break;
             }
 
-            double[,] a = new double[n, m], b = new double[n, m];
-            List<double> c = new List<double>();
+            double[,] a = new double[n, m];
 
             for (int i = 0; i < n; i++)
             {
@@ -744,32 +780,43 @@ namespace _4nd_Lab
 
             for (int i = 0; i < n; i++)
             {
-                if (i%2 == 0)
+                List<double> even = new List<double>(), odd = new List<double>();
+                if (i % 2 == 0)
                 {
                     for (int j = 0; j < m; j++)
                     {
-                        c.Add(a[i,j]);
-                    }
-                    c.Sort();
-                    c.Reverse();
-                    for (int j = 0; j < m; j++)
-                    {
-                        b[i, j] = c[j];
+                        even.Add(a[i, j]);
                     }
                 }
                 else
                 {
                     for (int j = 0; j < m; j++)
                     {
-                        c.Add(a[i, j]);
-                    }
-                    c.Sort();
-                    for (int j = 0; j < m; j++)
-                    {
-                        b[i, j] = c[j];
+                        odd.Add(a[i, j]);
                     }
                 }
-                c = new List<double>();
+
+                even.Sort();
+                even.Reverse();
+                odd.Sort();
+
+                int counter_even = 0, counter_odd = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        a[i, j] = even[counter_even];
+                        counter_even++;
+                    }
+                    else
+                    {
+                        a[i, j] = odd[counter_odd];
+                        counter_odd++;
+                    }
+                }
+                    
+                    
+
             }
 
             Console.WriteLine("     Answer: ");
@@ -777,7 +824,7 @@ namespace _4nd_Lab
             {
                 for (int j = 0; j < m; j++)
                 {
-                    Console.Write($"{b[i, j]} ");
+                    Console.Write($"{a[i, j]} ");
                 }
                 Console.WriteLine("\n");
             }
