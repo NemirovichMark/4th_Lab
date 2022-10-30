@@ -658,7 +658,7 @@ namespace _4nd_Lab
                 
             #region task 3.8
             Console.WriteLine("Level 3 Task 8");
-            int n = 4, m = 4;
+            int n = 7, m = 5;
             double[,] a = new double[n, m];
             int[,] quantities = new int[n, 2];
 
