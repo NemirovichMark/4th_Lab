@@ -1,254 +1,729 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net.NetworkInformation;
+using System.Runtime;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Channels;
+using System.Transactions;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+using Microsoft.VisualBasic;
 
-namespace _4th_Lab
+namespace ConsoleApplication1
 {
     class Program
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
+        static void Level1_3()
         {
-            for (int i = 0; i < array.Length; i++)
+            Console.WriteLine("Level1_3");
+            double[,] mas = new double[4, 4];
+            double sum = 0;
+            Console.WriteLine("Write elements in mas");
+            for (int i = 0; i < 4; i++)
             {
-                if (i % COLUMNS == 0)
+                for (int j = 0; j < 4; j++)
                 {
-                    Console.WriteLine();
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
                 }
-                Console.Write($"{array[i],5}");
+                sum += mas[i, i];
             }
+            Console.WriteLine("Answer");
+            Console.WriteLine(sum);
         }
-        static void ShowMatrix(int[,] matrix)
+        static void Level1_6()
         {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            Console.WriteLine("Level1_6");
+            double[,] mas = new double[4, 7];
+            List<int> Minel = new List<int>();
+            Console.WriteLine("Write elements in mas");
+            for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                double min = double.MaxValue;
+                int minind = 0;
+                for (int j = 0; j < 7; j++)
                 {
-                    Console.Write($"{matrix[i, j],5}");
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (mas[i, j] < min)
+                    {
+                        min = mas[i, j];
+                        minind = j;
+                    }
                 }
+                Minel.Add(minind);
             }
+            Console.WriteLine("Answer");
+            Console.WriteLine(string.Join(", ", Minel));
         }
-        static void Main(string[] args)
+        static void Level1_12()
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
+            Console.WriteLine("Level1_12");
+            double[,] mas = new double[6, 7];
+            double max = double.MinValue;
+            int MaxinI = 0;
+            int MaxinJ = 0;
+            Console.WriteLine("Write elements in mas");
+            for (int i = 0; i < 6; i++)
             {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
+
+                for (int j = 0; j < 7; j++)
                 {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
-                {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
-
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
-            #endregion
-
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (s > max)
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
+                        max = s;
+                        MaxinI = i;
+                        MaxinJ = j;
+                    }
+                }
+            }
+                int i1,j1;
+                for (int i=0;i<5;i++)
+                {
+                    if (i>=MaxinI)
+                    {
+                        i1 = i + 1;
+                    }
+                    else
+                    {
+                        i1 = i;
+                    }
+                    for (int j=0;j<6; j++)
+                    {
+                        if (j>=MaxinJ)
                         {
-                            min = (matrix[i, j], i, j);
+                            j1 = j + 1;
                         }
-                    }
-                }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
+                        else
                         {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
+                            j1 = j;
                         }
+                        mas[i, j] = mas[i1, j1];
                     }
                 }
-            }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
-            {
-                for (int i = left; i < right; i++)
+            Console.WriteLine("Answer");
+                for (int i = 0;i<5;i++)
                 {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
+                    for (int j=0;j<6;j++)
                     {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
+                        Console.WriteLine($"{mas[i,j], 5}");
                     }
                 }
-                right--;
-
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-            }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
-            #endregion
-
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
-
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
-            {
-                if (element == 0 || array[element] >= array[element - 1])
-                {
-                    element++;
-                }
-                else
-                {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
-                }
-            }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
-
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
-                    {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
-                    }
-                }
-                step /= 2;
-            }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
-
-            #endregion
             
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
+        }
+        static void Level1_13()
+        {
+            Console.WriteLine("Level1_13");
+            double[,] mas = new double[5,5];
+            int k = 4;
+            double max = double.MinValue;
+            int MaxinJ = 0;
+            int j = 0;
+            Console.WriteLine("Write elements in mas");
+            for (int i=0;i<5;i++)
+            {
+                for (j=0;j<5;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                }
+                if (mas[i,i]>max)
+                {
+                    max = mas[i, i];
+                    MaxinJ = i;
+                }
+            }
+            double swap;
+            for (int i = 0; i<5;i++)
+            {
+                swap = mas[i, k];
+                mas[i, k] = mas[i, MaxinJ];
+                mas[i, MaxinJ] = swap;
+            }
+            Console.WriteLine("Answer");
+            for (int i = 0; i<5;i++)
+            {
+                for(j=0;j<5;j++)
+                {
+                    Console.WriteLine($"{mas[i, j],5}");
+                }
+            }
+        }
+        static void Level1_17()
+        {
+            Console.WriteLine("Level1_17");
+            int n, m;
+            Console.WriteLine("Write amount of lines");
+            int.TryParse(Console.ReadLine(), out n);
+            Console.WriteLine("Write amount of columns");
+            int.TryParse(Console.ReadLine(), out m);
+            double[,] mas = new double [n, m];
+            double swap;
+            Console.WriteLine("Write elements in mas");
+            for (int i=0; i<n;i++)
+            {
+                double min = double.MaxValue;
+                int minin = 0;
+                for (int j=0; j<m;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (s < min)
+                    {
+                        min = s;
+                        minin = j;
+                    }
+                }
+                swap = mas[i, minin];
+                for (int z = minin; z>0; z--)
+                {
+                    mas[i, z] = mas[i, z - 1];
+                }
+                mas[i, 0] = swap;
+            }
+            Console.WriteLine("Answer");
+            for (int i=0; i<n;i++)
+            {
+                for (int j=0;j<m;j++)
+                {
+                    Console.WriteLine($"{mas[i, j],5}");
+                }
+            }
+        }
+        static void Level1_29()
+        {
+            Console.WriteLine("Level1_29");
+            double min = double.MaxValue;
+            int minin = 0;
+            double[,] mas = new double[5, 7];
+            Console.WriteLine("Write elements in mas");
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j=0;j<7;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (i==1)
+                    {
+                        if (Math.Abs(mas[i,j]) < min)
+                        {
+                            min = mas[i, j];
+                            minin = j;
+                        }
+                    }
+                }
+            }
+            int del = minin + 1;
+            int j1;
+            for (int i=0;i<5;i++)
+            {
+                for(int j = 0; j<6;j++)
+                {
+                    if (j >= del) j1 = j + 1;
+                    else j1 = j;
+                    mas[i, j] = mas[i, j1];
+                }
+            }
+            Console.WriteLine("Answer");
+            for (int i=0;i<5;i++)
+            {
+                for(int j=0;j<6;j++)
+                {
+                    Console.WriteLine($"{mas[i, j],5}");
+                }
+            }
+        }
+        static void Level1_31()
+        {
+            Console.WriteLine("Level1_31");
+            double[,] mas = new double[5, 8];
+            double min = double.MaxValue;
+            double[] B = new double[5];
+            int minin = 0;
+            Console.WriteLine("Write elements in vector");
+            for (int i=0;i<5;i++)
+            {
+                double x;
+                double.TryParse(Console.ReadLine(), out x);
+                B[i] = x;
+            }
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0; i<5;i++)
+            {
+                for (int j=0;j<7;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (s < min && i==4)
+                    {
+                        min = s;
+                        minin = j;
+                    }
+                }
+            }
+            int k = 0;
+            for(int i=0;i<5;i++)
+            {
+                for (int j=7;j>=minin+1;j--)
+                {
+                    if  (j>minin+1)
+                    {
+                        mas[i, j] = mas[i, j - 1];
+                    }
+                    else if (j==minin+1)
+                    {
+                        mas[i, j] = B[k];
+                        k++;
+                    }
+                }
+            }
+            Console.WriteLine("Answer");
+            for (int i=0;i<5;i++)
+            {
+                for (int j=0;j<8;j++)
+                {
+                    Console.WriteLine($"{mas[i, j],5}");
+                }
+            }    
+            
+
+        }
+        static void Level2_7()
+        {
+            Console.WriteLine("Level2_7");
+            int n = 6;
+            double[,] mas = new double[n,n];
+            double max = double.MinValue;
+            int maxind = 0;
+            Console.WriteLine("Write elements in  matrix");
+            for (int i=0; i<n;i++)
+            {
+                for (int j=0;j<n;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                }
+                if (mas[i,i]>max)
+                {
+                    max = mas[i, i];
+                    maxind = i;
+                }
+            }
+            for (int i=0; i<maxind;i++)
+            {
+                for (int j=maxind+1; j<n; j++)
+                {
+                    mas[i, j] = 0;
+                }
+            }
+            Console.WriteLine("Answer");
+            for (int i=0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    Console.WriteLine($"{mas[i,j],5}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Level2_8()
+        {
+            Console.WriteLine("Level2_8");
+            int n = 6;
+            double[,] mas = new double[n, n];
+            int k = 0;
+            double swap,swap1;
+            int swapind=0;
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<n;i++)
+            {
+                double max = double.MinValue;
+                int maxind = 0;
+                k = i % 2;
+                for(int j=0;j<n;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (s>max)
+                    {
+                        max = s;
+                        maxind = j;
+                    }
+                }
+                if (k==0)
+                {
+                    swap = max;
+                    swapind = maxind;
+                }
+                if (k == 1)
+                {
+                    swap = mas[i-1,swapind];
+                    mas[i - 1, swapind] = mas[i, maxind];
+                    mas[i, maxind] = swap;
+                }
+
+            }
+            Console.WriteLine("Answer");
+            for (int i=0;i<n;i++)
+            {
+                for(int j =0;j<n;j++)
+                {
+                    Console.WriteLine($"{mas[i, j],5}");
+                }
+                Console.WriteLine();
+            }
+
+        }
+        static void Level2_9()
+        {
+            Console.WriteLine("Level2_9");
+            int n = 6, m = 7;
+            double[,] mas = new double[n, m];
+            double swap;
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<n;i++)
+            {
+                for(int j=0;j<m;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                }    
+            }
+            for (int i=0;i<n;i++)
+            {
+                for (int j=0;j<m/2;j++)
+                {
+                    swap = mas[i,j];
+                    mas[i, j] = mas[i, m - j - 1];
+                    mas[i, m - j - 1] = swap;
+                }
+            }
+            Console.WriteLine("Answer");
+            for(int i=0;i<n;i++)
+            {
+                for (int j=0;j<m;j++)
+                {
+                    Console.WriteLine($"{mas[i,j],5}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Level3_1()
+        {
+            Console.WriteLine("Level3_1");
+            List < Tuple < double,int>> folder = new List<Tuple<double, int>>();
+            double[,] mas = new double[7, 5];
+            double[,] answer = new double[7, 5];
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<7;i++)
+            {
+                double min = double.MaxValue;
+                for (int j=0;j<5;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (s<min)
+                    {
+                        min = s;
+                    }
+                }
+                folder.Add(Tuple.Create(min, i));
+
+            }
+           folder = folder.OrderBy(x => x.Item1).ToList() ;
+            folder.Reverse();
+            Console.WriteLine(string.Join(" ", folder));
+            int k = 0;
+            for(int i=0;i<7;i++)
+            {
+                for (int j=0;j<5;j++)
+                {
+                    answer[i, j] = mas[folder[k].Item2, j];
+                }
+                k++;
+            }
+            Console.WriteLine("Answer");
+            for (int i =0;i<7;i++)
+            {
+                for (int j=0;j<5;j++)
+                {
+                    Console.WriteLine($"{answer[i, j],5}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Level3_2()
+        {
+            Console.WriteLine("Level3_2");
+            int n;
+            Console.WriteLine("Write amount of lines and colomns in matrix");
+            int.TryParse(Console.ReadLine(), out n);
+            double[,] mas = new double[n,n];
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<n;i++)
+            {
+                for (int j=0;j<n;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                }
+            }
+            for (int i=0;i<n;i++)
+            {
+                mas[i, 0] = 0;
+                mas[0, i] = 0;
+                mas[n-1,i] = 0;
+                mas[i, n - 1] = 0;
+            }
+            Console.WriteLine("Answer");
+            for (int i=0;i<n;i++)
+            {
+                for (int j=0;j<n;j++)
+                {
+                    Console.WriteLine($"{mas[i, j],5}");
+                }
+                Console.WriteLine();
+            }    
+        }
+        static void Level3_3()
+        {
+            Console.WriteLine("Level3_3");
+            int n;
+            Console.WriteLine("Write amount of lines and colomns in matrix");
+            int.TryParse(Console.ReadLine(), out n);
+            double[,] mas = new double[n, n];
+            double[] answer = new double[n * 2-1];
+            Console.WriteLine("Write elements in mas");
+            for (int i =0;i<n;i++)
+            {
+                for (int j=0;j<n;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(),out s);
+                    mas[i, j] = s;
+                    
+                }
+            }
+            for (int i=0;i<n;i++)
+            {
+                double sum = 0;
+                double obrsum = 0;
+                for (int j=0;j<=i;j++)
+                {
+                    sum+=mas[n-1-i+j, j];
+                    obrsum += mas[i-j, n - 1 - j];
+                }
+                answer[i] = sum;
+                answer[n*2-i-2] = obrsum;
+            }
+            Console.WriteLine("Answer");
+            Console.WriteLine(string.Join(", ", answer));
+        }
+        static void Level3_4()
+        {
+            Console.WriteLine("Level3_4");
+            int n;
+            Console.WriteLine("Write amount of lines and colomns in matrix");
+            int.TryParse(Console.ReadLine(), out n);
+            double[,] mas = new double[n, n];
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<n;i++)
+            {
+                for (int j=0;j<n;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (i>=(n/2) && (i-j)>=0)
+                    {
+                        mas[i, j] = 1;
+                    }
+                }
+            }
+            Console.WriteLine("Answer");
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    Console.WriteLine($"{mas[i,j],5}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Level3_8()
+        {
+            Console.WriteLine("Level3_8");
+            List<Tuple<int,int>> folder = new List<Tuple<int,int>>();
+            double[,] mas = new double[7, 5];
+            double[,] answer = new double[7, 5];
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<7;i++)
+            {
+                int kol = 0;
+                for (int j=0; j<5;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (s > 0) kol++;
+                }
+                folder.Add(Tuple.Create(kol, i));
+            }
+            folder.OrderBy(x => x.Item1);
+            folder.Reverse();
+            int k = 0;
+            for (int i=0;i<7;i++)
+            {
+                for (int j=0;j<5;j++)
+                {
+                    answer[i, j] = mas[folder[k].Item2, j];
+                }
+                k++;
+            }
+            Console.WriteLine("Answer");
+            for  (int i=0;i<7;i++)
+            {
+                for (int j=0;j<5;j++)
+                {
+                    Console.WriteLine($"{answer[i, j],5}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Level3_10()
+        {
+            Console.WriteLine("Level3_10");
+            List<double> folder1= new List<double>();
+            List<double> folder2 = new List<double>();
+            int n;
+            Console.WriteLine("Write amount of lines in matrix");
+            int.TryParse(Console.ReadLine(), out n);
+            int m;
+            Console.WriteLine("Write amount of colomns in matrix");
+            int.TryParse(Console.ReadLine(), out m);
+            double[,] mas = new double[n, m];
+            double[,] answer = new double[n, m];
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<n;i++)
+            {
+                for (int j=0;j<m;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (j % 2 == 0) folder1.Add(s);
+                   
+                    else folder2.Add(s);
+                }
+                folder1.Sort();
+                folder1.Reverse();
+                folder2.Sort();
+                for(int z=0;z<folder1.Count;z++)
+                {
+                    answer[i,z*2]=folder1[z];
+                }
+                for(int t=0;t<folder2.Count;t++)
+                {
+                    answer[i,t*2+1]=folder2[t];
+                }
+                folder1 = new List<double>();
+                folder2 = new List<double>();
+            }
+            Console.WriteLine("Answer");
+            for (int i=0;i<n;i++)
+            {
+                for(int j=0;j<m;j++)
+                {
+                    Console.WriteLine($"{answer[i, j],5}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Level3_11()
+        {
+            Console.WriteLine("Level3_11");
+            List<int> folder = new List<int>();
+            int n;
+            Console.WriteLine("Write amount of lines");
+            int.TryParse(Console.ReadLine(), out n);
+            int m;
+            Console.WriteLine("Write amount of colomns");
+            int.TryParse(Console.ReadLine(), out m);
+            double[,] mas= new double[n,m];
+            Console.WriteLine("Write elements in matrix");
+            for (int i=0;i<n;i++)
+            {
+                int flag = 0;
+                for (int j=0;j<m;j++)
+                {
+                    double s;
+                    double.TryParse(Console.ReadLine(), out s);
+                    mas[i, j] = s;
+                    if (s == 0) flag++;
+                }
+                if (flag > 0) folder.Add(i);
+            }
+            int k = 0;
+            for(int i=1;i<n;i++)
+            {
+                if (folder.Contains(i) == false)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        mas[folder[k], j] = mas[i, j];
+                    }
+                }
+            }
+            Console.WriteLine("Answer");
+            for (int i=0;i<(n-folder.Count);i++)
+            {
+                for(int j=0;j<m;j++)
+                {
+                    Console.WriteLine($"{mas[i, j], 5}");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Main(string[] arg)
+        {
+            Level1_3();
+            Level1_6();
+            Level1_12();
+            Level1_13();
+            Level1_17();
+            Level1_29();
+            Level1_31();
+            Level2_7();
+            Level2_8();
+            Level2_9();
+            Level3_1();
+            Level3_2();
+            Level3_3();
+            Level3_4();
+            Level3_8();
+            Level3_10();
+            Level3_11();
         }
     }
 }
