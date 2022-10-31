@@ -14,6 +14,7 @@ using System.Threading.Channels;
 using System.Transactions;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using Microsoft.VisualBasic;
 
 namespace ConsoleApplication1
 {
@@ -187,9 +188,12 @@ namespace ConsoleApplication1
                         minin = j;
                     }
                 }
-                swap = mas[i, 0];
-                mas[i, 0] = mas[i, minin];
-                mas[i, minin] = swap;
+                swap = mas[i, minin];
+                for (int z = minin; z>0; z--)
+                {
+                    mas[i, z] = mas[i, z - 1];
+                }
+                mas[i, 0] = swap;
             }
             Console.WriteLine("Answer");
             for (int i=0; i<n;i++)
@@ -214,7 +218,7 @@ namespace ConsoleApplication1
                     double s;
                     double.TryParse(Console.ReadLine(), out s);
                     mas[i, j] = s;
-                    if (i==2)
+                    if (i==1)
                     {
                         if (Math.Abs(mas[i,j]) < min)
                         {
@@ -426,7 +430,7 @@ namespace ConsoleApplication1
         static void Level3_1()
         {
             Console.WriteLine("Level3_1");
-            List < Tuple < double,int>>folder = new List<Tuple<double, int>>();
+            List < Tuple < double,int>> folder = new List<Tuple<double, int>>();
             double[,] mas = new double[7, 5];
             double[,] answer = new double[7, 5];
             Console.WriteLine("Write elements in matrix");
@@ -446,8 +450,9 @@ namespace ConsoleApplication1
                 folder.Add(Tuple.Create(min, i));
 
             }
-            folder.OrderBy(x => x.Item1);
+           folder = folder.OrderBy(x => x.Item1).ToList() ;
             folder.Reverse();
+            Console.WriteLine(string.Join(" ", folder));
             int k = 0;
             for(int i=0;i<7;i++)
             {
@@ -462,7 +467,7 @@ namespace ConsoleApplication1
             {
                 for (int j=0;j<5;j++)
                 {
-                    Console.WriteLine($"{mas[i, j],5}");
+                    Console.WriteLine($"{answer[i, j],5}");
                 }
                 Console.WriteLine();
             }
@@ -669,21 +674,25 @@ namespace ConsoleApplication1
             Console.WriteLine("Write elements in matrix");
             for (int i=0;i<n;i++)
             {
+                int flag = 0;
                 for (int j=0;j<m;j++)
                 {
                     double s;
                     double.TryParse(Console.ReadLine(), out s);
                     mas[i, j] = s;
-                    if (s==0) folder.Add(i);
+                    if (s == 0) flag++;
                 }
+                if (flag > 0) folder.Add(i);
             }
             int k = 0;
             for(int i=1;i<n;i++)
             {
-                if (folder.Contains(i) == false) ;
-                for (int j=0;j<m;j++)
+                if (folder.Contains(i) == false)
                 {
-                    mas[folder[k], j] = mas[i, j];
+                    for (int j = 0; j < m; j++)
+                    {
+                        mas[folder[k], j] = mas[i, j];
+                    }
                 }
             }
             Console.WriteLine("Answer");
