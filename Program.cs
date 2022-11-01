@@ -14,6 +14,7 @@ namespace TaskForLab4
         {
             Random random = new Random();
             #region Task#1.3
+            Console.WriteLine("Task#1.3");
             int n = 4;
             int[, ] A = new int[n, n];
             for (int i = 0; i < n; i++)
@@ -47,6 +48,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#1.6
+            Console.WriteLine("Task#1.6");
             int n1 = 4, m1 = 7;
             int[,] AA = new int[n1, m1];
             int[] A_A = new int[n1];
@@ -80,6 +82,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#1.12
+            Console.WriteLine("Task#1.12");
             int n2 = 6, m2 = 7;
             int[,] A1 = new int[n2, m2];
             for (int i = 0; i < n2; i++)
@@ -122,6 +125,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#1.13
+            Console.WriteLine("Task#1.13");
             int n3 = 5;
             int[,] A3 = new int[n3, n3];
             for (int i = 0; i < n3; i++)
@@ -163,6 +167,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#1.17
+            Console.WriteLine("Task#1.17");
             Console.WriteLine("Введите количество столбцов массива: ");
             int.TryParse(Console.ReadLine(), out int n4);
             Console.WriteLine("Введите количество строк массива:");
@@ -209,6 +214,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#1.29
+            Console.WriteLine("Task#1.29");
             int n5 = 5, m5 = 7;
             int[,] F = new int[n5, m5];
             for (int i = 0; i < n5; i++)
@@ -258,6 +264,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#1.31
+            Console.WriteLine("Task#1.31");
             int n6 = 5, m6 = 7;
             int[,] A6 = new int[5, 8];
             int[] B6 = new int[n6];
@@ -303,6 +310,7 @@ namespace TaskForLab4
             #endregion
 
             #region #Task2.7
+            Console.WriteLine("Task#2.7");
             int n7 = 6;
             int[,] A7 = new int[n7, n7];
             for (int i = 0; i < n7; i++)
@@ -347,6 +355,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#2.8
+            Console.WriteLine("Task#2.8");
             int n8 = 6;
             int[,] B8 = new int[n8, n8];
             int[] B_8 = new int[n8];
@@ -391,6 +400,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#2.9
+            Console.WriteLine("Task#2.9");
             int n9 = 6, m9 = 7;
             int[,] A9 = new int[n9, m9];
             int[,] A_9 = new int[n9, m9];
@@ -425,50 +435,84 @@ namespace TaskForLab4
             #endregion
 
             #region Task#3.1
-            int w = 5, u = 7;
-            int[,] lol = new int[w, u];
-            for (int i = 0; i < w; i++)
-                for (int j = 0; j < u; j++)
-                    lol[i, j] = random.Next(50);
-            List<int> lol1 = new List<int>();
-            static int Minimum(int[,] M, int m)
+            Console.WriteLine("Task#3.1");
+            int[,] a3_1 = new int[7, 5];
+            for (int i = 0; i < a3_1.GetLength(0); i++)
+                for (int j = 0; j < a3_1.GetLength(1); j++)
+                    a3_1[i, j] = random.Next(-10, 10);
+            int[,] b3_1 = new int[7, 2];
+            int[,] c3_1 = new int[7, 5];
+            for (int i = 0; i < a3_1.GetLength(0); i++)
             {
-                int imn = int.MaxValue;
-                for (int j = 0; j < M.GetLength(1); j++)
+                for (int j = 0; j < a3_1.GetLength(1); j++)
                 {
-                    if (imn > M[m, j])
-                    {
-                        imn = M[m, j];
-                    }
+                    Console.Write(a3_1[i, j] + "\t");
                 }
-                return imn;
-            }
-            for (int i = 0; i < lol.GetLength(0); i++)
-            {
-                lol1.Add(Minimum(lol, i));
-            }
-            List<int> lol2 = new List<int>(lol1);
-            lol1.Sort();
-
-            int[,] LOL = new int[5, 7];
-            for (int i = 0; i < lol.GetLength(0); i++)
-            {
-                int L = lol2.IndexOf(lol1[i]);
-                for (int j = 0; j < lol.GetLength(1); j++)
-                {
-                    LOL[i, j] = lol[L, j];
-                }
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 7; j++)
-                    Console.Write(LOL[i, j] + "\t");
                 Console.WriteLine();
             }
             Console.WriteLine();
+            int k3_1 = 0;
+            int q3_1 = 0;
+            int m3_1;
+
+            for (int i = 0; i < 7; i++)
+            {
+                int imin3_1 = i;
+                int jmin3_1 = 0;
+                int min3_1 = a3_1[i, 0];
+
+                for (int j = 0; j < 5; j++)
+                {
+                    if (a3_1[i, j] < min3_1)
+                    {
+                        min3_1 = a3_1[i, j];
+                        imin3_1 = i;
+                        jmin3_1 = j;
+                    }
+                }
+                b3_1[q3_1, k3_1] = imin3_1;
+                b3_1[q3_1, k3_1 + 1] = min3_1;
+                q3_1++;
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = i; j < 6; j++)
+                {
+
+                    if (b3_1[i, 1] < b3_1[j + 1, 1])
+                    {
+                        m3_1 = b3_1[i, 1];
+                        b3_1[i, 1] = b3_1[j + 1, 1];
+                        b3_1[j + 1, 1] = m3_1;
+                        m3_1 = b3_1[i, 0];
+                        b3_1[i, 0] = b3_1[j + 1, 0];
+                        b3_1[j + 1, 0] = m3_1;
+                    }
+                }
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    c3_1[i, j] = a3_1[b3_1[i, 0], j];
+                }
+            }
+
+
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write(c3_1[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
             #endregion
 
             #region Task#3.2
+            Console.WriteLine("Task#3.2");
             Console.WriteLine("Введите размер матрицы:");
             int.TryParse(Console.ReadLine(), out int g);
             int[,] Array = new int[g, g];
@@ -502,6 +546,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#3.3
+            Console.WriteLine("Task#3.3");
             Console.WriteLine("Введите размер матрицы");
             int.TryParse(Console.ReadLine(), out int len);
             int[,] MyArr = new int[len, len];
@@ -516,26 +561,26 @@ namespace TaskForLab4
                 Console.WriteLine();
             }
             Console.WriteLine("\n");
-            int k = 0;
+            int k3_3 = 0;
             for (int i = len - 1; i > 0; i--)
             {
-                int s = 0;
+                int s3_3 = 0;
                 for (int j = 0; j + i < len; j++)
                 {
-                    s += MyArr[i + j, j];
+                    s3_3 += MyArr[i + j, j];
                 }
-                My_Arr[k] = s;
-                k++;
+                My_Arr[k3_3] = s3_3;
+                k3_3++;
             }
             for (int i = len - 1; i >= 0; i--)
             {
-                int s = 0;
+                int s3_3 = 0;
                 for (int j = 0; j + i < len; j++)
                 {
-                    s += MyArr[j, i + j];
+                    s3_3 += MyArr[j, i + j];
                 }
-                My_Arr[k] = s;
-                k++;
+                My_Arr[k3_3] = s3_3;
+                k3_3++;
             }
             for (int i = 0; i < My_Arr.Length; i++)
             {
@@ -545,6 +590,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#3.4
+            Console.WriteLine("Task#3.4");
             Console.WriteLine("Введите размер матрицы:");
             int.TryParse(Console.ReadLine(), out int g1);
             int[,] Arr = new int[g1, g1];
@@ -578,6 +624,7 @@ namespace TaskForLab4
             #endregion
 
             #region Task#3.10
+            Console.WriteLine("Task#3.10");
             Console.WriteLine("Введите размер матрицы:");
             int.TryParse(Console.ReadLine(), out int f);
             Console.WriteLine("Введите размер матрицы:");
@@ -600,20 +647,20 @@ namespace TaskForLab4
             {
                 for (int j = 0; j < f1 - 1; j++)
                 {
-                    for (int k = j; k < f1; k++)
+                    for (int k3_10 = j; k3_10 < f1; k3_10++)
                     {
                         if (i % 2 == 0)
                         {
-                            if (arr[i, j] < arr[i, k])
+                            if (arr[i, j] < arr[i, k3_10])
                             {
-                                p10 = arr[i, j]; arr[i, j] = arr[i, k]; arr[i, k] = p10;
+                                p10 = arr[i, j]; arr[i, j] = arr[i, k3_10]; arr[i, k3_10] = p10;
                             }
                         }
                         else
                         {
-                            if (arr[i, j] > arr[i, k])
+                            if (arr[i, j] > arr[i, k3_10])
                             {
-                                p10 = arr[i, j]; arr[i, j] = arr[i, k]; arr[i, k] = p10;
+                                p10 = arr[i, j]; arr[i, j] = arr[i, k3_10]; arr[i, k] = p10;
                             }
                         }
                     }
@@ -630,38 +677,55 @@ namespace TaskForLab4
             #endregion
 
             #region Task#3.11
-            Console.WriteLine("Введите размер матрицы:");
-            int.TryParse(Console.ReadLine(), out int h);
-            Console.WriteLine("Введите размер матрицы:");
-            int.TryParse(Console.ReadLine(), out int h1);
-            int[,] ArrA = new int[h, h1];
-            for (int i = 0; i < h; i++)
-                for (int j = 0; j < h1; j++)
-                    ArrA[i, j] = random.Next(0, 10);
-            int pop = 0;
-            for (int i = 0; i < h; i++)
+            Console.WriteLine("Task#3.11");
+            Console.WriteLine("Введите размер массива");
+            int.TryParse(Console.ReadLine(), out int n3_11);
+            Console.WriteLine("Введите размер массива");
+            int.TryParse(Console.ReadLine(), out int m3_11);
+            int[,] A3_11 = new int[n3_11, m3_11];
+            List<int> noll = new List<int>();
+
+            for (int i = 0; i < n3_11; i++)
             {
-                for (int j = 0; j < h1; j++)
+                bool fg = false;
+                for (int j = 0; j < m3_11; j++)
                 {
-                    if (ArrA[i, j] == 0)
+                    A3_11[i, j] = random.Next(-50, 50);
+                    if (A3_11[i, j] == 0)
                     {
-                        for (int k = i; k < h - 1; k++)
-                        {
-                            for (int l = 0; l < h1; l++)
-                            {
-                                ArrA[k, l] = ArrA[k + 1, l];
-                            }
-                        }
-                        pop++;
-                        break;
+                        fg = true;
                     }
                 }
-            }
-            for (int i = 0; i < h - pop; i++)
-            {
-                for (int j = 0; j < h1; j++)
+                if (fg == true)
                 {
-                    Console.Write(ArrA[i, j] + "\t");
+                    noll.Add(i);
+                }
+            }
+            for (int i = 0; i < n3_11; i++)
+            {
+                for (int j = 0; j < m3_11; j++)
+                {
+                    Console.Write(A3_11[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            int iA3_11 = 0;
+            int len3_11 = noll.Count();
+            for (int i = 0; i < n3_11; i++)
+            {
+                if (iA3_11 == len3_11)
+                {
+                    iA3_11 = 0;
+                }
+                else if (i == noll[iA3_11])
+                {
+                    iA3_11 += 1;
+                    continue;
+                }
+                for (int j = 0; j < m3_11; j++)
+                {
+                    Console.Write(A3_11[i, j] + "\t");
                 }
                 Console.WriteLine();
             }
