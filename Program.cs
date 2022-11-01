@@ -15,7 +15,7 @@ namespace LAB4
     {
         static void Main(string[] args)
         {
-            task3_11();
+            task3_8();
         }
         static void task1_3()
         {
@@ -407,40 +407,36 @@ namespace LAB4
                                       {-1,4,3,-6,20},
                                       {1,2,3,-4,5},
                                       {2,6,4,1,-3} };
-            int[] b = new int[7];
-            int n = 7, m = 5;
-            
+            int n = 7,m = 5;
+            int[,] c = new int[n, 2];
+            double[,] b = new double[n, m];
             for (int i = 0; i < n; i++)
             {
-                int minelem = 10000;
-                for (int j = 0;j < m; j++)
+                int mn = a[i, 0];
+                for (int j = 0; j < m; j++)
                 {
-                    if (a[i,j] < minelem)
+                    if (a[i, j] < mn)
                     {
-                        minelem = a[i, j];
+                        mn = a[i, j];
                     }
                 }
-                b[i] = minelem;
+                c[i, 0] = i;
+                c[i, 1] = mn;
             }
-            int znach = 0;
-            for (int i = 0; i < b.Length; i++)
+            int index;
+            int zn;
+            for (int k = 0; k < n - 1; k++)
             {
-                for (int j = 0; j < b.Length - 1; j++)
+                for (int i = k + 1; i < n; i++)
                 {
-                    if (b[j] < b[j + 1])
+                    if (c[i, 1] > c[k, 1])
                     {
-                        znach = b[j + 1];
-                        b[j + 1] = b[j];
-                        b[j] = znach;
-                        int[] h = new int[m];
-                        for (int k = 0; k < m; k++)
-                            h[k] = a[j, k];
-                        for (int l = 0; l < m; l++)
-                        {
-                            a[j, l] = a[j + 1, l];
-                            a[j + 1, l] = h[l];
-                        }
-
+                        zn = c[k, 1];
+                        index = c[k, 0];
+                        c[k, 1] = c[i, 1];
+                        c[k, 0] = c[i, 0];
+                        c[i, 1] = zn;
+                        c[i, 0] = index;
                     }
                 }
             }
@@ -448,7 +444,14 @@ namespace LAB4
             {
                 for (int j = 0; j < m; j++)
                 {
-                    Console.Write(a[i, j]);
+                    b[i, j] = a[c[i, 0], j];
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(b[i, j]);
                     Console.Write(" ");
                 }
                 Console.WriteLine();
@@ -569,38 +572,35 @@ namespace LAB4
                                       {1,2,3,-4,5},
                                       {-2,-6,-4,1,-3} };
             int n = 7, m = 5;
-            int[] b = new int[n];
+            int[,] c = new int[n, 2];
+            double[,] b = new double[n, m];
             for (int i = 0; i < n; i++)
             {
                 int count = 0;
-                for (int j = 0;j < m;j++)
+                for (int j = 0; j < m; j++)
                 {
-                    if (0 > a[i,j])
+                    if (a[i, j] > 0)
                     {
                         count++;
                     }
                 }
-                b[i] = count;
+                c[i, 0] = i;
+                c[i, 1] = count;
             }
-            int znach = 0;
-            for (int i = 0; i < b.Length; i++)
+            int index;
+            int zn;
+            for (int k = 0; k < n - 1; k++)
             {
-                for (int j = 0; j < b.Length - 1; j++)
+                for (int i = k + 1; i < n; i++)
                 {
-                    if (b[j] > b[j + 1])
+                    if (c[i, 1] > c[k, 1])
                     {
-                        znach = b[j + 1];
-                        b[j + 1] = b[j];
-                        b[j] = znach;
-                        int[] h = new int[m];
-                        for (int k = 0; k < m; k++)
-                            h[k] = a[j, k];
-                        for (int l = 0;l < m;l++)
-                        {
-                            a[j, l] = a[j + 1, l];
-                            a[j + 1, l] = h[l];
-                        }
-                            
+                        zn = c[k, 1];
+                        index = c[k, 0];
+                        c[k, 1] = c[i, 1];
+                        c[k, 0] = c[i, 0];
+                        c[i, 1] = zn;
+                        c[i, 0] = index;
                     }
                 }
             }
@@ -608,7 +608,14 @@ namespace LAB4
             {
                 for (int j = 0; j < m; j++)
                 {
-                    Console.Write(a[i, j]);
+                    b[i, j] = a[c[i, 0], j];
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(b[i, j]);
                     Console.Write(" ");
                 }
                 Console.WriteLine();
@@ -664,42 +671,55 @@ namespace LAB4
         }
         static void task3_11()
         {
-            int[,] a = new int[7, 5] {{1,2,-3,4,5},
+            int[,] a = new int[7, 5] {{1,2,-3,4,0},
                                       {7,19,0,10,11},
                                       {14,-16,-15,0,2},
-                                      {14,-15,16,1,-2},
+                                      {14,-15,16,0,-2},
                                       {-1,0,-3,-6,-20},
-                                      {1,2,3,-4,5},
-                                      {-2,-6,-4,1,-3} };
-            int n = 7, m = 5;
+                                      {1,2,0,-4,5},
+                                      {-2,-6,-4,0,-3} };
+            int n = 7, m = 5,k = 0;
+            int[] b = new int[n];
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < m; j++)
                 {
                     if (a[i, j] == 0)
                     {
-                        n--;
-                        int k = i;
-                        for (int p = k; p < n; p++)
-                        {
-                            for (int l = 0; l < m; l++)
-                                a[p, l] = a[p + 1, l];
-                        }
+                        b[i] = 1;
+                        k++;
+                        break;
                     }
                 }
             }
-            int[,] b = new int[n, m];
-            for (int i = 0;i < n; i++)
-                for (int j = 0;j < m;j++)
-                    b[i,j] = a[i,j];
+            int p = 0;
+            int[,] c = new int[k + 1, m];
             for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < m; j++)
+                if(b[i] == 0)
                 {
-                    Console.Write(b[i, j]);
-                    Console.Write(" ");
+                    for (int j = 0; j < m; j++)
+                    {
+                        c[p, j] = a[i,j];
+                    }
+                    p++;
                 }
-                Console.WriteLine();
+            }
+            if (k != n)
+            {
+                for (int i = 0; i < k + 1; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        Console.Write(c[i, j]);
+                        Console.Write(" ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("All strings contain 0");
             }
         }
 
