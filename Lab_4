@@ -1,0 +1,714 @@
+using System;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 1st lvl (3, 6, 12, 13, 17, 29, 31)
+            #region 1
+            int[,] S1 = new int[4, 4]
+            {
+                {2, 3, 1, 5},
+                {5, 3, 8, 6},
+                {2, 2, 0, 1},
+                {0, 4, 1, 5}
+            };
+            int sum1 = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                sum1 += S1[i, i] + S1[i, 3 - i];
+            }
+            Console.WriteLine(sum1);
+            Console.WriteLine();
+            #endregion
+
+            #region 6
+            int[,] S2 = new int[4, 7]
+            {
+                {2, 3, 1, 5, 9, 10, 23},
+                {5, 3, 8, 6, 1, -3, 4},
+                {2, 2, 0, 1, -5, 7, 2},
+                {0, 4, 1, 5, 10, -5, 4}
+            };
+            int[] S3 = new int[4];
+            int min1, ind1;
+            for (int i = 0; i < 4; i++)
+            {
+                min1 = S2[i, 0];
+                ind1 = 0;
+                for (int j = 0; j < 7; j++)
+                {
+                    if (S2[i, j] < min1)
+                    {
+                        ind1 = j;
+                        min1 = S2[i, j];
+                    }
+                }
+                S3[i] = ind1;
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Console.Write(S3[i] + " ");
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 12
+            int[,] S4 = new int[6, 7]
+            {
+                {2, 3, 1, 5, 9, 10, 0},
+                {5, 3, 8, 6, 1, -3, 4},
+                {2, 2, 0, 1, -5, 7, 2},
+                {0, 4, 1, 5, 23, -5, 4},
+                {-10, 13, 0, 1, 5, -7, 1},
+                {5, 1, 9, 14, -5, 1, 12},
+            };
+            int[,] S5 = new int[5, 6];
+            int max1 = S4[0, 0], ind3 = 0, ind2 = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (S4[i, j] > max1)
+                    {
+                        ind2 = j;
+                        ind3 = i;
+                        max1 = S4[i, j];
+                    }
+                }
+            }
+            int ind6 = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                int ind5 = 0;
+                if (i != ind3)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        if (j == ind2)
+                        {
+                            ind5 -= 1;
+                        }
+                        else
+                        {
+                            S5[ind6, ind5] = S4[i, j];
+                        }
+                        ind5 += 1;
+                    }
+                }
+                else
+                {
+                    ind6 -= 1;
+                }
+                ind6 += 1;
+            }
+            for (int i = 0; i < S5.GetLength(0); i++)
+            {
+                for (int j = 0; j < S5.GetLength(1); j++)
+                {
+                    Console.Write(S5[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 13
+            int[,] S6 = new int[5, 5]
+            {
+                {2, 3, 1, 5, 0},
+                {5, 3, 8, 6, 1},
+                {2, 2, 9, 1, -5},
+                {0, 4, 1, 5, 23},
+                {-10, 13, 0, 1, 5}
+            };
+            int max2 = S6[0, 0], ind7 = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (S6[i, i] > max2)
+                {
+                    max2 = S6[i, i];
+                    ind7 = i;
+                }
+                if (S6[i, 4 - i] > max2)
+                {
+                    max2 = S6[i, 4 - i];
+                    ind7 = 4 - i;
+                }
+            }
+            int c;
+            for (int i = 0; i < 5; i++)
+            {
+                c = S6[i, ind7];
+                S6[i, ind7] = S6[i, 3];
+                S6[i, 3] = c;
+            }
+            for (int i = 0; i < S6.GetLength(0); i++)
+            {
+                for (int j = 0; j < S6.GetLength(1); j++)
+                {
+                    Console.Write(S6[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 17
+            int[,] S7 = new int[,]
+            {
+                {2, 3, 1, 5, 0},
+                {5, 3, 8, 6, 1},
+                {2, 2, 9, 1, -5},
+                {0, 4, 1, 5, 23},
+            };
+            for (int i = 0; i < S7.GetLength(0); i++)
+            {
+                int min2 = S7[i, 0];
+                int ind8 = 0;
+                for (int j = 0; j < S7.GetLength(1); j++)
+                {
+                    if (S7[i, j] < min2)
+                    {
+                        min2 = S7[i, j];
+                        ind8 = j;
+                    }
+                }
+                for (int j = ind8; j > 0; j--)
+                {
+                    S7[i, j] = S7[i, j - 1];
+                }
+                S7[i, 0] = min2;
+            }
+            for (int i = 0; i < S7.GetLength(0); i++)
+            {
+                for (int j = 0; j < S7.GetLength(1); j++)
+                {
+                    Console.Write(S7[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 29
+            int[,] S8 = new int[5, 7]
+            {
+                {2, 3, 1, 5, 0, 5, 1},
+                {5, 4, 8, 6, 1, -3, 13},
+                {2, 2, 9, 1, -5, -4, 2},
+                {0, 4, 1, 5, 23, 7, 12},
+                {14,-2, 1,-12,1, 5, 5},
+            };
+            int min3 = S8[1, 0], ind9 = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                if (min3 > Math.Abs(S8[1, i]))
+                {
+                    min3 = Math.Abs(S8[1, i]);
+                    ind9 = i;
+                }
+            }
+            if (ind9 == 6)
+            {
+                for (int i = 0; i < S8.GetLength(0); i++)
+                {
+                    for (int j = 0; j < S8.GetLength(1); j++)
+                    {
+                        Console.Write(S8[i, j] + "\t");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                int[,] S9 = new int[5, 6];
+                for (int i = 0; i < 5; i++)
+                {
+                    int ind10 = 0;
+                    for (int j = 0; j < 7; j++)
+                    {
+                        if (j == ind9 + 1)
+                        {
+                            ind10 -= 1;
+                        }
+                        else
+                        {
+                            S9[i, ind10] = S8[i, j];
+                        }
+                        ind10 += 1;
+                    }
+                }
+                for (int i = 0; i < S9.GetLength(0); i++)
+                {
+                    for (int j = 0; j < S9.GetLength(1); j++)
+                    {
+                        Console.Write(S9[i, j] + "\t");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 31
+            int[,] S10 = new int[5, 8]
+            {
+                {2, 3, 1, 5, 0, 5, 1, 0},
+                {5, 4, 8, 6, 1, -3, 13, 0},
+                {2, 2, 9, 1, -5, -4, 2, 0},
+                {0, 4, 1, 5, 23, 7, 12, 0},
+                {14,-2, 1,-12,1,  5, 5, 0},
+            };
+            int[] B = new int[5] { 1, 2, 3, 4, 5 };
+            int min4 = S10[4, 0], ind11 = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                if (min4 > Math.Abs(S10[4, i]))
+                {
+                    min4 = Math.Abs(S10[4, i]);
+                    ind11 = i;
+                }
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 7; j > ind11; j--)
+                {
+                    S10[i, j] = S10[i, j - 1];
+                }
+                S10[i, ind11 + 1] = B[i];
+            }
+            for (int i = 0; i < S10.GetLength(0); i++)
+            {
+                for (int j = 0; j < S10.GetLength(1); j++)
+                {
+                    Console.Write(S10[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            //2nd lvl (7, 8, 9)
+
+            #region 7
+            int max3, ind12;
+            int[,] S12 = new int[6, 6]
+            {
+                {2, 1, -4, 7, 12, -1},
+                {8, -2, 15, 21, 0, -2},
+                {9, 3, 23, 13, 1, -3},
+                {7, -12, 1, -2, 11, -3},
+                {1, -2, 6, 13, -5, 9},
+                {5, 8, -1, 4, 12, -10},
+            };
+            max3 = S12[0, 0];
+            ind12 = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                if (S12[i, i] > max3)
+                {
+                    max3 = S12[i, i];
+                    ind12 = i;
+                }
+            }
+            for (int i = 0; i < ind12; i++)
+            {
+                for (int j = i + 1; j < 6; j++)
+                {
+                    S12[i, j] = 0;
+                }
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    Console.Write(S12[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 8
+            int max4, ind13, max5 = 0, ind14 = 0;
+            int[,] S13 = new int[6, 6]
+            {
+                {2, 1, -4, 7, 12, -1},
+                {8, -2, 15, 21, 0, -2},
+                {9, 3, 23, 13, 1, -3},
+                {7, -12, 1, -2, 11, -3},
+                {1, -2, 6, 13, -5, 9},
+                {5, 8, -1, 4, 12, -10},
+            };
+
+            for (int i = 0; i < 6; i++)
+            {
+                max4 = S13[i, 0];
+                ind13 = 0;
+                for (int j = 0; j < 6; j++)
+                {
+                    if (max4 < S13[i, j])
+                    {
+                        max4 = S13[i, j];
+                        ind13 = j;
+                    }
+                }
+                if (i % 2 != 0)
+                {
+                    S13[i, ind13] = max5;
+                    S13[i - 1, ind14] = max4;
+
+                }
+                else
+                {
+                    max5 = max4;
+                    ind14 = ind13;
+                }
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    Console.Write(S13[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 9
+            int c2;
+            int[,] S14 = new int[6, 7]
+            {
+                {2, 1, -4, 7, 12, -1, 4},
+                {8, -2, 15, 21, 0, -2, 2},
+                {9, 3, 23, 13, 1, -3, 12},
+                {7, -12, 1, -2, 11, -3, -10},
+                {1, -2, 6, 13, -5, 9, 32},
+                {5, 8, -1, 4, 12, -10, 8},
+            };
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7 / 2; j++)
+                {
+                    c2 = S14[i, 6 - j];
+                    S14[i, 6 - j] = S14[i, j];
+                    S14[i, j] = c2;
+                }
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.Write(S14[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+            
+            // 3rd lvl (1, 2, 3, 4, 8, 10, 11)
+
+            #region 1
+            int[,] S15 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+                {5, 8, -1, 4, 12},
+                {2, -4, 14, 5, 2},
+            };
+            for (int i = 0; i < 7; i++)
+            {
+                int min5 = S15[0, 0], ind15 = 0, c3 = 0;
+                for (int j = i; j < 7; j++)
+                {
+                    for (int k = 0; k < 5; k++)
+                    {
+                        if (S15[j, k] < min5)
+                        {
+                            min5 = S15[j, k];
+                            ind15 = j;
+                        }
+                    }
+                }
+                for (int j = 0; j < 5; j++)
+                {
+                    c3 = S15[i, j];
+                    S15[i, j] = S15[ind15, j];
+                    S15[ind15, j] = c3;
+                }
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write(S15[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 2
+            int[,] S16 = new int[5, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+            };
+            for (int i = 0; i < 5; i++)
+            {
+                S16[0, i] = 0;
+                S16[i, 0] = 0;
+                S16[4, i] = 0;
+                S16[i, 4] = 0;
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write(S16[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 3
+            int[,] S26 = new int[5, 5]
+            {
+                {2, 1, -4, 7, 1},
+                {8, -2, 15, 21, 4},
+                {9, 3, 23, 13, 7},
+                {7, -12, 1, -2, -2},
+                {1, -2, 6, 13, -5},
+            };
+            int sum5, sum6, n;
+            n = S26.GetLength(0);
+            int[] S17 = new int[2 * n - 1];
+            for (int i = n - 1; i > -1; i--)
+            {
+                sum5 = 0;
+                sum6 = 0;
+                int cnt12 = i;
+                for (int j = n - 1; j > i - 1; j--)
+                {
+                    sum5 += S26[cnt12, n - 1 - j];
+                    sum6 += S26[n - 1 - cnt12, j];
+                    cnt12 += 1;
+                }
+                S17[n - 1 - i] = sum5;
+                S17[i + n - 1] = sum6;
+            }
+            Console.Write("B = ");
+            for (int i = 0; i < S17.Length; i++)
+            {
+                    Console.Write(S17[i] + " ");
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 4
+            int[,] S18 = new int[5, 5]
+            {
+                {2, 1,  -4,  7, 1},
+                {8, -2, 15, 21, 4},
+                {9,  3, 23, 13, 7},
+                {7, -12, 1, -2, -2},
+                {1, -2,  6, 13, -5},
+            };
+            for (int i = S18.GetLength(0)/2; i < S18.GetLength(0); i++)
+            {
+                for (int j = 0; j < i + 1; j++)
+                {
+                    S18[i, j] = 1;
+                }
+            }
+            for (int i = 0; i < S18.GetLength(0); i++)
+            {
+                for (int j = 0; j < S18.GetLength(1); j++)
+                {
+                    Console.Write(S18[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 8
+            int[,] S19 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+                {5, 8, -1, 4, 12},
+                {2, -4, 14, 5, 2},
+            };
+            for (int i = 0; i < 7; i++)
+            {
+                int ind16 = 0, c4, max12 = -1;
+                for (int j = i; j < 7; j++)
+                {
+                    int m = 0;
+                    for (int k = 0; k < 5; k++)
+                    {
+                        if (S19[j, k] >= 0)
+                        {
+                            m += 1;
+                        }
+                    }
+                    if (m > max12)
+                    {
+                        max12 = m;
+                        ind16 = j;
+                    }
+                }
+                for (int j = 0; j < 5; j++)
+                {
+                    c4 = S19[i, j];
+                    S19[i, j] = S19[ind16, j];
+                    S19[ind16, j] = c4;
+                }
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write(S19[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 10
+            int[,] S20 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+                {5, 8, -1, 4, 12},
+                {2, -4, 14, 5, 2},
+            };
+            for (int p = 0; p < 7; p++)
+            {
+                if (p%2 == 0)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int max13 = S20[p, i];
+                        int ind20 = i;
+                        for (int j = i + 1; j < 5; j++)
+                        {
+                            if (S20[p, j] > max13)
+                            {
+                                max13 = S20[p, j];
+                                ind20 = j;
+                            }
+                        }
+                        int c5 = S20[p, i];
+                        S20[p, i] = S20[p, ind20];
+                        S20[p, ind20] = c5;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int min13 = S20[p, i];
+                        int ind20 = i;
+                        for (int j = i + 1; j < 5; j++)
+                        {
+                            if (S20[p, j] < min13)
+                            {
+                                min13 = S20[p, j];
+                                ind20 = j;
+                            }
+                        }
+                        int c5 = S20[p, i];
+                        S20[p, i] = S20[p, ind20];
+                        S20[p, ind20] = c5;
+                    }
+                }
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write(S20[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 11
+            int[,] S21 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, 0, 6, 13, -5},
+                {5, 8, -1, 0, 12},
+                {2, -4, 14, 5, 2},
+            };
+            int n1 = S21.GetLength(0);
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if (S21[i, j] == 0)
+                    {
+                        n1 -= 1;
+                        break;
+                    }
+                }
+            }
+            int[,] S22 = new int[n1, 5];
+            int f5 = 0, c6 = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                f5 = 0;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (S21[i, j] == 0)
+                    {
+                        f5 = 1;
+                        break;
+                    }
+                }
+                if (f5 == 0)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        S22[c6, j] = S21[i, j];
+                    }
+                    c6 += 1;
+                }
+            }
+            for (int i = 0; i < n1; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write(S22[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+        }
+    }
+}
