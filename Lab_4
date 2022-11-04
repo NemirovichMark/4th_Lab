@@ -6,6 +6,7 @@ namespace ConsoleApp6
     {
         static void Main(string[] args)
         {
+
             // 1st lvl (3, 6, 12, 13, 17, 29, 31)
             #region 1
             int[,] S1 = new int[4, 4]
@@ -16,7 +17,7 @@ namespace ConsoleApp6
                 {0, 4, 1, 5}
             };
             int sum1 = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < S1.GetLength(0); i++)
             {
                 sum1 += S1[i, i] + S1[i, 3 - i];
             }
@@ -34,11 +35,11 @@ namespace ConsoleApp6
             };
             int[] S3 = new int[4];
             int min1, ind1;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < S2.GetLength(0); i++)
             {
                 min1 = S2[i, 0];
                 ind1 = 0;
-                for (int j = 0; j < 7; j++)
+                for (int j = 1; j < S2.GetLength(1); j++)
                 {
                     if (S2[i, j] < min1)
                     {
@@ -48,7 +49,7 @@ namespace ConsoleApp6
                 }
                 S3[i] = ind1;
             }
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < S3.Length; i++)
             {
                 Console.Write(S3[i] + " ");
             }
@@ -67,9 +68,9 @@ namespace ConsoleApp6
             };
             int[,] S5 = new int[5, 6];
             int max1 = S4[0, 0], ind3 = 0, ind2 = 0;
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S4.GetLength(0); i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < S4.GetLength(1); j++)
                 {
                     if (S4[i, j] > max1)
                     {
@@ -80,12 +81,12 @@ namespace ConsoleApp6
                 }
             }
             int ind6 = 0;
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S4.GetLength(0); i++)
             {
                 int ind5 = 0;
                 if (i != ind3)
                 {
-                    for (int j = 0; j < 7; j++)
+                    for (int j = 0; j < S4.GetLength(1); j++)
                     {
                         if (j == ind2)
                         {
@@ -125,7 +126,7 @@ namespace ConsoleApp6
                 {-10, 13, 0, 1, 5}
             };
             int max2 = S6[0, 0], ind7 = 0;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < S6.GetLength(0); i++)
             {
                 if (S6[i, i] > max2)
                 {
@@ -139,7 +140,7 @@ namespace ConsoleApp6
                 }
             }
             int c;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < S6.GetLength(0); i++)
             {
                 c = S6[i, ind7];
                 S6[i, ind7] = S6[i, 3];
@@ -203,7 +204,7 @@ namespace ConsoleApp6
                 {14,-2, 1,-12,1, 5, 5},
             };
             int min3 = S8[1, 0], ind9 = 0;
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < S8.GetLength(1); i++)
             {
                 if (min3 > Math.Abs(S8[1, i]))
                 {
@@ -225,10 +226,10 @@ namespace ConsoleApp6
             else
             {
                 int[,] S9 = new int[5, 6];
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < S8.GetLength(0); i++)
                 {
                     int ind10 = 0;
-                    for (int j = 0; j < 7; j++)
+                    for (int j = 0; j < S8.GetLength(1); j++)
                     {
                         if (j == ind9 + 1)
                         {
@@ -264,7 +265,7 @@ namespace ConsoleApp6
             };
             int[] B = new int[5] { 1, 2, 3, 4, 5 };
             int min4 = S10[4, 0], ind11 = 0;
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < S10.GetLength(1) - 1; i++)
             {
                 if (min4 > Math.Abs(S10[4, i]))
                 {
@@ -272,9 +273,9 @@ namespace ConsoleApp6
                     ind11 = i;
                 }
             }
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < S10.GetLength(0); i++)
             {
-                for (int j = 7; j > ind11; j--)
+                for (int j = S10.GetLength(1) - 1; j > ind11; j--)
                 {
                     S10[i, j] = S10[i, j - 1];
                 }
@@ -306,7 +307,7 @@ namespace ConsoleApp6
             };
             max3 = S12[0, 0];
             ind12 = 0;
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S12.GetLength(0); i++)
             {
                 if (S12[i, i] > max3)
                 {
@@ -316,14 +317,14 @@ namespace ConsoleApp6
             }
             for (int i = 0; i < ind12; i++)
             {
-                for (int j = i + 1; j < 6; j++)
+                for (int j = i + 1; j < S12.GetLength(1); j++)
                 {
                     S12[i, j] = 0;
                 }
             }
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S12.GetLength(0); i++)
             {
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < S12.GetLength(1); j++)
                 {
                     Console.Write(S12[i, j] + "\t");
                 }
@@ -344,11 +345,11 @@ namespace ConsoleApp6
                 {5, 8, -1, 4, 12, -10},
             };
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S13.GetLength(0); i++)
             {
                 max4 = S13[i, 0];
                 ind13 = 0;
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < S13.GetLength(1); j++)
                 {
                     if (max4 < S13[i, j])
                     {
@@ -368,9 +369,9 @@ namespace ConsoleApp6
                     ind14 = ind13;
                 }
             }
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S13.GetLength(0); i++)
             {
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < S13.GetLength(1); j++)
                 {
                     Console.Write(S13[i, j] + "\t");
                 }
@@ -390,18 +391,18 @@ namespace ConsoleApp6
                 {1, -2, 6, 13, -5, 9, 32},
                 {5, 8, -1, 4, 12, -10, 8},
             };
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S14.GetLength(0); i++)
             {
-                for (int j = 0; j < 7 / 2; j++)
+                for (int j = 0; j < S14.GetLength(1) / 2; j++)
                 {
                     c2 = S14[i, 6 - j];
                     S14[i, 6 - j] = S14[i, j];
                     S14[i, j] = c2;
                 }
             }
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < S14.GetLength(0); i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < S14.GetLength(1); j++)
                 {
                     Console.Write(S14[i, j] + "\t");
                 }
@@ -423,30 +424,43 @@ namespace ConsoleApp6
                 {5, 8, -1, 4, 12},
                 {2, -4, 14, 5, 2},
             };
-            for (int i = 0; i < 7; i++)
+            int[] S23 = new int[S15.GetLength(0)];
+            for (int i = 0; i < S15.GetLength(0); i++)
             {
-                int min5 = S15[0, 0], ind15 = 0, c3 = 0;
-                for (int j = i; j < 7; j++)
+                int min5 = S15[i, 0];
                 {
-                    for (int k = 0; k < 5; k++)
+                    for (int j = 1; j < S15.GetLength(1); j++)
                     {
-                        if (S15[j, k] < min5)
-                        {
-                            min5 = S15[j, k];
-                            ind15 = j;
-                        }
+                        if (S15[i, j] < min5)
+                            min5 = S15[i, j];
                     }
                 }
-                for (int j = 0; j < 5; j++)
+                S23[i] = min5;
+            }
+            int ind15 = 1;
+            while (ind15 < S23.Length)
+            {
+                if (ind15 == 0 || S23[ind15] <= S23[ind15 - 1])
                 {
-                    c3 = S15[i, j];
-                    S15[i, j] = S15[ind15, j];
-                    S15[ind15, j] = c3;
+                    ind15++;
+                }
+                else
+                {
+                    int c7 = S23[ind15 - 1];
+                    S23[ind15 - 1] = S23[ind15];
+                    S23[ind15] = c7;
+                    for (int j = 0; j < 5; j++)
+                    {
+                        c7 = S15[ind15 - 1, j];
+                        S15[ind15 - 1, j] = S15[ind15, j];
+                        S15[ind15, j] = c7;
+                    }
+                    ind15--;
                 }
             }
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < S15.GetLength(0); i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < S15.GetLength(1); j++)
                 {
                     Console.Write(S15[i, j] + "\t");
                 }
@@ -454,7 +468,7 @@ namespace ConsoleApp6
             }
             Console.WriteLine();
             #endregion
-
+            
             #region 2
             int[,] S16 = new int[5, 5]
             {
@@ -464,16 +478,16 @@ namespace ConsoleApp6
                 {7, -12, 1, -2, 11},
                 {1, -2, 6, 13, -5},
             };
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < S16.GetLength(0); i++)
             {
                 S16[0, i] = 0;
                 S16[i, 0] = 0;
                 S16[4, i] = 0;
                 S16[i, 4] = 0;
             }
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < S16.GetLength(0); i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < S16.GetLength(1); j++)
                 {
                     Console.Write(S16[i, j] + "\t");
                 }
@@ -542,7 +556,7 @@ namespace ConsoleApp6
             }
             Console.WriteLine();
             #endregion
-
+            
             #region 8
             int[,] S19 = new int[7, 5]
             {
@@ -554,35 +568,43 @@ namespace ConsoleApp6
                 {5, 8, -1, 4, 12},
                 {2, -4, 14, 5, 2},
             };
-            for (int i = 0; i < 7; i++)
+            int[] S24 = new int[S19.GetLength(0)];
+            int cnt121, ind34 = 1;
+            for (int i = 0; i < S19.GetLength(0); i++)
             {
-                int ind16 = 0, c4, max12 = -1;
-                for (int j = i; j < 7; j++)
+                cnt121 = 0;
+                for (int j = 0; j < S19.GetLength(1); j++)
                 {
-                    int m = 0;
-                    for (int k = 0; k < 5; k++)
+                    if (S19[i, j] > 0)
                     {
-                        if (S19[j, k] >= 0)
-                        {
-                            m += 1;
-                        }
-                    }
-                    if (m > max12)
-                    {
-                        max12 = m;
-                        ind16 = j;
+                        cnt121++;
                     }
                 }
-                for (int j = 0; j < 5; j++)
+                S24[i] = cnt121;
+            }
+            while (ind34 < S24.Length)
+            {
+                if (ind34 == 0 || S24[ind34 - 1] >= S24[ind34])
                 {
-                    c4 = S19[i, j];
-                    S19[i, j] = S19[ind16, j];
-                    S19[ind16, j] = c4;
+                    ind34++;
+                }
+                else
+                {
+                    int c121 = S24[ind34];
+                    S24[ind34] = S24[ind34 - 1];
+                    S24[ind34 - 1] = c121;
+                    for (int j = 0; j < S19.GetLength(1); j++)
+                    {
+                        c121 = S19[ind34 - 1, j];
+                        S19[ind34 - 1, j] = S19[ind34, j];
+                        S19[ind34, j] = c121;
+                    }
+                    ind34--;
                 }
             }
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < S19.GetLength(0); i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < S19.GetLength(1); j++)
                 {
                     Console.Write(S19[i, j] + "\t");
                 }
@@ -602,50 +624,47 @@ namespace ConsoleApp6
                 {5, 8, -1, 4, 12},
                 {2, -4, 14, 5, 2},
             };
-            for (int p = 0; p < 7; p++)
+            for (int i = 0; i < S20.GetLength(0); i++)
             {
-                if (p%2 == 0)
+                int ind141 = 0;
+                if (i%2 != 0)
                 {
-                    for (int i = 0; i < 5; i++)
+                    while (ind141 < S20.GetLength(1))
                     {
-                        int max13 = S20[p, i];
-                        int ind20 = i;
-                        for (int j = i + 1; j < 5; j++)
+                        if (ind141 == 0 || S20[i, ind141 - 1] <= S20[i, ind141])
                         {
-                            if (S20[p, j] > max13)
-                            {
-                                max13 = S20[p, j];
-                                ind20 = j;
-                            }
+                            ind141++;
                         }
-                        int c5 = S20[p, i];
-                        S20[p, i] = S20[p, ind20];
-                        S20[p, ind20] = c5;
+                        else
+                        {
+                            int smena = S20[i, ind141];
+                            S20[i, ind141] = S20[i, ind141 - 1];
+                            S20[i, ind141 - 1] = smena;
+                            ind141--;
+                        }
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < 5; i++)
+                    while (ind141 < S20.GetLength(1))
                     {
-                        int min13 = S20[p, i];
-                        int ind20 = i;
-                        for (int j = i + 1; j < 5; j++)
+                        if (ind141 == 0 || S20[i, ind141 - 1] >= S20[i, ind141])
                         {
-                            if (S20[p, j] < min13)
-                            {
-                                min13 = S20[p, j];
-                                ind20 = j;
-                            }
+                            ind141++;
                         }
-                        int c5 = S20[p, i];
-                        S20[p, i] = S20[p, ind20];
-                        S20[p, ind20] = c5;
+                        else
+                        {
+                            int keka = S20[i, ind141];
+                            S20[i, ind141] = S20[i, ind141 - 1];
+                            S20[i, ind141 - 1] = keka;
+                            ind141--;
+                        }
                     }
                 }
             }
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < S20.GetLength(0); i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < S20.GetLength(1); j++)
                 {
                     Console.Write(S20[i, j] + "\t");
                 }
@@ -653,7 +672,7 @@ namespace ConsoleApp6
             }
             Console.WriteLine();
             #endregion
-
+            
             #region 11
             int[,] S21 = new int[7, 5]
             {
@@ -666,9 +685,9 @@ namespace ConsoleApp6
                 {2, -4, 14, 5, 2},
             };
             int n1 = S21.GetLength(0);
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < S21.GetLength(0); i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < S21.GetLength(1); j++)
                 {
                     if (S21[i, j] == 0)
                     {
@@ -678,11 +697,11 @@ namespace ConsoleApp6
                 }
             }
             int[,] S22 = new int[n1, 5];
-            int f5 = 0, c6 = 0;
-            for (int i = 0; i < 7; i++)
+            int f5, c6 = 0;
+            for (int i = 0; i < S21.GetLength(0); i++)
             {
                 f5 = 0;
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < S21.GetLength(1); j++)
                 {
                     if (S21[i, j] == 0)
                     {
@@ -692,7 +711,7 @@ namespace ConsoleApp6
                 }
                 if (f5 == 0)
                 {
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < S21.GetLength(1); j++)
                     {
                         S22[c6, j] = S21[i, j];
                     }
@@ -701,7 +720,7 @@ namespace ConsoleApp6
             }
             for (int i = 0; i < n1; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < S22.GetLength(1); j++)
                 {
                     Console.Write(S22[i, j] + "\t");
                 }
