@@ -2,7 +2,7 @@
 
 namespace _4th_Lab
 {
-    class Program
+    class Theory
     {
         const int ROWS = 3;
         const int COLUMNS = 3;
