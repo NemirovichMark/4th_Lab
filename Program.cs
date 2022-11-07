@@ -89,9 +89,9 @@ namespace Lab_4
             max = M[0, 0];
             maxi = 0;
             int maxj = 0;
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < M.GetLength(0); i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < M.GetLength(1); j++)
                 {
                     if (M[i, j] > max)
                     {
@@ -101,15 +101,15 @@ namespace Lab_4
                     }
                 }
             }
-            for (int i = maxi; i < 5; i++)
-                for (int j = 0; j < 7; j++)
+            for (int i = maxi; i < M.GetLength(0) - 1; i++)
+                for (int j = 0; j < M.GetLength(1); j++)
                     M[i, j] = M[i + 1, j];
-            for (int i = 0; i < 5; i++)
-                for (int j = maxj; j < 6; j++)
+            for (int i = 0; i < M.GetLength(0) - 1; i++)
+                for (int j = maxj; j < M.GetLength(1) - 1; j++)
                     M[i, j] = M[i, j + 1];
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < M.GetLength(0) - 1; i++)
             {
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < M.GetLength(1) - 1; j++)
                     Console.Write(M[i, j] + " ");
                 Console.WriteLine();
             }
@@ -192,9 +192,9 @@ namespace Lab_4
                 }
                 for (int j = minj; j != 0; j--)
                 {
-                    double a = M[i, j - 1];
+                    double l = M[i, j - 1];
                     M[i, j - 1] = M[i, j];
-                    M[i, j] = a;
+                    M[i, j] = l;
                 }
                 min = double.MaxValue;
                 minj = -1;
@@ -211,10 +211,10 @@ namespace Lab_4
             min = double.MaxValue;
             minj = -1;
             Console.WriteLine("Write massive: ");
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < M.GetLength(0); i++)
             {
                 Console.WriteLine($"Write numbers of {i} string: ");
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < M.GetLength(1); j++)
                 {
                     if (!double.TryParse(Console.ReadLine(), out double x))
                     {
@@ -230,15 +230,15 @@ namespace Lab_4
                         }
                 }
             }
-            if (minj == 6) minj = -1;
+            if (minj == M.GetLength(1) - 1) minj = -1;
             minj += 1;
             Console.WriteLine();
-            for (int i = 0; i < 5; i++)
-                for (int j = minj; j < 6; j++)
+            for (int i = 0; i < M.GetLength(0); i++)
+                for (int j = minj; j < M.GetLength(1) - 1; j++)
                     M[i, j] = M[i, j + 1];
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < M.GetLength(0); i++)
             {
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < M.GetLength(1) - 1; j++)
                     Console.Write(M[i, j] + " ");
                 Console.WriteLine();
             }
@@ -406,45 +406,71 @@ namespace Lab_4
 
             #region Task_3_1
             Console.WriteLine("Task 3.1");
-            M = new double[5, 6] { { 10,-120, 2, 3, 4 ,-2},
-                                 { 5.1, 6, -100,-3.1, 8 ,32},
-                                 { 9,10, 13, 10, -101,42 },
-                                 { -10,13, 14, 15,-103, 3.9 },
-                                 {10, 5, 6, 7, 90, -10}};
-            //M = new double[4, 1] { {10}, { 0 }, { -13 }, { 22 } };
-            List<double> duble = new List<double>();
-            static double Minimum(double[,] M, int m)
+            Console.Write("Write n: ");
+            if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
             {
-                double mn = double.MaxValue;
-                for (int j = 0; j < M.GetLength(1); j++)
+                Console.WriteLine(ERROR);
+                return;
+            }
+            Console.Write("Write m: ");
+            if (!int.TryParse(Console.ReadLine(), out m) || m <= 0)
+            {
+                Console.WriteLine(ERROR);
+                return;
+            }
+            double[,] a = new double[n, m];
+            Console.WriteLine($"Write massive separated by space {n}x{m}");
+            double[][] arr = new double[n][];
+            for (int i = 0; i < n; i++)
+            {
+                string s = Console.ReadLine();
+                string[] c = s.Split(' ');
+                double[] p = new double[m];
+                min = double.MaxValue;
+                for (int j = 0; j < m; j++)
                 {
-                    if (mn > M[m, j])
+                    if ((c.Length < m) || (c.Length > m))
                     {
-                        mn = M[m, j];
+                        Console.WriteLine($"Length of massive can't be longer than {m}");
+                        break;
+                    }
+                    bool norm = double.TryParse(c[j], out p[j]);
+                    if (!norm)
+                    {
+                        Console.WriteLine(ERROR);
                     }
                 }
-                return mn;
+                arr[i] = p;
             }
-            for (int i = 0; i < M.GetLength(0); i++)
+            static double MIN(double[] arr)
             {
-                duble.Add(Minimum(M, i));
-            }
-            List<double> duble2 = new List<double>(duble);
-            duble.Sort();
-
-            double[,] MM = new double[5, 6];
-            for (int i = 0; i < M.GetLength(0); i++)
-            {
-                int OOO = duble2.IndexOf(duble[i]);
-                for (int j = 0; j < M.GetLength(1); j++)
+                double min = double.MaxValue;
+                for (int i = 0; i < arr.Length; i++)
                 {
-                    MM[i, j] = M[OOO, j];
+                    if (arr[i] < min)
+                    {
+                        min = arr[i];
+                    }
+                }
+                return min;
+            }
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                for (int j = 0; j < arr.Length - 1; j++)
+                {
+                    if (MIN(arr[j]) < MIN(arr[j + 1]))
+                    {
+                        (arr[j], arr[j + 1]) = (arr[j + 1], arr[j]);
+                    }
                 }
             }
-            for (int i = 0; i < 5; i++)
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < 6; j++)
-                    Console.Write(MM[i, j] + " ");
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write($"{arr[i][j]} ");
+                }
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -613,7 +639,7 @@ namespace Lab_4
                 }
             }
             Console.WriteLine();
-            duble = new List<double>();
+            List<double> duble = new List<double>();
             static double Counter(double[,] M, int mmm)
             {
                 int k = 0;
@@ -630,7 +656,7 @@ namespace Lab_4
             {
                 duble.Add(Counter(M, i));
             }
-            MM = new double[n, m];
+            double[,] MM = new double[n, m];
             for (int i = 0; i < duble.Count - 1; i++)
             {
                 for (int j = 0; j < duble.Count - 1 - i; j++)
@@ -733,65 +759,60 @@ namespace Lab_4
             #region Task_3_11
             Console.WriteLine("Task 3.11");
             Console.Write("Write n: ");
-            if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
+            if (!int.TryParse(Console.ReadLine(), out n) || n < 2)
             {
                 Console.WriteLine(ERROR);
                 return;
             }
             Console.Write("Write m: ");
-            if (!int.TryParse(Console.ReadLine(), out m) || m <= 0)
+            if (!int.TryParse(Console.ReadLine(), out m) || m < 2)
             {
                 Console.WriteLine(ERROR);
                 return;
             }
-            M = new double[n, m];
-            Console.WriteLine("Write massive: ");
+            a = new double[n, m];
+            Console.WriteLine($"Write numbers of massive separated by space {n}x{m}");
+            arr = new double[n][];
+            int stolb = n;
+            int strok = 0;
             for (int i = 0; i < n; i++)
             {
-                Console.WriteLine($"Write numbers of {i} string: ");
+                string s = Console.ReadLine();
+                string[] c = s.Split(' ');
+                double[] p = new double[m];
+                int nul = 0;
                 for (int j = 0; j < m; j++)
                 {
-                    if (!double.TryParse(Console.ReadLine(), out double x))
+                    if ((c.Length < m) || (c.Length > m))
                     {
-                        Console.WriteLine(ERROR);
-                        return;
-                    }
-                    M[i, j] = x;
-                }
-            }
-            Console.WriteLine();
-            int[] C = new int[n];
-            k = 0;
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < m; j++)
-                {
-
-                    if (M[i, j] == 0)
-                    {
-                        C[i] = 1;
-                        k++;
+                        Console.WriteLine($"Length of massive can't be longer than {m}");
                         break;
                     }
-                }
-            }
-            double[,] MMM = new double[k, m];
-            int K = 0;
-            for (int i = 0; i < n; i++)
-            {
-                if (C[i] == 0)
-                {
-                    for (int j = 0; j < m; j++)
+                    bool norm = double.TryParse(c[j], out p[j]);
+                    if (!norm)
                     {
-                        MMM[K, j] = M[i, j];
+                        Console.WriteLine(ERROR);
                     }
-                    K++;
+                    if (p[j] == 0)
+                    {
+                        nul = 1;
+                    }
                 }
+                if (nul == 1)
+                {
+                    stolb -= 1;
+                    continue;
+                }
+                arr[strok] = p;
+                strok += 1;
             }
-            for (int i = 0; i < k; i++)
+            Console.WriteLine();
+            for (int i = 0; i < stolb; i++)
             {
                 for (int j = 0; j < m; j++)
-                    Console.Write(MMM[i, j] + " ");
+                {
+                    Console.Write($"{arr[i][j]} ");
+                }
                 Console.WriteLine();
             }
             Console.WriteLine();
