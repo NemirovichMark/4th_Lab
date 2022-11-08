@@ -454,12 +454,20 @@ namespace Lab_4
                 }
                 return min;
             }
-            for (int i = 0; i < arr.Length - 1; i++)
+            double[,] mass = new double[n, 2];
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < arr.Length - 1; j++)
+                mass[i, 0] = i;
+                mass[i, 1] = MIN(arr[i]);
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - 1; j++)
                 {
-                    if (MIN(arr[j]) < MIN(arr[j + 1]))
+                    if (mass[j, 1] < mass[j + 1, 1])
                     {
+                        (mass[j, 0], mass[j + 1, 0]) = (mass[j + 1, 0], mass[j, 0]);
+                        (mass[j, 1], mass[j + 1, 1]) = (mass[j + 1, 1], mass[j, 1]);
                         (arr[j], arr[j + 1]) = (arr[j + 1], arr[j]);
                     }
                 }
@@ -785,8 +793,8 @@ namespace Lab_4
                 {
                     if ((c.Length < m) || (c.Length > m))
                     {
-                        Console.WriteLine($"Length of massive can't be longer than {m}");
-                        break;
+                        Console.WriteLine($"Length of massive can't be longer or shorter than {m}");
+                        return;
                     }
                     bool norm = double.TryParse(c[j], out p[j]);
                     if (!norm)
