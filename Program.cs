@@ -1,254 +1,789 @@
-﻿using System;
+using System;
 
-namespace _4th_Lab
+namespace lab4
 {
     class Program
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-        }
-        static void ShowMatrix(int[,] matrix)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
-        }
         static void Main(string[] args)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
+            #region level 1 number 3
+            Console.WriteLine("--------level 1 number 3--------");
+            int n = 4, m = 4;
+            double[,] matrix = new double[n, m];
+            double x;
+            double summ = 0;
+            Console.WriteLine("Enter elements of array:");
+            for(int i = 0; i < n; i++)
             {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
+                for(int j = 0; j < m; j++)
                 {
-                    Console.WriteLine();
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                    if(i==j) summ += matrix[i, j];
                 }
-                Console.Write($"{array[i],5}");
             }
+            Console.WriteLine("Sum = {0}", summ);
 
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
+            #endregion
+            #region level 1 number 6
+            Console.WriteLine("--------level 1 number 6--------");
+            n = 4;
+            m = 7;
+
+            matrix = new double[n, m];
+
+            Console.WriteLine("Enter elements of matrix");
+            for (int i = 0; i < n; i++)
             {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            double[] array = new double[n];
+            int index_min;
+            double mini;
+            for (int i = 0; i < n; i++)
+            {
+                mini = matrix[i, 0];
+                index_min = 0;
+
+                for (int j = 0; j < m; j++)
+                {
+                    if (matrix[i, j] < mini)
+                    {
+                        mini = matrix[i, j];
+                        index_min = j;
+                    }
+
+                }
+                array[i] = index_min;
+            }
+            Console.WriteLine("Your array:");
+            foreach (double el in array) Console.Write($"{el} ");
+            Console.WriteLine();
+            #endregion
+            #region level 1 number 12
+            Console.WriteLine("--------level 1 number 12--------");
+            n = 6;
+            m = 7;
+            matrix = new double[n, m];
+
+            Console.WriteLine("Enter elements of matrix");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            double maxi = matrix[0, 0];
+            int index_max = 0, index_maxj = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (matrix[i, j] > maxi)
+                    {
+                        index_max = i;
+                        index_maxj = j;
+                        maxi = matrix[i, j];
+                    }
+                }
+            }
+            for (int i = index_max; i < n - 1; i++)
+            {
+                for (int j = 0; j < m; j++) matrix[i, j] = matrix[i + 1, j];
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = index_maxj; j < m - 1; j++) matrix[i, j] = matrix[i, j + 1];
+            }
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < m - 1; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
                 Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
+            }
+            #endregion
+            #region level 1 number 13
+            Console.WriteLine("--------level 1 number 13--------");
+            n = 5;
+            m = 5;
+            matrix = new double[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
                 {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
                 }
             }
-
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
-            #endregion
-
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
+            maxi = matrix[0, 0];
+            index_max = 0;
+            for (int i = 0; i < n; i++)
             {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
+                if (matrix[i, i] > maxi)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    index_max = i;
+                    maxi = matrix[i, i];
+                }
+            }
+            double temp;
+            for (int i = 0; i < n; i++)
+            {
+                temp = matrix[i, 3];
+                matrix[i, 3] = matrix[i, index_max];
+                matrix[i, index_max] = temp;
+            }
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 1 number 17
+            Console.WriteLine("--------level 1 number 17--------");
+            Console.WriteLine("Enter n and m");
+            int.TryParse(Console.ReadLine(), out n);
+            int.TryParse(Console.ReadLine(), out m);
+            while (n <= 0 || m <= 0)
+            {
+                Console.WriteLine("Enter n and m >0");
+                int.TryParse(Console.ReadLine(), out n);
+                int.TryParse(Console.ReadLine(), out m);
+
+            }
+            matrix = new double[n, m];
+            Console.WriteLine("Enter elements of matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                mini = matrix[i, 0];
+                index_min = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    if (mini > matrix[i, j])
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
+                        mini = matrix[i, j];
+                        index_min = j;
+                    }
+                }
+                for (int j = index_min; j > 0; j--) matrix[i, j] = matrix[i, j - 1];
+                matrix[i, 0] = mini;
+            }
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 1 number 29
+            Console.WriteLine("--------level 1 number 29--------");
+            n = 5;
+            m = 7;
+            matrix = new double[n, m];
+            Console.WriteLine("Enter elements of matrix");
+            for (int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            mini = Math.Abs(matrix[1, 0]);
+            index_min = 0;
+            for(int j = 0; j < m; j++)
+            {
+                if (mini > Math.Abs(matrix[1, j]))
+                {
+                    mini = Math.Abs(matrix[1, j]);
+                    index_min = j;
+                }
+            }
+            for(int i = 0; i < n; i++)
+            {
+                for (int j = index_min + 1; j < m - 1; j++) matrix[i, j] = matrix[i, j + 1];
+            }
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 1 number 31
+            Console.WriteLine("--------level 1 number 31--------");
+            n = 5;
+            m = 8;
+            matrix = new double[n, m];
+            array = new double[n];
+            Console.WriteLine("Enter elements of array");
+            for(int i = 0; i < n; i++)
+            {
+                double.TryParse(Console.ReadLine(), out x);
+                array[i] = x;
+            }
+            Console.WriteLine("Enter elements of matrix");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m-1; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            index_min = 0;
+            mini = matrix[4, 0];
+            for(int i = 1; i < m - 1; i++)
+            {
+                if (matrix[4, i] < mini)
+                {
+                    index_min = i;
+                    mini = matrix[4, i];
+                }
+            }
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = m - 1; j > index_min; j--)
+                {
+                    if (j == index_min+1)
+                    {
+                        matrix[i, j] = array[i];
+                    }
+                    else
+                    {
+                        matrix[i, j] = matrix[i, j - 1];
+                    }
+                }
+            }
+            Console.WriteLine("Your array:");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 2 number 7
+            Console.WriteLine("--------level 2 number 7--------");
+            n = 6;
+            m = 6;
+            matrix = new double[n, m];
+            Console.WriteLine("Enter elements of matrix");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            maxi = matrix[0, 0];
+            index_max = 0;
+            for (int i = 1; i < n; i++)
+            {
+                if (matrix[i, i] > maxi)
+                {
+                    maxi = matrix[i, i];
+                    index_max = i;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < m; j++)
+                {
+                    if (i < index_max) matrix[i, j] = 0;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 2 number 8
+            Console.WriteLine("--------level 2 number 8--------");
+            n = 6;
+            m = 6;
+            int max_index_int;
+            matrix = new double[n, m];
+            int[] array2 = new int[n];
+            Console.WriteLine("Enter elements of matrix");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                maxi = matrix[i, 0];
+                max_index_int = 0;
+                for (int j = 0; j < m; j++)
+                {
+                    if (matrix[i, j] > maxi)
+                    {
+                        maxi = matrix[i, j];
+                        max_index_int = j;
+                    }
+                }
+                array2[i] = max_index_int;
+            }
+
+            double temp1 = matrix[0, array2[0]];
+            matrix[0, array2[0]] = matrix[1, array2[1]];
+            matrix[1, array2[1]] = temp1;
+
+            temp1 = matrix[2, array2[2]];
+            matrix[2, array2[2]] = matrix[3, array2[3]];
+            matrix[3, array2[3]] = temp1;
+
+            temp1 = matrix[4, array2[4]];
+            matrix[4, array2[4]] = matrix[5, array2[5]];
+            matrix[5, array2[5]] = temp1;
+
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 2 number 9
+            Console.WriteLine("--------level 2 number 9--------");
+            n = 6;
+            m = 7;
+            matrix = new double[n, m];
+            Console.WriteLine("Enter elements of matrix");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            for(int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m/2; j++){
+                    temp = matrix[i, m - 1 - j];
+                    matrix[i, m - 1 - j] = matrix[i, j];
+                    matrix[i, j] = temp;
+                }
+            }
+            Console.WriteLine("Your matrix:");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 3 number 1
+            Console.WriteLine("--------level 3 number 1--------");
+            n = 7;
+            m = 5;
+            matrix = new double[n, m];
+            double[,] res = new double[n, m];
+            double[,] matr = new double[n, 2];
+            Console.WriteLine("Enter elements of matrix");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            
+            int temp2;
+            double tempr1;
+            double tempr2;
+            double ind;
+            for(int i = 0; i < n; i++)
+            {
+                mini = matrix[i, 0];
+                for(int j = 0; j < m; j++)
+                {
+                    if (mini > matrix[i, j]) mini = matrix[i, j];
+                }
+                matr[i, 0] = i;
+                matr[i, 1] = mini;
+            }
+            for(int i= 0; i < n; i++)
+            {
+                ind = matr[i,0];
+                maxi = matr[i,1];
+                temp2 = i;
+                for(int j = i + 1; j < n; j++)
+                {
+                    if (matr[j,1] > maxi)
+                    {
+                        maxi = matr[j,1];
+                        ind = matr[j,0];
+                        temp2 = j;
+                    }
+                }
+                tempr1 = matr[i,0];
+                matr[i,0] = ind;
+                matr[temp2,0] = tempr1;
+                tempr2 = matr[i, 1];
+                matr[i, 1] = maxi;
+                matr[temp2, 1] = tempr2;
+
+            }
+            for(int i = 0; i < n; i++)
+            {
+                temp2 = (int)matr[i, 0];
+                for (int j = 0; j < m; j++) res[i, j] = matrix[temp2, j];
+            }
+            Console.WriteLine("Your matrix:");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", res[i, j]);
+                }
+                Console.WriteLine();
+            }
+            
+            #endregion
+            #region level 3 number 2
+            Console.WriteLine("--------level 3 number 2--------");
+            Console.WriteLine("Enter n:");
+            int.TryParse(Console.ReadLine(), out n);
+            while (n <= 0)
+            {
+                Console.WriteLine("Enter n>0");
+                int.TryParse(Console.ReadLine(), out n);
+            }
+            m = n;
+            matrix = new double[n, m];
+            Console.WriteLine("Enter elements of matrix");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                    if (i == 0 || j == 0 || i == n - 1 || j == m - 1) matrix[i, j] = 0;
+                }
+            }
+            Console.WriteLine("Your matrix:");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 3 number 3
+            Console.WriteLine("--------level 3 number 3--------");
+            Console.WriteLine("Enter n:");
+            int.TryParse(Console.ReadLine(), out n);
+            while (n <= 0)
+            {
+                Console.WriteLine("Enter n>0");
+                int.TryParse(Console.ReadLine(), out n);
+            }
+            m = n;
+            array = new double[n * 2 - 1];
+            matrix = new double[n, m];
+            
+            Console.WriteLine("Enter elements of matrix");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < n; j++)
+                {
+                    array[j - i + n - 1] += matrix[i, j];
+                }
+            }
+            Console.WriteLine("Your array:");
+            foreach (double el in array) Console.Write("{0}", el);
+            Console.WriteLine();
+            #endregion
+            #region level 3 number 4
+            Console.WriteLine("--------level 3 number 4--------");
+            Console.WriteLine("Enter n:");
+            int.TryParse(Console.ReadLine(), out n);
+            while (n <= 0)
+            {
+                Console.WriteLine("Enter n>0");
+                int.TryParse(Console.ReadLine(), out n);
+            }
+            m = n;
+            matrix = new double[n, m];
+
+            Console.WriteLine("Enter elements of matrix");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            for (int i = n / 2; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (j <= i)
+                    {
+                        matrix[i, j] = 1;
+                    }
+                }
+            }
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region level 3 number 8
+            Console.WriteLine("--------level 3 number 8--------");
+            n = 7;
+            m = 5;
+            matrix = new double[n, m];
+            res = new double[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            matr = new double[n, 2];
+            int k = 0;
+            for (int i = 0; i < n; i++)
+            {
+
+                for (int j = 0; j < m; j++)
+                {
+                    if (matrix[i, j] > 0)
+                    {
+                        k++;
+                    }
+                }
+                matr[i, 0] = i;
+                matr[i, 1] = k;
+                k = 0;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                maxi = matr[i, 1];
+                temp2 = i;
+                for (int j = 1 + i; j < n; j++)
+                {
+                    if (matr[j, 1] > maxi)
+                    {
+                        maxi = matr[j, 1];
+                        temp2 = j;
+                    }
+                }
+                temp = matr[i, 0];
+                matr[i, 0] = temp2;
+                matr[temp2, 0] = temp;
+                temp1 = matr[i, 1];
+                matr[i, 1] = maxi;
+                matr[temp2, 1] = temp1;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                temp2 = (int)matr[i, 0];
+                for (int j = 0; j < m; j++)
+                {
+                    res[i, j] = matrix[temp2, j];
+                }
+            }
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", res[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+
+
+            #endregion
+            #region level 3 number 10
+            Console.WriteLine("--------level 3 number 10--------");
+            Console.WriteLine("Enter n and m >0");
+            int.TryParse(Console.ReadLine(), out n);
+            int.TryParse(Console.ReadLine(), out m);
+            while (n <= 0 || m <= 0)
+            {
+                Console.WriteLine("Enter another n and m");
+                int.TryParse(Console.ReadLine(), out n);
+                int.TryParse(Console.ReadLine(), out m);
+            }
+            matrix = new double[n, m];
+            Console.WriteLine("Enter elements of matrix");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                }
+            }
+            for(int i = 0; i < n; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    for(int j = 0; j < m - 1; j++)
+                    {
+                        maxi = matrix[i, j];
+                        index_max = j;
+                        for(k = j + 1; k < m; k++)
                         {
-                            min = (matrix[i, j], i, j);
+                            if (matrix[i, k] > maxi)
+                            {
+                                maxi = matrix[i, k];
+                                index_max = k;
+                            }
                         }
+                        matrix[i, index_max] = matrix[i, j];
+                        matrix[i, j] = maxi;
                     }
-                }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
-                        {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
-            {
-                for (int i = left; i < right; i++)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                right--;
-
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-            }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
-            #endregion
-
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
-
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
-            {
-                if (element == 0 || array[element] >= array[element - 1])
-                {
-                    element++;
                 }
                 else
                 {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
-                }
-            }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
-
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
+                    for (int j = 0; j < m - 1; j++)
                     {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
+                        mini = matrix[i, j];
+                        index_min = j;
+                        for (k = j + 1; k < m; k++)
+                        {
+                            if (matrix[i, k] < mini)
+                            {
+                                mini = matrix[i, k];
+                                index_min = k;
+                            }
+                        }
+                        matrix[i, index_min] = matrix[i, j];
+                        matrix[i, j] = mini;
                     }
                 }
-                step /= 2;
             }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
-
+            Console.WriteLine("Your matrix:");
+            for(int i = 0; i < n; i++)
+            {
+                for(int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", matrix[i, j]);
+                }
+                Console.WriteLine();
+            }
             #endregion
-            
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
+            #region level 3 number 11
+            Console.WriteLine("--------level 3 number 11--------");
+            Console.WriteLine("Enter n and m >0");
+            int.TryParse(Console.ReadLine(), out n);
+            int.TryParse(Console.ReadLine(), out m);
+            while (n <= 0 || m <= 0)
+            {
+                Console.WriteLine("Enter another n and m");
+                int.TryParse(Console.ReadLine(), out n);
+                int.TryParse(Console.ReadLine(), out m);
+            }
+            matrix = new double[n, m];
+            Console.WriteLine("Enter elements of matrix");
+
+            k = 0;
+            int num = 0;
+            int count = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, j] = x;
+                    if (matrix[i, j] == 0) k++;
+                }
+                if (k == 0) count++;
+                k = 0;
+            }
+            res = new double[count, m];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (matrix[i, j] == 0) k++;
+                }
+                if (k == 0)
+                {
+                    for (int j = 0; j < m; j++) res[num, j] = matrix[i, j];
+                    num++;
+                }
+                k = 0;
+            }
+            Console.WriteLine("Your matrix:");
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0} ", res[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
         }
     }
 }
