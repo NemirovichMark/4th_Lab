@@ -250,11 +250,11 @@ static void lvl1Task31()
 
     for (int i = 0; i < array.GetLength(0); i++)
     {
-        for (int j = array.GetLength(1)-1; j > min_index+1; j--)
+        for (int j = array.GetLength(1) - 1; j > min_index + 1; j--)
         {
             temp = array[i, j];
-            array[i, j] = array[i, j-1];
-            array[i, j-1] = temp;
+            array[i, j] = array[i, j - 1];
+            array[i, j - 1] = temp;
         }
     }
 
@@ -267,5 +267,79 @@ static void lvl1Task31()
 }
 
 
+static void lvl2Task7()
+{
+    double max = double.NegativeInfinity;
+    int max_index = 0;
+    int d = 0;
+    double[,] array = CreateArray();
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (j == d)
+            {
+                if (array[i, j] > max)
+                {
+                    max = array[i, j];
+                    max_index = i;
+                }
+            }
+        }
+        d++;
+    }
 
+    d = 0;
 
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = d+1; j < array.GetLength(1); j++)
+        {
+            if (i < max_index)
+            {
+                array[i, j] = 0;
+            }
+        }
+        d++;
+    }
+    PrintArray(array);
+
+}
+
+static void lvl2Task8()
+{
+    double temp = 0;
+    double[,] array = CreateArray();
+    double[] max = new double[array.GetLength(0)];
+    int[] index = new int[array.GetLength(0)];
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (array[i, j] > max[i])
+            {
+                max[i] = array[i, j];
+                index[i] = j;
+            }
+        }
+    }
+
+    for (int i = 0; i < max.Length; i+=2)
+    {
+        temp = max[i];
+        max[i] = max[i+1];
+        max[i + 1] = temp;
+    }
+
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (j == index[i])
+            {
+                array[i, j] = max[i];
+            }
+        }
+    }
+    PrintArray(array);
+}
