@@ -5,14 +5,14 @@ static double[,] CreateArray()
 {
     int x;
     int y;
-    double[,] error = new double[0,0];
+    double[,] error = new double[0, 0];
     Console.WriteLine("Enter array height and width");
     try { x = int.Parse(Console.ReadLine()); y = int.Parse(Console.ReadLine()); }
     catch { Console.WriteLine("Error"); return error; }
-    double[,] array = new double[x,y];
+    double[,] array = new double[x, y];
     for (int i = 0; i < x; i++)
     {
-        Console.WriteLine($"Enter {i+1} line");
+        Console.WriteLine($"Enter {i + 1} line");
         for (int j = 0; j < y; j++)
         {
             try { array[i, j] = double.Parse(Console.ReadLine()); }
@@ -22,7 +22,7 @@ static double[,] CreateArray()
     return array;
 }
 
-static void PrintArray(double [,] array)
+static void PrintArray(double[,] array)
 {
     for (int i = 0; i < array.GetLength(0); i++)
     {
@@ -91,8 +91,8 @@ static void lvl1Task12()
             if (array[i, j] > max)
             {
                 max = array[i, j];
-                indexes[0] = i; 
-                indexes[1] = j; 
+                indexes[0] = i;
+                indexes[1] = j;
             }
         }
     }
@@ -112,7 +112,7 @@ static void lvl1Task12()
                 }
                 else
                 {
-                    array1[y,x] = array[i,j];
+                    array1[y, x] = array[i, j];
                     x++;
                 }
             }
@@ -152,7 +152,7 @@ static void lvl1Task13()
     for (int i = 0; i < array.GetLength(0); i++)
     {
         temp = array[i, max_index];
-        array[i, max_index] = array[i,3];
+        array[i, max_index] = array[i, 3];
         array[i, 3] = temp;
     }
     PrintArray(array);
@@ -182,7 +182,7 @@ static void lvl1Task17()
         temp = array[i, array1[i]];
         for (int j = array1[i]; j > 0; j--)
         {
-            array[i,j] = array[i, j-1];
+            array[i, j] = array[i, j - 1];
         }
         array[i, 0] = temp;
     }
@@ -195,7 +195,7 @@ static void lvl1Task29()
     double min = double.PositiveInfinity;
     int min_index = 0;
     double temp = 0;
-    double[,] array1 = new double[array.GetLength(0), array.GetLength(1)-1];
+    double[,] array1 = new double[array.GetLength(0), array.GetLength(1) - 1];
     for (int j = 0; j < array.GetLength(1); j++)
     {
         int i = 1;
@@ -207,11 +207,11 @@ static void lvl1Task29()
     }
     for (int i = 0; i < array.GetLength(0); i++)
     {
-        for (int j = min_index+1; j < array.GetLength(1)-1; j++)
+        for (int j = min_index + 1; j < array.GetLength(1) - 1; j++)
         {
-            temp = array[i,j];
-            array[i, j] = array[i, j+1];
-            array[i, j+1] = temp;
+            temp = array[i, j];
+            array[i, j] = array[i, j + 1];
+            array[i, j + 1] = temp;
         }
     }
     for (int i = 0; i < array.GetLength(0); i++)
@@ -223,4 +223,49 @@ static void lvl1Task29()
     }
     PrintArray(array1);
 }
+
+static void lvl1Task31()
+{
+    double temp = 0;
+    int min_index = 0;
+    double min = double.PositiveInfinity;
+    double[] vector = new double[5];
+    Console.WriteLine("Enter vector");
+    for (int i = 0; i < 5; i++)
+    {
+        try { vector[i] = Convert.ToDouble(Console.ReadLine()); }
+        catch { Console.Write("Error"); return; }
+    }
+    double[,] array = CreateArray();
+
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+        int i = 4;
+        if (array[i, j] < min)
+        {
+            min = array[i, j];
+            min_index = j;
+        }
+    }
+
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = array.GetLength(1)-1; j > min_index+1; j--)
+        {
+            temp = array[i, j];
+            array[i, j] = array[i, j-1];
+            array[i, j-1] = temp;
+        }
+    }
+
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        int j = min_index + 1;
+        array[i, j] = vector[i];
+    }
+    PrintArray(array);
+}
+
+
+
 
