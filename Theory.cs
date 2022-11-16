@@ -2,7 +2,7 @@
 
 namespace _4th_Lab
 {
-    class Program
+    class Theory
     {
         const int ROWS = 3;
         const int COLUMNS = 3;
@@ -186,11 +186,13 @@ namespace _4th_Lab
 
             #region Gnome sort
             var element = 1;
+            var pointer = 2;
             while (element < array.Length)
             {
                 if (element == 0 || array[element] >= array[element - 1])
                 {
-                    element++;
+                    element = pointer;
+                    pointer++;
                 }
                 else
                 {
