@@ -155,12 +155,26 @@ class HelloWorld
                     }
                 }
             }
-            matrix[IndexM].RemoveAt(IndexN);
-
-            Console.WriteLine("The result:");
-            for (int i = 0; i < m - 1; i++)
+            m -= 1;
+            for (int i = IndexN; i < m; i++)
             {
-                for (int j = 0; j < n - 1; j++)
+                for (int j = 0; j < n; j++)
+                {
+                    matrix[i][j] = matrix[i + 1][j];
+                }
+            }
+            n -= 1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = IndexM; j < n; j++)
+                {
+                    matrix[i][ j] = matrix[i][j + 1];
+                }
+            }
+            Console.WriteLine("The result:");
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
                 {
                     Console.Write(matrix[i][j] + " ");
                 }
@@ -281,51 +295,40 @@ class HelloWorld
                     matrix[i].Add(x);
                 }
             }
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < m; i++)
             {
-                matrix[i].Insert(0, matrix[i].Min());
-            }
-
-            Console.WriteLine("The result: ");
-            cout(matrix);
-        }
-        public static void Ex29()
-        {
-            double[,] matrix = new double[5, 7];
-            double[,] res = new double[5, 6];
-            double min = double.MaxValue;
-            int minIndex = 0;
-            double x;
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 7; j++)
+                double minimal = matrix[i][0];
+                int jmin = 0;
+                double curmin = 0;
+                for (int j = 0; j < n; j++)
                 {
-                    Console.WriteLine($"Enter elemment of matrix [{i}; {j}]");
-                    while (!double.TryParse(Console.ReadLine(), out x))
+                    if (matrix[i][j] < minimal)
                     {
-                        Console.WriteLine("Incorrect value");
+                        minimal = matrix[i][j];
+                        jmin = j;
                     }
-                    matrix[i, j] = x;
-                    if ((Math.Abs(matrix[i, j]) < min) && (i == 1))
+                }
+                if (jmin != 0)
+                {
+                    curmin = matrix[i][jmin];
+                    int c = jmin;
+                    do
                     {
-                        min = matrix[i, j];
-                        minIndex = j;
-                    }
+                        matrix[i][c] = matrix[i][c - 1];
+                        c--;
+                    } while (c - 1 >= 0);
+                    matrix[i][0] = curmin;
+                }
+            }
+            Console.WriteLine("The result: ");
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(String.Format("{0,3}", matrix[i][j]));
                 }
                 Console.WriteLine();
             }
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0, counter = 0; j < 6; j++, counter++)
-                {
-                    if (j == minIndex)
-                    {
-                        counter++;
-                    }
-                    res[i, j] = matrix[i, counter];
-                }
-            }
-            cout(res);
         }
         public static void Ex31()
         {
