@@ -2,6 +2,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,28 @@ namespace _4_лаба_3_часть
 {
     internal class Program
     {
+        static void sortirovka(int i,int stroks_element, int[] l, int[,] m)
+        {
+            for (int k = 0; k < stroks_element - 1; k++)
+            {
+                int amax = l[k];
+                int imax = k;
+                for (int j = k + 1; j < stroks_element ; j++)
+                {
+                    if (l[j] > amax)
+                    {
+                        amax = l[j];
+                        imax = j;
+                    }
+                }
+                l[imax] = l[k];
+                l[k] = amax;
+            }
+            for (int f = 0; f < l.Length; f++)
+            {
+                m[i, f] = l[f];
+            }
+        }
         static void Main(string[] args)
         {
             //3 часть 1 номер
@@ -21,48 +44,51 @@ namespace _4_лаба_3_часть
                     F[i, j] = random.Next(-60, 60);
                 }
             }
-           
-
-            /*int l = 0;
-           for (int i = 0; i < 7 && l < 7; i++)
-           {
-
-               C[0, l] = F[i, 4];
-               C[1, l] = i;
-               l += 1;
-
-           }*/
-            int[,] C = new int[2, 7];
-            int l = 0;
-            for (int i = 0; i < 7 && l < 7; i++)
+            Console.WriteLine("Вывод исходной матрицы");
+            for (int i = 0; i < 7; i++)
             {
-                int min = F[i,0];
-                int jmin = 0;
                 for (int j = 0; j < 5; j++)
                 {
-                    if (F[i,j] < min)
-                    {
-                        min = F[i, j];
-                        jmin = i;
-                    }
+                    Console.Write("{0:d} ", F[i, j]);
                 }
-                C[0, l] = min;
-                C[1, l] = jmin;
-                l += 1;
+                Console.WriteLine();
             }
+            int imax_otv = 0;
 
+
+            int[] sr = new int[5];
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+
+                    sr[j] = F[i, j];
+                    
+
+                }
+                sortirovka(i, 5, sr, F);
+
+            }
             Console.WriteLine("вывод упорядоченной матрицы");
             for (int i = 0; i < 7; i++)
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    Console.Write("{0:d} ", F[i,j]);
+                    Console.Write("{0:d} ", F[i, j]);
                 }
                 Console.WriteLine();
             }
-            
-           
-            
+            int[,] C = new int[2, 7];
+
+            int l = 0;
+            for (int i = 0; i < 7 && l < 7; i++)
+            {
+
+                C[0, l] = F[i, 4];
+                C[1, l] = i;
+                l += 1;
+
+            }
             Console.WriteLine("Вывод  исходного массива C");
             for (int i = 0; i < 2; i++)
             {
@@ -72,25 +98,30 @@ namespace _4_лаба_3_часть
                 }
                 Console.WriteLine();
             }
-            
-                for (int j = 0; j < 7; j++)
+
+            for (int j = 0; j < 7; j++)
+            {
+                for (int f = 0; f < 7; f++)
                 {
-                    for (int f = 0; f < 7; f++)
+                    if (C[0, j] > C[0, f])
                     {
-                        if (C[0, j] > C[0, f])
-                        {
-                            int temp = C[0, j];
-                            C[0, j] = C[0, f];
+                        int temp = C[0, j];
+                        C[0, j] = C[0, f];
 
-                            C[0, f] = temp;
-                            int jtemp = C[1, j];
-                            C[1, j] = C[1, f];
-                            C[1, f] = jtemp;
-
+                        C[0, f] = temp;
+                        int jtemp = C[1, j];
+                        C[1, j] = C[1, f];
+                        C[1, f] = jtemp;/*
+                            int temp = F[i, j];
+                            F[i, j] = F[i, k];
+                            F[i, k] = temp;
                         }
+                                                 */
+
                     }
                 }
-            
+            }
+
             Console.WriteLine("Вывод отредактированного массива С");
             for (int i = 0; i < 2; i++)
             {
@@ -102,15 +133,30 @@ namespace _4_лаба_3_часть
             }
 
 
-            
+            /*for (int ii = 0,i = 0; i < 7 && ii < 7;ii++, i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    int m = C[1, ii];
+
+                    int temp = F[i, j];
+                    F[i, j] = F[m, j];
+                    F[m, j] = temp;
+
+                }
+
+
+
+            }*/
+
             int[,] new_matrix = new int[7, 5];
             for (int ii = 0, i = 0; i < 7 && ii < 7; ii++, i++)
             {
-               
+
                 for (int j = 0; j < 5; j++)
                 {
 
-                    new_matrix[i, j] = F[C[1,ii], j];
+                    new_matrix[i, j] = F[C[1, ii], j];
                 }
             }
             Console.WriteLine("вывод  матрицы (new_matrix)");
@@ -128,215 +174,3 @@ namespace _4_лаба_3_часть
         }
     }
 }
-
-
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _10_задание_3_часть
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            //8 задание 3 часть
-            Random r = new Random();
-            Console.Write("введите кол-во строк: ");
-            string stroks = Console.ReadLine();
-            Console.WriteLine();
-            Console.Write("введите кол-во столбцов: ");
-            string stolbs = Console.ReadLine();
-            int strok;
-            int stolb;
-            bool val = int.TryParse(stroks, out strok);
-            bool l = int.TryParse(stolbs, out stolb);
-            int[,] a;
-            if (val && l)
-            {
-                a = new int[strok, stolb];
-            }
-            else
-            {
-                Console.WriteLine("что-то не так");
-                return;
-            }
-            for (int i = 0; i < a.GetLength(0); i++)
-            {
-                for (int j = 0; j < a.GetLength(1); j++)
-                {
-                    a[i, j] = r.Next(-30, 40);
-                }
-            }
-            Console.WriteLine("Вывод исходной матрицы");
-            for (int i = 0; i < a.GetLength(0); i++)
-            {
-                for (int j = 0; j < a.GetLength(1); j++)
-                {
-                    Console.Write(a[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-            int count = 0;
-            int imax = 0;
-            int[,] C = new int[2, strok];
-            int index_C = 0;
-            for (int i = 0; i < a.GetLength(0); i++)
-            {
-                count = 0;
-                for (int j = 0; j < a.GetLength(1); j++)
-                {
-                    imax = i;
-                    if (a[i, j] > 0)
-                    {
-                        count++;
-                    }
-                }
-                C[0, index_C] = count;
-                C[1, index_C] = imax;
-                index_C += 1;
-            }
-            Console.WriteLine("Вывод матрицы C");
-            for (int i = 0; i < 2; i++)
-            {
-                for (int j = 0; j < strok; j++)
-                {
-                    Console.Write(C[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-            int n = 0;
-           
-
-
-                for (int j = 0; j < strok; j++)
-                {
-                    for (int f = j; f < strok; f++)
-                    {
-                        if (C[0, f] > C[0, j])
-                        {
-                            int temp = C[0, j];
-                            C[0, j] = C[0, f];
-                            C[0, f] = temp;
-                            int i_temp = C[1, j];
-                            C[1, j] = C[1, f];
-                            C[1, f] = i_temp;
-
-
-                        }
-                    }
-                }
-           
-            Console.WriteLine("Вывод отредактированного двухмерного массива С");
-            for (int i = 0; i < 2; i++)
-            {
-                for (int j = 0; j < strok; j++)
-                {
-                    Console.Write(C[i,j] + " ");
-                }
-                Console.WriteLine();
-            }
-            int[,] new_matrix = new int[strok, stolb];
-            for (int i = 0; i < a.GetLength(0); i++)
-            {
-                for (int j = 0; j < a.GetLength(1); j++)
-                {
-                    new_matrix[i, j] = a[C[1,i],j];
-                }
-            }
-            Console.WriteLine("Вывод матрицы new_matrix");
-            for (int i = 0; i < strok; i++)
-            {
-                for (int j = 0; j < stolb; j++)
-                {
-                    Console.Write(new_matrix[i,j] + " ");
-                }
-                Console.WriteLine();
-            }
-            Console.ReadLine();
-
-
-
-        }
-    }
-}
-
-
-
-int n;
-            Console.WriteLine("Введите n: ");
-            Int32.TryParse(Console.ReadLine(), out n);
-
-            int[,] A = new int[n, n];
-            Random r = new Random();
-
-            Console.WriteLine("Исходная матрица: \n");
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    A[i, j] = r.Next(-10, 30);
-                    Console.Write("{0,-5}", A[i, j]);
-                }
-                Console.WriteLine();
-            }
-
-            for (int i = 0; i < n; i++)
-            {
-                if ((i + 1) % 2 != 0) //нечётный
-                {
-                    int sort = 0;
-                    while (sort < n)
-                    {
-                        if (sort == 0 || A[i, sort - 1] <= A[i, sort])
-                        {
-                            sort++;
-                        }
-                        else
-                        {
-                            int swap = A[i, sort];
-                            A[i, sort] = A[i, sort - 1];
-                            A[i, sort - 1] = swap;
-
-                            sort--;
-                        }
-                    }
-                }
-                else //чётный
-                {
-                    int sort = 0;
-                    while (sort < n)
-                    {
-                        if (sort == 0 || A[i, sort - 1] >= A[i, sort])
-                        {
-                            sort++;
-                        }
-                        else
-                        {
-                            int swap = A[i, sort];
-                            A[i, sort] = A[i, sort - 1];
-                            A[i, sort - 1] = swap;
-
-                            sort--;
-                        }
-                    }
-                }
-
-            }
-
-            Console.WriteLine(" Итоговая матрица: ");
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    Console.Write("{0,-5}", A[i, j]);
-                }
-                Console.WriteLine();
-            }
-            Console.ReadLine();
