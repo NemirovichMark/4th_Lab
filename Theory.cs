@@ -1,254 +1,869 @@
-﻿using System;
 
-namespace _4th_Lab
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class HelloWorld 
 {
-    class Theory
+  static void Main() 
+  {
+    Lab4Level3.Ex10();
+  }
+}
+
+    public class Lab4Level1
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
+        public static void cout(double[,] arr)
         {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-        }
-        static void ShowMatrix(int[,] matrix)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0; i < arr.GetLength(0); i++)
             {
                 Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < arr.GetLength(1); j++)
                 {
-                    Console.Write($"{matrix[i, j],5}");
+                    Console.Write(String.Format("{0,3}", arr[i, j]));
                 }
             }
+            Console.WriteLine();
         }
-        static void Main(string[] args)
+        public static void cout(List<List<double>> arr)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
-            {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
+            for (int i = 0; i < arr[0].Count; i++)
             {
                 Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
+                for (int j = 0; j < arr[1].Count; j++)
                 {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
+                    Console.Write(String.Format("{0,3}", arr[i][j]));
                 }
             }
-
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
-            #endregion
-
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
+            Console.WriteLine();
+        }
+        public static void cout12(List<List<double>> arr)
+        {
+            for (int i = 0; i < arr[0].Count - 2; i++)
             {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
+                Console.WriteLine();
+                for (int j = 0; j < arr[1].Count - 2; j++)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    Console.Write(String.Format("{0,3}", arr[i][j]));
+                }
+            }
+            Console.WriteLine();
+        }
+
+        public static void Ex3()
+        {
+            double x, sum = 0;
+            double[,] arr = new double[4, 4];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
+                        Console.WriteLine("Incorrect value");
+                    }
+                    arr[i, j] = x;
+                }
+                Console.WriteLine();
+            }
+            cout(arr);
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                sum += arr[i, i];
+            }
+            Console.WriteLine("The result is " + sum);
+
+
+        }
+        public static void Ex6()
+        {
+            double x, sum = 0;
+            double[,] arr = new double[4, 7];
+            double[] res = new double[4];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
+                    {
+                        Console.WriteLine("Incorrect value");
+                    }
+                    arr[i, j] = x;
+                }
+                Console.WriteLine();
+            }
+
+            cout(arr);
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                double min = double.MaxValue;
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    if (arr[i, j] < min)
+                    {
+                        min = arr[i, j];
+                    }
+                }
+                res[i] = min;
+            }
+            for (int i = 0; i < res.Length; i++)
+            {
+                Console.WriteLine(res[i]);
+            }
+        }
+        public static void Ex12()
+        {
+            string[] tmp;
+            int m = 6;
+            int n = 7;
+            List<List<double>> matrix = new List<List<double>>();
+            Console.WriteLine($"Enter the matrix ({n} in a line and {m} in a column)");
+            for (int i = 0; i < m; i++)
+            {
+                matrix.Add(new List<double>());
+                while (true)
+                {
+                    tmp = Console.ReadLine().Split(" ");
+                    if (tmp.Length != n)
+                    {
+                        Console.WriteLine($"Incorrect format, matrix should be {n} in a line and {m} in a column");
+                        continue;
+                    }
+                    break;
+                }
+                for (int j = 0; j < n; j++)
+                {
+                    double x;
+                    double.TryParse(tmp[j], out x);
+                    matrix[i].Add(x);
+                }
+            }
+            int IndexN = 0;
+            int IndexM = 0;
+            double max = matrix[0][0];
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (max < matrix[i][j])
+                    {
+                        max = matrix[i][j];
+                        IndexN = j;
+                        IndexM = i;
+                    }
+                }
+            }
+            m -= 1;
+            for (int i = IndexN; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    matrix[i][j] = matrix[i + 1][j];
+                }
+            }
+            n -= 1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = IndexM; j < n; j++)
+                {
+                    matrix[i][ j] = matrix[i][j + 1];
+                }
+            }
+            Console.WriteLine("The result:");
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(matrix[i][j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        public static void Ex13()
+        {
+            string[] tmp;
+            int n = 5;
+            List<List<double>> matrix = new List<List<double>>();
+            Console.WriteLine($"Enter the matrix ({n} in a line and {n} in a column)");
+            for (int i = 0; i < n; i++)
+            {
+                matrix.Add(new List<double>());
+                while (true)
+                {
+                    tmp = Console.ReadLine().Split(" ");
+                    if (tmp.Length != n)
+                    {
+                        Console.WriteLine($"Incorrect format, matrix should be {n} in a line and {n} in a column");
+                        continue;
+                    }
+                    break;
+                }
+                for (int j = 0; j < n; j++)
+                {
+                    double x;
+                    double.TryParse(tmp[j], out x);
+                    matrix[i].Add(x);
+                }
+            }
+            double x1 = 0;
+            double max = matrix[0][0];
+            int index = 0;
+            int k = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (matrix[i][k] > max)
+                {
+                    max = matrix[i][k];
+                    index = i;
+                }
+                k++;
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                x1 = matrix[i][index];
+                matrix[i][index] = matrix[i][3];
+                matrix[i][3] = x1;
+            }
+
+            Console.WriteLine(" Matrix");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(matrix[i][j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+        public static void Ex17()
+        {
+            string[] tmp;
+            int n, m;
+            Console.WriteLine("Enter the anount of row");
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out m))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (m < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+
+            Console.WriteLine("Enter the anount of column");
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out n))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (n < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            List<List<double>> matrix = new List<List<double>>();
+            Console.WriteLine($"Enter the matrix ({n} in a line and {m} in a column)");
+            for (int i = 0; i < m; i++)
+            {
+                matrix.Add(new List<double>());
+                while (true)
+                {
+                    tmp = Console.ReadLine().Split(" ");
+                    if (tmp.Length != n)
+                    {
+                        Console.WriteLine($"Incorrect format, matrix should be {n} in a line and {m} in a column");
+                        continue;
+                    }
+                    break;
+                }
+                for (int j = 0; j < n; j++)
+                {
+                    double x;
+                    double.TryParse(tmp[j], out x);
+                    matrix[i].Add(x);
+                }
+            }
+            for (int i = 0; i < m; i++)
+            {
+                double minimal = matrix[i][0];
+                int jmin = 0;
+                double curmin = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    if (matrix[i][j] < minimal)
+                    {
+                        minimal = matrix[i][j];
+                        jmin = j;
+                    }
+                }
+                if (jmin != 0)
+                {
+                    curmin = matrix[i][jmin];
+                    int c = jmin;
+                    do
+                    {
+                        matrix[i][c] = matrix[i][c - 1];
+                        c--;
+                    } while (c - 1 >= 0);
+                    matrix[i][0] = curmin;
+                }
+            }
+            Console.WriteLine("The result: ");
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(String.Format("{0,3}", matrix[i][j]));
+                }
+                Console.WriteLine();
+            }
+        }
+        public static void Ex31()
+        {
+
+            double[,] matrix = new double[5, 4];
+            double[,] res = new double[5, 5];
+            double[] B = new double[5];
+            double min = double.MaxValue;
+            int minIndex = 0;
+            double x;
+            Console.WriteLine("Enter B:");
+            for (int i = 0; i < 5; i++)
+            {
+                while (!double.TryParse(Console.ReadLine(), out x))
+                {
+                    Console.WriteLine("Incorrect value");
+                }
+                B[i] = x;
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
+                    {
+                        Console.WriteLine("Incorrect value");
+                    }
+                    matrix[i, j] = x;
+                    if ((Math.Abs(matrix[i, j]) < min) && (i == 4))
+                    {
+                        min = matrix[i, j];
+                        minIndex = j;
+                    }
+                }
+                Console.WriteLine();
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0, counter = 0; counter < 5; j++, counter++)
+                {
+                    res[i, counter] = matrix[i, j];
+                    if (counter == minIndex)
+                    {
+                        counter++;
+                        res[i, counter] = B[i];
+                    }
+                }
+            }
+            cout(res);
+        }
+
+    }
+    public class Lab4Level2
+    {
+        public static void Ex7()
+        {
+            double[,] matrix = new double[6, 6]
+            {
+                { 1,2,3,4,5,6 },
+                { 7,8,9,10,11,12 },
+                { 13,14,15,16,17,18 },
+                { 17,18,19,22,21,2 },
+                { 18,19,20,21,22,23 },
+                { 1,2,3,4,5,6 }
+            };
+            double max = double.MinValue;
+            int maxi = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    if (i == j && matrix[i, j] > max)
+                    {
+                        max = matrix[i, j];
+                        maxi = j;
+                    }
+                }
+            }
+            for (int i = 0; i < maxi; i++)
+            {
+                for (int j = i + 1; j < 6; j++)
+                {
+                    matrix[i, j] = 0;
+                }
+            }
+            Lab4Level1.cout(matrix);
+        }
+        public static void Ex8()
+        {
+            double[,] matrix = new double[6, 6]
+            {
+                { 1,2,3,4,5,6 },
+                { 7,8,9,10,11,12 },
+                { 13,14,15,16,17,18 },
+                { 17,18,19,22,21,2 },
+                { 18,19,20,21,22,23 },
+                { 1,2,3,4,5,6 }
+            };
+            int max0 = 0;
+            int max1 = 0;
+            double tmp = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    if (matrix[i, j] > matrix[i, max0] && (i % 2 == 0))
+                    {
+                        max0 = j;
+                    }
+                    if (matrix[i, j] > matrix[i, max1] && (i % 2 == 1))
+                    {
+                        max1 = j;
+                    }
+                }
+                if (i % 2 == 1)
+                {
+                    tmp = matrix[i - 1, max0];
+                    matrix[i - 1, max0] = matrix[i, max1];
+                    matrix[i, max1] = tmp;
+                    max0 = 0;
+                    max1 = 0;
+                }
+            }
+            Lab4Level1.cout(matrix);
+        }
+        public static void Ex9()
+        {
+            double[,] matrix = new double[6, 7]
+            {
+                { 1,2,3,4,5,6,7 },
+                { 7,8,9,10,11,12,13 },
+                { 13,14,15,16,17,18,19 },
+                { 17,18,19,22,21,2,4 },
+                { 18,19,20,21,22,23,14},
+                { 1,2,3,4,5,6,7 }
+            };
+            double tmp = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    tmp = matrix[i, k];
+                    matrix[i, k] = matrix[i, 6 - k];
+                    matrix[i, 6 - k] = tmp;
+                }
+            }
+            Lab4Level1.cout(matrix);
+        }
+        
+    }
+    public class Lab4Level3
+    {
+        public static void Ex1()
+        {
+            double[,] matrix = new double[7, 5]
+             {
+                { 1,2,3,4,5 },
+                { 7,8,9,10,11 },
+                { 13,14,15,16,17 },
+                { 17,18,19,22,21 },
+                { 18,19,20,21,22},
+                { 1,2,3,4,5},
+                { 3,4,5,6,7}
+            };
+            double[,] result = new double[7, 5];
+            double[] arr = new double[7];
+            double min = double.MaxValue;
+            int tmp = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if (matrix[i, j] < min)
+                    {
+                        min = matrix[i, j];
+                    }
+                }
+                arr[i] = min;
+                min = double.MaxValue;
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (arr[j] < min)
+                    {
+                        min = arr[j];
+                        tmp = j;
+                    }
+                }
+                for (int j = 0; j < 5; j++)
+                {
+                    result[i, j] = matrix[tmp, j];
+                }
+                arr[tmp] = double.MaxValue;
+                min = double.MaxValue;
+            }
+            Lab4Level1.cout(result);
+        }
+        public static void Ex2()
+        {
+            Console.WriteLine("Enter size of square: ");
+            int size;
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out size))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (size < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            double[,] matrix = new double[size, size];
+            double x;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
+                    {
+                        Console.WriteLine("Incorrect value");
+                    }
+                    matrix[i, j] = x;
+                    if (i == 0 || j == 0 || i == size - 1 || j == size - 1)
+                    {
+                        matrix[i, j] = 0;
+                    }
+                }
+            }
+            Lab4Level1.cout(matrix);
+        }
+        public static void Ex3()
+        {
+            Console.WriteLine("Enter size of square: ");
+            int size;
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out size))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (size < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            double[,] matrix = new double[size, size];
+            double[] sum = new double[size * 2 - 1];
+            double x;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
+                    {
+                        Console.WriteLine("Incorrect value");
+                    }
+                    matrix[i, j] = x;
+                }
+            }
+            double tmp = 0, tmp1 = 0, tmp2 = 0;
+            int help;
+            for (int i = size - 1; i >= 0; i--)
+            {
+                help = i;
+                for (int j = 0; j < size - i && i > 0; j++)
+                {
+                    tmp += matrix[help, j];
+                    tmp1 += matrix[j, help];
+                    help++;
+                }
+                tmp2 += matrix[i, i];
+                sum[size - 1 - i] = tmp;
+                sum[size - 1 + i] = tmp1;
+                tmp = 0;
+                tmp1 = 0;
+            }
+            sum[size - 1] = tmp2;
+            for (int i = 0; i < size * 2 - 1; i++)
+            {
+                Console.Write(sum[i] + "\t");
+            }
+        }
+        public static void Ex4()
+        {
+            Console.WriteLine("Enter size of square: ");
+            int size;
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out size))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (size < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            double[,] matrix = new double[size, size];
+            double x;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
+                    {
+                        Console.WriteLine("Incorrect value");
+                    }
+                    matrix[i, j] = x;
+                    if (i >= j && i > (size / 2 - size % 2))
+                    {
+                        matrix[i, j] = 1;
+                    }
+                }
+            }
+            Lab4Level1.cout(matrix);
+        }
+        public static void Ex8()
+        {
+            double[,] matrix = new double[7, 5]
+            {
+                {-5,-6,-7,-8,-9 },
+                {-5,6,-7,-8,-9},
+                {-5,7,-8,-9,6},
+                {-5,8,-7,9,6},
+                {-6,6,5,3,5 },
+                {1,2,3,4,5 },
+                {-1,-2,-3,-4,5 },
+            };
+            double[,] result = new double[7, 5];
+            int[] arr = new int[7];
+            int count = 0;
+            int tmp = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if (matrix[i, j] >= 0)
+                    {
+                        count++;
+                    }
+                }
+                arr[i] = count;
+                count = 0;
+            }
+            int max = int.MinValue;
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (arr[j] > max)
+                    {
+                        max = arr[j];
+                        tmp = j;
+                    }
+                }
+                for (int j = 0; j < 5; j++)
+                {
+                    result[i, j] = matrix[tmp, j];
+                }
+                arr[tmp] = int.MinValue;
+                max = int.MinValue;
+            }
+            Lab4Level1.cout(result);
+        }
+        public static void Ex10()
+        {
+            int line, column;
+            Console.WriteLine("Enter number of lines: ");
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out line))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (line < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            Console.WriteLine("Enter number of columns: ");
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out column))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (column < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            double[,] matrix = new double[line, column];
+            double x;
+            for (int i = 0; i < line; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
+                    {
+                        Console.WriteLine("Incorrect value");
+                    }
+                    matrix[i, j] = x;
+                }
+            }
+            for (int i = 0; i < line; i++)
+            {
+                int tmp = 0;
+                if (i % 2 != 0)
+                {
+                    while (tmp < column)
+                    {
+                        if (tmp == 0 || matrix[i, tmp - 1] <= matrix[i, tmp])
                         {
-                            min = (matrix[i, j], i, j);
+                            tmp++;
+                        }
+                        else
+                        {
+                            double swap = matrix[i, tmp];
+                            matrix[i, tmp] = matrix[i, tmp - 1];
+                            matrix[i, tmp - 1] = swap;
+                            tmp--;
                         }
                     }
-                }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
-                        {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
-            {
-                for (int i = left; i < right; i++)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                right--;
-
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-            }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
-            #endregion
-
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
-
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
-            {
-                if (element == 0 || array[element] >= array[element - 1])
-                {
-                    element++;
                 }
                 else
                 {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
-                }
-            }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
-
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
+                    while (tmp < column)
                     {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
+                        if (tmp == 0 || matrix[i, tmp - 1] >= matrix[i, tmp])
+                        {
+                            tmp++;
+                        }
+                        else
+                        {
+                            double swap = matrix[i, tmp];
+                            matrix[i, tmp] = matrix[i, tmp - 1];
+                            matrix[i, tmp - 1] = swap;
+                            tmp--;
+                        }
                     }
                 }
-                step /= 2;
             }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
-
-            #endregion
+            Lab4Level1.cout(matrix);
+        }
+        public static void Ex11()
+        {
+            int line, column;
+            Console.WriteLine("Enter size of line: ");
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out line))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (line < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            Console.WriteLine("Enter size of column: ");
+            while (true)
+            {
+                if (!int.TryParse(Console.ReadLine(), out column))
+                {
+                    Console.WriteLine("Incorrect value");
+                    continue;
+                }
+                if (column < 0)
+                {
+                    Console.WriteLine("Must be positive");
+                    continue;
+                }
+                break;
+            }
+            List<int> ints = new List<int>();
+            bool flag = false;
+            double[,] matrix = new double[line, column];
+            double x;
+            for (int i = 0; i < line; i++)
+            {
+                flag = false;
+                for (int j = 0; j < column; j++)
+                {
+                    Console.WriteLine($"Enter {i} and {j} elem");
+                    while (!double.TryParse(Console.ReadLine(), out x))
+                    {
+                        Console.WriteLine("Incorrect value");
+                    }
+                    matrix[i, j] = x;
+                    if (matrix[i, j] == 0)
+                    {
+                        flag = true;
+                    }
+                }
+                if (flag == false)
+                {
+                    ints.Add(i);
+                }
+            }
+            double[,] ans = new double[ints.Count(), column];
+            for (int i = 0; i < ints.Count(); i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    ans[i, j] = matrix[ints[i], j];
+                }
+            }
+            Lab4Level1.cout(ans);
             
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
         }
     }
-}
+
