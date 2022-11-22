@@ -293,7 +293,7 @@ static void lvl2Task7()
 
     for (int i = 0; i < array.GetLength(0); i++)
     {
-        for (int j = d+1; j < array.GetLength(1); j++)
+        for (int j = d + 1; j < array.GetLength(1); j++)
         {
             if (i < max_index)
             {
@@ -324,10 +324,10 @@ static void lvl2Task8()
         }
     }
 
-    for (int i = 0; i < max.Length; i+=2)
+    for (int i = 0; i < max.Length; i += 2)
     {
         temp = max[i];
-        max[i] = max[i+1];
+        max[i] = max[i + 1];
         max[i + 1] = temp;
     }
 
@@ -342,4 +342,51 @@ static void lvl2Task8()
         }
     }
     PrintArray(array);
+}
+
+static void lvl2Task9()
+{
+    double[,] array = CreateArray();
+    double temp = 0;
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1)/2 + 1; j++)
+        {
+            temp = array[i, (array.GetLength(1) / 2) - j];
+            array[i, (array.GetLength(1) / 2) - j] = array[i, (array.GetLength(1) / 2) + j];
+            array[i, (array.GetLength(1) / 2) + j] = temp;
+        }
+    }
+    PrintArray(array);
+}
+//1-4,8,10,11
+static void lvl3Task1()
+{
+    double[,] array = CreateArray();
+    int min = 0;
+    double temp = double.PositiveInfinity;
+    int temp_1 = 0;
+    double[,] min_index = new double[2, array.GetLength(0)];
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (array[i, j] < temp)
+            {
+                temp = array[i, j];
+                min_index[1, i] = array[i, j];
+                min_index[2, i] = i;
+            }
+        }
+    }
+
+    for (int j = 0; j < min_index.GetLength(1)-1; j++)
+    {
+        if (min_index[1, j] < min_index[1, j + 1])
+        {
+            temp = min_index[1, j];
+            temp_1 = min_index[2, j];
+        }
+    }
+    
 }
