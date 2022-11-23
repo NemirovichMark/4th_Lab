@@ -1,0 +1,1009 @@
+#region 1 lvl task 3
+            Console.WriteLine("Lvl 1 Task 3");
+
+            int s = 0;
+            int[,] a = new int[4, 4] { { 3, 5, 8, 1 }, { 4, 8, 13, 26 }, { 56, 82, 91, 66 }, { 73, 23, 33, 18 } };
+
+            for (int i = 0; i < 4; i++)
+            {
+                s += a[i, i];
+            }
+
+            Console.WriteLine($"Sum of diadonal elements: {s}");
+#endregion
+
+#region 1 lvl Task 6
+            Console.WriteLine("Lvl 1 Task 6");
+            int m = 4, n = 7, x, min = 0, min_i;
+            bool y;
+            int[,] a = new int[m, n];
+            Console.WriteLine("Enter elements of matrix (4 x 7)");
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    y = Int32.TryParse(Console.ReadLine(), out x);
+
+                    if (!y)
+                    {
+                        Console.WriteLine("Enter correct elements");
+                        return;
+                    }
+
+                    a[i, j] = x;
+                }
+            }
+            Console.WriteLine();
+
+            int[] b = new int[n];
+
+            for (int i = 0; i < m; i++)
+            {
+                min = a[0, 0];
+                min_i = 0;
+
+                for (int j = 0; j < n; j++)
+                {
+                    if(a[i, j] < min)
+                    {
+                        min = a[i, j];
+                        min_i = j;
+                    }
+                }
+                b[i] = min;
+            }
+
+            Console.WriteLine("Final array ");
+            for (int j = 0; j < b.Length; j++)
+            {
+                Console.WriteLine(b[j]);
+            }
+        }
+
+    }
+    }
+#endregion
+
+#region 1 lvl Task 12
+            Console.WriteLine("Lvl 1 Task 12");
+            int[,] a = new int[6, 7];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    a[i, j] = r.Next(0, 50);
+                    Console.WriteLine("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int max = a[0, 0], max_i = 0, max_j = 0;
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (a[i, j] > max)
+                    {
+                        max = a[i, j];
+                        max_i = i;
+                        max_j = j;
+                    }
+                }
+            }
+
+            for (int i = max_i; i < 5; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    a[i, j] = a[i + 1, j];
+                }
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = max_j; j < 6; j++)
+                {
+                    a[i, j] = a[i, j + 1];
+                }
+            }
+
+            Console.WriteLine($"Max = {max} ");
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 1 lvl Task 13
+            Console.WriteLine("Lvl 1 Task 13");
+
+            int[,] a = new int[5, 5];
+            Random r = new Random();
+            int b = 0;
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    a[i, j] = r.Next(0, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int max = a[0, 0], max_j = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (a[i, i] > max)
+                {
+                    max = a[i, i];
+                    max_j = i;
+                }
+            }
+
+            for (int n = 0; n < 5; n++)
+            {
+                b = a[n, 3];
+                a[n, 3] = a[n, max_j];
+                a[n, max_j] = b;
+            }
+
+            Console.WriteLine($"Max = {max} ");
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+
+            }
+        }
+    }
+}
+#endregion
+
+#region 1 lvl Task 17
+            Console.WriteLine("Lvl 1 Task 17");
+
+            int n = 0, m = 0;
+            Console.WriteLine("Enter the number of rows and columns in the matrix: ");
+
+            Int32.TryParse(Console.ReadLine(), out n);
+            Int32.TryParse(Console.ReadLine(), out m);
+
+            int[,] b = new int[n, m];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    b[i, j] = r.Next(0, 50);
+                    Console.Write("{0,-5}", b[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                int min = b[i, 0], min_j = 0;
+
+                for (int j = 0; j < m; j++)
+                {
+                    if (b[i, j] < min)
+                    {
+                        min = b[i, j];
+                        min_j = j;
+                    }
+                }
+
+                for (int f = min_j; f > 0; f--)
+                {
+                    b[i, f] = b[i, f - 1];
+                }
+                b[i, 0] = min;
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0,-5}", b[i, j]);
+                }
+                Console.WriteLine();
+
+            }
+        }
+    }
+}
+#endregion
+
+#region 1 lvl Task 29
+            Console.WriteLine("Lvl 1 Task 29");
+
+            int[,] f = new int[5, 7];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    f[i, j] = r.Next(-10, 50);
+                    Console.Write("{0,-5}", f[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int min = Math.Abs(f[1, 0]), min_j = 0;
+
+            for (int j = 0; j < 7; j++)
+            {
+                int ABS_j = Math.Abs(f[1, j]);
+                if (ABS_j < min)
+                {
+                    min = ABS_j;
+                    min_j = j;
+                }
+            }
+
+            if (min_j == 6)
+            {
+                Console.WriteLine("Matrix hasn't changed");
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        Console.Write("{0,-5}", f[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = min_j + 1; j < 6; j++)
+                    {
+                        f[i, j] = f[i, j + 1];
+                    }
+                }
+
+                Console.WriteLine("Final matrix: ");
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        Console.Write("{0,-5}", f[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+        }
+    }
+}
+#endregion
+
+#region 1 lvl Task 31
+            Console.WriteLine("Lvl 1 Task 31");
+
+            int[,] a = new int[5, 8];
+            int[] b = new int[5];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    a[i, j] = r.Next(0, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                b[i] = r.Next(0, 10);
+            }
+
+            Console.WriteLine("Array B:");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine(b[i]);
+            }
+
+            int min = a[4, 0], min_j = 0;
+
+            for (int j = 0; j < 7; j++)
+            {
+                if (a[4, j] < min)
+                {
+                    min = a[4, j];
+                    min_j = j;
+                }
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = min_j + 1; j < 7; j++)
+                {
+                    a[i, j + 1] = a[i, j];
+                }
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                a[i, min_j + 1] = b[i];
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 2 lvl Task 7
+            Console.WriteLine("Lvl 2 Task 7");
+
+            int[,] a = new int[6, 6];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    a[i, j] = r.Next(0, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int max = a[0, 0], max_i = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                if (a[i, i] > max)
+                {
+                    max = a[i, i];
+                    max_i = i;
+                }
+            }
+
+            for (int i = 0; i < max_i; i++)
+            {
+                for (int j = i + 1; j < 6; j++)
+                {
+                    a[i, j] = 0;
+                }
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 2 lvl Task 8
+            Console.WriteLine("Lvl 2 Task 8");
+
+            int[,] a = new int[6, 6];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    a[i, j] = r.Next(0, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int max_1 = 0, max_j1 = 0, count = 0, s = 0;
+
+            for (int i = 0; i < 6; i++)
+            {
+                int max = a[i, 0], max_j = 0;
+
+                for (int j = 0; j < 6; j++)
+                {
+                    if (a[i, j] > max)
+                    {
+                        max = a[i, j];
+                        max_j = j;
+                    }
+                }
+
+                count++;
+
+                if (count % 2 == 0)
+                {
+                    s = a[i, max_j];
+                    a[i, max_j] = max_1;
+                    a[i - 1, max_j1] = s;
+                }
+                else
+                {
+                    max_1 = max;
+                    max_j1 = max_j;
+                }
+
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 2 lvl Task 9
+            Console.WriteLine("Lvl 2 Task 9");
+
+            int[,] a = new int[6, 7];
+            Random r = new Random();
+            int s = 0;
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    a[i, j] = r.Next(0, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < (7 / 2); j++)
+                {
+                    s = a[i, j];
+                    a[i, j] = a[i, 7 - (j + 1)];
+                    a[i, 7 - (j + 1)] = s;
+                }
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 3 lvl Task 1
+            Console.WriteLine("Lvl 3 Task 1");
+
+            int min = 0;
+            int[,] a = new int[7, 5];
+            Random r = new Random();
+            int[] a_min = new int[7];
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    a[i, j] = r.Next(-10, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                min = a[i, 0];
+
+                for (int j = 0; j < 5; j++)
+                {
+                    if (a[i, j] < min)
+                    {
+                        min = a[i, j];
+                    }
+
+                    a_min[i] = min;
+                }
+            }
+
+            int sort_i = 1;
+            while (sort_i < a_min.Length)
+            {
+                if (sort_i == 0 || a_min[sort_i] <= a_min[sort_i - 1])
+                {
+                    sort_i++;
+                }
+                else
+                {
+                    int s = a_min[sort_i - 1];
+
+                    a_min[sort_i - 1] = a_min[sort_i];
+                    a_min[sort_i] = s;
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        s = a[sort_i - 1, j];
+                        a[sort_i - 1, j] = a[sort_i, j];
+                        a[sort_i, j] = s;
+                    }
+
+                    sort_i--;
+                }
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int[] b = new int[35];
+            int b_i = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    b[b_i] = a[i, j];
+                    b_i++;
+                }
+            }
+
+            Console.WriteLine("Final matrix (in array): ");
+            for (int i = 0; i < 35; i++)
+            {
+                Console.Write($"{b[i]}, ");
+            }
+        }
+    }
+}
+#endregion
+
+#region 3 lvl Task 2
+            Console.WriteLine("Lvl 3 Task 2");
+
+            int n;
+            Console.WriteLine("Enter the side of a square matrix: ");
+            Int32.TryParse(Console.ReadLine(), out n);
+
+            int[,] a = new int[n, n];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    a[i, j] = r.Next(-10, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                a[0, i] = 0;
+                a[i, 0] = 0;
+
+                a[n - 1, i] = 0;
+                a[i, n - 1] = 0;
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int[] b = new int[n * n];
+            int b_i = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    b[b_i] = a[i, j];
+                    b_i++;
+                }
+            }
+
+            Console.WriteLine("Final matrix (array): ");
+            for (int i = 0; i < n * n; i++)
+            {
+                Console.Write($"{b[i]}, ");
+            }
+        }
+    }
+}
+#endregion
+
+#region 3 lvl Task 3
+            Console.WriteLine("Lvl 3 Task 3");
+
+            int n, summa_1 = 0, summa_2 = 0;
+            Console.WriteLine("Enter the side of a square matrix: ");
+            Int32.TryParse(Console.ReadLine(), out n);
+
+            int[,] a = new int[n, n];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    a[i, j] = r.Next(0, 30);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+            int[] b = new int[2 * n - 1];
+            int k = 0;
+            int b_i = 0;
+
+            while (k < n)
+            {
+                summa_1 = 0;
+                summa_2 = 0;
+                for (int i = 0; i < n - k; i++)
+                {
+                    if (k == 0)
+                    {
+                        summa_1 += a[i, i];
+                    }
+                    else
+                    {
+                        summa_1 += a[i + k, i];
+
+                        summa_2 += a[i, i + k];
+                    }
+                }
+
+                if (b_i == 0)
+                {
+                    b[0] = summa_1;
+                    b_i++;
+                }
+                else
+                {
+                    b[b_i] = summa_1;
+                    b_i++;
+
+                    b[b_i] = summa_2;
+                    b_i++;
+
+                }
+
+                k++;
+            }
+
+            Console.WriteLine("Final array: ");
+            for (int i = 0; i < 2 * n - 1; i++)
+            {
+                Console.Write($"{b[i]}, ");
+            }
+
+        }
+    }
+}
+#endregion
+
+#region 3 lvl Task 4
+            Console.WriteLine("Lvl 3 Task 4");
+
+            int n;
+            Console.WriteLine("Enter the side of a square matrix: ");
+            Int32.TryParse(Console.ReadLine(), out n);
+
+            int[,] a = new int[n, n];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    a[i, j] = r.Next(0, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = n / 2; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == j) break;
+                    a[i, j] = 1;
+                }
+            }
+
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 3 lvl Task 8
+            Console.WriteLine("Lvl 3 Task 8");
+
+            int[,] a = new int[7, 5];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    a[i, j] = r.Next(-10, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            int max_count = 0;
+            int[] a_count = new int[7];
+
+            for (int i = 0; i < 7; i++)
+            {
+                max_count = 0;
+
+                for (int j = 0; j < 5; j++)
+                {
+                    if (a[i, j] > 0)
+                    {
+                        max_count++;
+                    }
+                }
+
+                a_count[i] = max_count;
+            }
+
+            int f = 1;
+            while (f < a_count.Length)
+            {
+                if (f == 0 || a_count[f - 1] >= a_count[f])
+                {
+                    f++;
+                }
+                else
+                {
+                    int s = a_count[f];
+
+                    a_count[f] = a_count[f - 1];
+                    a_count[f - 1] = s;
+
+                    for (int j = 0; j < 5; j++)
+                    {
+                        s = a[f - 1, j];
+                        a[f - 1, j] = a[f, j];
+                        a[f, j] = s;
+                    }
+
+                    f--;
+                }
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 3 lvl Task 10
+            Console.WriteLine("Lvl 3 Task 10");
+
+            int n;
+            Console.WriteLine("Enter N: ");
+            Int32.TryParse(Console.ReadLine(), out n);
+
+            int[,] a = new int[n, n];
+            Random r = new Random();
+
+            Console.WriteLine("Start matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    a[i, j] = r.Next(-10, 50);
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                if ((i + 1) % 2 != 0) 
+                {
+                    int f = 0;
+                    while (f < n)
+                    {
+                        if (f == 0 || a[i, f - 1] <= a[i, f])
+                        {
+                            f++;
+                        }
+                        else
+                        {
+                            int s = a[i, f];
+                            a[i, f] = a[i, f - 1];
+                            a[i, f - 1] = s;
+
+                            f--;
+                        }
+                    }
+                }
+                else
+                {
+                    int f = 0;
+                    while (f < n)
+                    {
+                        if (f == 0 || a[i, f - 1] >= a[i, f])
+                        {
+                            f++;
+                        }
+                        else
+                        {
+                            int swap = a[i, f];
+                            a[i, f] = a[i, f - 1];
+                            a[i, f - 1] = swap;
+
+                            f--;
+                        }
+                    }
+                }
+
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write("{0,-5}", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
+
+#region 3 lvl Task 11
+            Console.WriteLine("Lvl 3 Task 11");
+
+            int[,] a = new int[7, 7]
+            {
+                {2, 0, 1, 4, 9, 34, 18},
+                {10, 12, 4, 6, 8, 38, 0},
+                {32, 6, 123, 59, 35, 72, 53},
+                {22, 3, 0, 6, 65, 1, 81},
+                {1, 90, 58, 16, 8, 34, 69},
+                {0, 39, 19, 53, 194, 17, 43},
+                {54, 965, 14, 61, 14, 84, 13}
+            };
+
+            int count = 0;
+
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (a[i, j] == 0)
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            int[,] b = new int[7 - count, 7];
+            int f = 0;
+            int s = 0;
+
+            for (int i = 0; i < 7; i++)
+            {
+                f = 0;
+                for (int j = 0; j < 7; j++)
+                {
+                    if (a[i, j] == 0)
+                    {
+                        f = 1;
+                        break;
+                    }
+                }
+                if (f == 0)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        b[s, j] = a[i, j];
+                    }
+                    s++;
+                }
+            }
+
+            Console.WriteLine("Final matrix: ");
+            for (int i = 0; i < 7 - count; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.Write("{0,-5}", b[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
+#endregion
