@@ -1,0 +1,176 @@
+using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _4_лаба_3_часть
+{
+    internal class Program
+    {
+        /*
+        static void sortirovka(int i,int stroks_element, int[] l, int[,] m)
+        {
+            for (int k = 0; k < stroks_element - 1; k++)
+            {
+                int amax = l[k];
+                int imax = k;
+                for (int j = k + 1; j < stroks_element ; j++)
+                {
+                    if (l[j] > amax)
+                    {
+                        amax = l[j];
+                        imax = j;
+                    }
+                }
+                l[imax] = l[k];
+                l[k] = amax;
+            }
+            for (int f = 0; f < l.Length; f++)
+            {
+                m[i, f] = l[f];
+            }
+        }
+        */
+        static void Main(string[] args)
+        {
+            //3 часть 1 номер
+            Random random = new Random();
+            int[,] F = new int[7, 5];
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    F[i, j] = random.Next(-60, 60);
+                }
+            }
+            Console.WriteLine("Вывод исходной матрицы");
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0:d} ", F[i, j]);
+                }
+                Console.WriteLine();
+            }
+            int imax_otv = 0;
+
+
+            //int[] sr = new int[5];
+            
+            
+            Console.WriteLine("вывод упорядоченной матрицы");
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0:d} ", F[i, j]);
+                }
+                Console.WriteLine();
+            }
+            int[,] C = new int[2, 7];
+            int l = 0;
+            for (int i = 0; i < 7; i++)
+            {
+                int min = F[i, 0];
+                int imin = 0;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (F[i,j] < min)
+                    {
+                        min = F[i, j];
+                        imin = i;
+
+                    }
+                }
+                C[0, l] = min;
+                C[1, l] = i;
+                l += 1;
+            }
+            Console.WriteLine("Вывод  исходного массива C");
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.Write("{0:d} ", C[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            for (int j = 0; j < 7; j++)
+            {
+                for (int f = 0; f < 7; f++)
+                {
+                    if (C[0, j] > C[0, f])
+                    {
+                        int temp = C[0, j];
+                        C[0, j] = C[0, f];
+
+                        C[0, f] = temp;
+                        int jtemp = C[1, j];
+                        C[1, j] = C[1, f];
+                        C[1, f] = jtemp;/*
+                            int temp = F[i, j];
+                            F[i, j] = F[i, k];
+                            F[i, k] = temp;
+                        }
+                                                 */
+
+                    }
+                }
+            }
+
+            Console.WriteLine("Вывод отредактированного массива С");
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.Write("{0:d} ", C[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+
+            /*for (int ii = 0,i = 0; i < 7 && ii < 7;ii++, i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    int m = C[1, ii];
+
+                    int temp = F[i, j];
+                    F[i, j] = F[m, j];
+                    F[m, j] = temp;
+
+                }
+
+
+
+            }*/
+
+            int[,] new_matrix = new int[7, 5];
+            for (int ii = 0, i = 0; i < 7 && ii < 7; ii++, i++)
+            {
+
+                for (int j = 0; j < 5; j++)
+                {
+
+                    new_matrix[i, j] = F[C[1, ii], j];
+                }
+            }
+            Console.WriteLine("вывод  матрицы (new_matrix)");
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Console.Write("{0:d} ", new_matrix[i, j]);
+                }
+                Console.WriteLine();
+
+            }
+            Console.Read();
+
+        }
+    }
+}
