@@ -1,256 +1,714 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace _4th_Lab
 {
     class Theory
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-        }
-        static void ShowMatrix(int[,] matrix)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
-        }
         static void Main(string[] args)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
+            #region lvl1-3
+            int[,] m1 = new int[4, 4];
+            int s1 = 0;
+            Console.WriteLine("Введите элементы матрицы");
+            for (int y = 0; y < 4; y++)
             {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
+                for (int x = 0; x < 4; x++)
                 {
+                    int d;
+                    int.TryParse(Console.ReadLine(), out d);
+                    m1[y, x] = d;
+                }
+            }
+            Console.WriteLine("Сумма равна");
+
+            for (int i = 3; i >= 0; i--)
+            {
+                s1 += m1[i, i];
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                s1 += m1[i, i];
+            }
+
+            Console.WriteLine(s1);
+            #endregion
+            #region lvl1-6
+            int[,] m2 = new int[4, 7];
+            int[] m2a = new int[4];
+            int minm2 = 1000000;
+            int km2 = 0;
+            Console.WriteLine("Введите элементы матрицы");
+            for (int y = 0; y < 4; y++)
+            {
+                for (int x = 0; x < 7; x++)
+                {
+                    int d;
+                    int.TryParse(Console.ReadLine(), out d);
+                    m2[y, x] = d;
+                    if (d <= minm2)
+                    {
+                        minm2 = d;
+                        m2a[km2] = x;
+                    }
+
+                }
+                km2++;
+            }
+
+            foreach (int z in m2a)
+            {
+                Console.Write(z);
+                Console.Write(" ");
+            }
+
+            #endregion
+            #region lvl1-12
+            int[,] myArray = new int[6,7]
+            {
+                {1,1,1,1,0,1,1},
+                {2,2,2,2,0,2,2},
+                {3,3,3,3,0,3,3},
+                {4,4,4,4,9,4,4},
+                {5,5,5,5,0,5,5},
+                {6,6,6,6,0,6,6}
+            };
+            int maxArray = 0;
+            int height = myArray.GetLength(0);
+            int width = myArray.GetLength(1);
+            int indexheight = 0;
+            int indexwidth = 0;
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if(myArray[y,x] > maxArray)
+                    {
+                        indexheight = y;
+                        indexwidth = x;
+                        maxArray = myArray[y,x];
+                    }
+                }
+            }
+            for (int y = indexheight; y < height - 1; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    myArray[y,x] = myArray[y+1,x];
+                }
+            }
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = indexwidth; x < width-1; x++)
+                {
+                    myArray[y,x] = myArray[y,x + 1];
+                }
+            }
+            
+            for (int y = 0; y < height-1; y++)
+	        {
+                for (int x = 0; x < width-1; x++)
+                {
+                    Console.Write(myArray[y,x] + "\t");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region lvl1-13
+            int[,] myArray = new int[5,5]
+            {
+                {3,4,6,1,2},
+                {7,4,9,2,4},
+                {10,23,5,8,8},
+                {12,3,3,9,6},
+                {12,13,14,15,16}
+            };
+            int maxArray = 0;
+            int indexwidth = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (myArray[i,i] > maxArray)
+                {
+                    indexwidth = i;
+                    maxArray = myArray[i,i];
+                }
+            }
+           
+            for (int y = 0; y < 5; y++)
+            {
+                int s = myArray[y,3];
+                int p = myArray[y,indexwidth];
+                for (int x = 3; x < 5; x++)
+                {
+                   myArray[y,x] = p;
+                   p = s;
+                   
+                   
+                }
+            }
+            for (int y = 0; y < 5; y++)
+	        {
+                for (int x = 0; x < 5; x++)
+                {
+                    Console.Write(myArray[y,x] + "\t");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region lvl1-17
+            int n, m;
+            int.TryParse(Console.ReadLine(), out n);
+            int.TryParse(Console.ReadLine(), out m);
+            int[,] myArray = new int[n,m];
+            for (int y = 0; y < n; y++)
+            {
+                for (int x = 0; x < m; x++)
+                {
+                    int s;
+                    int.TryParse(Console.ReadLine(), out s);
+                    myArray[y,x] = s;
+                }
+            }
+            for (int y = 0; y < n; y++)
+            {
+                int indexArray = 0;
+                int minArray = 10000000;
+                for (int x = 0; x < m; x++)
+                {
+                    if (myArray[y,x] < minArray)
+                    {
+                        minArray = myArray[y,x];
+                        indexArray = x;
+
+                    }
+                    for (int j = indexArray; j > 0; j--)
+                    {
+                        myArray[y, j] = myArray[y, j - 1];
+                    }
+                    myArray[y, 0] = minArray;
+                }
+                
+            }
+            for (int y = 0; y < n; y++)
+            {
+                for (int x = 0; x < m; x++)
+                {
+                    Console.Write(myArray[y,x] + "\t");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region lvl1-29
+            int[,] f = new int[5,7]
+            {
+                {3,4,6,5,6,7,8},
+                {1,9,9,8,7,6,8},
+                {2,0,5,4,6,10,7},
+                {3,4,6,5,6,7,8},
+                {-1,9,9,8,7,6,4}
+                
+                
+            };
+            int minF = 10000000;
+            int indexF = 0;
+            for (int y = 0; y < f.GetLength(0); y++)
+            {
+                for (int x = 0; x < f.GetLength(1); x++)
+                {
+                    if (Math.Abs(f[1,x]) < minF)
+                    {
+                        minF = Math.Abs(f[1,x]);
+                        indexF = x;
+
+                    }
+                   
+                }
+            }
+            if (indexF == 6)
+            {
+                    Console.WriteLine("ТАК НЕ НАДО");
+                    Console.ReadLine();
+                return;
+               
+            }
+            
+            for (int y = 0; y < f.GetLength(0); y++)
+            {
+                  
+                    for (int x = indexF+1; x < f.GetLength(1)-1; x++)
+                    {
+                        f[y,x] = f[y,x+1];
+                    }   
+            }
+            for (int y = 0; y < f.GetLength(0); y++)
+            {
+                for (int x = 0; x < f.GetLength(1)-1; x++)
+                {
+                    Console.Write(f[y,x] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region lvl1-31
+            int[,] myArray = new int[5, 8]
+            {
+                {2, 3, 1, 53, 0, 52, 1, 0},
+                {8, 4, 87, 65, 1, -37, 13, 0},
+                {7, 2, 75, 1, -5, -47, 2, 0},
+                {8, 4, 1, 5, 23, 7, 127, 0},
+                {17,-2, 1,-100,1,  57, 5, 0},
+            };
+            int[] B = new int[5] { 9, 9, 9, 9, 9 };
+            int minArray = 100000000;
+            int indexArray = 0;
+            for (int i = 0; i < myArray.GetLength(1) - 1; i++)
+            {
+                if (minArray > myArray[4, i])
+                {
+                    minArray = myArray[4, i];
+                    indexArray = i;
+                }
+            }
+            for (int i = 0; i < myArray.GetLength(0); i++)
+            {
+                for (int j = myArray.GetLength(1) - 1; j > indexArray; j--)
+                {
+                    myArray[i, j] = myArray[i, j - 1];
+                }
+                myArray[i, indexArray + 1] = B[i];
+            }
+            for (int i = 0; i < myArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < myArray.GetLength(1); j++)
+                {
+                    Console.Write(myArray[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+            #region lvl2-7
+                const int n = 6;
+                double[,] array = new double[n, n]
+                {
+                    {5,6,4,3,7,4},
+                    {3,7,8,4,3,9},
+                    {0,8,9,3,6,2},
+                    {1,6,3,4,7,4},
+                    {7,6,8,2,1,0},
+                    {9,4,8,1,7,2}
+                };
+                double max = 0;
+                int indexs = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    if (array[i, i] > max)
+                    {
+                        max = array[i, i];
+                        indexs = i;
+                    }
+                }
+                for (int y = 0; y < indexs; y++)
+                {
+                    for (int x = y + 1; x < n; x++)
+                        array[y, x] = 0;
+                }
+                for (int y = 0; y < n; y++)
+                {
+                    for (int x = 0; x < n; x++)
+                    {
+                        Console.Write(array[y, x] + "\t");
+                    }
                     Console.WriteLine();
                 }
-                Console.Write($"{array[i],5}");
-            }
-
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
+            #endregion
+            #region lvl2-8
+                const int n = 6;
+                double[,] array = new double[n, n]
+                {
+                    {10,9,8,7,6,5},
+                    {9,8,7,6,5,4},
+                    {8,7,6,5,4,3},
+                    {7,6,5,4,3,2},
+                    {6,5,4,3,2,1},
+                    {5,4,3,2,1,0}
+                };
+                int[] index = new int[n];
+                for (int y = 0; y < n; y++)
+                {
+                    double mx = array[y, 0];
+                    int maxi = 0;
+                    for (int x = 0; x < n; x++)
+                    {
+                        if (array[y, x] > mx)
+                        {
+                            mx = array[y, x];
+                            maxi = x;
+                        }
+                    }
+                    index[y] = maxi;
+                }
+                for (int i = 0; i < n; i += 2)
+                {
+                    double p = array[i, index[i]];
+                    array[i, index[i]] = array[i + 1, index[i + 1]];
+                    array[i + 1, index[i + 1]] = p;
+                }
+                for (int y = 0; y < n; y++)
+                {
+                    for (int x = 0; x < n; x++)
+                    {
+                        Console.Write(array[y, x] + "\t");
+                    }
+                    Console.WriteLine();
+                }
+            #endregion
+            #region lvl2-9
+            int[,] array = new int[6,7]
             {
+                {1,2,3,4,5,6,7},
+                {1,2,3,4,5,6,7},
+                {1,2,3,4,5,6,7},
+                {1,2,3,4,5,6,7},
+                {1,2,3,4,5,6,7},
+                {1,2,3,4,5,6,7}
+            
+            };
+            for(int y = 0; y < 6; y++)
+            {
+                int[] array2 = new int[7];
+                int k = 0;
+                for (int j = 6; j >= 0; j--)
+                {
+                    array2[k] = array[y, j];
+                    k++;
+                }
+                for (int x = 0; x < 7; x++)
+                {
+                    array[y, x] = array2[x];
+                }
+            }
+            for (int y = 0; y < 6; y++)
+            {
+                for (int x = 0; x < 7; x++)
+                {
+                    Console.Write(array[y, x] + "\t");
+                }
                 Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
-                {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
-                }
             }
-
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
             #endregion
-
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
+            #region lvl3-1
+               int n = 7, m = 5;
+               double[,] array = new double[n, m];
+                for (int y = 0; y < n; y++)
+                    for (int x = 0; x < m; x++)
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
+                        double z;
+                        double.TryParse(Console.ReadLine(), out z);
+                        array[y, x] = z;
+                        
+                    }
+               double[] m1 = new double[n];
+               double[] m2 = new double[m];
+               double add_double = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    double min_el = array[i, 0];
+                    for (int j = 0; j < m; j++)
+                    {
+                        if (array[i, j] < min_el)
                         {
-                            min = (matrix[i, j], i, j);
+                            min_el = array[i, j];
+                        }
+                    }
+                    m1[i] = min_el;
+                }
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n - 1; j++)
+                    {
+                        if (m1[j] < m1[j + 1])
+                        {
+                            add_double = m1[j + 1];
+                            m1[j + 1] = m1[j];
+                            m1[j] = add_double;
+                            for (int k = 0; k < m; k++) 
+                            { 
+                                m2[k] = array[j, k]; 
+                            }
+                            for (int g = 0; g < m; g++)
+                            {
+                                array[j, g] = array[j + 1, g];
+                                array[j + 1, g] = m2[g];
+                            }
                         }
                     }
                 }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
+                for (int y = 0; y < n; y++)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    for (int x = 0; x < m; x++)
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
-                        {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
-                        }
+                        Console.Write(array[y, x] + "\t");
+                    }
+                    Console.WriteLine();
+                }
+                #endregion
+            #region lvl3-2
+            const int c = 4;
+            double[,] array = new double[c,c];
+            for (int y = 0; y < c; y++)
+            { 
+              for (int x = 0; x < c; x++)
+              {
+                 double z;
+                 double.TryParse(Console.ReadLine(), out z);
+                 array[y,x] = z;
+              }
+            }
+            for (int i = 0; i < c; i++)
+            { 
+                for (int j = 0; j < c; j++)
+                {
+                  if ((i == 0) | (i == c - 1))
+                  array[i, j] = 0;
+                }
+                array[i, 0] = 0;
+                array[i, c - 1] = 0;
+            }
+            for (int i = 0; i < c; i++)
+            {
+              for (int j = 0; j < c; j++)
+              {
+                 Console.Write(array[i, j] + "\t");
+              }
+              Console.WriteLine();
+            }
+            #endregion
+            #region lvl3-3
+                const int c = 4;
+                double[,] array = new double[c, c];
+                for (int y = 0; y < c; y++)
+                    for (int x = 0; x < c; x++)
+                    {
+                      double z;
+                      double.TryParse(Console.ReadLine(), out z);
+                      array[y, x] = z;
+                    }
+                double[] m3 = new double[2 * c - 1];
+                int el = 0;
+                for (int y = c - 1; y != -1; y--)
+                {
+                    for (int x = 0; x + y != c; x++)
+                    {
+                        m3[el] += array[y + x, x];
+                    }
+                    el++;
+                }
+                for (int y = c - 1; y != 0; y--)
+                {
+                    for (int x = 0; x + y != c; x++)
+                    {
+                        m3[el] += array[x, x + y];
+                    }
+                    el++;
+                }
+                foreach (int i in m3)
+                {
+                    Console.Write(i + " ");
+                }
+                #endregion
+            #region lvl3-4
+            const int c = 4;
+            double[,] array = new double[c, c];
+            for (int y = 0; y < c; y++)
+                for (int x = 0; x < c; x++)
+                {
+                    double z;
+                    double.TryParse(Console.ReadLine(), out z);
+                    array[y, x] = z;
+                }
+            for (int y = c / 2; y < c; y++)
+            {
+                for (int x = 0; x <= y; x++)
+                {
+                    array[y, x] = 0;
+                }
+            }
+            for (int y = 0; y < c; y++)
+            {
+                for (int x = 0; x < c; x++)
+                {
+                    Console.Write(array[y,x] + "\t");
+                }
+                Console.WriteLine();
+                
+            }
+            #endregion
+            #region lvl3-8
+            int[,] array = new int[4, 4]
+            {
+                {2, 1, -4, 7,},
+                {8, -2, 15, 21},
+                {9, 3, 23, 13},
+                {7, -12, 1, -2}
+             
+            };
+            int[] m1 = new int[array.GetLength(0)];
+            int c, k = 1;
+            for (int y = 0; y < array.GetLength(0); y++)
+            {
+                c = 0;
+                for (int x = 0; x < array.GetLength(1); x++)
+                {
+                    if (array[y, x] > 0)
+                    {
+                        c++;
                     }
                 }
+                m1[y] = c;
             }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
+            while (k < m1.Length)
             {
-                for (int i = left; i < right; i++)
+                if (k == 0 || m1[k - 1] >= m1[k])
                 {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                right--;
-
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-            }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
-            #endregion
-
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
-
-            #region Gnome sort
-            var element = 1;
-            var pointer = 2;
-            while (element < array.Length)
-            {
-                if (element == 0 || array[element] >= array[element - 1])
-                {
-                    element = pointer;
-                    pointer++;
+                    k++;
                 }
                 else
                 {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
-                }
-            }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
-
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
+                    int s = m1[k];
+                    m1[k] = m1[k - 1];
+                    m1[k - 1] = s;
+                    for (int j = 0; j < array.GetLength(1); j++)
                     {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
+                        s = array[k - 1, j];
+                        array[k - 1, j] = array[k, j];
+                        array[k, j] = s;
+                    }
+                    k--;
+                }
+            }
+            for (int y = 0; y < array.GetLength(0); y++)
+            {
+                for (int x = 0; x < array.GetLength(1); x++)
+                {
+                    Console.Write(array[y, x] + "\t");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region lvl3-10
+            int[,] array = new int[4, 4]
+            {
+                {2, 1, -4, 7},
+                {8, -2, 15, 21},
+                {9, 3, 23, 13,},
+                {7, -12, 1, -2,},
+               
+            };
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                int k1 = 0;
+                if (i%2 != 0)
+                {
+                    while (k1 < array.GetLength(1))
+                    {
+                        if (k1 == 0 || array[i, k1 - 1] <= array[i, k1])
+                        {
+                            k1++;
+                        }
+                        else
+                        {
+                            int s = array[i, k1];
+                            array[i, k1] = array[i, k1 - 1];
+                            array[i, k1 - 1] = s;
+                            k1--;
+                        }
                     }
                 }
-                step /= 2;
+                else
+                {
+                    while (k1 < array.GetLength(1))
+                    {
+                        if (k1 == 0 || array[i, k1 - 1] >= array[i, k1])
+                        {
+                            k1++;
+                        }
+                        else
+                        {
+                            int s2 = array[i, k1];
+                            array[i, k1] = array[i, k1 - 1];
+                            array[i, k1 - 1] = s2;
+                            k1--;
+                        }
+                    }
+                }
             }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
-
+            for (int y = 0; y < array.GetLength(0); y++)
+            {
+                for (int x = 0; x < array.GetLength(1); x++)
+                {
+                    Console.Write(array[y, x] + "\t");
+                }
+                Console.WriteLine();
+            }
             #endregion
-            
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
+            #region lvl3-11
+            int[,] array = new int[4, 4]
+            {
+                {8, 1, -4, 7},
+                {7, -2, 21, 0},
+                {9, 3, 13, 1},
+                {7, 1, -2, 11}
+             
+            };
+            int n1 = array.GetLength(0);
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] == 0)
+                    {
+                        n1 -= 1;
+                        break;
+                    }
+                }
+            }
+            int[,] array2 = new int[n1, 5];
+            int k, c = 0;
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                k = 0;
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] == 0)
+                    {
+                        k = 1;
+                        break;
+                    }
+                }
+                if (k == 0)
+                {
+                    for (int j = 0; j < array.GetLength(1); j++)
+                    {
+                        array2[c, j] = array[i, j];
+                        
+                    }
+                    c += 1;
+                }
+            }
+            for (int i = 0; i < n1; i++)
+            {
+                for (int j = 0; j < array2.GetLength(1) - 1; j++)
+                {
+                    Console.Write(array2[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            #endregion
         }
+
+
     }
+    
 }
