@@ -109,46 +109,49 @@ static double[][] ASD()
 #endregion
 
 #region ex12
+
 {
     double[][] arr = asd(6, 7);
     double[][] arr2 = new double[5][];
-    double k = arr[0].Max();
-    int k1 = Array.IndexOf(arr[0], k);
-    int k2 = 0;
-    int z1 = 0;
-    for (int i = 1; i < arr.Length; i++)
+    double max = double.MinValue;
+    int imax = 0;
+    int jmax = 0;
+    for (int i = 0; i < arr.Length; i++)
     {
 
-        if (k < arr[i].Max())
+        for (int j = 0; j < arr[i].Length; j++)
         {
-            k = arr[i].Max();
-            k1 = Array.IndexOf(arr[i], k);
-            k2 = i;
+
+            if (arr[i][j] >= max)
+            {
+                max = arr[i][j];
+                imax = i;
+                jmax = j;
+            }
         }
     }
-    
+
+    for (int i = imax; i < arr.Length - 1; i++)
+    {
+        for (int j = 0; j < arr[i].Length; j++)
+        {
+            arr[i][j] = arr[i + 1][j];
+        }
+    }
     
     for (int i = 0; i < arr.Length; i++)
     {
-        double[] arr3 = new double[6];
-        if (i != k2)
+        for (int j = jmax; j < arr[i].Length - 1; j++)
         {
-            int z = 0;
-            for (int j = 0; j < arr[i].Length; j++)
-            {
-                if (j != k1)
-                {
-                    arr3[z] = arr[i][j];
-                    z += 1;
-                }
-            }
-            arr2[z1] = arr3;
-            z1 += 1;
+            arr[i][j] = arr[i][j + 1];
         }
     }
-    Result(arr2); 
+
+    Result(arr);
+
+
 }
-    
+
 #endregion
 
 #region ex13
@@ -345,12 +348,20 @@ static double[][] ASD()
 }
 #endregion
 
+
 #region ex9
 {
     double[][] arr = asd(6, 7);
+    double t;
     for (int i = 0; i < arr.Length; i++)
     {
-        arr[i].Reverse();
+        for (int j = arr[i].Length - 1; j > arr[i].Length / 2 - 1; j--)
+        {
+            t = arr[i][j];
+            arr[i][j] = arr[i][arr[i].Length - j - 1];
+            arr[i][arr[i].Length - j - 1] = t;
+
+        }
     }
     Result(arr);
 }
@@ -360,20 +371,48 @@ static double[][] ASD()
 #endregion
 
 #region lvl3
+
 #region ex1
 {
     double[][] arr = asd(7, 5);
-    for (int i = 0; i < arr.Length - 1; i++)
+    double[] b = new double[arr.Length];
+    for (int i = 0; i < arr.Length; i++)
     {
-        for (int j = 0; j < arr.Length - i - 1; j++)
+        double xmin = double.MaxValue;
+        for (int j = 0; j < arr[i].Length; j++)
         {
-            if (arr[j].Min() < arr[j + 1].Min())
+            if (arr[i][j] < xmin)
             {
-                double[] vp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = vp;
+                xmin = arr[i][j];
+                b[i] = xmin;
             }
         }
+    }
+
+    int f = 0;
+    while (f < b.Length - 1)
+    {
+        if (b[f] < b[f + 1])
+        {
+            double temp = b[f];  
+            b[f] = b[f + 1];
+            b[f + 1] = temp;
+            for (int i = 0; i < arr[i].Length; i++)
+            {
+                double p = arr[f][i];
+                arr[f][i] = arr[f + 1][i];
+                arr[f + 1][i] = p;
+            }
+            if (f > 0)
+            {
+                f--;
+            }
+        }
+        else
+        {
+            f++;
+        }
+
     }
     Result(arr);
 }
@@ -468,16 +507,41 @@ static double[][] ASD()
 #region ex8
 {
     double[][] arr = asd(7, 5);
-    for (int i = 0; i < arr.Length - 1; i++)
+    double[] b = new double[arr.Length];
+    for (int i = 0; i < arr.Length; i++)
     {
-        for (int j = 0; j < arr.Length - i - 1; j++)
+        int k = 0;
+        for (int j = 0; j < arr[i].Length; j++)
         {
-            if (arr[j].Where(i=>i>0).ToArray().Length < arr[j + 1].Where(i => i > 0).ToArray().Length)
+            if (arr[i][j] > 0)
             {
-                double[] vp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = vp;
+                k++;
             }
+        }
+        b[i] = k;
+    }
+    int f = 0;
+    while (f < b.Length - 1)
+    {
+        if (b[f] < b[f + 1])
+        {
+            double t = b[f];
+            b[f] = b[f + 1];
+            b[f + 1] = t;
+            for (int i = 0; i < arr[0].Length; i++)
+            {
+                double p = arr[f][i];
+                arr[f][i] = arr[f + 1][i];
+                arr[f + 1][i] = p;
+            }
+            if (f > 0)
+            {
+                f--;
+            }
+        }
+        else
+        {
+            f++;
         }
     }
     Result(arr);
@@ -518,4 +582,5 @@ static double[][] ASD()
     Result(arr);
 }
 #endregion
+
 #endregion
