@@ -212,11 +212,9 @@ namespace _4th_Lab
             {
                 var remembered = array[i];
                 var j = i;
-                while (j > 0 && array[j - 1] > array[j])
+                while (j > 0 && array[j - 1] > remembered)
                 {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
+                    array[j] = array[j - 1];
                     j--;
                 }
                 array[j] = remembered;
