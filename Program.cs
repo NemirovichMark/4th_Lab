@@ -116,6 +116,7 @@ static double[][] ASD()
     double max = double.MinValue;
     int imax = 0;
     int jmax = 0;
+    int k1 = 0;
     for (int i = 0; i < arr.Length; i++)
     {
 
@@ -130,24 +131,29 @@ static double[][] ASD()
             }
         }
     }
+    Console.WriteLine(imax);
+    Console.WriteLine(jmax);
 
-    for (int i = imax; i < arr.Length - 1; i++)
-    {
-        for (int j = 0; j < arr[i].Length; j++)
-        {
-            arr[i][j] = arr[i + 1][j];
-        }
-    }
-    
     for (int i = 0; i < arr.Length; i++)
     {
-        for (int j = jmax; j < arr[i].Length - 1; j++)
+        double[] arg = new double[6];
+        int k = 0;
+        if (i != imax)
         {
-            arr[i][j] = arr[i][j + 1];
+            for (int j = 0; j < arr[i].Length; j++)
+            {
+                if (j != jmax)
+                {
+                    arg[k] = arr[i][j];
+                    k++;
+                }
+            }
+            arr2[k1] = arg;
+            k1++;
         }
     }
 
-    Result(arr);
+    Result(arr2);
 
 
 }
