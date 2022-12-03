@@ -9,19 +9,25 @@ namespace _4th_Lab
     {
         static Random rand;
 
-        #region OutPut
-        public static void Print(int[,] matrix)
+        int a;
+        public Matrix(int a)
         {
-            if(matrix == null)
+            this.a = a;
+        }
+
+        #region OutPut
+        public static void Print(int[,] source)
+        {
+            if(source == null)
             {
                 Error.Kill();
             }
 
-            for(int i = 0; i < matrix.GetLength(0); i++)
+            for(int i = 0; i < source.GetLength(0); i++)
             {
-                for(int j = 0; j < matrix.GetLength(1); j++)
+                for(int j = 0; j < source.GetLength(1); j++)
                 {
-                    Console.Write($"{matrix[i, j], 6}");
+                    Console.Write($"{source[i, j], 6}");
                 }
                 Console.WriteLine();
             }
@@ -29,10 +35,10 @@ namespace _4th_Lab
         #endregion
 
         #region Set
-        public static int SetRow()
+        public static int SetLengthRow()
         {
             int n = 0;
-            while (n < 0)
+            while (n <= 0)
             {
                 Console.Write("input row: ");
                 int.TryParse(Console.ReadLine(), out n);
@@ -40,16 +46,106 @@ namespace _4th_Lab
             return n;
         }
 
-        public static int SetCol()
+        public static void SetRowInRange(int[,] source, int element, int rowNumber, int colNumber)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            if(rowNumber < 0 || rowNumber >= source.GetLength(0))
+            {
+                Error.Kill();
+            }
+
+            if(colNumber < 0)
+            {
+                Error.Kill();
+            }
+
+            for(int j = colNumber; j < source.GetLength(1); j++)
+            {
+                source[rowNumber, j] = element;
+            }
+        }
+
+        public static int SetLengthCol()
         {
             int n = 0;
-            while (n < 0)
+            while (n <= 0)
             {
                 Console.Write("input col: ");
                 int.TryParse(Console.ReadLine(), out n);
             }
             return n;
         }
+
+        public static void SetCol(ref int[,] source, int[] col, int colNumber)
+        {
+            if(source == null || col == null)
+            {
+                Error.Kill();
+            }
+
+            if(col.Length != source.GetLength(0) || colNumber >= source.GetLength(1))
+            {
+                Error.Kill();
+            }
+
+            for (int i = 0; i < source.GetLength(0); i++)
+            {
+                source[i, colNumber] = col[i];
+            }
+        }
+
+        public static void SetCol(ref int[,] source, int element, int colNumber)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            if(colNumber >= source.GetLength(1) || colNumber < 0)
+            {
+                Error.Kill();
+            }
+
+            for(int i = 0; i < source.GetLength(0); i++)
+            {
+                source[i, colNumber] = element;
+            }
+        }
+
+        #endregion
+
+        #region Get
+        public static int[] GetRow(int[,] source, int row)
+        {
+            return null;
+        }
+
+        public static int[] GetCol(int[,] source, int col)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            if(col < 0 || col >= source.GetLength(1))
+            {
+                Error.Kill();
+            }
+
+            int[] array = new int[0];
+            for(int i = 0; i < source.GetLength(0); i++)
+            {
+                Line.Add(ref array, source[i, col]);
+            }
+
+            return array;
+        }
+
+
         #endregion
 
         #region Fill
@@ -73,22 +169,27 @@ namespace _4th_Lab
         #endregion
 
         #region Search
-        static int[] FindMax(int[,] matrix)
+        /// <summary>
+        /// Search for the largest value across the entire matrix
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static int[] FindMax(int[,] source)
         {
-            if(matrix == null)
+            if(source == null)
             {
                 Error.Kill();
             }
 
-            int max = matrix[0, 0];
+            int max = source[0, 0];
             int[] index = { 0, 0 };
-            for(int i = 0; i < matrix.GetLength(0); i++)
+            for(int i = 0; i < source.GetLength(0); i++)
             {
-                for(int j = 0; j < matrix.GetLength(1); j++)
+                for(int j = 0; j < source.GetLength(1); j++)
                 {
-                    if (max < matrix[i, j])
+                    if (max < source[i, j])
                     {
-                        max = matrix[i, j];
+                        max = source[i, j];
                         index[0] = i;
                         index[1] = j;
                     }
@@ -96,6 +197,120 @@ namespace _4th_Lab
             }
 
             return index;
+        }
+
+        public static int FindMaxOnDiag(int[,] source)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            if(source.GetLength(1) != source.GetLength(0))
+            {
+                Error.Kill();
+            }
+
+            int max = source[0, 0];
+            int index = 0;
+            for(int i = 0; i < source.GetLength(0); i++)
+            {
+                if(max < source[i, i])
+                {
+                    max = source[i, i];
+                    index = i;
+                }
+            }
+
+            return index;
+        }
+
+        /// <summary>
+        /// Finding the minimum value on each row
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static int[,] FindMinOnRow(int[,] source)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            int[,] indexes = new int[source.GetLength(0), 2];
+            for(int i = 0; i < source.GetLength(0); i++)
+            {
+                int min = source[i, 0];
+                for(int j = 0; j < source.GetLength(1); j++)
+                {
+                    if(min > source[i, j])
+                    {
+                        min = source[i, j];
+                        indexes[i, 0] = i;
+                        indexes[i, 1] = j;
+                    }
+                }
+            }
+
+            return indexes;
+        }
+
+        /// <summary>
+        /// Finding the minimum value on a specific row
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <param name="rowNumber"></param>
+        /// <returns></returns>
+        public static int FindMinOnRow(int[,] matrix, int rowNumber)
+        {
+            if(matrix == null)
+            {
+                Error.Kill();
+            }
+
+            if(rowNumber >= matrix.GetLength(0))
+            {
+                Error.Kill();
+            }
+
+            int min = matrix[rowNumber, 0];
+            int colNumber = 0;
+            for(int j = 0; j < matrix.GetLength(1); j++)
+            {
+                if(min > matrix[rowNumber, j])
+                {
+                    min = matrix[rowNumber, j];
+                    colNumber = j;
+                }
+            }
+
+            return colNumber;
+        }
+
+        public static int FindMinOnRow(int[,] source, int rowNumber, bool absolute)
+        {
+            if (source == null)
+            {
+                Error.Kill();
+            }
+
+            if (rowNumber >= source.GetLength(0))
+            {
+                Error.Kill();
+            }
+
+            int min = Math.Abs(source[rowNumber, 0]);
+            int colNumber = 0;
+            for (int j = 0; j < source.GetLength(1); j++)
+            {
+                if (min > Math.Abs(source[rowNumber, j]))
+                {
+                    min = Math.Abs(source[rowNumber, j]);
+                    colNumber = j;
+                }
+            }
+
+            return colNumber;
         }
         #endregion
 
@@ -105,6 +320,12 @@ namespace _4th_Lab
             if (source == null)
             {
                 Error.Kill();
+            }
+
+            if(row < 0 || row >= source.GetLength(0))
+            {
+                Console.WriteLine("Nothing to erase");
+                return;
             }
 
             int[,] dest = new int[source.GetLength(0) - 1, source.GetLength(1)];
@@ -127,6 +348,58 @@ namespace _4th_Lab
             source = dest;
         }
 
+        public static void EraseCol(ref int[,] source, int col)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            if(col < 0 || col >= source.GetLength(1))
+            {
+                Console.WriteLine("Nothing to erase");
+                return;
+            }
+
+            int[,] dest = new int[source.GetLength(0), source.GetLength(1) - 1];
+            for(int i = 0; i < dest.GetLength(0); i++)
+            {
+                int externalCol = 0;
+                for(int j = 0; j < dest.GetLength(1) && externalCol < source.GetLength(1); j++)
+                {
+                    if(externalCol == col)
+                    {
+                        externalCol++;
+                    }
+
+                    dest[i, j] = source[i, externalCol];
+                    externalCol++;
+                }
+            }
+
+            source = dest;
+        }
+
+        #endregion
+
+        #region Move
+        public static void MoveCols(ref int[,] source, int end)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            if(end < 0 || end > source.GetLength(1))
+            {
+                Error.Kill();
+            }
+
+            for (int j = source.GetLength(1) - 1; j >= end + 1; j--)
+            {
+                SetCol(ref source, GetCol(source, j - 1), j);
+            }
+        }
         #endregion
     }
 }

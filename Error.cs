@@ -6,7 +6,7 @@ namespace _4th_Lab
 {
     internal class Error
     {
-        static string message = "Ooops...";
+        static readonly string message = "Ooops...";
 
         public static void Kill()
         {

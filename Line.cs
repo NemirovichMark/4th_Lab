@@ -6,6 +6,23 @@ namespace _4th_Lab
 {
     internal class Line
     {
+        static Random rand;
+
+        public static void Fill(int[] array, int minValue, int maxValue)
+        {
+            if(array == null)
+            {
+                Error.Kill();
+            }
+
+            int seed = DateTime.Now.Millisecond;
+            rand = new Random(seed);
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = rand.Next(minValue, maxValue);
+            }
+        }
+
         #region OutPut
         public static void Print(int[] array)
         {
@@ -16,8 +33,9 @@ namespace _4th_Lab
 
             foreach(var element in array)
             {
-                Console.Write($"{element, 4}");
+                Console.Write($"{element, 5}");
             }
+            Console.WriteLine();
         }
 
         public static void Print(string[] array)
