@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Threading;
 
 namespace _4th_Lab
 {
@@ -172,23 +173,82 @@ namespace _4th_Lab
 
             return array;
         }
+
+        public static int[] GetDiag(int[,] source, int row, int col)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            if(source.GetLength(0) != source.GetLength(1))
+            {
+                Error.Kill();
+            }
+
+            if(row < 0 || col < 0)
+            {
+                Error.Kill();
+            }
+
+            int[] array = new int[0];
+            for(int i = row, j = col; i < source.GetLength(0) && j < source.GetLength(0); i++, j++)
+            {
+                Line.Add(ref array, source[i, j]);
+            }
+            return array;
+        }
         #endregion
 
         #region Fill
-        public static void Fill(int[,] matrix, int minValue, int maxValue)
+        public static void Fill(int[,] source, int minValue, int maxValue)
         {
-            if(matrix == null)
+            if(source == null)
             {
                 Error.Kill();
             }
 
             int seed = DateTime.Now.Millisecond;
             rand = new Random(seed);
-            for(int i = 0; i < matrix.GetLength(0); i++)
+            for(int i = 0; i < source.GetLength(0); i++)
             {
-                for(int j = 0; j < matrix.GetLength(1); j++)
+                for(int j = 0; j < source.GetLength(1); j++)
                 {
-                    matrix[i, j] = rand.Next(minValue, maxValue);
+                    source[i, j] = rand.Next(minValue, maxValue);
+                }
+            }
+        }
+
+        public static void Fill(int[,] source)
+        {
+            if (source == null)
+            {
+                Error.Kill();
+            }
+
+            for (int i = 0; i < source.GetLength(0); i++)
+            {
+                Console.WriteLine($"Rows {i + 1}");
+                string[] rowElements = Console.ReadLine().Split(' ');
+                if (rowElements.Length == source.GetLength(1))
+                {
+                    for (int j = 0; j < source.GetLength(1); j++)
+                    {
+                        if (int.TryParse(rowElements[j], out int element))
+                        {
+                            source[i, j] = element;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Incorrect data");
+                            Error.Kill();
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Not enough elements");
+                    Error.Kill();
                 }
             }
         }
@@ -238,6 +298,8 @@ namespace _4th_Lab
             for (int i = 0; i < source.GetLength(0); i++)
             {
                 int max = source[i, 0];
+                indexes[i, 0] = i;
+                indexes[i, 1] = 0;
                 for (int j = 0; j < source.GetLength(1); j++)
                 {
                     if (max < source[i, j])
@@ -279,6 +341,28 @@ namespace _4th_Lab
         }
         #endregion
 
+        public static int[] FindElement(int[,] source, int element)
+        {
+            if(source == null)
+            {
+                Error.Kill();
+            }
+
+            int[] index = new int[0];
+            for(int i = 0; i < source.GetLength(0); i++)
+            {
+                for(int j = 0; j < source.GetLength(1); j++)
+                {
+                    if(element == source[i, j])
+                    {
+                        Line.Add(ref index, i);
+                        break;
+                    }
+                }
+            }
+            return index;
+        }
+
         #region Min
         /// <summary>
         /// Finding the minimum value on each row
@@ -296,6 +380,8 @@ namespace _4th_Lab
             for(int i = 0; i < source.GetLength(0); i++)
             {
                 int min = source[i, 0];
+                indexes[i, 0] = i;
+                indexes[i, 1] = 0;
                 for(int j = 0; j < source.GetLength(1); j++)
                 {
                     if(min > source[i, j])

@@ -15,9 +15,15 @@ namespace _4th_Lab
             //int[,] a = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             //Console.WriteLine(a[a.GetLength(0) - 2, a.GetLength(1) - 1]);
 
-            //int[] i = { 1, 2, 3, 4, 5, 6 };
-            //Line.Inverse(i);
+            //int[] i = { 1, 6, 3, 4, 5, 2 };
+            //Line.Sort(i, false);
+            //Line.Sort(i, true);
             //Line.Print(i);
+
+            //int a = 3;
+            //int b = 5;
+            //Swap(ref a, ref b);
+            //Console.WriteLine($"a = {a},b = {b}");
             #endregion
 
             //Task1_3();
@@ -29,7 +35,14 @@ namespace _4th_Lab
             //Task1_31();
             //Task2_7();
             //Task2_8();
-            Task2_9();
+            //Task2_9();
+            //Task3_1();
+            //Task3_2();
+            //Task3_3();
+            //Task3_4();
+            Task3_8();
+            //Task3_10();
+            //Task3_11();
         }
 
         #region Level1
@@ -246,12 +259,15 @@ namespace _4th_Lab
             Matrix.Print(matrix);
             Console.WriteLine();
 
-            for(int i = 0; i < matrix.GetLength(0); i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 int[] row = Matrix.GetRow(matrix, i);
                 Line.Inverse(row);
                 Matrix.SetRow(matrix, row, i);
             }
+
+            Console.WriteLine("inverse");
+            Console.WriteLine();
 
             Matrix.Print(matrix);
         }
@@ -259,10 +275,183 @@ namespace _4th_Lab
         #endregion
 
         #region Level3
+        #region Task3_1
         static void Task3_1()
+        {
+            int[,] matrix = new int[7, 5];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
+
+            int[,] indexes = Matrix.FindMinOnRow(matrix);
+            Matrix.Print(indexes);
+            Console.WriteLine();
+
+            for (int i = 0; i < indexes.GetLength(0) - 1; i++)
+            {
+                for (int j = 0; j < matrix.GetLength(0) - i - 1; j++)
+                {
+                    int rowNumber1 = indexes[j, 0];
+                    int colNumber1 = indexes[j, 1];
+
+                    int rowNumber2 = indexes[j + 1, 0];
+                    int colNumber2 = indexes[j + 1, 1];
+
+                    if (matrix[rowNumber1, colNumber1] < matrix[rowNumber2, colNumber2])
+                    {
+                        indexes[j, 0] = rowNumber2;
+                        indexes[j, 1] = colNumber2;
+
+                        indexes[j + 1, 0] = rowNumber1;
+                        indexes[j + 1, 1] = colNumber1;
+                    }
+                }
+            }
+
+            int[,] sortedMatrix = new int[7, 5];
+            int[] row;
+            for(int i = 0; i < indexes.GetLength(0); i++)
+            {
+                int rowNumber = indexes[i, 0];
+                row = Matrix.GetRow(matrix, rowNumber);
+                Matrix.SetRow(sortedMatrix, row, i);
+            }
+
+            Console.WriteLine("Sorted\n");
+
+            Matrix.Print(sortedMatrix);
+        }
+        #endregion
+
+        #region Task3_2
+        static void Task3_2()
+        {
+            int rowLength = Matrix.SetLengthRow();
+            int colLength = Matrix.SetLengthCol();
+            int[,] matrix = new int[rowLength, colLength];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
+
+            for(int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for(int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if(i == 0 || i == matrix.GetLength(0) - 1)
+                    {
+                        matrix[i, j] = 0;
+                    }
+                    matrix[i, 0] = 0;
+                    matrix[i, matrix.GetLength(1) - 1] = 0;
+                }
+            }
+
+            Matrix.Print(matrix);
+        }
+        #endregion
+
+        #region Task3_3
+        static void Task3_3()
+        {
+            int rowLength = Matrix.SetLengthRow();
+            int[,] matrix = new int[rowLength, rowLength];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
+
+            int[] vec = new int[0];
+            int[] diag;
+
+            for (int j = matrix.GetLength(0) - 1; j >= 0; j--)
+            {
+                diag = Matrix.GetDiag(matrix, 0, j);
+                int sum = Line.Sum(diag);
+                Line.Add(ref vec, sum);
+            }
+
+            for(int i = 0; i < matrix.GetLength(0); i++)
+            {
+                diag = Matrix.GetDiag(matrix, i, 0);
+                int sum = Line.Sum(diag);
+                Line.Add(ref vec, sum);
+            }
+
+            Line.Print(vec);
+        }
+        #endregion
+
+        #region Task3_4
+        static void Task3_4()
+        {
+            int rowLength = Matrix.SetLengthRow();
+
+            int[,] matrix = new int[rowLength, rowLength];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
+
+            int middle = matrix.GetLength(0) / 2;
+            for(int i = middle; i < matrix.GetLength(0); i++)
+            {
+                for(int j = 0; j < i; j++)
+                {
+                    matrix[i, j] = 0;
+                }
+            }
+
+            Matrix.Print(matrix);
+        }
+        #endregion
+
+        #region Task3_8
+        static void Task3_8()
         {
 
         }
+        #endregion
+
+        #region Task3_10
+        static void Task3_10()
+        {
+            int rowLength = Matrix.SetLengthRow();
+            int colLength = Matrix.SetLengthCol();
+            int[,] matrix = new int[rowLength, colLength];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
+
+            int[] row;
+            for(int i = 0; i < matrix.GetLength(0); i++)
+            {
+                row = Matrix.GetRow(matrix, i);
+                Line.Sort(row, true);
+                Line.Sort(row, false);
+                Matrix.SetRow(matrix, row, i);
+            }
+
+            Matrix.Print(matrix);
+        }
+        #endregion
+
+        #region Task3_11
+        static void Task3_11()
+        {
+            int rowLength = Matrix.SetLengthRow();
+            int colLength = Matrix.SetLengthCol();
+            int[,] matrix = new int[rowLength, colLength];
+            Matrix.Fill(matrix);
+
+            int[] index = Matrix.FindElement(matrix, 0);
+            Line.Print(index);
+
+            for(int i = index.Length - 1; i >= 0; i--)
+            {
+                Matrix.EraseRow(ref matrix, index[i]);
+            }
+
+            Matrix.Print(matrix);
+        }
+        #endregion
         #endregion
     }
 }

@@ -35,7 +35,7 @@ namespace _4th_Lab
 
             foreach(var element in array)
             {
-                Console.Write($"{element, 5}");
+                Console.Write($"{element}\t");
             }
             Console.WriteLine();
         }
@@ -105,6 +105,61 @@ namespace _4th_Lab
                 int temp = array[i];
                 array[i] = array[inverseIndex];
                 array[inverseIndex] = temp;
+            }
+        }
+        #endregion
+
+        #region Sum
+        public static int Sum(int[] array)
+        {
+            if(array == null)
+            {
+                Error.Kill();
+            }
+
+            int sum = 0;
+            for(int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+            }
+
+            return sum;
+        }
+        #endregion
+
+        #region Sort
+        public static void Sort(int[] array, bool isEven)
+        {
+            if(array == null)
+            {
+                Error.Kill();
+            }
+
+            int index = isEven ? 0 : 1;
+
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                for (int j = index; j < array.Length - 2 - i; j += 2)
+                {
+                    if (isEven)
+                    {
+                        if (array[j] < array[j + 2])
+                        {
+                            array[j] = array[j] + array[j + 2];
+                            array[j + 2] = array[j] - array[j + 2];
+                            array[j] = array[j] - array[j + 2];
+                        }
+                    }
+                    else
+                    {
+                        if (array[j] > array[j + 2])
+                        {
+                            array[j] = array[j] + array[j + 2];
+                            array[j + 2] = array[j] - array[j + 2];
+                            array[j] = array[j] - array[j + 2];
+                        }
+                    }
+                }
             }
         }
         #endregion
