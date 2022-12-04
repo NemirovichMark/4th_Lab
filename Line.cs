@@ -8,6 +8,7 @@ namespace _4th_Lab
     {
         static Random rand;
 
+        #region Fill
         public static void Fill(int[] array, int minValue, int maxValue)
         {
             if(array == null)
@@ -22,6 +23,7 @@ namespace _4th_Lab
                 array[i] = rand.Next(minValue, maxValue);
             }
         }
+        #endregion
 
         #region OutPut
         public static void Print(int[] array)
@@ -85,6 +87,25 @@ namespace _4th_Lab
 
             final[array.Length] = element;
             array = final;
+        }
+        #endregion
+
+        #region Inverse
+        public static void Inverse(int[] array)
+        {
+            if(array == null)
+            {
+                Error.Kill();
+            }
+
+            for(int i = 0; i < array.Length / 2; i++)
+            {
+                int inverseIndex = array.Length - i - 1;
+
+                int temp = array[i];
+                array[i] = array[inverseIndex];
+                array[inverseIndex] = temp;
+            }
         }
         #endregion
     }

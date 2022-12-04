@@ -6,14 +6,18 @@ namespace _4th_Lab
 {
     internal class Program
     {
-        static int minValue = -1000;
-        static int maxValue = 1000;
+        static readonly int minValue = -1000;
+        static readonly int maxValue = 1000;
 
         static void Main()
         {
             #region Testing buns
             //int[,] a = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             //Console.WriteLine(a[a.GetLength(0) - 2, a.GetLength(1) - 1]);
+
+            //int[] i = { 1, 2, 3, 4, 5, 6 };
+            //Line.Inverse(i);
+            //Line.Print(i);
             #endregion
 
             //Task1_3();
@@ -24,7 +28,8 @@ namespace _4th_Lab
             //Task1_29();
             //Task1_31();
             //Task2_7();
-            Task2_8();
+            //Task2_8();
+            Task2_9();
         }
 
         #region Level1
@@ -104,8 +109,8 @@ namespace _4th_Lab
             int index = Matrix.FindMaxOnDiag(matrix);
             int[] column = Matrix.GetCol(matrix, index);
 
-            Matrix.SetCol(ref matrix, fourth, index);
-            Matrix.SetCol(ref matrix, column, 3);
+            Matrix.SetCol(matrix, fourth, index);
+            Matrix.SetCol(matrix, column, 3);
 
             Matrix.Print(matrix);
         }
@@ -165,13 +170,13 @@ namespace _4th_Lab
 
             int[,] matrix = new int[5, 8];
             Matrix.Fill(matrix, minValue, maxValue);
-            Matrix.SetCol(ref matrix, 0, 7);
+            Matrix.SetCol(matrix, 0, 7);
             Matrix.Print(matrix);
 
             int colNumber = Matrix.FindMinOnRow(matrix, matrix.GetLength(0) - 1) + 1;
             Matrix.MoveCols(ref matrix, colNumber);
             Console.WriteLine();
-            Matrix.SetCol(ref matrix, column, colNumber);
+            Matrix.SetCol(matrix, column, colNumber);
             Matrix.Print(matrix);
         }
         #endregion
@@ -232,6 +237,32 @@ namespace _4th_Lab
             Matrix.Print(matrix);
         }
         #endregion
+
+        #region Task2_9
+        static void Task2_9()
+        {
+            int[,] matrix = new int[6, 7];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
+
+            for(int i = 0; i < matrix.GetLength(0); i++)
+            {
+                int[] row = Matrix.GetRow(matrix, i);
+                Line.Inverse(row);
+                Matrix.SetRow(matrix, row, i);
+            }
+
+            Matrix.Print(matrix);
+        }
+        #endregion
+        #endregion
+
+        #region Level3
+        static void Task3_1()
+        {
+
+        }
         #endregion
     }
 }

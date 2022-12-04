@@ -9,12 +9,6 @@ namespace _4th_Lab
     {
         static Random rand;
 
-        int a;
-        public Matrix(int a)
-        {
-            this.a = a;
-        }
-
         #region OutPut
         public static void Print(int[,] source)
         {
@@ -44,6 +38,24 @@ namespace _4th_Lab
                 int.TryParse(Console.ReadLine(), out n);
             }
             return n;
+        }
+
+        public static void SetRow(int[,] source, int[] row, int rowNumber)
+        {
+            if (source == null || row == null)
+            {
+                Error.Kill();
+            }
+
+            if (row.Length != source.GetLength(1) || rowNumber >= source.GetLength(0))
+            {
+                Error.Kill();
+            }
+
+            for (int j = 0; j < source.GetLength(1); j++)
+            {
+                source[rowNumber, j] = row[j];
+            }
         }
 
         public static void SetRowInRange(int[,] source, int element, int rowNumber, int colNumber)
@@ -80,7 +92,7 @@ namespace _4th_Lab
             return n;
         }
 
-        public static void SetCol(ref int[,] source, int[] col, int colNumber)
+        public static void SetCol(int[,] source, int[] col, int colNumber)
         {
             if(source == null || col == null)
             {
@@ -98,7 +110,7 @@ namespace _4th_Lab
             }
         }
 
-        public static void SetCol(ref int[,] source, int element, int colNumber)
+        public static void SetCol(int[,] source, int element, int colNumber)
         {
             if(source == null)
             {
@@ -121,7 +133,23 @@ namespace _4th_Lab
         #region Get
         public static int[] GetRow(int[,] source, int row)
         {
-            return null;
+            if (source == null)
+            {
+                Error.Kill();
+            }
+
+            if (row < 0 || row >= source.GetLength(0))
+            {
+                Error.Kill();
+            }
+
+            int[] array = new int[0];
+            for (int j = 0; j < source.GetLength(1); j++)
+            {
+                Line.Add(ref array, source[row, j]);
+            }
+
+            return array;
         }
 
         public static int[] GetCol(int[,] source, int col)
@@ -144,8 +172,6 @@ namespace _4th_Lab
 
             return array;
         }
-
-
         #endregion
 
         #region Fill
@@ -428,7 +454,7 @@ namespace _4th_Lab
 
             for (int j = source.GetLength(1) - 1; j >= end + 1; j--)
             {
-                SetCol(ref source, GetCol(source, j - 1), j);
+                SetCol(source, GetCol(source, j - 1), j);
             }
         }
         #endregion
