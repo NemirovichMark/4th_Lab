@@ -23,7 +23,8 @@ namespace _4th_Lab
             //Task1_17();
             //Task1_29();
             //Task1_31();
-            Task2_7();
+            //Task2_7();
+            Task2_8();
         }
 
         #region Level1
@@ -177,6 +178,7 @@ namespace _4th_Lab
         #endregion
 
         #region Level2
+        #region Task2_7
         static void Task2_7()
         {
             int[,] matrix = new int[6, 6];
@@ -185,8 +187,51 @@ namespace _4th_Lab
             Console.WriteLine();
 
             int index = Matrix.FindMaxOnDiag(matrix);
+            Console.WriteLine($"Max ({index}; {index})");
 
+            if(index == 0)
+            {
+                Matrix.Print(matrix);
+                return;
+            }
+
+            for(int i = 0; i < index; i++)
+            {
+                Matrix.SetRowInRange(matrix, 0, i, i + 1);
+            }
+
+            Matrix.Print(matrix);
         }
+        #endregion
+
+        #region Task2_8
+        static void Task2_8()
+        {
+            int[,] matrix = new int[6, 6];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
+
+            int[,] indexes = Matrix.FindMaxOnRow(matrix);
+            Matrix.Print(indexes);
+            Console.WriteLine();
+
+            for(int i = 0; i < matrix.GetLength(0) - 1; i+= 2)
+            {
+                int row1 = indexes[i, 0];
+                int col1 = indexes[i, 1];
+
+                int row2 = indexes[i + 1, 0];
+                int col2 = indexes[i + 1, 1];
+
+                int buff = matrix[row1, col1];
+                matrix[row1, col1] = matrix[row2, col2];
+                matrix[row2, col2] = buff;
+            }
+
+            Matrix.Print(matrix);
+        }
+        #endregion
         #endregion
     }
 }

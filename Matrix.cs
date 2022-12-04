@@ -169,6 +169,8 @@ namespace _4th_Lab
         #endregion
 
         #region Search
+
+        #region Max
         /// <summary>
         /// Search for the largest value across the entire matrix
         /// </summary>
@@ -199,6 +201,31 @@ namespace _4th_Lab
             return index;
         }
 
+        public static int[,] FindMaxOnRow(int[,] source)
+        {
+            if (source == null)
+            {
+                Error.Kill();
+            }
+
+            int[,] indexes = new int[source.GetLength(0), 2];
+            for (int i = 0; i < source.GetLength(0); i++)
+            {
+                int max = source[i, 0];
+                for (int j = 0; j < source.GetLength(1); j++)
+                {
+                    if (max < source[i, j])
+                    {
+                        max = source[i, j];
+                        indexes[i, 0] = i;
+                        indexes[i, 1] = j;
+                    }
+                }
+            }
+
+            return indexes;
+        }
+
         public static int FindMaxOnDiag(int[,] source)
         {
             if(source == null)
@@ -224,7 +251,9 @@ namespace _4th_Lab
 
             return index;
         }
+        #endregion
 
+        #region Min
         /// <summary>
         /// Finding the minimum value on each row
         /// </summary>
@@ -312,6 +341,8 @@ namespace _4th_Lab
 
             return colNumber;
         }
+        #endregion
+
         #endregion
 
         #region Erase
