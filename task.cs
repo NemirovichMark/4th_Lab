@@ -350,7 +350,7 @@ static void lvl2Task9()
     double temp = 0;
     for (int i = 0; i < array.GetLength(0); i++)
     {
-        for (int j = 0; j < array.GetLength(1)/2 + 1; j++)
+        for (int j = 0; j < array.GetLength(1) / 2 + 1; j++)
         {
             temp = array[i, (array.GetLength(1) / 2) - j];
             array[i, (array.GetLength(1) / 2) - j] = array[i, (array.GetLength(1) / 2) + j];
@@ -360,6 +360,8 @@ static void lvl2Task9()
     PrintArray(array);
 }
 //1-4,8,10,11
+
+/**
 static void lvl3Task1()
 {
     double[,] array = CreateArray();
@@ -380,7 +382,7 @@ static void lvl3Task1()
         }
     }
 
-    for (int j = 0; j < min_index.GetLength(1)-1; j++)
+    for (int j = 0; j < min_index.GetLength(1) - 1; j++)
     {
         if (min_index[1, j] < min_index[1, j + 1])
         {
@@ -388,5 +390,69 @@ static void lvl3Task1()
             temp_1 = min_index[2, j];
         }
     }
-    
+
+}
+**/
+
+static void lvl3Task2()
+{
+    double[,] array = CreateArray();
+    PrintArray(array);
+    Console.WriteLine();
+    int end = array.GetLength(0) - 1;
+    for (int i = 0; i < end + 1; i++)
+    {
+        for (int j = 0; j < end + 1; j++)
+        {
+            if (i == 0 || i == end || j == 0 || j == end)
+            {
+                array[i, j] = 0;
+            }
+        }
+    }
+    PrintArray(array);
+}
+
+
+
+static void lvl3Task3()
+{
+    double[,] array = CreateArray();
+    double summ = 0;
+    int end = array.GetLength(0) - 1;
+    for (int i = 0; i < end + 1; i++)
+    {
+        for (int j = 0; j < end + 1; j++)
+        {
+            if (i == 0 && j == end || i == end && j == 0)
+            {
+                continue;
+            }
+            else
+            {
+                summ+= array[i, j];
+            }
+        }
+    }
+    Console.WriteLine(2*summ - 1);
+}
+
+static void lvl3Task4()
+{
+
+    double[,] array = CreateArray();
+    int end = array.GetLength(0);
+    int middle = (end / 2);
+    for (int i = middle; i < end; i++)
+    {
+        for (int j = 0; j < end; j++)
+        {
+            if (j < middle)
+            {
+                array[i, j] = 1;
+            }
+        }
+        middle++;
+    }
+    PrintArray(array);
 }
