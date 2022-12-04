@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
 
@@ -158,6 +159,27 @@ namespace _4th_Lab
                             array[j + 2] = array[j] - array[j + 2];
                             array[j] = array[j] - array[j + 2];
                         }
+                    }
+                }
+            }
+        }
+
+        public static void BubbleSort(int[] array)
+        {
+            if(array == null)
+            {
+                Error.Kill();
+            }
+
+            for(int i = 0; i < array.Length - 1; i++)
+            {
+                for(int j = 0; j < array.Length - 1 - i; j++)
+                {
+                    if (array[j] < array[j + 1])
+                    {
+                        array[j] = array[j] + array[j + 1];
+                        array[j + 1] = array[j] - array[j + 1];
+                        array[j] = array[j] - array[j + 1];
                     }
                 }
             }

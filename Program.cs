@@ -11,21 +11,6 @@ namespace _4th_Lab
 
         static void Main()
         {
-            #region Testing buns
-            //int[,] a = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-            //Console.WriteLine(a[a.GetLength(0) - 2, a.GetLength(1) - 1]);
-
-            //int[] i = { 1, 6, 3, 4, 5, 2 };
-            //Line.Sort(i, false);
-            //Line.Sort(i, true);
-            //Line.Print(i);
-
-            //int a = 3;
-            //int b = 5;
-            //Swap(ref a, ref b);
-            //Console.WriteLine($"a = {a},b = {b}");
-            #endregion
-
             //Task1_3();
             //Task1_6();
             //Task1_12();
@@ -406,7 +391,70 @@ namespace _4th_Lab
         #region Task3_8
         static void Task3_8()
         {
+            int[,] matrix = new int[7, 5];
+            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Print(matrix);
+            Console.WriteLine();
 
+            int[,] indexes = GetP(matrix);
+            Matrix.Print(indexes);
+            Console.WriteLine();
+
+            for (int i = 0; i < indexes.GetLength(0) - 1; i++)
+            {
+                for (int j = 0; j < indexes.GetLength(0) - 1 - i; j++)
+                {
+                    if (indexes[j, 1] < indexes[j + 1, 1])
+                    {
+                        indexes[j, 0] += indexes[j + 1, 0];
+                        indexes[j + 1, 0] = indexes[j, 0] - indexes[j + 1, 0];
+                        indexes[j, 0] = indexes[j, 0] - indexes[j + 1, 0];
+
+                        indexes[j, 1] += indexes[j + 1, 1];
+                        indexes[j + 1, 1] = indexes[j, 1] - indexes[j + 1, 1];
+                        indexes[j, 1] = indexes[j, 1] - indexes[j + 1, 1];
+                    }
+                }
+            }
+
+            Matrix.Print(indexes);
+            Console.WriteLine();
+
+            int[,] sorted = new int[matrix.GetLength(0), matrix.GetLength(1)];
+            int[] row;
+            for (int i = 0; i < sorted.GetLength(0); i++)
+            {
+                int rowNumber = indexes[i, 0];
+                row = Matrix.GetRow(matrix, rowNumber);
+                Matrix.SetRow(sorted, row, i);
+            }
+
+            Matrix.Print(sorted);
+        }
+
+        static int[,] GetP(int[,] matrix)
+        { 
+            if (matrix == null)
+            {
+                Error.Kill();
+            }
+
+            int[,] indexes = new int[matrix.GetLength(0), 2];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                int count = 0;
+                indexes[i, 0] = i;
+                indexes[i, 1] = 0;
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if (matrix[i, j] > 0)
+                    {
+                        count++;
+                    }
+                }
+                indexes[i, 1] = count;
+            }
+            return indexes;
         }
         #endregion
 
