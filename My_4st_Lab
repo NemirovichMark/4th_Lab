@@ -1,0 +1,682 @@
+int l, c, add_int, i_max_el, i_min_el;
+double summ = 0, add_double, max_el, min_el;
+double[,] array;
+double[] box, box2;
+int[] box_for_int;
+
+#region 3 in 1
+Console.WriteLine("Task 3 in level 1");
+l = 4; c = 4;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+summ = 0;
+for (int i = 0; i < array.GetLength(0); i++)
+{
+    if ((i == 0) ^ (i == 3))
+        summ = summ + array[i, 0] + array[i, 3];
+    else
+        summ = summ + array[i, 1] + array[i, 2];
+}
+Console.WriteLine("Sum of diagonal elements " + summ);
+Console.WriteLine();
+#endregion
+
+#region 6 in 1
+Console.WriteLine("Task 6 in level 1");
+l = 4; c = 7;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+box = new double[4];
+min_el = 0;
+for (int i = 0; i < array.GetLength(0); i++)
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+        if (j == 0) { min_el = array[i, j];}
+        if (array[i, j] > min_el) { box[i] = min_el; }
+    }
+Console.WriteLine(String.Join(" ", box));
+Console.WriteLine();
+#endregion
+
+#region 12 in 1
+Console.WriteLine("Task 12 in level 1");
+l = 6; c = 7;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+box_for_int = new int[2];
+max_el = array[0, 0];
+for (int i = 0; i < array.GetLength(0); i++)
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+        if (array[i, j] > max_el) { max_el = array[i, j]; box_for_int[0] = i; box_for_int[1] = j; }
+    }
+
+for (int i = box_for_int[0]; i < array.GetLength(0) - 1; i++)
+{
+    for (int j = 0; j < array.GetLength(1); j++)
+        array[i, j] = array[i + 1, j];
+}
+for (int i = 0; i < array.GetLength(0); i++)
+{
+    for (int j = box_for_int[1]; j < array.GetLength(1) - 1; j++)
+        array[i, j] = array[i, j + 1];
+}
+
+for (int i = 0; i < array.GetLength(0) - 1; i++)
+{
+    for (int j = 0; j < array.GetLength(1) - 1; j++)
+        Console.Write(array[i, j] + " ");
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 13 in 1
+Console.WriteLine("Task 13 in level 1");
+l = 5; c = 5;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+
+max_el = array[0, 0];
+i_max_el = 0;
+for (int i = 0; i < l; i++)
+{
+    if (array[i, i] > max_el)
+    {
+        max_el = array[i, i];
+        i_max_el = i;
+    }
+}
+
+add_int = 4;
+add_double = 0;
+
+for (int i = 0; i < l; i++)
+{
+    add_double = array[i, i_max_el];
+    array[i, i_max_el] = array[i, add_int];
+    array[i, add_int] = add_double;
+}
+
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 17 in 1
+Console.WriteLine("Task 17 in level 1");
+Console.WriteLine("Write umbers of lines and numbers of columns of array");
+if (Int32.TryParse(Console.ReadLine(), out l))
+    {
+    if (Int32.TryParse(Console.ReadLine(), out c))
+    {
+        array = new double[l, c];
+        for (int i = 0; i < l; i++)
+            for (int j = 0; j < c; j++)
+            {
+                Console.WriteLine("Write " + j + " element in line " + i);
+                if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+                else { Console.WriteLine(":("); break; }
+            }
+        for (int i = 0; i < l; i++)
+        {
+            min_el = array[i, 0];
+            i_min_el = 0;
+            for (int j = 0; j < c; j++)
+            {
+                if (array[i, j] < min_el)
+                {
+                    min_el = array[i, j];
+                    i_min_el = j;
+                }
+            }
+            if (i_min_el != 0)
+            {
+                for (int j = i_min_el; j - 1 >= 0; j--)
+                {
+                    array[i, j] = array[i, j - 1];
+                } 
+                array[i, 0] = min_el;
+            }
+        }
+        Console.WriteLine("Changed array is");
+        for (int i = 0; i < l; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                Console.Write(array[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+else { Console.WriteLine(":("); }
+Console.WriteLine();
+#endregion
+
+#region 29 in 1
+Console.WriteLine("Task 29 in level 1");
+l = 5; c = 7;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+min_el = Math.Abs(array[2, 0]);
+i_min_el = 0;
+for (int j = 0; j < c; j++)
+    if (Math.Abs(array[2, j]) < Math.Abs(min_el))
+    {
+        min_el = Math.Abs(array[2, j]);
+        i_min_el = j;
+    }
+for (int i = 0; i < array.GetLength(0); i++)
+{
+    for (int j = i_min_el + 1; j < array.GetLength(1) - 1; j++)
+        array[i, j] = array[i, j + 1];
+}
+Console.WriteLine("Changed array is");
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c - 1; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 31 in 1
+Console.WriteLine("Task 31 in level 1");
+l = 5; c = 8;
+add_int = 5;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+box = new double[add_int];
+for (int i = 0; i < add_int; i++)
+{
+    Console.WriteLine("Write " + i + " element in array B");
+    if (Double.TryParse(Console.ReadLine(), out box[i])) { }
+    else { Console.WriteLine("Fail"); break; }
+}
+min_el = array[4, 0];
+i_min_el = 0;
+for (int j = 0; j < c; j++)
+    if (array[4, j] < min_el)
+    {
+        min_el = array[4, j];
+        i_min_el = j;
+    }
+for (int i = 0; i < array.GetLength(0); i++)
+{
+    for (int j = array.GetLength(1) - 1; j > i_min_el + 1; j--)
+        array[i, j] = array[i, j - 1];
+}
+add_int = 0;
+for (int i = 0; i < array.GetLength(0); i++)
+{
+    array[i, i_min_el + 1] = box[add_int];
+    add_int++;
+}
+Console.WriteLine("Changed array is");
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 7 in 2
+Console.WriteLine("Task 7 in level 2");
+l = 6; c = 6;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+max_el = array[0, 0];
+i_max_el = 0;
+for (int i = 0; i < l; i++)
+    if (array[i, i] > max_el)
+    {
+        max_el = array[i, i];
+        i_max_el = i;
+    }
+for (int i = 0; i < i_max_el; i++)
+{
+    for (int j = 0; j < c - i - 1; j++)
+        array[i, i + j + 1] = 0;
+}
+Console.WriteLine("Changed array is");
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 8 in 2
+Console.WriteLine("Task 8 in level 2");
+l = 6; c = 6;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+box = new double[6];
+box_for_int = new int[6];
+add_int = 0;
+for (int i = 0; i < l; i++)
+{
+    max_el = array[i, 0];
+    i_max_el = 0;
+    for (int j = 0; j < c; j++)
+    {
+        if (array[i, j] > max_el)
+        {
+            max_el = array[i, j];
+            i_max_el = j;
+        }
+    }
+    if (i % 2 == 0) { box[i + 1] = max_el; box_for_int[i] = i_max_el; }
+    if (i % 2 != 0) { box[i - 1] = max_el; box_for_int[i] = i_max_el; }
+}
+for (int i = 0; i < l; i++)
+{
+    array[i, (box_for_int[add_int])] = box[add_int];
+    add_int++;
+}
+Console.WriteLine("Changed array is");
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 9 in 2
+Console.WriteLine("Task 9 in level 2");
+l = 6; c = 7;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < (c / 2); j++)
+    {
+        add_double = array[i, j];
+        array[i, j] = array[i, c - j - 1];
+        array[i, c - j - 1] = add_double;
+    }
+}
+Console.WriteLine("Changed array is");
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 1 in 3
+Console.WriteLine("Task 1 in level 3");
+l = 7; c = 5;
+array = new double[l, c];
+for (int i = 0; i < l; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+box = new double[l];
+box2 = new double[c];
+add_double = 0;
+for (int i = 0; i < l; i++)
+{
+    min_el = array[i, 0];
+    for (int j = 0; j < c; j++)
+    {
+        if (array[i, j] < min_el)
+        {
+            min_el = array[i, j];
+        }
+    }
+    box[i] = min_el;
+}
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < l - 1; j++)
+    {
+        if (box[j] < box[j + 1])
+        {
+            add_double = box[j + 1];
+            box[j + 1] = box[j];
+            box[j] = add_double;
+            for (int k = 0; k < c; k++) { box2[k] = array[j, k]; }
+            for (int g = 0; g < c; g++)
+            {
+                array[j, g] = array[j + 1, g];
+                array[j + 1, g] = box2[g];
+            }
+        }
+    }
+}
+Console.WriteLine("Changed array is");
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c; j++)
+    {
+        Console.Write(array[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+Console.WriteLine();
+#endregion
+
+#region 2 in 3
+Console.WriteLine("Task 2 in level 3");
+Console.WriteLine("Write height of array");
+if (Int32.TryParse(Console.ReadLine(), out c))
+{
+
+    array = new double[c, c];
+    for (int i = 0; i < c; i++)
+        for (int j = 0; j < c; j++)
+        {
+            Console.WriteLine("Write " + j + " element in line " + i);
+            if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+            else { Console.WriteLine(":("); break; }
+        }
+    for (int i = 0; i < c; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            if ((i == 0) | (i == c - 1))
+                array[i, j] = 0;
+        }
+        array[i, 0] = 0;
+        array[i, c - 1] = 0;
+    }
+    Console.WriteLine("Changed array is");
+    for (int i = 0; i < c; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.WriteLine();
+    }
+
+}
+else { Console.WriteLine(":("); }
+Console.WriteLine();
+#endregion
+
+#region 3 in 3
+Console.WriteLine("Task 3 in level 3");
+Console.WriteLine("Write height of array");
+if (Int32.TryParse(Console.ReadLine(), out c))
+{
+    array = new double[c, c];
+    for (int i = 0; i < c; i++)
+        for (int j = 0; j < c; j++)
+        {
+            Console.WriteLine("Write " + j + " element in line " + i);
+            if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+            else { Console.WriteLine(":("); break; }
+        }
+    box = new double[2 * c - 1];
+    add_int = 0;
+    for (int i = c - 1; i != -1; i--)
+    {
+        for (int j = 0; j + i != c; j++)
+        {
+            box[add_int] += array[i + j, j];
+        }
+        add_int++;
+    }
+    for (int i = c - 1; i != 0; i--)
+    {
+        for (int j = 0; j + i != c; j++)
+        {
+            box[add_int] += array[j, j + i];
+        }
+        add_int++;
+    }
+    Console.WriteLine("Vector is { " + String.Join(" ", box) + " }");
+}
+else { Console.WriteLine(":("); }
+Console.WriteLine();
+#endregion
+
+#region 4 in 3
+Console.WriteLine("Task 4 in level 3");
+Console.WriteLine("Write height of array");
+if (Int32.TryParse(Console.ReadLine(), out c))
+{
+    array = new double[c, c];
+    for (int i = 0; i < c; i++)
+        for (int j = 0; j < c; j++)
+        {
+            Console.WriteLine("Write " + j + " element in line " + i);
+            if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+            else { Console.WriteLine(":("); break; }
+        }
+    for (int i = c / 2; i < c; i++)
+    {
+        for (int j = 0; j <= i; j++)
+        {
+            array[i, j] = 0;
+        }
+    }
+    Console.WriteLine("Changed array is");
+    for (int i = 0; i < c; i++)
+    {
+        for (int j = 0; j < c; j++)
+            Console.Write(array[i, j] + " ");
+        Console.WriteLine();
+    }
+}
+else { Console.WriteLine(":("); }
+Console.WriteLine();
+#endregion
+
+#region 8 in 3
+Console.WriteLine("Task 8 in level 3");
+l = 7; c = 5;
+array = new double[c, c];
+for (int i = 0; i < c; i++)
+    for (int j = 0; j < c; j++)
+    {
+        Console.WriteLine("Write " + j + " element in line " + i);
+        if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+        else { Console.WriteLine(":("); break; }
+    }
+box_for_int = new int[l];
+box = new double[c];
+add_int = 0;
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < c; j++)
+        if (0 <= array[i, j]) { box_for_int[i]++; }
+}
+
+for (int i = 0; i < l; i++)
+{
+    for (int j = 0; j < l - 1; j++)
+    {
+        if (box_for_int[j] < box_for_int[j + 1])
+        {
+            add_int = box_for_int[j + 1];
+            box_for_int[j + 1] = box_for_int[j];
+            box_for_int[j] = add_int;
+            for (int k = 0; k < c; k++) { box[k] = array[j, k]; }
+            for (int g = 0; g < c; g++)
+            {
+                array[j, g] = array[j + 1, g];
+                array[j + 1, g] = box[g];
+            }
+        }
+    }
+}
+
+Console.WriteLine("Changed array is");
+for (int i = 0; i < c; i++)
+{
+    for (int j = 0; j < c; j++)
+        Console.Write(array[i, j] + " ");
+    Console.WriteLine();
+}
+
+Console.WriteLine();
+#endregion
+
+#region 10 in 3
+Console.WriteLine("Task 10 in level 3");
+Console.WriteLine("Write height and width of array");
+if (Int32.TryParse(Console.ReadLine(), out l))
+{
+    if (Int32.TryParse(Console.ReadLine(), out c))
+    {
+        array = new double[c, c];
+        for (int i = 0; i < c; i++)
+            for (int j = 0; j < c; j++)
+            {
+                Console.WriteLine("Write " + j + " element in line " + i);
+                if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+                else { Console.WriteLine(":("); break; }
+            }
+        box = new double[c];
+        for (int i = 0; i < l; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                for (int k = 0; k < c; k++) { box[k] = array[i, k]; }
+                Array.Sort(box);
+                if (i % 2 == 0) {Array.Reverse(box);}
+                for (int k = 0; k < c; k++) { array[i, k] = box[k]; }
+            }
+        }
+
+        Console.WriteLine("Changed array is");
+        for (int i = 0; i < c; i++)
+        {
+            for (int j = 0; j < c; j++)
+                Console.Write(array[i, j] + " ");
+            Console.WriteLine();
+        }
+    }
+}
+else { Console.WriteLine(":("); }
+Console.WriteLine();
+#endregion
+
+#region 11 in 3
+Console.WriteLine("Task 11 in level 3");
+Console.WriteLine("Write height and width of array");
+if (Int32.TryParse(Console.ReadLine(), out l))
+{
+    if (Int32.TryParse(Console.ReadLine(), out c))
+    {
+        array = new double[c, c];
+        for (int i = 0; i < c; i++)
+            for (int j = 0; j < c; j++)
+            {
+                Console.WriteLine("Write " + j + " element in line " + i);
+                if (Double.TryParse(Console.ReadLine(), out array[i, j])) { }
+                else { Console.WriteLine(":("); break; }
+            }
+        for (int i = 0; i < l; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (array[i, j] == 0)
+                {
+                    l--;
+                    for (int k = i; k < l; k++)
+                    {
+                        for (int g = 0; g < c; g++)
+                            array[k, g] = array[k + 1, g];
+                    }
+                }
+            }
+        }
+        Console.WriteLine("Changed array is");
+        for (int i = 0; i < l; i++)
+        {
+            for (int j = 0; j < c; j++)
+                Console.Write(array[i, j] + " ");
+            Console.WriteLine();
+        }
+    }
+}
+else { Console.WriteLine(":("); }
+Console.WriteLine();
+#endregion
