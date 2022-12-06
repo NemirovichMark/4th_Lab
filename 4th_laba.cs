@@ -225,56 +225,37 @@ namespace _4th_lab
             #endregion
 
             #region 1.31
-            int nnn;
-            List<int> nujno = new List<int>();
-            int[,] a15 = new int[5, 5]
+            int[,] a31 = new int[5, 8]
+                        {
+                {2, 3, 1, 5, 0, 5, 1, 0},
+                {5, 4, 8, 6, 1, -3, 13, 0},
+                {2, 2, 9, 1, -5, -4, 2, 0},
+                {0, 4, 1, 5, 23, 7, 12, 0},
+                {14,-2, 1,-12,1,  5, 5, 0},
+                        };
+            int[] B = new int[5] { 1, 2, 3, 4, 5 };
+            int min4 = a31[4, 0], ind31 = 0;
+            for (int i = 0; i < a31.GetLength(1) - 1; i++)
             {
-                {2,2,3,4,5},
-                {10,7,3,0,10},
-                {11,12,13,14,15},
-                {16,25,18,30,20},
-                {21,0,23,24,25},
-            };
-            nnn = a15.GetLength(0);
-            for (int i = 0; i < a15.GetLength(0); i++)
-            {
-                for (int j = 0; j < a15.GetLength(1); j++)
+                if (min4 > Math.Abs(a31[4, i]))
                 {
-                    if (a15[i, j] == 0)
-                    {
-                        nnn--;
-                        break;
-                    }
+                    min4 = Math.Abs(a31[4, i]);
+                    ind31 = i;
                 }
             }
-            int[,] a16 = new int[nnn, 5];
-            int flag = 0;
-            int zamena = 0;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < a31.GetLength(0); i++)
             {
-                flag = 0;
-                for (int j = 0; j < 5; j++)
+                for (int j = 7; j > ind31; j--)
                 {
-                    if (a15[i, j] == 0)
-                    {
-                        flag = 1;
-                        break;
-                    }
+                    a31[i, j] = a31[i, j - 1];
                 }
-                if (flag == 0)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        a16[zamena, j] = a15[i, j];
-                    }
-                    zamena++;
-                }
+                a31[i, ind31 + 1] = B[i];
             }
-            for (int i = 0; i < nnn; i++)
+            for (int i = 0; i < a31.GetLength(0); i++)
             {
-                for (int j = 0; j < a16.GetLength(1); j++)
+                for (int j = 0; j < a31.GetLength(1); j++)
                 {
-                    Console.Write(a16[i, j] + "\t");
+                    Console.Write(a31[i, j] + "\t");
                 }
                 Console.WriteLine();
             }
@@ -399,44 +380,6 @@ namespace _4th_lab
             #endregion
 
             #region 3.1
-            int[,] a31 = new int[5, 8]
-            {
-                {2, 3, 1, 5, 0, 5, 1, 0},
-                {5, 4, 8, 6, 1, -3, 13, 0},
-                {2, 2, 9, 1, -5, -4, 2, 0},
-                {0, 4, 1, 5, 23, 7, 12, 0},
-                {14,-2, 1,-12,1,  5, 5, 0},
-            };
-            int[] B = new int[5] { 1, 2, 3, 4, 5 };
-            int min4 = a31[4, 0], ind31 = 0;
-            for (int i = 0; i < a31.GetLength(1) - 1; i++)
-            {
-                if (min4 > Math.Abs(a31[4, i]))
-                {
-                    min4 = Math.Abs(a31[4, i]);
-                    ind31 = i;
-                }
-            }
-            for (int i = 0; i < a31.GetLength(0); i++)
-            {
-                for (int j = 7; j > ind31; j--)
-                {
-                    a31[i, j] = a31[i, j - 1];
-                }
-                a31[i, ind31 + 1] = B[i];
-            }
-            for (int i = 0; i < a31.GetLength(0); i++)
-            {
-                for (int j = 0; j < a31.GetLength(1); j++)
-                {
-                    Console.Write(a31[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-            #endregion 
-
-            #region 3.2
             int c9 = 0;
             int[,] a9 = new int[7, 5]
             {
@@ -493,6 +436,33 @@ namespace _4th_lab
             Console.WriteLine();
             #endregion
 
+            #region 3.2
+            int[,] a11 = new int[5, 5]
+            {
+                {2,2,3,4,5},
+                {6,7,8,9,10},
+                {11,12,13,14,15},
+                {16,17,18,19,20},
+                {21,22,23,24,25},
+            };
+            for (int i = 0; i < a11.GetLength(0); i++)
+            {
+                a11[0, i] = 0;
+                a11[i, 0] = 0;
+                a11[4, i] = 0;
+                a11[i, 4] = 0;
+            }
+            for (int i = 0; i < a11.GetLength(0); i++)
+            {
+                for (int j = 0; j < a11.GetLength(1); j++)
+                {
+                    Console.Write(a11[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
             #region 3.3
             int[,] a33 = new int[5, 5]
             {
@@ -528,34 +498,6 @@ namespace _4th_lab
             #endregion
 
             #region 3.4
-            int[,] a11 = new int[5, 5]
-            {
-                {2,2,3,4,5},
-                {6,7,8,9,10},
-                {11,12,13,14,15},
-                {16,17,18,19,20},
-                {21,22,23,24,25},
-            };
-            for (int i = 0; i < a11.GetLength(0); i++)
-            {
-                a11[0, i] = 0;
-                a11[i, 0] = 0;
-                a11[4, i] = 0;
-                a11[i, 4] = 0;
-            }
-            for (int i = 0; i < a11.GetLength(0); i++)
-            {
-                for (int j = 0; j < a11.GetLength(1); j++)
-                {
-                    Console.Write(a11[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-            #endregion
-
-            #region 3.8
-
             int n = 0;
             Random rnd = new Random();
             Console.WriteLine("Введите n");
@@ -591,7 +533,7 @@ namespace _4th_lab
             Console.WriteLine();
             #endregion
 
-            #region 3.10
+            #region 3.8
             int[] elements = new int[7];
             int schet = 0;
             int goat = 1;
@@ -603,10 +545,11 @@ namespace _4th_lab
                 {-5,8,-7,9,6},
                 {-6,6,5,3,5 },
                 {1,2,3,4,5 },
-                {-1,-2,-3,-4,-5, },
+                {-1,-2,-3,-4,5 },
             };
             for (int i = 0; i < a13.GetLength(0); i++)
             {
+                schet = 0;
                 for (int j = 0; j < a13.GetLength(1); j++)
                 {
                     if (a13[i, j] > 0)
@@ -647,8 +590,7 @@ namespace _4th_lab
             Console.WriteLine();
             #endregion
 
-            #region 3.11
-
+            #region 3.10
             int index14 = 0;
             int[,] a14 = new int[5, 5]
             {
@@ -706,6 +648,64 @@ namespace _4th_lab
                 Console.WriteLine();
             }
             Console.WriteLine();
+            #endregion
+
+            #region 3.11
+            int nnn;
+            List<int> nujno = new List<int>();
+            int[,] a15 = new int[5, 5]
+            {
+                {2,2,3,4,5},
+                {10,7,3,0,10},
+                {11,12,13,14,15},
+                {16,25,18,30,20},
+                {21,0,23,24,25},
+            };
+            nnn = a15.GetLength(0);
+            for (int i = 0; i < a15.GetLength(0); i++)
+            {
+                for (int j = 0; j < a15.GetLength(1); j++)
+                {
+                    if (a15[i, j] == 0)
+                    {
+                        nnn--;
+                        break;
+                    }
+                }
+            }
+            int[,] a16 = new int[nnn, 5];
+            int flag = 0;
+            int zamena = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                flag = 0;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (a15[i, j] == 0)
+                    {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 0)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        a16[zamena, j] = a15[i, j];
+                    }
+                    zamena++;
+                }
+            }
+            for (int i = 0; i < nnn; i++)
+            {
+                for (int j = 0; j < a16.GetLength(1); j++)
+                {
+                    Console.Write(a16[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
             #endregion
 
 
