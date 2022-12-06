@@ -185,5 +185,49 @@ namespace _4th_Lab
             }
         }
         #endregion
+        
+        #region Move
+        public static void Move(int[] array, int index)
+        {
+            if (array == null)
+            {
+                Error.Kill();
+            }
+
+            if (index < 0 || index > array.Length)
+            {
+                Error.Kill();
+            }
+
+            int temp = array[index];
+            for(int i = index; i > 0; i--)
+            {
+                array[i] = array[i - 1];
+            }
+            array[0] = temp;
+        }
+        #endregion
+        
+        #region Search
+        public static int FindMin(int[] array)
+        {
+            if(array == null)
+            {
+                Error.Kill();
+            }
+
+            int min = array[0];
+            int index = 0;
+            for(int i = 0; i < array.Length; i++)
+            {
+                if(min > array[i])
+                {
+                    min = array[i];
+                    index = i;
+                }
+            }
+            return index;
+        }
+        #endregion
     }
 }
