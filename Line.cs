@@ -194,7 +194,7 @@ namespace _4th_Lab
                 Error.Kill();
             }
 
-            if (index < 0 || index > array.Length)
+            if (index < 0 || index >= array.Length)
             {
                 Error.Kill();
             }
