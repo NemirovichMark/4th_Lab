@@ -121,22 +121,19 @@ namespace _4th_Lab
             int m = Matrix.SetLengthCol();
 
             int[,] matrix = new int[n, m];
-            Matrix.Fill(matrix, minValue, maxValue);
+            Matrix.Fill(matrix, -20, 20);
             Matrix.Print(matrix);
             Console.WriteLine();
 
-            int[,] indexes = Matrix.FindMinOnRow(matrix);
-            Matrix.Print(indexes);
+            
             Console.WriteLine();
 
             for(int i = 0; i < matrix.GetLength(0); i++)
             {
-                int rowNumber = indexes[i, 0];
-                int colNumber = indexes[i, 1];
-
-                matrix[i, 0] += matrix[rowNumber, colNumber];
-                matrix[rowNumber, colNumber] = matrix[i, 0] - matrix[rowNumber, colNumber];
-                matrix[i, 0] = matrix[i, 0] - matrix[rowNumber, colNumber];
+                int[] row = Matrix.GetRow(matrix, i);
+                int index = Line.FindMin(row);
+                Line.Move(row, index);
+                Matrix.SetRow(matrix, row, i);
             }
 
             Matrix.Print(matrix);
