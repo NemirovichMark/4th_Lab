@@ -211,16 +211,15 @@ class hw5
 
             for (int i2 = 0; i2 < m; i2++)
             {
-                for (int j2 = 0; j2 < n; j2++)
+                if ((a[i2,i2] > max))
                 {
-                    if ((i2 == j2) || (j2 == n - i2 - 1))
-                    {
-                        if (max < a[i2, j2])
-                        {
-                            max = a[i2, j2];
-                            jmax = j2;
-                        }
-                    }
+                    max = a[i2,i2];
+                    jmax = i2;
+                }
+                if ((a[i2,n-i2-1] > max))
+                {
+                    max = a[i2, n - i2-1];
+                    jmax = n - i2-1;
                 }
 
             }
