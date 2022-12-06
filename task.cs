@@ -430,11 +430,11 @@ static void lvl3Task3()
             }
             else
             {
-                summ+= array[i, j];
+                summ += array[i, j];
             }
         }
     }
-    Console.WriteLine(2*summ - 1);
+    Console.WriteLine(2 * summ - 1);
 }
 
 static void lvl3Task4()
@@ -454,5 +454,59 @@ static void lvl3Task4()
         }
         middle++;
     }
+    PrintArray(array);
+}
+
+static void lvl3Task1()
+{
+    double[,] array = CreateArray();
+    int f;
+    double temp = double.PositiveInfinity;
+    int a = array.GetLength(0);
+    int b = array.GetLength(1);
+    double[,] array1 = new double[a, b];
+    double[,] indexes = new double[2, a];
+    for (int i = 0; i < a; i++)
+    {
+        for (int j = 0; j < b; j++)
+        {
+            if (array[i, j] < temp)
+            {
+                temp = array[i, j];
+                indexes[0,i] = array[i, j];
+                indexes[1, i] = i;
+            }
+        }
+        temp = double.PositiveInfinity;
+    }
+
+    for (int i = 0; i < a - 1; i++)
+    {
+        for (int j = 0; j < a - 1; j++)
+        {
+            if (indexes[0, j + 1] < indexes[0, j])
+            {
+                temp = indexes[0, j + 1];
+                indexes[0, j + 1] = indexes[0, j];
+                indexes[0, j] = temp;
+
+                temp = indexes[1, j + 1];
+                indexes[1, j + 1] = indexes[1, j];
+                indexes[1, j] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < a; i++)
+    {
+        f = Convert.ToInt32(indexes[1, i]);
+        for (int j = 0; j < b; j++)
+        {
+            array1[i, j] = array[f, j];
+        }
+    }
+
+    array = array1;
+
     PrintArray(array);
 }
