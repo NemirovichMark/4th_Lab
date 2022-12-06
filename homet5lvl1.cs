@@ -256,7 +256,7 @@ class hw5
         }
         else if (numb == 17)
         {
-            #region Level1task13
+            #region Level1task17
             Console.WriteLine("введите размер матрицы n");
             int n = Convert.ToInt32(Console.ReadLine());
             if (n > 0)
@@ -309,8 +309,11 @@ class hw5
                                 jmin = j2;
                             }
                         }
-                        a[i2, jmin] = a[i2, 0];
-                        a[i2, 0] = min;
+                        while (jmin >= 1)
+                        {
+                            (a[i2, jmin], a[i2, jmin - 1]) = (a[i2, jmin - 1], a[i2, jmin]);
+                            jmin--;
+                        }
 
                     }
 
