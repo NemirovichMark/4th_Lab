@@ -45,17 +45,14 @@ class hw5
             int max = -100000;
             int imax = 0;
             for (int i2 = 0; i2 < m; i2++)
-                for (int j2 = 0; j2 < n; j2++)
-                {
-                    if (i2 == j2)
-                    {
-                        if (max < a3[i2, j2])
+            {
+                   if (max < a3[i2, i2])
                         {
-                            max = a3[i2, j2];
+                            max = a3[i2, i2];
                             imax = i2;
                         }
-                    }
-                }
+ 
+            }
 
             for (int i = 0; i < m; i++)
             {
