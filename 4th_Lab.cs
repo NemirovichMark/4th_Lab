@@ -1,1219 +1,836 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace _4th_Lab
 {
     class Program
     {
-        static int exercise_3_1((int, double) a, (int, double) b)
-        {
-            if (a.Item2 < b.Item2)
-            {
-                return 1;
-            }
-
-            if (a.Item2 > b.Item2)
-            {
-                return -1;
-            }
-            return 0;
-        }
-
-        static int exercise_3_8((int, int) a, (int, int) b)
-        {
-            if (a.Item2 < b.Item2)
-            {
-                return 1;
-            }
-
-            if (a.Item2 > b.Item2)
-            {
-                return -1;
-            }
-            return 0;
-        }
-
         static void Main(string[] args)
         {
 
-            #region level 1
-            Console.WriteLine("level 1");
 
-            #region task 3
-            Console.WriteLine("task 3");
+            static double[,] double_matrix(int rows, int columns, ref bool flag)
             {
-                int n = 4, m = 4;
-                double[,] A = new double[n, m];
-                double ans = 0;
+                double[,] fin_matrix = new double[rows, columns];
+                for (int j = 0; j < rows; j++)
+                {
+                    Console.WriteLine($"enter row {j}:");
+                    string str_ = Console.ReadLine();
+                    double[] str_arr = new double[columns];
+                    string[] row = str_.Split(' ');
+                    for (int i = 0; i < columns; i++)
+                    {
+                        if (!(row.Length == columns & double.TryParse(row[i], out str_arr[i])))
+                        {
+                            Console.WriteLine("input error");
+                            flag = true;
+                            double[,] mat = { };
+                            return mat;
+                        }
+                        fin_matrix[j, i] = str_arr[i];
+                    }
 
-                Console.WriteLine($"    enter {n} rows {m} columns");
+                }
+                return fin_matrix;
+            }
+            static void show_matrix(double[,] matrix, int rows, int columns, ref bool flag)
+            {
+                Console.WriteLine();
+                for (int i = 0; i < rows; i++)
+                {
+                    Console.WriteLine();
+                    for (int k = 0; k < columns; k++)
+                    {
+                        Console.Write($"{matrix[i, k]} ");
+                    }
+                }
+            }
+            static double[] double_array(string str_, int size, ref bool flag)
+            {
 
+                double[] fin_arr = new double[size];
+                string[] array_1 = str_.Split(' ');
+                for (int i = 0; i < size; i++)
+                {
+                    if (!(array_1.Length == size & double.TryParse(array_1[i], out fin_arr[i])))
+                    {
+                        Console.WriteLine("input error");
+                        flag = true;
+                        double[] arr = { };
+                        return arr;
+                    }
+                }
+                return fin_arr;
+            }
+            
+
+
+            static void task_1_3()
+            {
+                bool flag = false;
+                int n = 4;
+                int m = 4;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+                double s = 0;
                 for (int i = 0; i < n; i++)
                 {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    List<double> row = new List<double>();
-
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        row.Add(value);
-                    }
-
                     for (int j = 0; j < m; j++)
                     {
-                        double el = row[j];
-
-                        A[i, j] = el;
+                        if (i == j)
+                        {
+                            s += matrix_in_use[i, j];
+                        }
                     }
-
-                    ans += A[i, i];
                 }
-
-                Console.WriteLine($"    answer: {ans.ToString()}");
+                Console.WriteLine();
+                Console.WriteLine($"result:{s}");
             }
-            #endregion
-
-            #region task 6
-            Console.WriteLine("task 6");
+            static void task_1_6()
             {
-                int n = 4, m = 7;
-                double[,] A = new double[n, m];
-                double[] ans = new double[n];
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
+                bool flag = false;
+                int n = 4;
+                int m = 7;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
                 {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    double[] row = new double[m];
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-                        row[j] = value;
-
-                    }
-
-                    int min_idx = Array.IndexOf(row, row.Min());
-
-                    ans[i] = min_idx;
+                    Console.WriteLine("input error");
+                    return;
                 }
-
-                Console.WriteLine($"    answer: {ans.ToString()}");
-            }
-            #endregion
-
-            #region task 12
-            Console.WriteLine("task 12");
-            {
-                int n = 6, m = 7;
-                double[,] A = new double[n, m];
-                double[,] ans = new double[n - 1, m - 1];
-                int i_max = 0, j_max = 0;
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
+                show_matrix(matrix_in_use, n, m, ref flag);
+                double[] res_ar = new double[n];
+                double smallest_value = matrix_in_use[0, 0];
+                for (int k = 0; k < n; k++)
                 {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-                        if (value > A[i_max, j_max])
-                        {
-                            i_max = i;
-                            j_max = j;
-                        }
-                    }
-                }
-
-                int ans_i = 0, ans_j = 0;
-                for (int i = 0; i < n - 1; ++i)
-                {
-                    if (ans_i == i_max)
-                    {
-                        ans_i++;
-                    }
-                    ans_j = 0;
-                    for (int j = 0; j < m - 1; ++j)
-                    {
-                        if (ans_j == j_max)
-                        {
-                            ans_j++;
-                        }
-                        ans[i, j] = A[ans_i, ans_j];
-                        ans_j++;
-                    }
-                    ans_i++;
-                }
-
-                for (int i = 0; i < n - 1; i++)
-                {
-                    string answer = "";
-                    for (int j = 0; j < m - 1; j++)
-                    {
-                        answer += ans[i, j].ToString();
-                        answer += " ";
-                    }
-                    Console.WriteLine(answer);
-                }
-            }
-            #endregion
-
-            #region task 13
-            Console.WriteLine("task 13");
-            {
-                int n = 5, m = 5;
-                int column_max = 0;
-                double[,] A = new double[n, m];
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-                    }
-
-                    if (A[i, i] > A[column_max, column_max])
-                    {
-                        column_max = i;
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    (A[i, 4], A[i, column_max]) = (A[i, column_max], A[i, 4]);
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string answer = "";
                     for (int j = 0; j < m; j++)
                     {
-                        answer += A[i, j].ToString();
-                        answer += " ";
+                        if (matrix_in_use[k, j] < smallest_value)
+                        {
+                            smallest_value = matrix_in_use[k, j];
+                        }
                     }
-                    Console.WriteLine(answer);
+                    res_ar[k] = smallest_value;
+                    if (k == n - 1) break;
+                    smallest_value = matrix_in_use[k + 1, 0];
+                }
+                Console.WriteLine();
+                Console.WriteLine($"result:");
+                foreach (double elem in res_ar)
+                {
+                    Console.Write($"{elem}\t");
                 }
             }
-            #endregion
-
-            #region task 17
-            Console.WriteLine("task 17");
+            static void task_1_12()
             {
-                int n, m;
-
-                Console.WriteLine("enter n");
-                while (true)
+                bool flag = false;
+                int n;
+                int m;
+                Console.WriteLine("enter rows:");
+                bool res = int.TryParse(Console.ReadLine(), out n);
+                Console.WriteLine("enter columns:");
+                bool res2 = int.TryParse(Console.ReadLine(), out m);
+                if (!(res & n > 0 & res2 & m > 0)) return;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
                 {
-                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 1)
-                    {
-                        Console.WriteLine("incorrect format, try again");
-                        continue;
-                    }
-                    break;
+                    Console.WriteLine("input error");
+                    return;
                 }
+                show_matrix(matrix_in_use, n, m, ref flag);
 
-                Console.WriteLine("enter m");
-                while (true)
+                double biggest_value = matrix_in_use[0, 0];
+                int row = 0;
+                int column = 0;
+                for (int k = 0; k < n; k++)
                 {
-                    if (!int.TryParse(Console.ReadLine(), out m) || m <= 1)
-                    {
-                        Console.WriteLine("incorrect format, try again");
-                        continue;
-                    }
-                    break;
-                }
-
-                double[,] A = new double[n, m];
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() < m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1, min_column = 0;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-                        if (value < A[i, min_column])
-                        {
-                            min_column = j;
-                        }
-                    }
-
-                    while (min_column != 0)
-                    {
-                        (A[i, min_column], A[i, min_column - 1]) = (A[i, min_column - 1], A[i, min_column]);
-                        min_column--;
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string answer = "";
                     for (int j = 0; j < m; j++)
                     {
-                        answer += A[i, j].ToString();
-                        answer += " ";
+                        if (matrix_in_use[k, j] > biggest_value)
+                        {
+                            biggest_value = matrix_in_use[k, j];
+                            row = k;
+                            column = j;
+                        }
                     }
-                    Console.WriteLine(answer);
                 }
+                n -= 1;
+                for (int i = row; i < n; i++)
+                {
+                    for (int k = 0; k < m; k++)
+                    {
+                        matrix_in_use[i, k] = matrix_in_use[i + 1, k];
+                    }
+                }
+                m -= 1;
+                for (int i = column; i < m; i++)
+                {
+                    for (int k = 0; k < n; k++)
+                    {
+                        matrix_in_use[k, i] = matrix_in_use[k, i + 1];
+                    }
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+
 
             }
-            #endregion
-
-            #region task 29
-            Console.WriteLine("task 29");
+            static void task_1_13()
             {
-                int n = 5, m = 7;
-                double[,] A = new double[n, m];
-                double[,] ans = new double[n, m - 1];
-                int row_idx = 1;
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
+                bool flag = false;
+                int n = 5;
+                int m = 5;
+                double p = 0;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
                 {
-                    string[] row_string = Console.ReadLine().Split(" ");
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
 
-                    if (row_string.Count() != m)
+                double biggest_value = matrix_in_use[0, 0];
+                int row = 0;
+                int column = 0;
+                for (int k = 0; k < n; k++)
+                {
+                    if (matrix_in_use[k, k] > biggest_value)
                     {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1, min_column = 0;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
+                        biggest_value = matrix_in_use[k, k];
+                        row = k;
+                        column = k;
                     }
                 }
-
-                int j_min = 0;
-                for (int j = 0; j < m; j++)
+                for (int i = 0; i < m; i++)
                 {
-                    if (Math.Abs(A[row_idx, j]) < Math.Abs(A[row_idx, j_min]))
+                    p = matrix_in_use[i, 3];
+                    matrix_in_use[i, 3] = matrix_in_use[i, column];
+                    matrix_in_use[i, column] = p;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+
+            }
+            static void task_1_17()
+            {
+                bool flag = false;
+                int n;
+                int m;
+                int column = 0;
+                Console.WriteLine("enter rows:");
+                bool res = int.TryParse(Console.ReadLine(), out n);
+                Console.WriteLine("enter columns:");
+                bool res2 = int.TryParse(Console.ReadLine(), out m);
+                if (!(res & n > 0 & res2 & m > 0)) return;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+                double smallest_value = matrix_in_use[0, 0];
+                for (int k = 0; k < n; k++)
+                {
+                    smallest_value = matrix_in_use[k, 0];
+                    for (int j = 0; j < m; j++)
                     {
-                        j_min = j;
+                        if (matrix_in_use[k, j] < smallest_value)
+                        {
+                            smallest_value = matrix_in_use[k, j];
+                            column = j;
+                        }
+                    }
+                    for (int i = column; i > 0; i--)
+                    {
+                        matrix_in_use[k, i] = matrix_in_use[k, i - 1];
+                    }
+                    matrix_in_use[k, 0] = smallest_value;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+            }
+            static void task_1_29()
+            {
+                bool flag = false;
+                int n = 5;
+                int m = 7;
+                double p = 0;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+
+                double smallest_value = Math.Abs(matrix_in_use[1, 0]);
+                int row = 0;
+                int column = 0;
+                for (int k = 1; k < m; k++)
+                {
+                    if (Math.Abs(matrix_in_use[1, k]) < Math.Abs(smallest_value))
+                    {
+                        smallest_value = matrix_in_use[1, k];
+                        column = k;
                     }
                 }
-
-                if (j_min == m - 1)
+                if (column != m - 1)
                 {
-                    for (int i = 0; i < n; i++)
+
+
+                    m -= 1;
+                    for (int i = column + 1; i < m; i++)
                     {
-                        string line = "";
-                        for (int j = 0; j < m; j++)
+                        for (int k = 0; k < n; k++)
                         {
-                            line += A[i, j];
-                            line += " ";
+                            matrix_in_use[k, i] = matrix_in_use[k, i + 1];
                         }
-                        Console.WriteLine(line);
                     }
+                    show_matrix(matrix_in_use, n, m, ref flag);
+                    
                 }
                 else
                 {
-                    j_min++;
-                    int ans_j = 0;
 
-                    for (int i = 0; i < n; i++)
-                    {
-                        ans_j = 0;
-                        for (int j = 0; j < m - 1; j++)
-                        {
-                            if (ans_j == j_min)
-                            {
-                                ans_j++;
-                            }
-                            ans[i, j] = A[i, ans_j];
-                            ans_j++;
-                        }
-                    }
-
-                    for (int i = 0; i < n; i++)
-                    {
-                        string line = "";
-                        for (int j = 0; j < m - 1; j++)
-                        {
-                            line += ans[i, j];
-                            line += " ";
-                        }
-                        Console.WriteLine(line);
-                    }
+                    show_matrix(matrix_in_use, n, m, ref flag);
                 }
-            }
-            #endregion
 
-            #region task 31
-            Console.WriteLine("task 31");
+            }//fixed3
+            static void task_1_31()
             {
-                int row_idx = 4, n = 5, m = 7;
-                double[,] A = new double[n, m];
-                double[,] ans = new double[n, m + 1];
-                int j_min = 0;
-
+                bool flag = false;
+                int n = 5;
+                int m = 8;
+                Console.WriteLine("enter b(5):");
+                string str_ = Console.ReadLine();
+                double[] arr_in_use = double_array(str_, 5, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }//i use for 8th elem in row elem that is already in this row, but this elem is not the smallest(it is important for the 5th row)
+                double[,] matrix_in_use = { { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 4, 5, 6, 7, 7 }, { 1, 2, 3, 0, 5, 6, 7, 7 } };
+                show_matrix(matrix_in_use, n, m - 1, ref flag);
+                double smallest_value = matrix_in_use[4, 0];
+                int row = 0;
+                int column = 0;
+                for (int k = 1; k < m - 1; k++)
+                {
+                    if (matrix_in_use[4, k] < smallest_value)
+                    {
+                        smallest_value = matrix_in_use[4, k];
+                        column = k;
+                    }
+                }
+                for (int i = m - 2; i > column; i--)
+                {
+                    for (int k = 0; k < n; k++)
+                    {
+                        matrix_in_use[k, i + 1] = matrix_in_use[k, i];
+                    }
+                }
                 for (int i = 0; i < n; i++)
                 {
-                    string[] row_string = Console.ReadLine().Split(" ");
+                    matrix_in_use[i, column + 1] = arr_in_use[i];
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
 
-                    if (row_string.Count() < m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
+            }
+            task_3_11();
 
-                    int j = -1;
-                    foreach (string elem in row_string)
+            static void task_2_8()
+            {
+                bool flag = false;
+                int n = 6;
+                int m = 6;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+                double[] biggest_values_array = new double[n];
+                int prev_index_column = 0;
+                for (int k = 0; k < n; k++)
+                {
+                    double biggest_value = matrix_in_use[k, 0];
+                    int index_column = 0;
+                    if (k % 2 == 0) prev_index_column = 0;
+                    for (int j = 0; j < m; j++)
                     {
-                        double value;
-                        if (!double.TryParse(elem, out value))
+                        if (matrix_in_use[k, j] > biggest_value)
                         {
-                            Console.WriteLine("     incorrect format");
-                            return;
+                            biggest_value = matrix_in_use[k, j];
+                            index_column = j;
+                            if (k % 2 == 0)
+                            {
+                                prev_index_column = index_column;
+                            }
                         }
-                        j++;
-
-                        A[i, j] = value;
                     }
-                }
+                    biggest_values_array[k] = biggest_value;
 
-                for (int j = 0; j < m; j++)
-                {
-                    if (A[row_idx, j] < A[row_idx, j_min])
+                    if (k % 2 == 1)
                     {
-                        j_min = j;
+                        double p = biggest_values_array[k];
+                        matrix_in_use[k, index_column] = matrix_in_use[k - 1, prev_index_column];
+                        matrix_in_use[k - 1, prev_index_column] = p;
                     }
+
+
                 }
-
-                Console.WriteLine($"    enter {n} values in a row");
-
-                double[] B = new double[n];
-                int iter = 0;
-
-                string[] row_b = Console.ReadLine().Split(" ");
-                foreach (string elem in row_b)
+                show_matrix(matrix_in_use, n, m, ref flag);
+            }
+            static void task_2_9()
+            {
+                bool flag = false;
+                int n = 6;
+                int m = 7;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
                 {
-                    double value;
-                    if (!double.TryParse(elem, out value))
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+                for (int k = 0; k < n; k++)
+                {
+                    for (int i = 0; i < m / 2; i++)
                     {
-                        Console.WriteLine("     incorrect format");
-                        return;
+                        double p = matrix_in_use[k, i];
+                        matrix_in_use[k, i] = matrix_in_use[k, m - 1 - i];
+                        matrix_in_use[k, m - 1 - i] = p;
                     }
-                    B[iter] = value;
-                    iter++;
                 }
 
-                int ans_j = 0;
-                j_min++;
+                show_matrix(matrix_in_use, n, m, ref flag);
+
+            }
+            static void task_2_7()
+            {
+                bool flag = false;
+                int n = 6;
+                int m = 6;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+
+                double biggest_value = matrix_in_use[0, 0];
+                int row = 0;
+                for (int k = 0; k < n; k++)
+                {
+                    if (matrix_in_use[k, k] > biggest_value)
+                    {
+                        biggest_value = matrix_in_use[k, k];
+                        row = k;
+                    }
+                }
+                for (int k = 0; k < n; k++)
+                {
+                    if (k == row) break;
+
+                    for (int i = 0; i < m - k - 1; i++)
+                    {
+                        matrix_in_use[k, k + 1 + i] = 0;
+                    }
+
+
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+
+            } 
+
+            static void task_3_1() 
+            {
+                bool flag = false;
+                int n = 7;
+                int m = 5;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
+                Console.WriteLine();
+                double[,] mat_in_use2 = new double[n,2];
+                for (int k = 0; k < n; k++)
+                {
+                    double smallest_value = matrix_in_use[k,0];
+                    for (int i = 1; i < m; i++)
+                    {
+                        if (matrix_in_use[k,i] < smallest_value)
+                        {
+                            smallest_value = matrix_in_use[k, i];
+                        }
+                    }
+
+                    mat_in_use2[k,0] =k ;
+                    mat_in_use2[k,1] =smallest_value;
+
+                }
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+                Console.WriteLine();
+                for (int i = 0; i < n; i++)
+                {
+                    double big_ind = mat_in_use2[i, 0];
+                    double big = mat_in_use2[i, 1];
+                    int row = i;
+                    for (int k = 1+i; k < n; k++)
+                    {
+                        if (mat_in_use2[k, 1] > big)
+                        {
+                            big = mat_in_use2[k, 1];
+                            big_ind = mat_in_use2[k, 0];
+                            row = k;
+                        }
+
+                    }
+
+                    double help1 = mat_in_use2[i, 0];
+                    mat_in_use2[i, 0] = big_ind;
+                    mat_in_use2[row, 0] = help1;
+                    double help2 = mat_in_use2[i, 1];
+                    mat_in_use2[i, 1] = big;
+                    mat_in_use2[row, 1] = help2;
+                }
+                double[,] res_mat = new double[n, m];
+                for (int i = 0; i < n; i++)
+                {
+                    int row = (int)mat_in_use2[i, 0];
+                    for (int k = 0; k < m; k++)
+                    {
+                        
+                        res_mat[i,k] =matrix_in_use[row,k];
+                    }
+                }
+
+
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+
+                show_matrix(res_mat, n, m, ref flag);
+
+
+
+            }//fixed
+            static void task_3_2()
+            {
+                bool flag = false;
+                int n;
+                int m;
+                Console.WriteLine("enter rows:");
+                bool res = int.TryParse(Console.ReadLine(), out n);
+                Console.WriteLine("enter columns:");
+                bool res2 = int.TryParse(Console.ReadLine(), out m);
+                if (!(res & n > 0 & res2 & m > 0)) return;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
+                {
+                    Console.WriteLine("input error");
+                    return;
+                }
+                show_matrix(matrix_in_use, n, m, ref flag);
 
                 for (int i = 0; i < n; i++)
                 {
-                    ans_j = 0;
-                    for (int j = 0; j < m + 1; ++j)
+                    for (int k = 0; k < m; k++)
                     {
-                        if (j == j_min)
+                        if (i == 0 || i == n - 1)
                         {
-                            ans[i, j] = B[i];
+                            matrix_in_use[i, k] = 0;
                             continue;
                         }
-                        ans[i, j] = A[i, ans_j];
-                        ans_j++;
+                        matrix_in_use[i, 0] = 0;
+                        matrix_in_use[i, m - 1] = 0;
+                        break;
                     }
                 }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < m - 1; j++)
-                    {
-                        line += ans[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
+                show_matrix(matrix_in_use, n, m, ref flag);
             }
-            #endregion
-
-            #endregion
-
-            #region level 2
-            Console.WriteLine("level 2");
-
-            #region task 7
-            Console.WriteLine("task 7");
+            static void task_3_3()
             {
-                int n = 6, m = 6;
-                double[,] A = new double[n, m];
-                int ii = 0;
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-                    }
-
-                    if (A[i, i] > A[ii, ii])
-                    {
-                        ii = i;
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = i + 1; j < m; j++)
-                    {
-                        if (i < ii)
-                        {
-                            A[i, j] = 0;
-                        }
-                    }
-                }
-
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < m; j++)
-                    {
-                        line += A[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
-
-            #region task 8
-            Console.WriteLine("task 8");
-            {
-                int n = 6, m = 6;
-                double[,] B = new double[n, m];
-                int[] max_elems = new int[n];
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    int j_max = 0;
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        B[i, j] = value;
-
-                        if (value > B[i, j_max])
-                        {
-                            j_max = j;
-                        }
-                    }
-                    max_elems[i] = j_max;
-                }
-
-                for (int i = 0; i < n; i += 2)
-                {
-                    (B[i + 1, max_elems[i + 1]], B[i, max_elems[i]]) = (B[i, max_elems[i]], B[i + 1, max_elems[i + 1]]);
-                }
-
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < m - 1; j++)
-                    {
-                        line += B[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
-
-            #region task 9
-            Console.WriteLine("task 9");
-            {
-                int n = 6, m = 7;
-                double[,] A = new double[n, m];
-
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, m - j - 1] = value;
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < m - 1; j++)
-                    {
-                        line += A[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
-
-            #endregion
-
-            #region level 3
-            Console.WriteLine("level 3");
-
-            #region task 1
-            Console.WriteLine("task 1");
-            {
-                int n = 7, m = 5;
-                double[,] A = new double[n, m], B = new double[n, m];
-                List<(int, double)> a = new List<(int, double)>();
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j_min = 0;
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-
-                        if (value < A[i, j_min])
-                        {
-                            j_min = j;
-                        }
-                    }
-                    a.Add((i, A[i, j_min]));
-                }
-                a.Sort(exercise_3_1);
-
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < m; j++)
-                    {
-                        B[i, j] = A[a[i].Item1, j];
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < m; j++)
-                    {
-                        line += B[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
-
-            #region task 2
-            Console.WriteLine("task 2");
-            {
+                bool flag = false;
                 int n;
-
-                Console.WriteLine("     enter n");
-                while (true)
+                // dificult but it is true just math
+                Console.WriteLine("enter rows:");
+                bool res = int.TryParse(Console.ReadLine(), out n);
+                if (!(res & n > 0)) return;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, n, ref flag);
+                if (flag)
                 {
-                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
-                    {
-                        Console.WriteLine("     incorrect format, try again");
-                        continue;
-                    }
-                    break;
+                    Console.WriteLine("input error");
+                    return;
                 }
-
-                double[,] A = new double[n, n];
-
+                double[] vector = new double[2 * n - 1];
+                int j = 0;
                 for (int i = 0; i < n; i++)
                 {
-                    (A[i, 0], A[0, i]) = (0, 0);
-                    (A[n - 1, i], A[i, n - 1]) = (0, 0);
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < n; j++)
+                    for (int k = 0; k < n; k++)
                     {
-                        line += A[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
-
-            #region task 3
-            Console.WriteLine("task 3");
-            {
-                int n;
-
-                Console.WriteLine("     enter n");
-                while (true)
-                {
-                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
-                    {
-                        Console.WriteLine("     incorrect format, try again");
-                        continue;
-                    }
-                    break;
-                }
-
-                double[,] A = new double[n, n];
-                List<double> vector = new List<double>(2 * n - 1);
-
-                Console.WriteLine($"    enter {n} rows {n} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != n)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
+                        if (k - i < 0)
                         {
-                            Console.WriteLine("     incorrect format");
-                            return;
+                            vector[n - 1 + Math.Abs(k - i)] += matrix_in_use[i, k];
+                            continue;
                         }
-                        j++;
-
-                        A[i, j] = value;
+                        vector[k - i] += matrix_in_use[i, k];
                     }
                 }
-
-                for (int i = n - 1; i > -1; i--)
-                {
-                    double sum = 0;
-                    for (int j = 0; j < n - i; j++)
-                    {
-                        sum += A[i + j, j];
-                    }
-                    vector.Add(sum);
-                }
-
-                for (int j = 1; j < n; j++)
-                {
-                    double sum = 0;
-                    for (int i = 0; i < n - j; i++)
-                    {
-                        sum += A[i, i + j];
-                    }
-                    vector.Add(sum);
-                }
-
-                string answer = "   answer: ";
-
                 foreach (double elem in vector)
                 {
-                    answer += elem.ToString();
-                    answer += " ";
+                    Console.WriteLine($"{elem}\t");
                 }
-                Console.WriteLine(answer);
-            }
-            #endregion
 
-            #region task 4
-            Console.WriteLine("task 4");
+            }
+            static void task_3_4()
             {
+                bool flag = false;
                 int n;
-
-                Console.WriteLine("     enter n");
-                while (true)
-                {
-                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
-                    {
-                        Console.WriteLine("     incorrect format, try again");
-                        continue;
-                    }
-                    break;
-                }
-
-                double[,] A = new double[n, n];
-
-                Console.WriteLine($"    enter {n} rows {n} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != n)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-                    }
-                }
-
-                for (int i = n / 2; i < n; i++)
-                {
-                    for (int j = 0; j < i + 1; j++)
-                    {
-                        A[i, j] = 1;
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < n; j++)
-                    {
-                        line += A[i, j].ToString();
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
-
-            #region task 8
-            Console.WriteLine("task 8");
-            {
-                int n = 7, m = 5;
-                double[,] A = new double[n, m], B = new double[n, m];
-                List<(int, int)> a = new List<(int, int)>();
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
-                {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int counter = 0;
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-
-                        if (value > 0)
-                        {
-                            counter++;
-                        }
-                    }
-                    a.Add((i, counter));
-                }
-                a.Sort(exercise_3_8);
-
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < m; j++)
-                    {
-                        B[i, j] = A[a[i].Item1, j];
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < m; j++)
-                    {
-                        line += B[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
-
-            #region task 10
-            Console.WriteLine("task 10");
-            {
-                int n;
-
-                Console.WriteLine("     enter n");
-                while (true)
-                {
-                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
-                    {
-                        Console.WriteLine("     incorrect format, try again");
-                        continue;
-                    }
-                    break;
-                }
-
                 int m;
-
-                Console.WriteLine("     enter m");
-                while (true)
+                Console.WriteLine("enter rows:");
+                bool res = int.TryParse(Console.ReadLine(), out n);
+                Console.WriteLine("enter columns:");
+                bool res2 = int.TryParse(Console.ReadLine(), out m);
+                if (!(res & n > 0 & res2 & m > 0)) return;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
                 {
-                    if (!int.TryParse(Console.ReadLine(), out m) || m <= 0)
-                    {
-                        Console.WriteLine("     incorrect format, try again");
-                        continue;
-                    }
-                    break;
+                    Console.WriteLine("input error");
+                    return;
                 }
-
-                double[,] A = new double[n, m];
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
-                for (int i = 0; i < n; i++)
+                int i = 1;
+                int x = n / 2;
+                for (int k = 0; k < n; k++)
                 {
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
+                    if (k == x || k > x)
                     {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
+                        for (int j = 0; j < n / 2 + i; j++)
                         {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
 
-                        A[i, j] = value;
+                            matrix_in_use[k, j] = 1;
+
+                        }
+                        i++;
                     }
+
                 }
-
-                for (int j = 0; j < m; j++)
-                {
-                    List<double> even = new List<double>(), odd = new List<double>();
-                    for (int i = 0; i < n; i++)
-                    {
-                        if (i % 2 == 0)
-                        {
-                            even.Add(A[i, j]);
-                        }
-                        else
-                        {
-                            odd.Add(A[i, j]);
-                        }
-                    }
-
-                    even.Sort();
-                    even.Reverse();
-                    odd.Sort();
-
-                    int idx_even = 0, idx_odd = 0;
-                    for (int i = 0; i < n; i++)
-                    {
-                        if (i % 2 == 0)
-                        {
-                            A[i, j] = even[idx_even];
-                            idx_even++;
-                        }
-                        else
-                        {
-                            A[i, j] = odd[idx_odd];
-                            idx_odd++;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    string line = "";
-                    for (int j = 0; j < m; j++)
-                    {
-                        line += A[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
+                show_matrix(matrix_in_use, n, m, ref flag);
             }
-            #endregion
 
-            #region task 11
-            Console.WriteLine("task 11");
+
+
+            static void task_3_8()
             {
-                int n;
-
-                Console.WriteLine("     enter n");
-                while (true)
+                bool flag = false;
+                int n = 3;
+                int m = 4;
+                Console.WriteLine("enter array data:");
+                double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                if (flag)
                 {
-                    if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
-                    {
-                        Console.WriteLine("     incorrect format, try again");
-                        continue;
-                    }
-                    break;
+                    Console.WriteLine("input error");
+                    return;
                 }
-
-                int m;
-
-                Console.WriteLine("     enter m");
-                while (true)
+                show_matrix(matrix_in_use, n, m, ref flag);
+                Console.WriteLine();
+                double[,] mat_in_use2 = new double[n, 2];
+                int quality = 0;
+                for (int k = 0; k < n; k++)
                 {
-                    if (!int.TryParse(Console.ReadLine(), out m) || m <= 0)
+                    
+                    for (int i = 0; i < m; i++)
                     {
-                        Console.WriteLine("     incorrect format, try again");
-                        continue;
+                        if (matrix_in_use[k, i] >0)
+                        {
+                            quality++;
+                        }
                     }
-                    break;
+
+                    mat_in_use2[k, 0] = k;
+                    mat_in_use2[k, 1] = quality;
+                    quality = 0;
+
                 }
-                double[,] A = new double[n, m];
-                int counter = 0;
-                Dictionary<int, bool> cache = new Dictionary<int, bool>();
-
-                Console.WriteLine($"    enter {n} rows {m} columns");
-
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+                Console.WriteLine();
                 for (int i = 0; i < n; i++)
+                {
+                    double big = mat_in_use2[i, 1];
+                    int row = i;
+                    for (int k = 1 + i; k < n; k++)
+                    {
+                        if (mat_in_use2[k, 1] > big)
+                        {
+                            big = mat_in_use2[k, 1];
+                            row = k;
+                        }
+
+                    }
+
+                    double help1 = mat_in_use2[i, 0];
+                    mat_in_use2[i, 0] = row;
+                    mat_in_use2[row, 0] = help1;
+                    double help2 = mat_in_use2[i, 1];
+                    mat_in_use2[i, 1] = big;
+                    mat_in_use2[row, 1] = help2;
+                }
+                double[,] res_mat = new double[n, m];
+                for (int i = 0; i < n; i++)
+                {
+                    int row = (int)mat_in_use2[i, 0];
+                    for (int k = 0; k < m; k++)
+                    {
+
+                        res_mat[i, k] = matrix_in_use[row, k];
+                    }
+                }
+
+
+                foreach (double elem in mat_in_use2) Console.Write($"{elem}   ");
+
+
+
+
+                show_matrix(res_mat, n, m, ref flag);
+            }
+
+            static void task_3_10()
                 {
                     bool flag = false;
-
-                    string[] row_string = Console.ReadLine().Split(" ");
-
-                    if (row_string.Count() != m)
-                    {
-                        Console.WriteLine("     incorrect format");
-                        return;
-                    }
-
-                    int j = -1;
-                    foreach (string elem in row_string)
-                    {
-                        double value;
-                        if (!double.TryParse(elem, out value))
-                        {
-                            Console.WriteLine("     incorrect format");
-                            return;
-                        }
-                        j++;
-
-                        A[i, j] = value;
-                        if (value == 0)
-                        {
-                            flag = true;
-                        }
-                    }
-
+                    int n;
+                    int m;
+                    Console.WriteLine("enter rows:");
+                    bool res = int.TryParse(Console.ReadLine(), out n);
+                    Console.WriteLine("enter columns:");
+                    bool res2 = int.TryParse(Console.ReadLine(), out m);
+                    if (!(res & n > 0 & res2 & m > 0)) return;
+                    Console.WriteLine("enter array data:");
+                    double[,] matrix_in_use = double_matrix(n, m, ref flag);
                     if (flag)
                     {
-                        counter++;
-                        cache[i] = true;
+                        Console.WriteLine("input error");
+                        return;
                     }
+                    show_matrix(matrix_in_use, n, m, ref flag);
+
+                    for (int i = 0; i < n; i++)
+                    {
+                        double[] row_array = new double[m];
+                        if (i % 2 == 0)
+                        {
+                            for (int j = 0; j < m; j++)
+                            {
+                                row_array[j] = matrix_in_use[i, j];
+                            }
+                            Array.Sort(row_array);
+                            Array.Reverse(row_array);
+                            for (int j = 0; j < m; j++)
+                            {
+                                matrix_in_use[i, j] = row_array[j];
+                            }
+                        }
+                        if (i % 2 != 0)
+                        {
+                            for (int j = 0; j < m; j++)
+                            {
+                                row_array[j] = matrix_in_use[i, j];
+                            }
+                            Array.Sort(row_array);
+                            for (int j = 0; j < m; j++)
+                            {
+                                matrix_in_use[i, j] = row_array[j];
+                            }
+                        }
+                    }
+                    show_matrix(matrix_in_use, n, m, ref flag);
                 }
-
-                double[,] B = new double[n - counter, m];
-                int ans_i = 0;
-
-                for (int i = 0; i < n; i++)
+            static void task_3_11()
                 {
-                    if (cache.ContainsKey(i))
+                    bool flag = false;
+                    int n;
+                    int m;
+                    Console.WriteLine("enter rows:");
+                    bool res = int.TryParse(Console.ReadLine(), out n);
+                    Console.WriteLine("enter columns:");
+                    bool res2 = int.TryParse(Console.ReadLine(), out m);
+                    if (!(res & n > 0 & res2 & m > 0)) return;
+                    Console.WriteLine("enter array data:");
+                    double[,] matrix_in_use = double_matrix(n, m, ref flag);
+                    if (flag)
                     {
-                        continue;
+                        Console.WriteLine("input error");
+                        return;
                     }
-                    for (int j = 0; j < m; j++)
+                    Console.WriteLine("you entered:");
+                    show_matrix(matrix_in_use, n, m, ref flag);
+                    int q = 0;
+                    for (int k = 0; k < n; k++)
                     {
-                        B[ans_i, j] = A[i, j];
+                        for (int i = 0; i < m; i++)
+                        {
+                            if (matrix_in_use[k, i] == 0)
+                            {
+                            q++;
+                            }
+                        }
                     }
-                    ans_i++;
-                }
-
-                for (int i = 0; i < n - counter; i++)
+                if (q <n)
                 {
-                    string line = "";
-                    for (int j = 0; j < m; j++)
+                    double[,] res_mat = new double[n-q, m];
+                    bool res1 = true;
+                    int j = 0;
+                    for (int k = 0; k < n; k++)
                     {
-                        line += B[i, j];
-                        line += " ";
-                    }
-                    Console.WriteLine(line);
-                }
-            }
-            #endregion
+                        for (int i = 0; i < m; i++)
+                        {
+                            if (matrix_in_use[k, i] == 0)
+                            {
+                                res1 = false;
+                            }
+                        }
+                        if (res1)
+                        {
 
-            #endregion
+                            for (int i = 0; i < m; i++)
+                            {
+                                res_mat[j, i] = matrix_in_use[k, i];
+                            }
+                            j++;
+                        }
+                        res1 = true;
+                    }
+
+                    show_matrix(res_mat, n-q, m, ref flag);
+                }
+                }//fixed3
+
+                
+            
         }
     }
 }
