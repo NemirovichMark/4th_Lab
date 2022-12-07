@@ -39,9 +39,8 @@ for (int i = 0; i < n; i++)
     Console.WriteLine();
 }
 
-int cnt_del = 0;
-
-for (int i = 0; i < n - cnt_del; i++)
+bool[] check = new bool[n];
+for (int i = 0; i < n; i++)
 {
     bool iszero = false;
     for (int j = 0; j < m; j++)
@@ -51,28 +50,32 @@ for (int i = 0; i < n - cnt_del; i++)
             iszero = true;
         }
     }
+    check[i] = iszero;
+}
 
-    if (iszero)
+int[,] B = new int[n, m];
+int c = 0;
+for (int i = 0; i < n; i++)
+{
+    if (check[i])
     {
-        for (int k = i; k < n - 1; k++)
-        {
-            for (int l = 0; l < m; l++)
-            {
-                A[k, l] = A[k + 1, l];
-            }
-        }
-        cnt_del++;
-        i--;
+        continue;
     }
+
+    for (int j = 0; j < m; j++)
+    {
+        B[c, j] = A[i, j];
+    }
+    c++;
 }
 
 // matrix output
 Console.WriteLine();
-for (int i = 0; i < n - cnt_del; i++)
+for (int i = 0; i < c; i++)
 {
     for (int j = 0; j < m; j++)
     {
-        Console.Write($"{A[i, j],3} ");
+        Console.Write($"{B[i, j],3} ");
     }
     Console.WriteLine();
 }
