@@ -31,7 +31,7 @@ for (int i = 0; i < n; i++)
 {
     int min = A[i, 0];
     int minj = 0;
-    for (int j = 0; j < 7; j++)
+    for (int j = 0; j < m; j++)
     {
         if (A[i, j] < min)
         {
