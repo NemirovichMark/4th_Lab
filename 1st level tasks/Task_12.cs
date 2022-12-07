@@ -29,9 +29,9 @@ for (int i = 0; i < n; i++)
 // find max index
 int max = A[0, 0];
 int maxi = 0, maxj = 0;
-for (int i = 0; i < 6; i++)
+for (int i = 0; i < n; i++)
 {
-    for (int j = 0; j < 7; j++)
+    for (int j = 0; j < m; j++)
     {
         if (A[i, j] > max)
         {
@@ -43,18 +43,18 @@ for (int i = 0; i < 6; i++)
 }
 
 // delete line
-for (int i = maxi; i < 6 - 1; i++)
+for (int i = maxi; i < n - 1; i++)
 {
-    for (int j = 0; j < 7; j++)
+    for (int j = 0; j < m; j++)
     {
         A[i, j] = A[i + 1, j];
     }
 }
 
 // delete column
-for (int i = 0; i < 6; i++)
+for (int i = 0; i < n; i++)
 {
-    for (int j = maxj; j < 7 - 1; j++)
+    for (int j = maxj; j < m - 1; j++)
     {
         A[i, j] = A[i, j + 1];
     }
