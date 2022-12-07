@@ -27,9 +27,9 @@ for (int i = 0; i < n; i++)
 }
 
 int save;
-for (int i = 0; i < 6; i++)
+for (int i = 0; i < n; i++)
 {
-    for (int j = 0; j < ((int)(7 / 2)); j++)
+    for (int j = 0; j < ((int)(m / 2)); j++)
     {
         save = A[i, j];
         A[i, j] = A[i, m - 1 - j];
