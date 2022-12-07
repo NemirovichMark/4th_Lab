@@ -1,0 +1,812 @@
+// Лабораторная работа №4
+// Уровень 1
+// Номер 3
+/*
+#region
+int[,] a = new int [4, 4];
+for (int i = 0; i < 4; i++)
+{
+    for (int j = 0; j < 4; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out a[i, j]));
+    }
+}
+int sum = 0;
+for (int i = 0; i < 4; i ++)
+{
+    for (int j = 0; j < 4; j++)
+    {
+        if (i == j)
+        {
+            sum += a[i, j];
+        }
+    }
+}
+Console.WriteLine(sum);
+#endregion
+*/
+
+// Номер 6
+/*
+#region
+int[,] a = new int[4, 7];
+for (int i = 0; i < 4; i ++)
+{
+    for (int j = 0; j < 7; j ++)
+    {
+        do
+        {
+        }
+        while(!int.TryParse(Console.ReadLine(), out a[i, j]));
+    }
+}
+int minel = 10000;
+var min = new List<int>();
+for(int i = 0; i < 4; i ++)
+{
+    for(int j = 0; j < 7; j ++)
+    {
+        if(minel > a[i, j])
+        {
+            minel = a[i, j];
+        }
+    }
+    min.Add(minel);
+    minel = 10000;
+}
+for(int i = 0; i < min.Count; i ++)
+{
+    Console.WriteLine(min[i]);
+}
+#endregion
+*/
+
+// Номер 12
+/*
+#region
+int[,] a = new int[6, 7];
+for(int i = 0; i < 6; i++)
+{
+    for(int j = 0; j < 7; j++)
+    {
+        do
+        {
+        }
+        while(!int.TryParse(Console.ReadLine(), out a[i, j]));
+    }
+}
+Console.WriteLine();
+for(int i = 0; i < 6; i ++)
+{
+    for(int j = 0; j < 7; j ++)
+    {
+        Console.Write(a[i, j] + " ");
+    }
+}
+int max = -10000;
+int indexi = 0, indexj = 0;
+for(int i = 0; i < 6; i ++)
+{
+    for(int j = 0; j < 7; j ++)
+    {
+        if (max > a[i, j])
+        {
+            max = a[i, j];
+            indexi = i;
+            indexj = j;
+        }
+    }
+}
+for(int i = indexi; i < 5; i ++)
+{
+    for(int j = 0; j < 7; j ++)
+    {
+        a[i, j] = a[i + 1, j];
+    }
+}
+for(int i = 0; i < 5; i ++)
+{
+    for(int j = indexj; j < 6; j ++)
+    {
+        a[i, j] = a[i, j + 1];
+    }
+}
+for(int i = 0; i < 5; i ++)
+{
+    for(int j = 0; j < 6; j++)
+    {
+        Console.Write(a[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 13
+/*
+#region
+int[,] a = new int[5,5];
+for(int i = 0; i < 5; i++)
+{
+    for(int j = 0; j < 5; j++)
+    {
+        do
+        {
+        }
+        while(!int.TryParse(Console.ReadLine(),out a[i,j]));
+    }
+}
+int indexi = 0, indexj = 0, c = 0;
+int max = -100000;
+for(int i = 0; i < 5; i++)
+{
+    for(int j = 0; j < 5; j++)
+    {
+        if(i == j)
+        {
+            if(max < a[i,j])
+            {
+                max = a[i,j];
+                indexi = i;
+                indexj = j;
+            }
+        }
+    }
+}
+for(int i = 0; i < 5; i++)
+{
+    for(int j = 0; j < 5; j++)
+    {
+        c = a[i,indexj];
+        if(j == 3)
+        {
+            a[i,indexj] = a[i,j];
+            a[i,j] = c;
+        }
+    }
+}
+for(int i = 0; i < 5; i ++)
+{
+    for(int j = 0; j < 5; j++)
+    {
+        Console.Write(a[i, j] + " ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 17
+/*
+#region
+int n = Convert.ToInt32(Console.ReadLine()), m = Convert.ToInt32(Console.ReadLine());
+int[,] a = new int[n, m];
+for(int i = 0; i < n; i++)
+{
+    for(int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while(!int.TryParse(Console.ReadLine(), out a[i,j]));
+    }
+}
+int min, minj, c;
+for(int i = 0; i < n; i++)
+{
+    min = a[i, 0];
+    minj = 0;
+    for(int j = 0; j < m; j++)
+    {
+        if(a[i,j] < min)
+        {
+            min = a[i,j];
+            minj = j;
+        }
+    }
+    while(minj != 0)
+    {
+        c = a[i, minj];
+        a[i, minj] = a[i, minj - 1];
+        a[i, minj - 1] = c;
+        minj --;
+    }
+}
+Console.WriteLine();
+for (int i = 0; i < n ; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{a[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 29
+/*
+#region
+int n = 5, m = 7;
+int [,] a = new int[n,m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out F[i, j]));
+    }
+}
+int min_abs = Math.Abs(F[1, 0]);
+int minj = 0;
+for (int j = 0; j < 7; j++)
+{
+    if (Math.Abs(F[1, j]) < min_abs)
+    {
+        min_abs = Math.Abs(F[1, j]);
+        minj = j;
+    }
+}
+for (int i = 0; i < 5; i++)
+{
+    for (int j = minj; j < 7 - 1; j++)
+    {
+        F[i, j] = F[i, j + 1];
+    }
+}
+Console.WriteLine();
+for (int i = 0; i < n ; i++)
+{
+    for (int j = 0; j < m - 1; j++)
+    {
+        Console.Write($"{F[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 31
+/*
+#region
+int n = 5, m = 8;
+int [,] a = new int[n,m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m - 1; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+int l = 5;
+int [] B = new int[l];
+for (int i = 0; i < l; i++)
+{
+    do
+    {
+    }
+    while (!int.TryParse(Console.ReadLine(), out B[i]));
+}
+Console.Write("B = ");
+foreach (int x in B) Console.Write($"{x} ");
+Console.WriteLine();
+int min = A[4, 0];
+int minj = 0;
+for (int j = 0; j < m - 1; j++)
+{
+    if (A[4, j] < min)
+    {
+        min = A[4, j];
+        minj = j;
+    }
+}
+for (int i = 0; i < n; i++)
+{
+    for (int j = m - 1; j > minj; j--)
+    {
+        A[i, j] = A[i, j - 1];
+    }
+
+    A[i, minj + 1] = B[i];
+}
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Уровень 2
+// Номер 7
+/*
+#region 
+int n = 6, m = 6;
+int[,] A = new int[n, m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+int max = A[0, 0];
+int maxi = 0;
+for (int i = 0; i < m; i++)
+{
+    if (A[i, i] > max)
+    {
+        max = A[i, i];
+        maxi = i;
+    }
+}
+for (int i = 0; i < maxi; i++)
+{
+    for (int j = maxi; j < m; j++)
+    {
+        A[i, j] = 0;
+    }
+}
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 8
+/*
+#region
+int n = 6, m = 6;
+int[,] B = new int[n, m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out B[i, j]));
+    }
+}
+for (int i = 0; i < n; i += 2)
+{
+    int max = B[i, 0];
+    int maxj = 0;
+    int max2 = B[i + 1, 0];
+    int max2j = 0;
+    int c;
+    for (int j = 0; j < m; j++)
+    {
+        if (B[i, j] > max)
+        {
+            max = B[i, j];
+            maxj = j;
+        }
+
+        if (B[i + 1, j] > max2)
+        {
+            max2 = B[i + 1, j];
+            max2j = j;
+        }
+    }
+    c = B[i, maxj];
+    B[i, maxj] = B[i + 1, max2j];
+    B[i + 1, max2j] = c;
+}
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{B[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 9
+/*
+#region
+int n = 6, m = 7;
+int[,] A = new int[n, m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+int c;
+for (int i = 0; i < 6; i++)
+{
+    for (int j = 0; j < ((int)(7 / 2)); j++)
+    {
+        c = A[i, j];
+        A[i, j] = A[i, m - 1 - j];
+        A[i, m - 1 - j] = c;
+    }
+}
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Уровень 3
+// Номер 1
+/*
+#region
+int n = 7, m = 5;
+int[,] a = new int[n, m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }a
+        while (!int.TryParse(Console.ReadLine(), out a[i, j]));
+    }
+}
+int[] b = new int [n];
+for (int i = 0; i < n; i++)
+{
+    int min = a[i, 0];
+    for (int j = 1; j < m; j++)
+    {
+        if (a[i, j] < min)
+        {
+            min = a[i, j];
+        }
+    }
+    b[i] = min;
+}
+foreach (int x in b) Console.WriteLine(x);
+int el = 1;
+int temp;
+while (el < n)
+{
+    if (el == 0 || b[el] <= b[el - 1])
+    {
+        el++;
+    }
+    else
+    {
+        temp = b[el - 1];
+        b[el - 1] = b[el];
+        b[el] = temp;
+        for (int j = 0; j < m; j++)
+        {
+            temp = a[el - 1, j];
+            a[el - 1, j] = a[el, j];
+            a[el, j] = temp;
+        }
+        el--;
+    }
+}
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{a[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 2
+/*
+#region
+int n = Convert.ToInt32(Console.ReadLine());
+int[,] a = new int[n, n];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < n; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out a[i, j]));
+    }
+}
+for (int i = 0; i < n; i++)
+{
+    a[0, i] = 0;
+    a[n-1, i] = 0;
+    a[i, 0] = 0;
+    a[i, n-1] = 0;
+}
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < n; j++)
+    {
+        Console.Write($"{a[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 3
+/*
+#region
+int n = Convert.ToInt32(Console.ReadLine());
+int[,] A = new int[n, n];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < n; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+int[] B = new int[2*n - 1];
+for (int i = 0; i < n; i++)
+{
+    int sum1 = 0, sum2 = 0;
+    for (int j = 0; j <= i; j++)
+    {
+        sum1 += A[n - 1 - i + j, j];
+        sum2 += A[j, n - 1 - i + j];
+    }
+    B[i] = sum1;
+    B[(2*n - 1) - 1 - i] = sum2;
+}
+foreach (int x in B) Console.Write($"{x} ");
+#endregion
+*/
+
+// Номер 4
+/*
+#region
+int n = Convert.ToInt32(Console.ReadLine());
+int[,] A = new int[n, n];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < n; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+for (int i = (int)(Math.Round((double)n / 2)); i < n; i++)
+{
+    for (int j = 0; j <= i; j++)
+    {
+        A[i, j] = 0;
+    }
+}
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < n; j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 8
+/*
+#region
+int n = 7, m = 5;
+int[,] A = new int[n, m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+int[] B = new int [n];
+for (int i = 0; i < n; i++)
+{
+    int cnt_positive = 0;
+    for (int j = 0; j < m; j++)
+    {
+        if (A[i, j] > 0) cnt_positive++;
+    }
+    B[i] = cnt_positive;
+}
+foreach (int x in B) Console.Write($"{x} ");
+int el = 1;
+int temp;
+while (el < n)
+{
+    if (el == 0 || B[el] <= B[el - 1])
+    {
+        el++;
+    }
+
+    else
+    {
+        temp = B[el - 1];
+        B[el - 1] = B[el];
+        B[el] = temp;
+
+        for (int j = 0; j < m; j++)
+        {
+            temp = A[el - 1, j];
+            A[el - 1, j] = A[el, j];
+            A[el, j] = temp;
+        }
+
+        el--;
+    }
+}
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 10
+/*
+#region
+static void ShellSort(int[,] matrix, int row, int a)
+{
+    if (a == 0)
+    {
+        var step = matrix.GetLength(1) / 2;
+        while (step > 0)
+        {
+            for (int i = step; i < matrix.GetLength(1); i++)
+            {
+                int j = i;
+                while ((j >= step) && matrix[row, j - step] < matrix[row, j])
+                {
+                    var temp = matrix[row, j - step];
+                    matrix[row, j - step] = matrix[row, j];
+                    matrix[row, j] = temp;
+                    j -= step;
+                }
+            }
+            step /= 2;
+        }
+    }
+    else if (a == 1)
+    {
+        var step = matrix.GetLength(1) / 2;
+        while (step > 0)
+        {
+            for (int i = step; i < matrix.GetLength(1); i++)
+            {
+                int j = i;
+                while ((j >= step) && matrix[row, j - step] > matrix[row, j])
+                {
+                    var temp = matrix[row, j - step];
+                    matrix[row, j - step] = matrix[row, j];
+                    matrix[row, j] = temp;
+                    j -= step;
+                }
+            }
+            step /= 2;
+        }
+    }
+}
+int n = Convert.ToInt32(Console.ReadLine()), m = Convert.ToInt32(Console.ReadLine());
+int[,] A = new int[n, m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+for (int i = 0; i < n; i++) ShellSort(A, i, i % 2);
+Console.WriteLine();
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
+
+// Номер 11
+/*
+#region 
+int n = Convert.ToInt32(Console.ReadLine()), m = Convert.ToInt32(Console.ReadLine());
+int[,] A = new int[n, m];
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+bool[] check = new bool[n];
+for (int i = 0; i < n; i++)
+{
+    bool iszero = false;
+    for (int j = 0; j < m; j++)
+    {
+        if (A[i, j] == 0)
+        {
+            iszero = true;
+        }
+    }
+    check[i] = iszero;
+}
+int[,] B = new int[n, m];
+int c = 0;
+for (int i = 0; i < n; i++)
+{
+    if (check[i])
+    {
+        continue;
+    }
+    for (int j = 0; j < m; j++)
+    {
+        B[c, j] = A[i, j];
+    }
+    c++;
+}
+Console.WriteLine();
+for (int i = 0; i < c; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        Console.Write($"{B[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+#endregion
+*/
