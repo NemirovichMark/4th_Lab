@@ -29,7 +29,7 @@ for (int i = 0; i < n; i++)
 // find max index (diag)
 int max = A[0, 0];
 int maxj = 0;
-for (int i = 0; i < 5; i++)
+for (int i = 0; i < n; i++)
 {
     if (A[i, i] > max)
     {
@@ -39,7 +39,7 @@ for (int i = 0; i < 5; i++)
 }
 
 int save;
-for (int i = 0; i < 5; i++)
+for (int i = 0; i < n; i++)
 {
     save = A[i, maxj];
     A[i, maxj] = A[i, 3];
