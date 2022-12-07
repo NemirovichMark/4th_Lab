@@ -28,7 +28,7 @@ for (int i = 0; i < n; i++)
 
 int min_abs = Math.Abs(F[1, 0]);
 int minj = 0;
-for (int j = 0; j < 7; j++)
+for (int j = 0; j < m; j++)
 {
     if (Math.Abs(F[1, j]) < min_abs)
     {
@@ -37,9 +37,9 @@ for (int j = 0; j < 7; j++)
     }
 }
 
-for (int i = 0; i < 5; i++)
+for (int i = 0; i < n; i++)
 {
-    for (int j = minj; j < 7 - 1; j++)
+    for (int j = minj; j < m - 1; j++)
     {
         F[i, j] = F[i, j + 1];
     }
