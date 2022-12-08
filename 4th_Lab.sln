@@ -23,3 +23,993 @@ Global
 		SolutionGuid = {DA412E04-3FF3-42EB-B253-65075581ADAC}
 	EndGlobalSection
 EndGlobal
+class Theory
+    {
+        static void Main(string[] args)
+        {
+            //1
+            //3
+            int[,] a = new int[4, 4] {{ 1, 2, 3,4 },
+                                      { 5, 6,7,8 },
+                                      { 9,10,11,12 },
+                                      {13,14,15,16} };
+            int n = 4, m = 4;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                    Console.WriteLine("{0:d}", a[i, j]);
+                Console.WriteLine();
+            }
+            int s = 0;
+            for (int i=0;i<n;i++)
+            {
+                s += a[i, i];
+            }
+            Console.WriteLine(s);
+            //6
+            int[,] a1 = new int[4, 7];
+            int[] min = new int[4];
+            for (int i=0;i<4;i++)
+                for (int j=0;j<7;j++)
+                {
+                    string s1 =Console.ReadLine();
+                    a1[i,j]=int.Parse(s1);
+                }
+            Console.WriteLine("Матрица:");
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    Console.Write(String.Format("{0, 6}", a[i, j]));
+                }
+                Console.WriteLine();
+            }
+
+            for (int j = 0; j < 7; j++)
+            {
+                min[j] = int.MinValue;
+                for (int i = 0; i < 4; i++)
+                {
+                    if (a[i, j] > min[i]) { min[i] = a[i, j]; }
+                }
+            }
+
+            Console.WriteLine("Минимумы:");
+            for (int i = 0; i < 4; i++)
+            {
+                System.Console.Write(System.String.Format("{0, 3}", min[i]));
+            }
+
+            //12
+            int[,] matrix = new int[6, 7];
+            int i12 = 0, j12 = 0, i1, j1, maxi = 0, maxj = 0;
+            Random rnd = new Random();
+            Console.WriteLine("Случайная матрица:");
+            for (i12 = 0; i12 < 6; i12++)
+            {
+                for (j12 = 0; j12 < 7; j12++)
+                {
+                    matrix[i12, j12] = rnd.Next(0, 10);
+                    Console.Write("{0} ", matrix[i12, j12]);
+                }
+                Console.Write("\n");
+            }
+            for (i12 = 0; i12 < 6; i12++)
+            {
+                for (j12 = 0; j12 < 7; j12++)
+                {
+                    if (matrix[i12, j12] > matrix[maxi, maxj])
+                    {
+                        maxi = i12;
+                        maxj = j12;
+                    }
+                }
+            }
+            Console.WriteLine("\nМаксимальный элемент матрицы: {0}", matrix[maxi, maxj]);
+            Console.WriteLine("Преобразованная матрица:");
+            int[,] matrix2 = new int[4, 4];
+            for (i12 = 0; i12 < 4; i12++)
+            {
+                if (i12 >= maxi)
+                {
+                    i1 = i12 + 1;
+                }
+                else
+                {
+                    i1 = i12;
+                }
+                for (j12 = 0; j12 < 4; j12++)
+                {
+                    if (j12 >= maxj)
+                    {
+                        j1 = j12 + 1;
+                    }
+                    else
+                    {
+                        j1 = j12;
+                    }
+                    matrix2[i12, j12] = matrix[i1, j1];
+                    Console.Write("{0} ", matrix2[i12, j12]);
+                }
+                Console.Write("\n");
+                //13
+                int n13 = 5, m13 = 5;
+                int[,] A = new int[n13, m13];
+
+                // input of matrix values
+                for (int i = 0; i < n13; i++)
+                {
+                    for (int j = 0; j < m13; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter the value ({i},{j}) of the array: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n13; i++)
+                {
+                    for (int j = 0; j < m13; j++)
+                    {
+                        Console.Write($"{A[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                // find max index (diag)
+                int max13 = A[0, 0];
+                int maxj13 = 0;
+                for (int i = 0; i < n13; i++)
+                {
+                    if (A[i, i] > max13)
+                    {
+                        max13 = A[i, i];
+                        maxj13 = i;
+                    }
+                }
+
+                int save;
+                for (int i = 0; i < n13; i++)
+                {
+                    save = A[i, maxj13];
+                    A[i, maxj13] = A[i, 3];
+                    A[i, 3] = save;
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n13; i++)
+                {
+                    for (int j = 0; j < m13; j++)
+                    {
+                        Console.Write($"{A[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //17
+                int n17;
+                do
+                {
+                    Console.Write($"enter n17: ");
+                }
+                while (!int.TryParse(Console.ReadLine(), out n17));
+
+                int m17;
+                do
+                {
+                    Console.Write($"enter m17: ");
+                }
+                while (!int.TryParse(Console.ReadLine(), out m17));
+
+
+                int[,] B = new int[n17, m17];
+
+                // input of matrix values
+                for (int i = 0; i < n17; i++)
+                {
+                    for (int j = 0; j < m17; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter the value ({i},{j}) of the array: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out B[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n17; i++)
+                {
+                    for (int j = 0; j < m17; j++)
+                    {
+                        Console.Write($"{B[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                int min17, minj;
+                int save17;
+                for (int i = 0; i < n; i++)
+                {
+                    min17 = B[i, 0];
+                    minj = 0;
+
+                    // found the minimum value in the "i" line
+                    for (int j = 0; j < m; j++)
+                    {
+                        if (B[i, j] < min17)
+                        {
+                            min17 = B[i, j];
+                            minj = j;
+                        }
+                    }
+
+                    while (minj != 0)
+                    {
+                        save17 = B[i, minj];
+                        B[i, minj] = B[i, minj - 1];
+                        B[i, minj - 1] = save17;
+                        minj--;
+                    }
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n17; i++)
+                {
+                    for (int j = 0; j < m17; j++)
+                    {
+                        Console.Write($"{B[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //29
+                int n29 = 5, m29 = 7;
+                int[,] F = new int[n29, m29];
+
+                // input of matrix values
+                for (int i = 0; i < n29; i++)
+                {
+                    for (int j = 0; j < m29; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter the value ({i},{j}) of the array: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out F[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n29; i++)
+                {
+                    for (int j = 0; j < m29; j++)
+                    {
+                        Console.Write($"{F[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                int min_abs = Math.Abs(F[1, 0]);
+                int minj29 = 0;
+                for (int j = 0; j < m29; j++)
+                {
+                    if (Math.Abs(F[1, j]) < min_abs)
+                    {
+                        min_abs = Math.Abs(F[1, j]);
+                        minj29 = j;
+                    }
+                }
+
+                for (int i = 0; i < n29; i++)
+                {
+                    for (int j = minj29; j < m29 - 1; j++)
+                    {
+                        F[i, j] = F[i, j + 1];
+                    }
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n29; i++)
+                {
+                    for (int j = 0; j < m29 - 1; j++)
+                    {
+                        Console.Write($"{F[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //31
+                int n31 = 5, m31 = 8;
+                int[,] A31= new int[n31, m31];
+
+                // input of matrix values
+                for (int i = 0; i < n31; i++)
+                {
+                    for (int j = 0; j < m31 - 1; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A31[i, j]));
+                    }
+                }
+
+                int l = 5;
+                int[] B31 = new int[l];
+
+                // input of array values
+                for (int i = 0; i < l; i++)
+                {
+                    do
+                    {
+                        Console.Write($"enter {i} value of array B31: ");
+                    }
+                    while (!int.TryParse(Console.ReadLine(), out B31[i]));
+                }
+
+                // matrix output
+                for (int i = 0; i < n31; i++)
+                {
+                    for (int j = 0; j < m31; j++)
+                    {
+                        Console.Write($"{A31[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                // array output
+                Console.Write("B31 = ");
+                foreach (int x in B31) Console.Write($"{x} ");
+                Console.WriteLine();
+
+                int min31 = A[4, 0];
+                int minj31 = 0;
+                for (int j = 0; j < m31 - 1; j++)
+                {
+                    if (A31[4, j] < min31)
+                    {
+                        min31 = A31[4, j];
+                        minj31 = j;
+                    }
+                }
+
+                for (int i = 0; i < n31; i++)
+                {
+                    for (int j = m31 - 1; j > minj31; j--)
+                    {
+                        A31[i, j] = A31[i, j - 1];
+                    }
+
+                    A31[i, minj31 + 1] = B31[i];
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n31; i++)
+                {
+                    for (int j = 0; j < m31; j++)
+                    {
+                        Console.Write($"{A31[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //2 уровень
+                //7
+                int n7 = 6, m7 = 6;
+                int[,] A7 = new int[n7, m7];
+
+                // input of matrix values
+                for (int i = 0; i < n7; i++)
+                {
+                    for (int j = 0; j < m7; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A7[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n7; i++)
+                {
+                    for (int j = 0; j < m7; j++)
+                    {
+                        Console.Write($"{A7[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                int max7 = A7[0, 0];
+                int maxi7 = 0;
+                for (int i = 0; i < m7; i++)
+                {
+                    if (A7[i, i] > max7)
+                    {
+                        max7 = A7[i, i];
+                        maxi7 = i;
+                    }
+                }
+
+                for (int i = 0; i < maxi7; i++)
+                {
+                    for (int j = maxi7; j < m7; j++)
+                    {
+                        A7[i, j] = 0;
+                    }
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n7; i++)
+                {
+                    for (int j = 0; j < m7; j++)
+                    {
+                        Console.Write($"{A7[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //8
+                int n8 = 6, m8= 6;
+                int[,] B8 = new int[n8, m8];
+
+                // input of matrix values
+                for (int i = 0; i < n8; i++)
+                {
+                    for (int j = 0; j < m8; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out B8[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n8; i++)
+                {
+                    for (int j = 0; j < m8; j++)
+                    {
+                        Console.Write($"{B8[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                for (int i = 0; i < n8; i += 2)
+                {
+                    int max8 = B8[i, 0];
+                    int maxj8 = 0;
+
+                    int max28 = B8[i + 1, 0];
+                    int max2j8 = 0;
+
+                    int save8;
+                    for (int j = 0; j < m8; j++)
+                    {
+                        if (B8[i, j] > max8)
+                        {
+                            max8 = B8[i, j];
+                            maxj8 = j;
+                        }
+
+                        if (B8[i + 1, j] > max28)
+                        {
+                            max28 = B8[i + 1, j];
+                            max2j8= j;
+                        }
+                    }
+
+                    save8 = B8[i, maxj];
+                    B8[i, maxj8] = B8[i + 1, max2j8];
+                    B8[i + 1, max2j8] = save8;
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n8; i++)
+                {
+                    for (int j = 0; j < m8; j++)
+                    {
+                        Console.Write($"{B8[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //9
+                int n9 = 6, m9 = 7;
+                int[,] A9 = new int[n9, m9];
+
+                // input of matrix values
+                for (int i = 0; i < n9; i++)
+                {
+                    for (int j = 0; j < m9; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A9[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n9; i++)
+                {
+                    for (int j = 0; j < m9; j++)
+                    {
+                        Console.Write($"{A9[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                int save9;
+                for (int i = 0; i < n9; i++)
+                {
+                    for (int j = 0; j < ((int)(m9 / 2)); j++)
+                    {
+                        save9 = A9[i, j];
+                        A9[i, j] = A9[i, m9 - 1 - j];
+                        A9[i, m9 - 1 - j] = save9;
+                    }
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n9; i++)
+                {
+                    for (int j = 0; j < m9; j++)
+                    {
+                        Console.Write($"{A9[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //3
+                //1
+                int n1 = 7, m1 = 5;
+                int[,] A1 = new int[n1, m1];
+
+                // input of matrix values
+                for (int i = 0; i < n1; i++)
+                {
+                    for (int j = 0; j < m1; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A1[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n1; i++)
+                {
+                    for (int j = 0; j < m1; j++)
+                    {
+                        Console.Write($"{A1[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                int[] B1 = new int[n1];
+                for (int i = 0; i < n1; i++)
+                {
+                    int min1 = A1[i, 0];
+                    for (int j = 1; j < m1; j++)
+                    {
+                        if (A1[i, j] < min1)
+                        {
+                            min1 = A1[i, j];
+                        }
+                    }
+                    B1[i] = min1;
+                }
+
+                Console.WriteLine("\nminimum values in each row:");
+                foreach (int x in B1) Console.WriteLine(x);
+
+
+                int element = 1;
+                int temp;
+                while (element < n)
+                {
+                    if (element == 0 || B1[element] <= B1[element - 1])
+                    {
+                        element++;
+                    }
+
+                    else
+                    {
+                        temp = B1[element - 1];
+                        B1[element - 1] = B1[element];
+                        B1[element] = temp;
+
+                        for (int j = 0; j < m1; j++)
+                        {
+                            temp = A1[element - 1, j];
+                            A1[element - 1, j] = A1[element, j];
+                            A1[element, j] = temp;
+                        }
+
+                        element--;
+                    }
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n1; i++)
+                {
+                    for (int j = 0; j < m1; j++)
+                    {
+                        Console.Write($"{A1[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //2
+                int n2;
+                do
+                {
+                    Console.WriteLine($"enter n2: ");
+                }
+                while (!int.TryParse(Console.ReadLine(), out n2));
+
+                int[,] A2 = new int[n2, n2];
+
+                // input of matrix values
+                for (int i = 0; i < n2; i++)
+                {
+                    for (int j = 0; j < n2; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A2[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n2; i++)
+                {
+                    for (int j = 0; j < n2; j++)
+                    {
+                        Console.Write($"{A2[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                for (int i = 0; i < n2; i++)
+                {
+                    A2[0, i] = 0;
+                    A2[n2 - 1, i] = 0;
+                    A2[i, 0] = 0;
+                    A2[i, n2 - 1] = 0;
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n2; i++)
+                {
+                    for (int j = 0; j < n2; j++)
+                    {
+                        Console.Write($"{A2[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //3
+                int n3;
+                do
+                {
+                    do
+                    {
+                        Console.Write("enter n3: ");
+                    }
+                    while (!int.TryParse(Console.ReadLine(), out n3));
+                }
+                while (n3 < 1);
+
+                int[,] A3 = new int[n3, n3];
+
+                // input of matrix values
+                for (int i = 0; i < n3; i++)
+                {
+                    for (int j = 0; j < n3; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A3[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n3; i++)
+                {
+                    for (int j = 0; j < n3; j++)
+                    {
+                        Console.Write($"{A3[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                int[] B3 = new int[2 * n3 - 1];
+                for (int i = 0; i < n3; i++)
+                {
+                    int sum1 = 0, sum2 = 0;
+                    for (int j = 0; j <= i; j++)
+                    {
+                        sum1 += A[n3 - 1 - i + j, j];
+                        sum2 += A[j, n3 - 1 - i + j];
+                    }
+                    B3[i] = sum1;
+                    B3[(2 * n3 - 1) - 1 - i] = sum2;
+                }
+
+                foreach (int x in B3) Console.Write($"{x} ");
+                //8
+                int n38 = 7, m38 = 5;
+                int[,] A38 = new int[n38, m38];
+
+                // input of matrix values
+                for (int i = 0; i < n38; i++)
+                {
+                    for (int j = 0; j < m38; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A38[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n38; i++)
+                {
+                    for (int j = 0; j < m38; j++)
+                    {
+                        Console.Write($"{A38[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                int[] B38 = new int[n38];
+                for (int i = 0; i < n38; i++)
+                {
+                    int cnt_positive = 0;
+                    for (int j = 0; j < m38; j++)
+                    {
+                        if (A38[i, j] > 0) cnt_positive++;
+                    }
+                    B38[i] = cnt_positive;
+                }
+
+                Console.Write("B38 = ");
+                foreach (int x in B38) Console.Write($"{x} ");
+
+                int element38 = 1;
+                int temp38;
+                while (element < n38)
+                {
+                    if (element38 == 0 || B38[element38] <= B38[element38 - 1])
+                    {
+                        element38++;
+                    }
+
+                    else
+                    {
+                        temp = B38[element38 - 1];
+                        B38[element38 - 1] = B38[element38];
+                        B38[element38] = temp;
+
+                        for (int j = 0; j < m38; j++)
+                        {
+                            temp = A38[element38 - 1, j];
+                            A38[element38 - 1, j] = A38[element38, j];
+                            A38[element38, j] = temp;
+                        }
+
+                        element38--;
+                    }
+                }
+
+                // matrix output
+                Console.WriteLine("\n38");
+                for (int i = 0; i < n38; i++)
+                {
+                    for (int j = 0; j < m38; j++)
+                    {
+                        Console.Write($"{A38[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //10
+                static void ShellSort(int[,] matrix, int row, int a)
+                {
+                    if (a == 0)
+                    {
+                        var step = matrix.GetLength(1) / 2;
+                        while (step > 0)
+                        {
+                            for (int i = step; i < matrix.GetLength(1); i++)
+                            {
+                                int j = i;
+                                while ((j >= step) && matrix[row, j - step] < matrix[row, j])
+                                {
+                                    var temp = matrix[row, j - step];
+                                    matrix[row, j - step] = matrix[row, j];
+                                    matrix[row, j] = temp;
+                                    j -= step;
+                                }
+                            }
+                            step /= 2;
+                        }
+                    }
+
+                    else if (a == 1)
+                    {
+                        var step = matrix.GetLength(1) / 2;
+                        while (step > 0)
+                        {
+                            for (int i = step; i < matrix.GetLength(1); i++)
+                            {
+                                int j = i;
+                                while ((j >= step) && matrix[row, j - step] > matrix[row, j])
+                                {
+                                    var temp = matrix[row, j - step];
+                                    matrix[row, j - step] = matrix[row, j];
+                                    matrix[row, j] = temp;
+                                    j -= step;
+                                }
+                            }
+                            step /= 2;
+                        }
+                    }
+                }
+
+
+                int n10;
+                do
+                {
+                    Console.Write("enter n10: ");
+                }
+                while (!int.TryParse(Console.ReadLine(), out n10));
+
+                int m10;
+                do
+                {
+                    Console.Write("enter m10: ");
+                }
+                while (!int.TryParse(Console.ReadLine(), out m10));
+
+                int[,] A10 = new int[n10, m10];
+
+                // input of matrix values
+                for (int i = 0; i < n10; i++)
+                {
+                    for (int j = 0; j < m10; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A10[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n10; i++)
+                {
+                    for (int j = 0; j < m10; j++)
+                    {
+                        Console.Write($"{A10[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                for (int i = 0; i < n10; i++) ShellSort(A10, i, i % 2);
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < n10; i++)
+                {
+                    for (int j = 0; j < m10; j++)
+                    {
+                        Console.Write($"{A10[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+                //11
+                int n11;
+                do
+                {
+                    Console.Write("enter n11: ");
+                }
+                while (!int.TryParse(Console.ReadLine(), out n11));
+
+                int m11;
+                do
+                {
+                    Console.Write("enter m11: ");
+                }
+                while (!int.TryParse(Console.ReadLine(), out m11));
+
+                int[,] A11 = new int[n11, m11];
+
+                // input of matrix values
+                for (int i = 0; i < n11; i++)
+                {
+                    for (int j = 0; j < m11; j++)
+                    {
+                        do
+                        {
+                            Console.Write($"enter value ({i},{j}) of the matrix: ");
+                        }
+                        while (!int.TryParse(Console.ReadLine(), out A11[i, j]));
+                    }
+                }
+
+                // matrix output
+                for (int i = 0; i < n11; i++)
+                {
+                    for (int j = 0; j < m11; j++)
+                    {
+                        Console.Write($"{A11[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+
+                bool[] check = new bool[n11];
+                for (int i = 0; i < n11; i++)
+                {
+                    bool iszero = false;
+                    for (int j = 0; j < m11; j++)
+                    {
+                        if (A11[i, j] == 0)
+                        {
+                            iszero = true;
+                        }
+                    }
+                    check[i] = iszero;
+                }
+
+                int[,] B11 = new int[n11, m11];
+                int c = 0;
+                for (int i = 0; i < n11; i++)
+                {
+                    if (check[i])
+                    {
+                        continue;
+                    }
+
+                    for (int j = 0; j < m11; j++)
+                    {
+                        B11[c, j] = A11[i, j];
+                    }
+                    c++;
+                }
+
+                // matrix output
+                Console.WriteLine();
+                for (int i = 0; i < c; i++)
+                {
+                    for (int j = 0; j < m11; j++)
+                    {
+                        Console.Write($"{B11[i, j],3} ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+
+        } 
+    }
+}
+
