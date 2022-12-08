@@ -1,0 +1,973 @@
+#region L1T3
+//int[,] a = new int[4, 4] {
+//    { 1, 2, 3, 4 },
+//    { 1, 2, 3, 4 },
+//    { 1, 2, 3, 4 },
+//    { 1, 2, 3, 4 } };
+//int s = 0 ;
+//for (int i=0; i<4;i++)
+//{
+//    s += a[i, i];
+//}
+//Console.WriteLine(s);
+#endregion
+
+#region L1T6
+//int[,] a = new int[4, 7] {
+//    { 1, 2, 3, 4,5,6,7 },
+//    { 1, 2, 3, 4,5,6,7 },
+//    { 1, 2, 3, 4,5,6,7 },
+//    { 1, 2, 3, 4,5,6,7 },
+//    };
+//int mmin = 100;
+//int[] b = new int[4];
+//for (int i = 0; i < 4; i++)
+//{
+//    for (int j = 0; j < 7; j++)
+//    {
+//        if (a[i, j] < mmin)
+//            mmin = a[i, j];
+//    }
+//    b[i] = mmin;
+//}
+//for (int i = 0; i < 4; i++)
+//    Console.Write("{0:d} ", b[i]);
+#endregion
+
+#region L1T12
+//int[,] a = new int[6, 7] {
+//{1,2,3,4,5,6,7 },
+//{2,2,3,4,5,6,7 },
+//{3,2,3,80,5,6,7 },
+//{4,2,3,4,5,6,7 },
+//{5,2,3,4,5,6,7 },
+//{6,2,3,4,5,6,7 },
+//};
+//int n = 6;
+//int m = 7;
+//int str = 0;
+//int stb = 0;
+//int mmax = -100;
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//        Console.Write("{0:d} ", a[i, j]);
+//    Console.WriteLine();
+//}
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        if (a[i, j] > mmax)
+//        {
+//            mmax = a[i, j];
+//            str = j;
+//            stb = i;
+//        }
+
+//    }
+//}
+//Console.WriteLine(mmax);
+//n -= 1;
+//m -= 1;
+//for (int i = stb; i < n; i++)
+//    for (int j = 0; j < m; j++)
+//        a[i, j] = a[i + 1, j];
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//    for (int j = str; j < m; j++)
+//        a[i, j] = a[i, j + 1];
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//        Console.Write($"{a[i, j]:d} ");
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L1T13
+//int[,] a = new int[5, 5] {
+//    { 1, 2, 3, 4, 5 },
+//    { 1, 2, 3, 4, 5 },
+//    { 1, 2, -3, 4, 5 },
+//    { 1, 2, 3, 4, 5 },
+//    { 1, 2, 3, 4, 5 },
+//};
+//int mmin = 100;
+//int stb = 0;
+//for (int i = 0; i < 5; i++)
+//{
+//    if (a[i, i] < mmin)
+//    {
+//        mmin = a[i, i];
+//        stb = i;
+//    }
+//}
+//int p = 0;
+//for (int i = 0; i < 5; i++)
+//{
+//    for (int j = 0; j < 5; j++)
+//        Console.Write($"{a[i, j]:d} ");
+//    Console.WriteLine();
+//}
+//Console.WriteLine($"{mmin}, {stb}");
+//int ii = stb, jj = 3;
+//for (int i = 0; i < 5; i++)
+//{
+//    p = a[i, ii]; a[i, ii] = a[i, jj]; a[i, jj] = p;
+//}
+//Console.WriteLine();
+//for (int i = 0; i < 5; i++)
+//{
+//    for (int j = 0; j < 5; j++)
+//        Console.Write($"{a[i, j]:d} ");
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L1T17
+//int n;
+//do
+//{
+//    Console.Write($"enter n: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out n));
+//int m;
+//do
+//{
+//    Console.Write($"enter m: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out m));
+//int[,] B = new int[n, m];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter the value ({i},{j}) of the array: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out B[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{B[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//int min, minj;
+//int s;
+//for (int i = 0; i < n; i++)
+//{
+//    min = B[i, 0];
+//    minj = 0;
+
+//    for (int j = 0; j < m; j++)
+//    {
+//        if (B[i, j] < min)
+//        {
+//            min = B[i, j];
+//            minj = j;
+//        }
+//    }
+
+//    while (minj != 0)
+//    {
+//        s = B[i, minj];
+//        B[i, minj] = B[i, minj - 1];
+//        B[i, minj - 1] = s;
+//        minj--;
+//    }
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{B[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+#endregion
+
+#region L1T19
+//int n = 5, m = 7;
+//int[,] F = new int[n, m];
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter the value ({i},{j}) of the array: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out F[i, j]));
+//    }
+//}
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{F[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+//int min_abs = Math.Abs(F[1, 0]);
+//int minj = 0;
+//for (int j = 0; j < m; j++)
+//{
+//    if (Math.Abs(F[1, j]) < min_abs)
+//    {
+//        min_abs = Math.Abs(F[1, j]);
+//        minj = j;
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = minj; j < m - 1; j++)
+//    {
+//        F[i, j] = F[i, j + 1];
+//    }
+//}
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m - 1; j++)
+//    {
+//        Console.Write($"{F[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L1T31
+//int n = 5, m = 8;
+//int[,] A = new int[n, m];
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m - 1; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//int l = 5;
+//int[] B = new int[l];
+
+//for (int i = 0; i < l; i++)
+//{
+//    do
+//    {
+//        Console.Write($"enter {i} value of array B: ");
+//    }
+//    while (!int.TryParse(Console.ReadLine(), out B[i]));
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//Console.Write("B = ");
+//foreach (int x in B) Console.Write($"{x} ");
+//Console.WriteLine();
+
+//int min = A[4, 0];
+//int minj = 0;
+//for (int j = 0; j < m - 1; j++)
+//{
+//    if (A[4, j] < min)
+//    {
+//        min = A[4, j];
+//        minj = j;
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = m - 1; j > minj; j--)
+//    {
+//        A[i, j] = A[i, j - 1];
+//    }
+
+//    A[i, minj + 1] = B[i];
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+
+
+#region L2T7
+//int n = 6, m = 6;
+//int[,] A = new int[n, m];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//int max = A[0, 0];
+//int maxi = 0;
+//for (int i = 0; i < m; i++)
+//{
+//    if (A[i, i] > max)
+//    {
+//        max = A[i, i];
+//        maxi = i;
+//    }
+//}
+
+//for (int i = 0; i < maxi; i++)
+//{
+//    for (int j = maxi; j < m; j++)
+//    {
+//        A[i, j] = 0;
+//    }
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L2T8
+//int n = 6, m = 6;
+//int[,] B = new int[n, m];
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out B[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{B[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//for (int i = 0; i < n; i += 2)
+//{
+//    int max = B[i, 0];
+//    int maxj = 0;
+
+//    int max2 = B[i + 1, 0];
+//    int max2j = 0;
+
+//    int save;
+//    for (int j = 0; j < m; j++)
+//    {
+//        if (B[i, j] > max)
+//        {
+//            max = B[i, j];
+//            maxj = j;
+//        }
+
+//        if (B[i + 1, j] > max2)
+//        {
+//            max2 = B[i + 1, j];
+//            max2j = j;
+//        }
+//    }
+
+//    save = B[i, maxj];
+//    B[i, maxj] = B[i + 1, max2j];
+//    B[i + 1, max2j] = save;
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{B[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+#endregion
+
+#region L2T9
+//int n = 6, m = 7;
+//int[,] A = new int[n, m];
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//int save;
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < ((int)(m / 2)); j++)
+//    {
+//        save = A[i, j];
+//        A[i, j] = A[i, m - 1 - j];
+//        A[i, m - 1 - j] = save;
+//    }
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+
+#region L3T1
+//int n = 7, m = 5;
+//int[,] A = new int[n, m];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//int[] B = new int[n];
+//for (int i = 0; i < n; i++)
+//{
+//    int min = A[i, 0];
+//    for (int j = 1; j < m; j++)
+//    {
+//        if (A[i, j] < min)
+//        {
+//            min = A[i, j];
+//        }
+//    }
+//    B[i] = min;
+//}
+
+//Console.WriteLine("\nminimum values in each row:");
+//foreach (int x in B) Console.WriteLine(x);
+
+
+//int element = 1;
+//int temp;
+//while (element < n)
+//{
+//    if (element == 0 || B[element] <= B[element - 1])
+//    {
+//        element++;
+//    }
+
+//    else
+//    {
+//        temp = B[element - 1];
+//        B[element - 1] = B[element];
+//        B[element] = temp;
+
+//        for (int j = 0; j < m; j++)
+//        {
+//            temp = A[element - 1, j];
+//            A[element - 1, j] = A[element, j];
+//            A[element, j] = temp;
+//        }
+
+//        element--;
+//    }
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L3T2
+//int n;
+//do
+//{
+//    Console.WriteLine($"enter n: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out n));
+
+//int[,] A = new int[n, n];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    A[0, i] = 0;
+//    A[n - 1, i] = 0;
+//    A[i, 0] = 0;
+//    A[i, n - 1] = 0;
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L3T3
+//int n;
+//do
+//{
+//    do
+//    {
+//        Console.Write("enter n: ");
+//    }
+//    while (!int.TryParse(Console.ReadLine(), out n));
+//}
+//while (n < 1);
+
+//int[,] A = new int[n, n];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//int[] B = new int[2 * n - 1];
+//for (int i = 0; i < n; i++)
+//{
+//    int sum1 = 0, sum2 = 0;
+//    for (int j = 0; j <= i; j++)
+//    {
+//        sum1 += A[n - 1 - i + j, j];
+//        sum2 += A[j, n - 1 - i + j];
+//    }
+//    B[i] = sum1;
+//    B[(2 * n - 1) - 1 - i] = sum2;
+//}
+
+//foreach (int x in B) Console.Write($"{x} ");
+#endregion
+
+#region L3T4
+//int n;
+//do
+//{
+//    Console.Write("enter n: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out n));
+
+//int[,] A = new int[n, n];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//for (int i = (int)(Math.Round((double)n / 2)); i < n; i++)
+//{
+//    for (int j = 0; j <= i; j++)
+//    {
+//        A[i, j] = 0;
+//    }
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < n; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L3T8
+//int n = 7, m = 5;
+//int[,] A = new int[n, m];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//int[] B = new int[n];
+//for (int i = 0; i < n; i++)
+//{
+//    int cnt_positive = 0;
+//    for (int j = 0; j < m; j++)
+//    {
+//        if (A[i, j] > 0) cnt_positive++;
+//    }
+//    B[i] = cnt_positive;
+//}
+
+//Console.Write("B = ");
+//foreach (int x in B) Console.Write($"{x} ");
+
+//int element = 1;
+//int temp;
+//while (element < n)
+//{
+//    if (element == 0 || B[element] <= B[element - 1])
+//    {
+//        element++;
+//    }
+
+//    else
+//    {
+//        temp = B[element - 1];
+//        B[element - 1] = B[element];
+//        B[element] = temp;
+
+//        for (int j = 0; j < m; j++)
+//        {
+//            temp = A[element - 1, j];
+//            A[element - 1, j] = A[element, j];
+//            A[element, j] = temp;
+//        }
+
+//        element--;
+//    }
+//}
+
+//Console.WriteLine("\n");
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L3T10
+//static void ShellSort(int[,] matrix, int row, int a)
+//{
+//    if (a == 0)
+//    {
+//        var step = matrix.GetLength(1) / 2;
+//        while (step > 0)
+//        {
+//            for (int i = step; i < matrix.GetLength(1); i++)
+//            {
+//                int j = i;
+//                while ((j >= step) && matrix[row, j - step] < matrix[row, j])
+//                {
+//                    var temp = matrix[row, j - step];
+//                    matrix[row, j - step] = matrix[row, j];
+//                    matrix[row, j] = temp;
+//                    j -= step;
+//                }
+//            }
+//            step /= 2;
+//        }
+//    }
+
+//    else if (a == 1)
+//    {
+//        var step = matrix.GetLength(1) / 2;
+//        while (step > 0)
+//        {
+//            for (int i = step; i < matrix.GetLength(1); i++)
+//            {
+//                int j = i;
+//                while ((j >= step) && matrix[row, j - step] > matrix[row, j])
+//                {
+//                    var temp = matrix[row, j - step];
+//                    matrix[row, j - step] = matrix[row, j];
+//                    matrix[row, j] = temp;
+//                    j -= step;
+//                }
+//            }
+//            step /= 2;
+//        }
+//    }
+//}
+
+
+//int n;
+//do
+//{
+//    Console.Write("enter n: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out n));
+
+//int m;
+//do
+//{
+//    Console.Write("enter m: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out m));
+
+//int[,] A = new int[n, m];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//for (int i = 0; i < n; i++) ShellSort(A, i, i % 2);
+
+//Console.WriteLine();
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
+
+#region L3T11
+//int n;
+//do
+//{
+//    Console.Write("enter n: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out n));
+
+//int m;
+//do
+//{
+//    Console.Write("enter m: ");
+//}
+//while (!int.TryParse(Console.ReadLine(), out m));
+
+//int[,] A = new int[n, m];
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        do
+//        {
+//            Console.Write($"enter value ({i},{j}) of the matrix: ");
+//        }
+//        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+//    }
+//}
+
+//for (int i = 0; i < n; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{A[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+
+//bool[] check = new bool[n];
+//for (int i = 0; i < n; i++)
+//{
+//    bool iszero = false;
+//    for (int j = 0; j < m; j++)
+//    {
+//        if (A[i, j] == 0)
+//        {
+//            iszero = true;
+//        }
+//    }
+//    check[i] = iszero;
+//}
+
+//int[,] B = new int[n, m];
+//int c = 0;
+//for (int i = 0; i < n; i++)
+//{
+//    if (check[i])
+//    {
+//        continue;
+//    }
+
+//    for (int j = 0; j < m; j++)
+//    {
+//        B[c, j] = A[i, j];
+//    }
+//    c++;
+//}
+
+//Console.WriteLine();
+//for (int i = 0; i < c; i++)
+//{
+//    for (int j = 0; j < m; j++)
+//    {
+//        Console.Write($"{B[i, j]} ");
+//    }
+//    Console.WriteLine();
+//}
+#endregion
