@@ -1,0 +1,786 @@
+
+using System;
+
+namespace Lab_4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            #region Level 1
+            #region №3
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№3---");
+                double[,] mass = new double[4, 4];
+                double sum = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        mass[i, j] = rnd.Next(100);
+                        if (i == j)
+                        {
+                            sum += mass[i, j];
+                        }
+                    }
+
+                }
+                Console.WriteLine("Answer №3");
+                Console.WriteLine(sum);
+            }
+            #endregion
+            #region №6
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№6---");
+                double[,] A = new double[4, 7];
+                double[] Arr = new double[4];
+                double max = 999999999;
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        A[i, j] = rnd.Next(1000);
+                        if (A[i, j] < max)
+                        {
+                            max = A[i, j];
+                        }
+                    }
+                    Arr[i] = max;
+                }
+                Console.WriteLine("Answer №6");
+                foreach (double x in Arr) Console.Write(x + " ");
+                Console.WriteLine();
+            }
+            #endregion
+            #region №9
+            {
+                Console.WriteLine("---№9---");
+                Random rnd = new Random();
+                double[,] A = new double[5, 7];
+                for (int i = 0; i < 5; i++)
+                {
+                    int max_i = 0;
+                    for (int j = 0; j < 7; j++)
+                    {
+                        A[i, j] = rnd.Next(100);
+                        if (A[i, j] > max_i) max_i = j;
+                    }
+                    double x = A[i, 0];
+                    A[i, 0] = A[i, max_i];
+                    A[i, max_i] = i;
+                }
+                Console.WriteLine("Answer №9");
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        Console.Write(A[i, j] + " ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region №12
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№12---");
+                double[,] MassEffect = new double[6, 7];
+                double max = -10000000;
+                int max_i = 0, max_j = 0;
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        MassEffect[i, j] = rnd.Next(51);
+                        Console.Write("{0, -5}", MassEffect[i, j]);
+                        if (MassEffect[i, j] > max)
+                        {
+                            max = MassEffect[i, j];
+                            max_i = i;
+                            max_j = j;
+                        }
+
+                    }
+                    Console.WriteLine();
+                }
+                for (int i = max_i; i < 6 - 1; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        MassEffect[i, j] = MassEffect[i + 1, j];
+                    }
+                }
+                for (int j = max_j; j < 7 - 1; j++)
+                {
+                    for (int i = 0; i < 6 - 1; i++)
+                    {
+                        MassEffect[i, j] = MassEffect[i, j + 1];
+                    }
+                }
+                Console.WriteLine("Answer №12");
+                for (int i = 0; i < 6 - 1; i++)
+                {
+                    for (int j = 0; j < 7 - 1; j++)
+                    {
+                        Console.Write("{0, -5}", MassEffect[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+
+            }
+            #endregion
+            #region №13
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№13---");
+                double[,] MassEffect2 = new double[5, 5];
+                double max = -1000000;
+                int max_i = 0;
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        MassEffect2[i, j] = rnd.Next(51);
+                        Console.Write("{0, -5}", MassEffect2[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    if (MassEffect2[i, i] > max)
+                    {
+                        max = MassEffect2[i, i];
+                        max_i = i;
+                    }
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    double swap = MassEffect2[i, 3];
+                    MassEffect2[i, 3] = MassEffect2[i, max_i];
+                    MassEffect2[i, max_i] = swap;
+                }
+                Console.WriteLine("Answer №13");
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        Console.Write("{0, -5}", MassEffect2[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+
+            }
+            #endregion
+            #region №17
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№17---");
+                Console.WriteLine("Enter number of lines");
+                int n = 0, m = 0;
+                int.TryParse(Console.ReadLine(), out n);
+                Console.WriteLine("Enter number of posts");
+                int.TryParse(Console.ReadLine(), out m);
+                double[,] masseffect = new double[n, m];
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        masseffect[i, j] = rnd.Next(-100, 100);
+                        Console.Write("{0,-5}", masseffect[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                for (int i = 0; i < n; i++)
+                {
+                    double min = masseffect[i, 0];
+                    int min_j = 0;
+                    for (int j = 0; j < m; j++)
+                    {
+                        if (masseffect[i, j] < min)
+                        {
+                            min = masseffect[i, j];
+                            min_j = j;
+                        }
+                    }
+                    for (int j = min_j - 1; j > 0; j--)
+                    {
+                        masseffect[i, j + 1] = masseffect[i, j];
+                    }
+                    masseffect[i, 0] = min;
+                }
+                Console.WriteLine("Answer for №17");
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        Console.Write("{0,-5}", masseffect[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+
+            }
+            #endregion
+            #region №27
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№27---");
+                double[,] masseffect = new double[5, 7];
+                double[] max_arr = new double[5];
+                for (int i = 0; i < 5; i++)
+                {
+                    double max = masseffect[i, 0];
+                    for (int j = 0; j < 7; j++)
+                    {
+                        masseffect[i, j] = rnd.Next(-100, 100);
+                        Console.Write("{0, -5}", masseffect[i, j]);
+                        if (masseffect[i, j] > max)
+                        {
+                            max = masseffect[i, j];
+                            max_arr[i] = masseffect[i, j];
+                        }
+                    }
+                    Console.WriteLine();
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    masseffect[i, 3] = max_arr[4 - i];
+                }
+                Console.WriteLine("Answer for №27");
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                        Console.Write("{0, -5}", masseffect[i, j]);
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region №32
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№31---");
+                double[,] Mass = new double[5, 8];
+                double[] Arr = new double[5] { 100, 100, 100, 100, 100 };
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        Mass[i, j] = rnd.Next(-100, 100);
+                        Console.Write("{0, -5}", Mass[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine("Arr:");
+                foreach (double x in Arr) Console.Write(x + " ");
+                Console.WriteLine();
+                double min = Mass[4, 0];
+                int min_j = 0;
+                for (int j = 1; j < 7; j++)
+                {
+                    if (Mass[4, j] < min)
+                    {
+                        min = Mass[4, j];
+                        min_j = j;
+                    }
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 6; j >= min_j; j--)
+                    {
+                        Mass[i, j + 1] = Mass[i, j];
+                    }
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    Mass[i, min_j] = Arr[i];
+                }
+                Console.WriteLine();
+                Console.WriteLine("Answer №31");
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Console.Write("{0, -5}", Mass[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+
+
+            }
+            #endregion
+            #endregion
+            #region level 2
+            #region
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№7---");
+                double[,] BigMass = new double[6, 6];
+                Console.WriteLine("BigMass");
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        BigMass[i, j] = rnd.Next(51);
+                        Console.Write("{0,-5}", BigMass[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                double max = BigMass[0, 0];
+                int max_ij = 0;
+                for (int i = 1; i < 6; i++)
+                {
+                    if (BigMass[i, i] > max)
+                    {
+                        max = BigMass[i, i];
+                        max_ij = i;
+                    }
+                }
+                int counter = 1;
+                for (int i = 0; i < max_ij; i++)
+                {
+                    for (int j = counter; j < 6; j++)
+                    {
+                        BigMass[i, j] = 0;
+                    }
+                    counter++;
+
+                }
+                Console.WriteLine("Answer №7");
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        Console.Write("{0,-5}", BigMass[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region №8
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№8---");
+                double[,] mass = new double[6, 6];
+                Console.WriteLine("mass");
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        mass[i, j] = rnd.Next(50);
+                        Console.Write("{0, -5}", mass[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                double past_max = 0;
+                int past_max_index = 0;
+                for (int i = 0; i < 6; i++)
+                {
+                    double max = mass[i, 0];
+                    int max_j = 0;
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (mass[i, j] > max)
+                        {
+                            max = mass[i, j];
+                            max_j = j;
+                        }
+                    }
+                    if ((i + 1) % 2 != 0)
+                    {
+                        past_max = max;
+                        past_max_index = max_j;
+                    }
+                    else
+                    {
+                        double x = mass[i, max_j];
+                        mass[i, max_j] = past_max;
+                        mass[i - 1, past_max_index] = x;
+                    }
+                }
+                Console.WriteLine("Answer №8");
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                        Console.Write("{0, -5}", mass[i, j]);
+                    Console.WriteLine();
+                }
+
+            }
+            #endregion
+            #region №9
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№9---");
+                double[,] terriblemess = new double[6, 7];
+                for (int i = 0; i < 6; i++)
+                {
+                    double[] mass = new double[7];
+                    for (int j = 0; j < 7; j++)
+                    {
+                        terriblemess[i, j] = rnd.Next(50);
+                        Console.Write("{0, -5}", terriblemess[i, j]);
+                        mass[j] = terriblemess[i, j];
+                    }
+                    int counter = 0;
+                    for (int j = 6; j >= 0; j--)
+                    {
+                        terriblemess[i, j] = mass[counter];
+                        counter++;
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine("Answer №9");
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 7; j++) Console.Write("{0, -5}", terriblemess[i, j]);
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #endregion
+            #region Level 3
+            #region №1
+            {
+                Random ran = new Random();
+                Console.WriteLine("---№1---");
+                double[,] matrix = new double[7, 5];
+                Console.WriteLine("Matrix");
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        matrix[i, j] = ran.Next(50);
+                        Console.Write("{0, -5}", matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                double[] mass_min = new double[7];
+                for (int i = 0; i < 7; i++)
+                {
+                    double min = matrix[i, 0];
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (matrix[i, j] < min)
+                        {
+                            min = matrix[i, j];
+                        }
+                    }
+                    mass_min[i] = min;
+                }
+                int sort_index = 1;
+                while (sort_index < 7)
+                {
+                    if (sort_index == 0 || mass_min[sort_index] <= mass_min[sort_index - 1])
+                    {
+                        sort_index++;
+                    }
+                    else
+                    {
+                        double x = mass_min[sort_index - 1];
+                        mass_min[sort_index - 1] = mass_min[sort_index];
+                        mass_min[sort_index] = x;
+
+
+                        for (int j = 1; j < 5; j++)
+                        {
+                            x = matrix[sort_index - 1, j];
+                            matrix[sort_index - 1, j] = matrix[sort_index, j];
+                            matrix[sort_index, j] = x;
+                        }
+
+                        sort_index--;
+                    }
+
+                }
+                Console.WriteLine("Answer №1");
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        Console.Write("{0, -5}", matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region №2
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№2---");
+                Console.WriteLine("Enter n");
+                int n = 0;
+                int.TryParse(Console.ReadLine(), out n);
+                double[,] MatrixRevolution = new double[n, n];
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        MatrixRevolution[i, j] = rnd.Next(50);
+                        if (i == 0 || i == (n - 1)) MatrixRevolution[i, j] = 0;
+                        if (j == 0 || j == (n - 1)) MatrixRevolution[i, j] = 0;
+                        Console.Write("{0, -5}", MatrixRevolution[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region №3
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№3---");
+                int n;
+                int.TryParse(Console.ReadLine(), out n);
+                double[,] Matrix_Reboot = new double[n, n];
+                double[] Sum_dig_mass = new double[2 * n - 1];
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        Matrix_Reboot[i, j] = rnd.Next(50);
+                        Console.Write("{0, -5}", Matrix_Reboot[i, j]);
+                    }
+                    Console.WriteLine();
+
+                }
+                int counter = 0, middle_number = (2 * n - 1) / 2;
+                while (counter < n)
+                {
+                    double sum = 0, reverse_sum = 0;
+                    for (int j = 0; j < n - counter; j++)
+                    {
+                        if (counter == 0)
+                            sum += Matrix_Reboot[j, j];
+                        else
+                        {
+                            sum += Matrix_Reboot[j + counter, j];
+                            reverse_sum += Matrix_Reboot[j, j + counter];
+                        }
+                    }
+                    Sum_dig_mass[middle_number + counter] = sum;
+                    if (counter != 0)
+                        Sum_dig_mass[middle_number - counter] = reverse_sum;
+                    counter++;
+                }
+                Console.WriteLine("Answer №3");
+                for (int i = 0; i < 2 * n - 1; i++)
+                {
+                    Console.Write(Sum_dig_mass[i] + " ");
+                }
+
+            }
+            #endregion
+            #region №4
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№4---");
+                int n = 0;
+                int.TryParse(Console.ReadLine(), out n);
+                double[,] Matrix = new double[n, n];
+                for (int i = 0; i < n; i++)
+                {
+
+                    for (int j = 0; j < n; j++)
+                    {
+                        Matrix[i, j] = rnd.Next(50);
+                        Console.Write("{0, -5}", Matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+
+                for (int i = n / 2; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        if (i == j) break;
+                        Matrix[i, j] = 1;
+                    }
+                }
+                Console.WriteLine("Answer №4");
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                        Console.Write("{0, -5}", Matrix[i, j]);
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region №8
+            {
+                Random ran = new Random();
+                Console.WriteLine("---№8---");
+                double[,] Matrix = new double[7, 5];
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        Matrix[i, j] = ran.Next(100);
+                        Console.Write("{0, -5}", Matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                double[] Positive_mass = new double[7];
+                for (int i = 0; i < 7; i++)
+                {
+                    int counter = 0;
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (Matrix[i, j] >= 0)
+                        {
+                            counter++;
+                        }
+                    }
+                    Positive_mass[i] = counter;
+                }
+                int index_sort = 1;
+                while (index_sort < 7)
+                {
+                    if (index_sort == 0 || Positive_mass[index_sort - 1] < Positive_mass[index_sort])
+                    {
+                        index_sort++;
+                    }
+                    else
+                    {
+                        double x = Positive_mass[index_sort];
+                        Positive_mass[index_sort] = Positive_mass[index_sort - 1];
+                        Positive_mass[index_sort] = x;
+                        for (int j = 0; j < 5; j++)
+                        {
+                            x = Matrix[index_sort - 1, j];
+                            Matrix[index_sort - 1, j] = Matrix[index_sort, j];
+                            Matrix[index_sort, j] = x;
+                        }
+                        index_sort--;
+                    }
+                }
+                Console.WriteLine("Answer №8");
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        Console.Write("{0, -5}", Matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region №10
+            {
+                Random ran = new Random();
+                Console.WriteLine("---№10---");
+                double[,] Matrix = new double[7, 5];
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        Matrix[i, j] = ran.Next(100);
+                        Console.Write("{0, -5}", Matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                int sort_index = 0;
+                for (int i = 0; i < 7; i++)
+                {
+                    if ((i + 1) % 2 != 0)
+                    {
+                        sort_index = 0;
+                        while (sort_index < 5)
+                        {
+                            if (sort_index == 0 || Matrix[i, sort_index - 1] <= Matrix[i, sort_index]) sort_index++;
+                            else
+                            {
+                                double x = Matrix[i, sort_index];
+                                Matrix[i, sort_index] = Matrix[i, sort_index - 1];
+                                Matrix[i, sort_index - 1] = x;
+                                sort_index--;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sort_index = 0;
+                        while (sort_index < 5)
+                        {
+                            if (sort_index == 0 || Matrix[i, sort_index - 1] >= Matrix[i, sort_index]) sort_index++;
+                            else
+                            {
+                                double x = Matrix[i, sort_index];
+                                Matrix[i, sort_index] = Matrix[i, sort_index - 1];
+                                Matrix[i, sort_index - 1] = x;
+                                sort_index--;
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine("Answer №10");
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                        Console.Write("{0, -5}", Matrix[i, j]);
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #region
+            {
+                Random rnd = new Random();
+                Console.WriteLine("---№11---");
+                double[,] matrix = new double[7, 5];
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        matrix[i, j] = rnd.Next(-2, 2);
+                        Console.Write("{0, -5}", matrix[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+                int rows = matrix.GetLength(0); ;
+                for (int i = 0; i < 7; i++)
+                {
+                    for (int j= 0; j < 5; j++)
+                    {
+                        if (matrix[i, j] == 0)
+                        {
+                            rows--;
+                            break;
+                        }
+                    }
+                }
+                double[,] matrix_without_0 = new double[rows, 5];
+                int trigger = 0, columns = 0;
+                for (int i = 0; i < 7; i++)
+                {
+                    trigger = 0;
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (matrix[i, j] == 0)
+                        {
+                            trigger = 1;
+                            break;
+                        }
+                    }
+                    if (trigger == 0)
+                    {
+                        for (int j = 0; j < 5; j++)
+                        {
+                             matrix_without_0[columns, j] = matrix[i, j];
+                        }
+                        columns++;
+                    }
+                }
+                Console.WriteLine("Answer №11");
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        Console.Write("{0, -5}", matrix_without_0[i, j]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            #endregion
+            #endregion
+        }
+    }
+}
