@@ -47,91 +47,112 @@ class Theory
             }
             Console.WriteLine(s);
             //6
-            int[,] a1 = new int[4, 7];
+            int n=4,m=7;
+	    int[,] a1 = new int[n, m];
             int[] min = new int[4];
-            for (int i=0;i<4;i++)
-                for (int j=0;j<7;j++)
+            for (int i=0;i<n;i++)
+                for (int j=0;j<m;j++)
                 {
                     string s1 =Console.ReadLine();
                     a1[i,j]=int.Parse(s1);
                 }
             Console.WriteLine("Матрица:");
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < n; i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < m; j++)
                 {
                     Console.Write(String.Format("{0, 6}", a[i, j]));
                 }
                 Console.WriteLine();
             }
 
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < m; j++)
             {
                 min[j] = int.MinValue;
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < n; i++)
                 {
                     if (a[i, j] > min[i]) { min[i] = a[i, j]; }
                 }
             }
 
             Console.WriteLine("Минимумы:");
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < n; i++)
             {
                 System.Console.Write(System.String.Format("{0, 3}", min[i]));
             }
 
             //12
-            int[,] matrix = new int[6, 7];
-            int i12 = 0, j12 = 0, i1, j1, maxi = 0, maxj = 0;
-            Random rnd = new Random();
-            Console.WriteLine("Случайная матрица:");
-            for (i12 = 0; i12 < 6; i12++)
-            {
-                for (j12 = 0; j12 < 7; j12++)
-                {
-                    matrix[i12, j12] = rnd.Next(0, 10);
-                    Console.Write("{0} ", matrix[i12, j12]);
-                }
-                Console.Write("\n");
-            }
-            for (i12 = 0; i12 < 6; i12++)
-            {
-                for (j12 = 0; j12 < 7; j12++)
-                {
-                    if (matrix[i12, j12] > matrix[maxi, maxj])
-                    {
-                        maxi = i12;
-                        maxj = j12;
-                    }
-                }
-            }
-            Console.WriteLine("\nМаксимальный элемент матрицы: {0}", matrix[maxi, maxj]);
-            Console.WriteLine("Преобразованная матрица:");
-            int[,] matrix2 = new int[4, 4];
-            for (i12 = 0; i12 < 4; i12++)
-            {
-                if (i12 >= maxi)
-                {
-                    i1 = i12 + 1;
-                }
-                else
-                {
-                    i1 = i12;
-                }
-                for (j12 = 0; j12 < 4; j12++)
-                {
-                    if (j12 >= maxj)
-                    {
-                        j1 = j12 + 1;
-                    }
-                    else
-                    {
-                        j1 = j12;
-                    }
-                    matrix2[i12, j12] = matrix[i1, j1];
-                    Console.Write("{0} ", matrix2[i12, j12]);
-                }
-                Console.Write("\n");
+            int n = 6, m = 7;
+int[,] A = new int[n, m];
+
+// input of matrix values
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        do
+        {
+            Console.Write($"enter the value ({i},{j}) of the array: ");
+        }
+        while (!int.TryParse(Console.ReadLine(), out A[i, j]));
+    }
+}
+
+// matrix output
+for (int i=0;i<n;i++)
+{
+    for (int j=0;j<m;j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+
+// find max index
+int max = A[0, 0];
+int maxi = 0, maxj = 0;
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        if (A[i, j] > max)
+        {
+            max = A[i, j];
+            maxi = i;
+            maxj = j;
+        }
+    }
+}
+
+// delete line
+for (int i = maxi; i < n - 1; i++)
+{
+    for (int j = 0; j < m; j++)
+    {
+        A[i, j] = A[i + 1, j];
+    }
+}
+
+// delete column
+for (int i = 0; i < n; i++)
+{
+    for (int j = maxj; j < m - 1; j++)
+    {
+        A[i, j] = A[i, j + 1];
+    }
+}
+
+// matrix output
+Console.WriteLine();
+for (int i = 0; i < n - 1; i++)
+{
+    for (int j = 0; j < m - 1; j++)
+    {
+        Console.Write($"{A[i, j],3} ");
+    }
+    Console.WriteLine();
+}
+
                 //13
                 int n13 = 5, m13 = 5;
                 int[,] A = new int[n13, m13];
