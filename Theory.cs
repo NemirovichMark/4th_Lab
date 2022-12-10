@@ -226,8 +226,25 @@ namespace _4th_Lab
             }
             if (indexF == 6)
             {
-                    Console.WriteLine("ТАК НЕ НАДО");
-                    Console.ReadLine();
+                for (int y = 0; y < f.GetLength(0); y++)
+                {
+                    for (int x = 0; x < f.GetLength(1); x++)
+                    {
+                        Console.Write(f[y,x] + "\t");
+
+                    }
+                    Console.WriteLine();
+                } 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                Console.ReadLine();
                 return;
                
             }
@@ -399,61 +416,65 @@ namespace _4th_Lab
             }
             #endregion
             #region lvl3-1
-               int n = 7, m = 5;
-               double[,] array = new double[n, m];
-                for (int y = 0; y < n; y++)
-                    for (int x = 0; x < m; x++)
-                    {
-                        double z;
-                        double.TryParse(Console.ReadLine(), out z);
-                        array[y, x] = z;
-                        
-                    }
-               double[] m1 = new double[n];
-               double[] m2 = new double[m];
-               double add_double = 0;
-                for (int i = 0; i < n; i++)
+            int min = 0;
+            int n = 3, m = 3;
+            int[,] array = new int[n,m];
+            int[] array_min = new int[n];
+            for (int y = 0; y < n; y++)
+            {
+                for (int x = 0; x < m; x++)
                 {
-                    double min_el = array[i, 0];
+                    int z;
+                    int.TryParse(Console.ReadLine(), out z);
+                    array[y,x] = z;
+                }
+            }
+            for (int y = 0; y < n; y++)
+            {
+                min = array[y,0];
+                for (int x = 0; x < m; x++)
+                {
+                    if (array[y,x] < min)
+                    {
+                        min = array[y,x];
+                    }
+                    array_min[y] = min;
+                    
+                }
+            }
+            int sort_array = 1;
+            while (sort_array < array_min.Length)
+            {
+                if (sort_array == 0 || array_min[sort_array] <= array_min[sort_array - 1])
+                {
+                    sort_array++;
+                }
+                else
+                {
+                    int s = array_min[sort_array - 1];
+
+                    array_min[sort_array - 1] = array_min[sort_array];
+                    array_min[sort_array] = s;
+
                     for (int j = 0; j < m; j++)
                     {
-                        if (array[i, j] < min_el)
-                        {
-                            min_el = array[i, j];
-                        }
+                        s = array[sort_array - 1, j];
+                        array[sort_array - 1, j] = array[sort_array, j];
+                        array[sort_array, j] = s;
                     }
-                    m1[i] = min_el;
+
+                    sort_array--;
                 }
-                for (int i = 0; i < n; i++)
+            }
+            for (int y = 0; y < n; y++)
+            {
+                for (int x = 0; x < m; x++)
                 {
-                    for (int j = 0; j < n - 1; j++)
-                    {
-                        if (m1[j] < m1[j + 1])
-                        {
-                            add_double = m1[j + 1];
-                            m1[j + 1] = m1[j];
-                            m1[j] = add_double;
-                            for (int k = 0; k < m; k++) 
-                            { 
-                                m2[k] = array[j, k]; 
-                            }
-                            for (int g = 0; g < m; g++)
-                            {
-                                array[j, g] = array[j + 1, g];
-                                array[j + 1, g] = m2[g];
-                            }
-                        }
-                    }
+                    Console.Write(array[y, x] + "\t");
                 }
-                for (int y = 0; y < n; y++)
-                {
-                    for (int x = 0; x < m; x++)
-                    {
-                        Console.Write(array[y, x] + "\t");
-                    }
-                    Console.WriteLine();
-                }
-                #endregion
+                Console.WriteLine();
+            }
+            #endregion
             #region lvl3-2
             const int c = 4;
             double[,] array = new double[c,c];
