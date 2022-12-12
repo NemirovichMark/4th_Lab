@@ -516,10 +516,14 @@ namespace _4th_Lab
             
             #region Num_1
             {
-                double[,] matrix = new double[7, 5];
-                for (int i = 0; i < 7; ++i)
+                #region Num_1
+            {
+                int n = 7;
+                int g = 5;
+                double[,] matrix = new double[n, g];
+                for (int i = 0; i < n; ++i)
                 {
-                    for (int j = 0; j < 5; ++j)
+                    for (int j = 0; j < g; ++j)
                     {
                         if (double.TryParse(Console.ReadLine(), out double digit))
                         {
@@ -531,11 +535,11 @@ namespace _4th_Lab
                         }
                     }
                 }
-                double[] arr = new double[7];
+                double[] arr = new double[n];
                 double min_ = 0;
-                for (int i = 0; i < 7; ++i)
+                for (int i = 0; i < n; ++i)
                 {
-                    for (int j = 0; j < 5; ++j)
+                    for (int j = 0; j < g; ++j)
                     {
                         if (j == 0)
                         {
@@ -548,27 +552,34 @@ namespace _4th_Lab
                         }
                     }
                 }
-                for (int l = arr.Length; l > 0; --l)
+                int aux = 0;
+                while (aux < arr.Length - 1)
                 {
-                    for (int i = 0; i < (l - 1); ++i)
+                    if (arr[aux] < arr[aux + 1])
                     {
-                        if (arr[i] < arr[i + 1])
+                        double empty = arr[aux];
+                        arr[aux] = arr[aux + 1];
+                        arr[aux + 1] = empty;
+                        for (int i = 0; i < g; i++)
                         {
-                            double empty = arr[i];
-                            arr[i] = arr[i + 1];
-                            arr[i + 1] = empty;
-                            for (int j = 0; j < 5; ++j)
-                            {
-                                empty = matrix[i, j];
-                                matrix[i, j] = matrix[i + 1, j];
-                                matrix[i + 1, j] = empty;
-                            }
+                            double free = matrix[aux, i];
+                            matrix[aux, i] = matrix[aux + 1, i];
+                            matrix[aux + 1, i] = free;
+                        }
+                        if (aux > 0)
+                        {
+                            --aux;
                         }
                     }
+                    else
+                    {
+                        ++aux;
+                    }
+
                 }
-                for (int i = 0; i < 7; ++i)
+                for (int i = 0; i < n; ++i)
                 {
-                    for (int j = 0; j < 5; ++j)
+                    for (int j = 0; j < g; ++j)
                     {
                         Console.Write("{0,1} ", matrix[i, j]);
                     }
@@ -731,20 +742,22 @@ namespace _4th_Lab
             
             #region Num_8
             {
-                double[,] matrix = new double[7, 5];
-                double[] arr = new double[7];
-                int n = 0;
-                for (int i = 0; i < 7; ++i)
+                int n = 7;
+                int g = 5;
+                double[,] matrix = new double[n, g];
+                double[] arr = new double[n];
+                int p = 0;
+                for (int i = 0; i < n; ++i)
                 {
-                    n = 0;
-                    for (int j = 0; j < 5; ++j)
+                    p = 0;
+                    for (int j = 0; j < g; ++j)
                     {
                         if (double.TryParse(Console.ReadLine(), out double digit))
                         {
                             matrix[i, j] = digit;
                             if (digit > 0)
                             {
-                                ++n;
+                                ++p;
                             }
                         }
                         else
@@ -752,25 +765,32 @@ namespace _4th_Lab
                             Console.WriteLine("Error");
                         }
                     }
-                    arr[i] = n;
+                    arr[i] = p;
                 }
-                for (int l = arr.Length; l > 0; --l)
+                int aux = 0;
+                while (aux < arr.Length - 1)
                 {
-                    for (int i = 0; i < (l - 1); ++i)
+                    if (arr[aux] < arr[aux + 1])
                     {
-                        if (arr[i] < arr[i + 1])
+                        double empty = arr[aux];
+                        arr[aux] = arr[aux + 1];
+                        arr[aux + 1] = empty;
+                        for (int i = 0; i < g; i++)
                         {
-                            double empty = arr[i];
-                            arr[i] = arr[i + 1];
-                            arr[i + 1] = empty;
-                            for (int j = 0; j < 5; ++j)
-                            {
-                                empty = matrix[i, j];
-                                matrix[i, j] = matrix[i + 1, j];
-                                matrix[i + 1, j] = empty;
-                            }
+                            double free = matrix[aux, i];
+                            matrix[aux, i] = matrix[aux + 1, i];
+                            matrix[aux + 1, i] = free;
+                        }
+                        if (aux > 0)
+                        {
+                            --aux;
                         }
                     }
+                    else
+                    {
+                        ++aux;
+                    }
+
                 }
                 for (int i = 0; i < 7; ++i)
                 {
@@ -780,11 +800,6 @@ namespace _4th_Lab
                     }
                     Console.WriteLine();
                 }
-                for (int i = 0; i < arr.Length; ++i)
-                {
-                    Console.WriteLine(arr[i]);
-                }
-
             }
             #endregion
             
@@ -823,38 +838,40 @@ namespace _4th_Lab
                         }
                     }
                 }
-                double max_ = 0;
-                double min_ = 0;
                 for (int i = 0; i < n; ++i)
                 {
-                    for (int j = 0; j < g; ++j)
+                    int aux = 0;
+                    if (i % 2 != 0)
                     {
-                        if (j % 2 == 0)
+                        while (aux < g)
                         {
-                            max_ = matrix[i, j];
-                            for (int p = j; p < g; p += 2)
+                            if (aux == 0 || matrix[i, aux - 1] <= matrix[i, aux])
                             {
-                                if (matrix[i, p] > max_)
-                                {
-                                    max_ = matrix[i, p];
-                                    double empty = matrix[i, j];
-                                    matrix[i, j] = max_;
-                                    matrix[i, p] = empty;
-                                }
+                                ++aux;
+                            }
+                            else
+                            {
+                                double empty = matrix[i, aux];
+                                matrix[i, aux] = matrix[i, aux - 1];
+                                matrix[i, aux - 1] = empty;
+                                --aux;
                             }
                         }
-                        if (j % 2 != 0)
+                    }
+                    else
+                    {
+                        while (aux < g)
                         {
-                            min_ = matrix[i, j];
-                            for (int p = j; p < g; p += 2)
+                            if (aux == 0 || matrix[i, aux - 1] >= matrix[i, aux])
                             {
-                                if (matrix[i, p] < min_)
-                                {
-                                    min_ = matrix[i, p];
-                                    double empty = matrix[i, j];
-                                    matrix[i, j] = min_;
-                                    matrix[i, p] = empty;
-                                }
+                                ++aux;
+                            }
+                            else
+                            {
+                                double temp = matrix[i, aux];
+                                matrix[i, aux] = matrix[i, aux - 1];
+                                matrix[i, aux - 1] = temp;
+                                --aux;
                             }
                         }
                     }
