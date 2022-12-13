@@ -1,0 +1,999 @@
+using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Net.Sockets;
+using System.Reflection;
+using System.Xml.Linq;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Globalization;
+using System.Runtime.Serialization.Formatters;
+
+namespace ConsoleApp
+{
+    class Program89
+    {
+
+
+        static void Main(string[] args)
+        {
+            
+            #region part 1 task 3
+            
+            int[,] a = new int[4, 4];
+            
+            for (int j=0; j<4; j++)
+            {
+                Console.WriteLine($"Введите ряд матрицы {j}");
+                for (int i=0; i<4; i++)
+                {
+                    try
+                    {
+                        a[j, i] = int.Parse(Console.ReadLine());
+                    }
+                    catch { }
+                }
+            }
+            int count = a[0, 0] + a[1, 1] + a[2, 2] + a[3, 3];
+            int count1 = a[0, 3] + a[1, 2] + a[2, 1] + a[3, 0];
+            int count2 = count + count1;
+            Console.WriteLine("Сумма из левого верхнего угла: " + count);
+            Console.WriteLine("Сумма из правого верхнего угла: " + count1);
+            Console.WriteLine("Сумма диагоналей: " + count2);
+            #endregion
+            
+
+            #region part 1 task 6
+            int n=4;
+            int m = 7;
+            int[,] b = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        b[i, j] = int.Parse(Console.ReadLine());
+                    }
+                    catch {}
+                }
+            }
+
+            int[] b1 = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                int imin = b[i, 0];
+                for (int j = 0; j < m; j++)
+                {
+                    if (b[i, j] < imin)
+                    {
+                        b1[i] = j;
+
+                    }
+                }
+            }
+            foreach(int x in b1)
+                Console.Write(x + " ");
+            #endregion
+            
+
+            #region part 1 task 12
+            int n = 6;
+            int m = 7;
+            int[,] b = new int[n, m];
+            for (int i = 0; i < 6; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < 7; j++)
+                {
+                    try
+                    {
+                        b[i, j] = int.Parse(Console.ReadLine());
+                    }
+                    catch { }
+                }
+            }
+            int max = -1000000000;
+            int maxindstr = 0;
+            int maxindcolumn=0;
+            for (int i = 0; i < n; i++)
+            {
+                
+                for(int j = 0; j < m; j++)
+                {
+                    if(b[i, j] > max)
+                    {
+                        max = b[i, j];
+                        maxindstr=i;
+                        maxindcolumn=j;
+                    }
+                }
+            }
+            
+            for(int i = maxindstr; i < n-1; i++)
+            {
+                for(int k=0; k < m; k++)
+                {
+                    b[i, k] = b[i + 1, k];
+                }
+            }
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<m-1;j++)
+                {
+                    b[i, j] = b[i, j + 1];
+                }
+            }
+            Console.WriteLine();
+            for(int i = 0; i < n-1; i++)
+            {
+                for(int j=0; j < m-1; j++)
+                {
+                    
+                    Console.Write(b[i,j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 1 task 13
+            int n = 5;
+            int m = 5;
+            int[,] a = new int[n,m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        a[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            int max1 = -1000000000;
+            int maxindstr1 = 0;
+            int maxindcolumn1 = 0;
+            for (int i = 0; i < n; i++)
+            {
+
+                
+                    if (a[i, i] > max1)
+                    {
+                        max1 = a[i, i];
+                        
+                        maxindcolumn1 = i;
+                    }
+                
+            }
+            Console.WriteLine("Исходный массив: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+
+                    Console.Write(a[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.WriteLine(max1);
+            Console.WriteLine();
+            int p = 3;
+            int temp = 0;
+            for (int i = 0; i < m; i++)
+            {
+                temp = a[i, maxindcolumn1];
+                a[i, maxindcolumn1] = a[i, p];
+                a[i, p] = temp;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(a[i, j] + " ");
+
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 1 task 17
+            int n=0;
+            int m=0;
+            try
+            {
+                Console.WriteLine("Введите количество строк ");
+                n=int.Parse(Console.ReadLine());
+                Console.WriteLine("Введите количество столбцов ");
+                m = int.Parse(Console.ReadLine());
+            }
+            catch { }
+            int[,] bb = new int[n,m];
+            for(int i=0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j=0; j < m; j++)
+                {
+                    bb[i,j] = int.Parse(Console.ReadLine());
+                }
+            }
+            for(int i=0;i<n;i++)
+            {
+                int minn = 100000000;
+                int minn1 = 0;
+                for(int j=0; j < m; j++)
+                {
+                    if(bb[i,j] < minn)
+                    {
+                        minn = bb[i,j];
+                        minn1=j;
+                    }
+
+                }
+                for(int k=minn1;k>0;k--)
+                {
+                    bb[i, k] = bb[i,k-1];
+                }
+                bb[i, 0] = minn;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(bb[i, j] + " ");
+
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 1 task 29
+            int n = 5;
+            int m = 7;
+            
+            int[,] f = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        f[i, j] = int.Parse(Console.ReadLine());
+                    }
+                    catch { }
+                    
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(f[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            int fmin = 10000000;
+            int fimin = 0;
+            
+              
+           for(int j=0; j < m; j++)
+           {
+                if(Math.Abs(f[1, j]) < fmin)
+                {
+                    fmin = f[1, j];
+                    fimin= j;
+                }
+           }
+            for(int i=0; i < n; i++)
+            {
+                for(int j=0;j<m; j++)
+                {
+                    if(j==fimin+1)
+                    {
+                        f[i, j] = f[i, j - 1];
+                    }
+                     
+                    
+                }
+                Console.WriteLine();
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = m-1; j > 0; j--)
+                {
+                    Console.Write(f[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 1 task 31
+            int n = 5;
+            int m = 8;
+
+            int[,] f1 = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m-1; j++)
+                {
+                    try
+                    {
+                        f1[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            
+            Console.WriteLine();
+            Console.WriteLine("Введите элементы массива В:");
+            int[] b2 = new int[5];
+            for (int i = 0; i < b2.Length; i++)
+            {
+                b2[i] = int.Parse(Console.ReadLine());
+            }
+            Console.WriteLine();
+            int fmin1 = 10000000;
+            int fimin1 = 0;
+
+
+            for (int j = 0; j < m-1; j++)
+            {
+                if (f1[4, j] < fmin1)
+                {
+                    fmin1 = f1[4, j];
+                    fimin1 = j;
+                }
+            }
+            for(int i = 0; i < n; i++)
+            {
+                for(int j=m-2;j>=fimin1; j--)
+                {
+                    f1[i, j + 1] = f1[i, j];
+                }
+            }
+            int r = 0;
+            for(int i= 0; i < n; i++)
+            {
+                for(int j= 0; j < m; j++)
+                {
+                    
+                    if(j==fimin1+1)
+                    {
+                        f1[i, j] = b2[r];
+                        r++;
+
+                    }
+                }
+            }
+            
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(f1[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 2 task 7
+            int n = 6;
+            int m = 6;
+            int max2 = int.MinValue;
+            int maxi = 0;
+            int[,] arr = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        arr[i, j] = int.Parse(Console.ReadLine());
+                    }
+                    catch { }
+                   
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (arr[i, i] > max2)
+                {
+                    max2 = arr[i, i];
+                    maxi = i;
+                }
+            }
+
+            int diag = 0;
+            for (int i = 0; i < maxi; i++)
+            {
+
+                for (int j = i + 1; j < m; j++)
+                {
+                    arr[i, j] = 0;
+                }
+
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(arr[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 2 task 8
+            int n = 6;
+            int m = 6;
+            int[,]y=new int[n,m];
+            
+            int maxi1 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        y[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            int[] yadd = new int[n];
+            int[] ysub = new int[n];
+            for(int i = 0; i < n; i++)
+            {
+                int maxx1 = y[i, 0];
+                for(int j=0; j < m; j++)
+                {
+                    if(y[i, j] >= maxx1)
+                    {
+                        maxx1 = y[i,j];
+                        yadd[i] = maxx1;
+                        ysub[i] = j;
+                        
+                        
+                    }
+                }
+            }
+            for (int i=0; i < n-1; i+=2)
+            {
+                y[i, ysub[i]] = yadd[i+1];
+                
+
+            }
+            for (int i = 1; i < n+1; i += 2)
+            {
+                y[i, ysub[i]] = yadd[i-1];
+                
+
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(y[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 2 task 9
+            int n = 6;
+            int m = 7;
+            int[,] h = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        h[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = m-1; j >=0; j--)
+                {
+                    Console.Write(h[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            
+
+            #region part 3 task 1
+            int n = 7;
+            int m = 5;
+            int[,] ui = new int[n, m];
+            int[] uimni = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        ui[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            for(int i=0; i < n; i++)
+            {
+                int mn = int.MaxValue;
+                for(int j=0; j < m; j++)
+                {
+                    if(ui[i, j] < mn)
+                    {
+                        mn = ui[i, j];
+                        uimni[i]=mn;
+                    }
+                }
+            }
+            int gg = 0;
+            for(gg = 0; gg < uimni.Length-1; gg+=0)
+            {
+                if (uimni[gg] < uimni[gg + 1])
+                {
+                    int uit = uimni[gg];  
+                    uimni[gg] = uimni[gg + 1];
+                    uimni[gg + 1] = uit;
+                    for (int i = 0; i < m; i++) 
+                    {
+                        int p = ui[gg, i];
+                        ui[gg, i] = ui[gg + 1, i];
+                        ui[gg + 1, i] = p;
+                    }
+                    if (gg > 0)
+                    {
+                        gg--;
+                    }
+                }
+                else
+                {
+                    gg++;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(ui[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region part 3 task 2
+            int n=0;
+            try 
+            {
+                Console.WriteLine("Введите количество строк и столбцов ");
+                n = int.Parse(Console.ReadLine());
+            }
+            catch{ }
+            int[,] sqr = new int[n, n];
+            for(int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j=0; j < n; j++)
+                {
+                    sqr[i,j] = int.Parse(Console.ReadLine()); 
+                }
+            }
+            for(int i = 0; i < n; i++)
+            {
+                sqr[0, i] = 0;
+                sqr[n-1, i] = 0;
+                sqr[i, 0] = 0;
+                sqr[i,n-1] = 0;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(sqr[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region part 3 task 3
+            int n=0;
+            try
+            {
+                Console.WriteLine("Введите количество строк и столбцов ");
+                n = int.Parse(Console.ReadLine());
+            }
+            catch{ }
+            int[,] sqr1 = new int[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < n; j++)
+                {
+                    sqr1[i, j] = int.Parse(Console.ReadLine());
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(sqr1[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            int m = 0;
+            int hh = 0;
+            int[] sqrdiag = new int[2 * n - 1];
+            for (int i = n-1; i >= 0; i--)
+            {
+                
+                hh = 0;
+                for(int j = 0; j < n-i; j++)
+                {
+                    hh+=sqr1[i + j, j];
+                }
+                sqrdiag[m]=hh;
+                m++;
+                
+
+            }
+            for(int i=1; i < n; i++)
+            {
+                hh = 0;
+                for( int j = 0; j < n-i; j++)
+                {
+                    hh += sqr1[i,i+j];
+                }
+                sqrdiag[m] = hh;
+                m++;
+
+            }
+            foreach(int i in sqrdiag)
+                Console.Write(i+" ");
+            #endregion
+
+            #region part 3 task 4
+            int n=0;
+            try
+            {
+                Console.WriteLine("Введите количество строк и столбцов ");
+                n = int.Parse(Console.ReadLine());
+            }
+            catch{ }
+            int[,] sqr2 = new int[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < n; j++)
+                {
+                    try
+                    {
+                        sqr2[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(sqr2[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            int k = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j <= k; j++)
+                {
+                    sqr2[i, j] = 1;
+                }
+                k += 1;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(sqr2[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+            #endregion
+
+            #region part 3 task 8
+            int n = 7;
+            int m = 5;
+            int[,] l = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");                                    
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        l[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            int counter=0;
+            int[] l2 = new int[n];
+            for(int i = 0; i < n; i++)
+            {
+                counter = 0;
+                for (int j=0;j<m; j++)
+                {
+                    
+                    if (l[i,j]>0)
+                    {
+                        
+                        counter++;
+                        
+                    }
+                    l2[i] = counter;
+
+                }
+                
+            }
+            foreach(int i in l2)
+                Console.Write(i+" ");
+            Console.WriteLine();
+            var element = 1;
+            var pointer = 2;
+            while (element < l2.Length)
+            {
+                if (element == 0 || l2[element] <= l2[element - 1])
+                {
+                    element = pointer;
+                    pointer++;
+                }
+                else
+                {
+                    var temp = l2[element - 1];
+                    l2[element - 1] = l2[element];
+                    l2[element] = temp;
+                    for(int j=0; j < m; j++)
+                    {
+                        var tem = l[element-1,j];
+                        l[element - 1, j] = l[element, j];
+                        l[element, j] = tem;
+
+                    }
+                    element--;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(l[i, j] + "\t ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+
+            #region part 3 task 10
+            int n=0;
+            int m=0;
+            try
+            {
+                Console.WriteLine("Введите n");
+                n = int.Parse(Console.ReadLine());
+                Console.WriteLine("Введите m");
+                m = int.Parse(Console.ReadLine());
+            }
+            catch{ }
+            int[,] ll = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        ll[i, j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            int[] rchet = new int[m / 2 * n];
+            int[] rnechet = new int[m / 2 * n];
+            int io = 0;
+            int io1 = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+
+                    if (j % 2 == 0)
+                    {
+                        rchet[io] = ll[i, j];
+                        io++;
+                    }
+                    if (j % 2 != 0)
+                    {
+                        rnechet[io1] = ll[i, j];
+                        io1++;
+                    }
+                }
+            }
+            for (int i = 0; i < rchet.Length; i += m / 2)
+            {
+                for (int j = 0; j < rchet.Length - 1; j += 2)
+                {
+                    if (rchet[j] < rchet[j + 1])
+                    {
+                        int temp = rchet[j];
+                        rchet[j] = rchet[j + 1];
+                        rchet[j + 1] = temp;
+                    }
+
+                }
+            }
+            for (int i = 0; i < rnechet.Length; i++)
+            {
+                for (int j = 0; j < rnechet.Length - 1; j += 2)
+                {
+                    if (rnechet[j] > rnechet[j + 1])
+                    {
+                        int temp = rnechet[j];
+                        rnechet[j] = rnechet[j + 1];
+                        rnechet[j + 1] = temp;
+                    }
+                }
+            }
+            foreach (int i in rchet)
+                Console.Write(i + " ");
+            Console.WriteLine();
+            foreach (int i in rnechet)
+                Console.Write(i + " ");
+            Console.WriteLine();
+            int ko = 0;
+            int ko1 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (j % 2 == 0)
+                    {
+                        ll[i, j] = rchet[ko1];
+                        ko1++;
+                    }
+                    if (j % 2 != 0)
+                    {
+                        ll[i, j] = rnechet[ko];
+                        ko++;
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(ll[i, j] + "\t ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            */
+
+            #region part 3 task 11
+            int n =0;
+            int m=0;
+            try
+            {
+                Console.WriteLine("Введите n");
+                n = int.Parse(Console.ReadLine());
+                Console.WriteLine("Введите m");
+                m = int.Parse(Console.ReadLine());
+            }
+            catch { }
+            int[][] f = new int[n][];
+            for (int i = 0; i < n; i++)
+                f[i] = new int[m];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Введите элемент строки {i}");
+                for (int j = 0; j < m; j++)
+                {
+                    try
+                    {
+                        f[i][j] = int.Parse(Console.ReadLine());
+
+                    }
+                    catch { }
+                }
+            }
+            int[] ff = new int[n];
+            int cnt = 0;
+            int cnt1 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (f[i][j] == 0)
+                    {
+                        ff[cnt1] = i;
+                        cnt++;
+                        cnt1++;
+                        break;
+                    }
+
+                }
+            }
+            foreach (int i in ff)
+                Console.Write(i + " ");
+            Console.WriteLine();
+            cnt1 = 0;
+            int g = 1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (i == ff[cnt1])
+                    {
+                        int temp = f[ff[cnt1]][j];
+                        f[ff[cnt1]][j] = f[n - g][j];
+
+                        f[n - g][j] = temp;
+                    }
+                }
+            }
+            for (int j = 0; j < m; j++)
+            {
+                if (f[0][j] == 0)
+                {
+                    int temp = f[0][j];
+                    f[0][j] = f[n - 2][j];
+                    f[n - 2][j] = temp;
+                }
+            }
+            for (int i = 0; i < n - cnt; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write(f[i][j] + "\t ");
+                }
+                Console.WriteLine();
+            }
+            #endregion
+        }
+    }
+}
