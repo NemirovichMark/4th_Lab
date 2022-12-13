@@ -450,16 +450,17 @@ namespace Lab_4
                 {
                     for (int j = 0; j < 5; j++)
                     {
-                        matrix[i, j] = ran.Next(50);
+                        matrix[i, j] = ran.Next(-50, 50);
                         Console.Write("{0, -5}", matrix[i, j]);
                     }
                     Console.WriteLine();
                 }
+                double min = 0;
                 double[] mass_min = new double[7];
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < matrix.GetLength(0); i++)
                 {
-                    double min = matrix[i, 0];
-                    for (int j = 0; j < 5; j++)
+                    min = matrix[i, 0];
+                    for (int j = 1; j < matrix.GetLength(1); j++)
                     {
                         if (matrix[i, j] < min)
                         {
@@ -469,7 +470,7 @@ namespace Lab_4
                     mass_min[i] = min;
                 }
                 int sort_index = 1;
-                while (sort_index < 7)
+                while (sort_index < mass_min.Length)
                 {
                     if (sort_index == 0 || mass_min[sort_index] <= mass_min[sort_index - 1])
                     {
@@ -482,21 +483,20 @@ namespace Lab_4
                         mass_min[sort_index] = x;
 
 
-                        for (int j = 1; j < 5; j++)
+                        for (int j = 0; j < 5; j++)
                         {
                             x = matrix[sort_index - 1, j];
                             matrix[sort_index - 1, j] = matrix[sort_index, j];
                             matrix[sort_index, j] = x;
                         }
-
                         sort_index--;
                     }
 
                 }
                 Console.WriteLine("Answer №1");
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < matrix.GetLength(0); i++)
                 {
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < matrix.GetLength(1); j++)
                     {
                         Console.Write("{0, -5}", matrix[i, j]);
                     }
@@ -605,7 +605,7 @@ namespace Lab_4
                 }
             }
             #endregion
-            #region №8
+           #region №8
             {
                 Random ran = new Random();
                 Console.WriteLine("---№8---");
@@ -614,18 +614,19 @@ namespace Lab_4
                 {
                     for (int j = 0; j < 5; j++)
                     {
-                        Matrix[i, j] = ran.Next(100);
+                        Matrix[i, j] = ran.Next(-100, 100);
                         Console.Write("{0, -5}", Matrix[i, j]);
                     }
                     Console.WriteLine();
                 }
                 double[] Positive_mass = new double[7];
+                int counter = 0;
                 for (int i = 0; i < 7; i++)
                 {
-                    int counter = 0;
+                    counter = 0;
                     for (int j = 0; j < 5; j++)
                     {
-                        if (Matrix[i, j] >= 0)
+                        if (Matrix[i, j] > 0)
                         {
                             counter++;
                         }
@@ -633,9 +634,9 @@ namespace Lab_4
                     Positive_mass[i] = counter;
                 }
                 int index_sort = 1;
-                while (index_sort < 7)
+                while (index_sort < Positive_mass.Length)
                 {
-                    if (index_sort == 0 || Positive_mass[index_sort - 1] < Positive_mass[index_sort])
+                    if (index_sort == 0 || Positive_mass[index_sort - 1] >= Positive_mass[index_sort])
                     {
                         index_sort++;
                     }
@@ -643,7 +644,7 @@ namespace Lab_4
                     {
                         double x = Positive_mass[index_sort];
                         Positive_mass[index_sort] = Positive_mass[index_sort - 1];
-                        Positive_mass[index_sort] = x;
+                        Positive_mass[index_sort - 1] = x;
                         for (int j = 0; j < 5; j++)
                         {
                             x = Matrix[index_sort - 1, j];
