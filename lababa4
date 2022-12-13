@@ -1,0 +1,721 @@
+using System;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            #region 1-1
+            int[,] matr11 = new int[4, 4]
+            {
+                {2, 3, 1, 5},
+                {5, 3, 8, 6},
+                {2, 2, 0, 1},
+                {0, 4, 1, 5}
+            };
+            int sum11 = 0;
+            for (int i = 0; i < matr11.GetLength(0); i++)
+            {
+                sum11 += matr11[i, i] + matr11[i, 3 - i];
+            }
+            Console.WriteLine(matr11);
+            Console.WriteLine();
+            #endregion
+
+            #region 1-6
+            int[,] matr12 = new int[4, 7]
+            {
+                {2, 3, 1, 5, 9, 10, 23},
+                {5, 3, 8, 6, 1, -3, 4},
+                {2, 2, 0, 1, -5, 7, 2},
+                {0, 4, 1, 5, 10, -5, 4}
+            };
+            int[] arr12 = new int[4];
+            int min12, ind12;
+            for (int i = 0; i < matr12.GetLength(0); i++)
+            {
+                min12 = matr12[i, 0];
+                ind12 = 0;
+                for (int j = 1; j < matr12.GetLength(1); j++)
+                {
+                    if (matr12[i, j] < min12)
+                    {
+                        ind12 = j;
+                        min12 = matr12[i, j];
+                    }
+                }
+                arr12[i] = ind12;
+            }
+            for (int i = 0; i < arr12.Length; i++)
+            {
+                Console.Write(arr12[i] + " ");
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 1-12
+            int[,] matr112 = new int[6, 7]
+            {
+                {2, 3, 1, 5, 9, 10, 0},
+                {5, 3, 8, 6, 1, -3, 4},
+                {2, 2, 0, 1, -5, 7, 2},
+                {0, 4, 1, 5, 23, -5, 4},
+                {-10, 13, 0, 1, 5, -7, 1},
+                {5, 1, 9, 14, -5, 1, 12},
+            };
+            int[,] matr1112 = new int[5, 6];
+            int max112 = matr112[0, 0], ind112 = 0, ind1112 = 0;
+            for (int i = 0; i < matr112.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr112.GetLength(1); j++)
+                {
+                    if (matr112[i, j] > max112)
+                    {
+                        ind1112 = j;
+                        ind112 = i;
+                        max112 = matr112[i, j];
+                    }
+                }
+            }
+            int ind1122 = 0;
+            for (int i = 0; i < matr112.GetLength(0); i++)
+            {
+                int ind1132 = 0;
+                if (i != ind112)
+                {
+                    for (int j = 0; j < matr112.GetLength(1); j++)
+                    {
+                        if (j == ind1112)
+                        {
+                            ind1132 -= 1;
+                        }
+                        else
+                        {
+                            matr1112[ind1122, ind1132] = matr112[i, j];
+                        }
+                        ind1132 += 1;
+                    }
+                }
+                else
+                {
+                    ind1122 -= 1;
+                }
+                ind1122 += 1;
+            }
+            for (int i = 0; i < matr1112.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr1112.GetLength(1); j++)
+                {
+                    Console.Write(matr1112[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 1-13
+            int[,] matr113 = new int[5, 5]
+            {
+                {2, 3, 1, 5, 0},
+                {5, 3, 8, 6, 1},
+                {2, 2, 9, 1, -5},
+                {0, 4, 1, 5, 23},
+                {-10, 13, 0, 1, 5}
+            };
+            int max113 = matr113[0, 0], ind113 = 0;
+            for (int i = 0; i < matr113.GetLength(0); i++)
+            {
+                if (matr113[i, i] > max113)
+                {
+                    max113 = matr113[i, i];
+                    ind113 = i;
+                }
+                if (matr113[i, 4 - i] > max113)
+                {
+                    max113 = matr113[i, 4 - i];
+                    ind113 = 4 - i;
+                }
+            }
+            int n113;
+            for (int i = 0; i < matr113.GetLength(0); i++)
+            {
+                n113 = matr113[i, ind113];
+                matr113[i, ind113] = matr113[i, 3];
+                matr113[i, 3] = n113;
+            }
+            for (int i = 0; i < matr113.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr113.GetLength(1); j++)
+                {
+                    Console.Write(matr113[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 1-17
+            int[,] matr117 = new int[,]
+            {
+                {2, 3, 1, 5, 0},
+                {5, 3, 8, 6, 1},
+                {2, 2, 9, 1, -5},
+                {0, 4, 1, 5, 23},
+            };
+            for (int i = 0; i < matr117.GetLength(0); i++)
+            {
+                int min117 = matr117[i, 0];
+                int ind117 = 0;
+                for (int j = 0; j < matr117.GetLength(1); j++)
+                {
+                    if (matr117[i, j] < min117)
+                    {
+                        min117 = matr117[i, j];
+                        ind117 = j;
+                    }
+                }
+                for (int j = ind117; j > 0; j--)
+                {
+                    matr117[i, j] = matr117[i, j - 1];
+                }
+                matr117[i, 0] = min117;
+            }
+            for (int i = 0; i < matr117.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr117.GetLength(1); j++)
+                {
+                    Console.Write(matr117[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 1-29
+            int[,] matr129 = new int[5, 7]
+            {
+                {2, 3, 1, 5, 0, 5, 1},
+                {5, 4, 8, 6, 1, -3, 13},
+                {2, 2, 9, 1, -5, -4, 2},
+                {0, 4, 1, 5, 23, 7, 12},
+                {14,-2, 1,-12,1, 5, 5},
+            };
+            int min129 = matr129[1, 0], ind129 = 0;
+            for (int i = 0; i < matr129.GetLength(1); i++)
+            {
+                if (min129 > Math.Abs(matr129[1, i]))
+                {
+                    min129 = Math.Abs(matr129[1, i]);
+                    ind129 = i;
+                }
+            }
+            if (ind129 == 6)
+            {
+                for (int i = 0; i < matr129.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matr129.GetLength(1); j++)
+                    {
+                        Console.Write(matr129[i, j] + "\t");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                int[,] matr1129 = new int[5, 6];
+                for (int i = 0; i < matr129.GetLength(0); i++)
+                {
+                    int ind1129 = 0;
+                    for (int j = 0; j < matr129.GetLength(1); j++)
+                    {
+                        if (j == ind129 + 1)
+                        {
+                            ind1129 -= 1;
+                        }
+                        else
+                        {
+                            matr1129[i, ind1129] = matr129[i, j];
+                        }
+                        ind1129 += 1;
+                    }
+                }
+                for (int i = 0; i < matr1129.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matr1129.GetLength(1); j++)
+                    {
+                        Console.Write(matr1129[i, j] + "\t");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 1-31
+            int[,] matr131 = new int[5, 8]
+            {
+                {2, 3, 1, 5, 0, 5, 1, 0},
+                {5, 4, 8, 6, 1, -3, 13, 0},
+                {2, 2, 9, 1, -5, -4, 2, 0},
+                {0, 4, 1, 5, 23, 7, 12, 0},
+                {14,-2, 1,-12,1,  5, 5, 0},
+            };
+            int[] arr131 = new int[5] { 1, 2, 3, 4, 5 };
+            int min4 = matr131[4, 0], ind131 = 0;
+            for (int i = 0; i < matr131.GetLength(1) - 1; i++)
+            {
+                if (min4 > Math.Abs(matr131[4, i]))
+                {
+                    min4 = Math.Abs(matr131[4, i]);
+                    ind131 = i;
+                }
+            }
+            for (int i = 0; i < matr131.GetLength(0); i++)
+            {
+                for (int j = matr131.GetLength(1) - 1; j > ind131; j--)
+                {
+                    matr131[i, j] = matr131[i, j - 1];
+                }
+                matr131[i, ind131 + 1] = arr131[i];
+            }
+            for (int i = 0; i < matr131.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr131.GetLength(1); j++)
+                {
+                    Console.Write(matr131[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+            #region 2-7
+            int[,] matr27 = new int[6, 6]
+            {
+                {2, 1, -4, 7, 12, -1},
+                {8, -2, 15, 21, 0, -2},
+                {9, 3, 23, 13, 1, -3},
+                {7, -12, 1, -2, 11, -3},
+                {1, -2, 6, 13, -5, 9},
+                {5, 8, -1, 4, 12, -10},
+            };
+            int max27 = matr27[0, 0], ind27=0;
+            for (int i = 0; i < matr27.GetLength(0); i++)
+            {
+                if (matr27[i, i] > max27)
+                {
+                    max27 = matr27[i, i];
+                    ind27 = i;
+                }
+            }
+            for (int i = 0; i < ind27; i++)
+            {
+                for (int j = i + 1; j < matr27.GetLength(1); j++)
+                {
+                    matr27[i, j] = 0;
+                }
+            }
+            for (int i = 0; i < matr27.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr27.GetLength(1); j++)
+                {
+                    Console.Write(matr27[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 2-8
+            int max28, ind28, max218 = 0, ind218 = 0;
+            int[,] matr28 = new int[6, 6]
+            {
+                {2, 1, -4, 7, 12, -1},
+                {8, -2, 15, 21, 0, -2},
+                {9, 3, 23, 13, 1, -3},
+                {7, -12, 1, -2, 11, -3},
+                {1, -2, 6, 13, -5, 9},
+                {5, 8, -1, 4, 12, -10},
+            };
+
+            for (int i = 0; i < matr28.GetLength(0); i++)
+            {
+                max28 = matr28[i, 0];
+                ind28 = 0;
+                for (int j = 0; j < matr28.GetLength(1); j++)
+                {
+                    if (max28 < matr28[i, j])
+                    {
+                        max28 = matr28[i, j];
+                        ind28 = j;
+                    }
+                }
+                if (i % 2 != 0)
+                {
+                    matr28[i, ind28] = max218;
+                    matr28[i - 1, ind218] = max28;
+
+                }
+                else
+                {
+                    max218 = max28;
+                    ind218 = ind28;
+                }
+            }
+            for (int i = 0; i < matr28.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr28.GetLength(1); j++)
+                {
+                    Console.Write(matr28[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 2-9
+            int n29;
+            int[,] matr29 = new int[6, 7]
+            {
+                {2, 1, -4, 7, 12, -1, 4},
+                {8, -2, 15, 21, 0, -2, 2},
+                {9, 3, 23, 13, 1, -3, 12},
+                {7, -12, 1, -2, 11, -3, -10},
+                {1, -2, 6, 13, -5, 9, 32},
+                {5, 8, -1, 4, 12, -10, 8},
+            };
+            for (int i = 0; i < matr29.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr29.GetLength(1) / 2; j++)
+                {
+                    n29 = matr29[i, 6 - j];
+                    matr29[i, 6 - j] = matr29[i, j];
+                    matr29[i, j] = n29;
+                }
+            }
+            for (int i = 0; i < matr29.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr29.GetLength(1); j++)
+                {
+                    Console.Write(matr29[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+            #region 3-1
+            int[,] matr31 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+                {5, 8, -1, 4, 12},
+                {2, -4, 14, 5, 2},
+            };
+            int[] arr31 = new int[matr31.GetLength(0)];
+            for (int i = 0; i < matr31.GetLength(0); i++)
+            {
+                int min31 = matr31[i, 0];
+                {
+                    for (int j = 1; j < matr31.GetLength(1); j++)
+                    {
+                        if (matr31[i, j] < min31)
+                            min31 = matr31[i, j];
+                    }
+                }
+                arr31[i] = min31;
+            }
+            int ind31 = 1;
+            while (ind31 < arr31.Length)
+            {
+                if (ind31 == 0 || arr31[ind31] <= arr31[ind31 - 1])
+                {
+                    ind31++;
+                }
+                else
+                {
+                    int n31 = arr31[ind31 - 1];
+                    arr31[ind31 - 1] = arr31[ind31];
+                    arr31[ind31] = n31;
+                    for (int j = 0; j < 5; j++)
+                    {
+                        n31 = matr31[ind31 - 1, j];
+                        matr31[ind31 - 1, j] = matr31[ind31, j];
+                        matr31[ind31, j] = n31;
+                    }
+                    ind31-=1;
+                }
+            }
+            for (int i = 0; i < matr31.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr31.GetLength(1); j++)
+                {
+                    Console.Write(matr31[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 3-2
+            int[,] matr32 = new int[5, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+            };
+            for (int i = 0; i < matr32.GetLength(0); i++)
+            {
+                matr32[0, i] = 0;
+                matr32[i, 0] = 0;
+                matr32[4, i] = 0;
+                matr32[i, 4] = 0;
+            }
+            for (int i = 0; i < matr32.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr32.GetLength(1); j++)
+                {
+                    Console.Write(matr32[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 3-3
+            int[,] matr33 = new int[5, 5]
+            {
+                {2, 1, -4, 7, 1},
+                {8, -2, 15, 21, 4},
+                {9, 3, 23, 13, 7},
+                {7, -12, 1, -2, -2},
+                {1, -2, 6, 13, -5},
+            };
+            int sum33, sum313, n33 = matr33.GetLength(0);
+            int[] arr33 = new int[2 * n33 - 1];
+            for (int i = n33 - 1; i > -1; i--)
+            {
+                sum33 = 0;
+                sum313 = 0;
+                int cnt12 = i;
+                for (int j = n33 - 1; j > i - 1; j--)
+                {
+                    sum33 += matr33[cnt12, n33 - 1 - j];
+                    sum313 += matr33[n33 - 1 - cnt12, j];
+                    cnt12 += 1;
+                }
+                arr33[n33 - 1 - i] = sum33;
+                arr33[i + n33 - 1] = sum313;
+            }
+            for (int i = 0; i < arr33.Length; i++)
+            {
+                Console.Write(arr33[i] + " ");
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 3-4
+            int[,] matr34 = new int[5, 5]
+            {
+                {2, 1,  -4,  7, 1},
+                {8, -2, 15, 21, 4},
+                {9,  3, 23, 13, 7},
+                {7, -12, 1, -2, -2},
+                {1, -2,  6, 13, -5},
+            };
+            for (int i = matr34.GetLength(0) / 2; i < matr34.GetLength(0); i++)
+            {
+                for (int j = 0; j < i + 1; j++)
+                {
+                    matr34[i, j] = 1;
+                }
+            }
+            for (int i = 0; i < matr34.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr34.GetLength(1); j++)
+                {
+                    Console.Write(matr34[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 3-8
+            int[,] matr38 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+                {5, 8, -1, 4, 12},
+                {2, -4, 14, 5, 2},
+            };
+            int[] arr38 = new int[matr38.GetLength(0)];
+            int cnt38, ind38 = 1;
+            for (int i = 0; i < matr38.GetLength(0); i++)
+            {
+                cnt38 = 0;
+                for (int j = 0; j < matr38.GetLength(1); j++)
+                {
+                    if (matr38[i, j] > 0)
+                    {
+                        cnt38++;
+                    }
+                }
+                arr38[i] = cnt38;
+            }
+            while (ind38 < arr38.Length)
+            {
+                if (ind38 == 0 || arr38[ind38 - 1] >= arr38[ind38])
+                {
+                    ind38++;
+                }
+                else
+                {
+                    int c121 = arr38[ind38];
+                    arr38[ind38] = arr38[ind38 - 1];
+                    arr38[ind38 - 1] = c121;
+                    for (int j = 0; j < matr38.GetLength(1); j++)
+                    {
+                        c121 = matr38[ind38 - 1, j];
+                        matr38[ind38 - 1, j] = matr38[ind38, j];
+                        matr38[ind38, j] = c121;
+                    }
+                    ind38--;
+                }
+            }
+            for (int i = 0; i < matr38.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr38.GetLength(1); j++)
+                {
+                    Console.Write(matr38[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 3-10
+            int[,] matr310 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, -2, 6, 13, -5},
+                {5, 8, -1, 4, 12},
+                {2, -4, 14, 5, 2},
+            };
+            for (int i = 0; i < matr310.GetLength(0); i++)
+            {
+                int ind310 = 0;
+                if (i % 2 != 0)
+                {
+                    while (ind310 < matr310.GetLength(1))
+                    {
+                        if (ind310 == 0 || matr310[i, ind310 - 1] <= matr310[i, ind310])
+                        {
+                            ind310++;
+                        }
+                        else
+                        {
+                            int switc310 = matr310[i, ind310];
+                            matr310[i, ind310] = matr310[i, ind310 - 1];
+                            matr310[i, ind310 - 1] = switc310;
+                            ind310--;
+                        }
+                    }
+                }
+                else
+                {
+                    while (ind310 < matr310.GetLength(1))
+                    {
+                        if (ind310 == 0 || matr310[i, ind310 - 1] >= matr310[i, ind310])
+                        {
+                            ind310++;
+                        }
+                        else
+                        {
+                            int switc3110 = matr310[i, ind310];
+                            matr310[i, ind310] = matr310[i, ind310 - 1];
+                            matr310[i, ind310 - 1] = switc3110;
+                            ind310--;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < matr310.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr310.GetLength(1); j++)
+                {
+                    Console.Write(matr310[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            #region 3-11
+            int[,] matr311 = new int[7, 5]
+            {
+                {2, 1, -4, 7, 12},
+                {8, -2, 15, 21, 0},
+                {9, 3, 23, 13, 1},
+                {7, -12, 1, -2, 11},
+                {1, 0, 6, 13, -5},
+                {5, 8, -1, 0, 12},
+                {2, -4, 14, 5, 2},
+            };
+            int n311 = matr311.GetLength(0);
+            for (int i = 0; i < matr311.GetLength(0); i++)
+            {
+                for (int j = 0; j < matr311.GetLength(1); j++)
+                {
+                    if (matr311[i, j] == 0)
+                    {
+                        n311 -= 1;
+                        break;
+                    }
+                }
+            }
+            int[,] matr3111 = new int[n311, 5];
+            int n3111, n3211 = 0;
+            for (int i = 0; i < matr311.GetLength(0); i++)
+            {
+                n3111 = 0;
+                for (int j = 0; j < matr311.GetLength(1); j++)
+                {
+                    if (matr311[i, j] == 0)
+                    {
+                        n3111 = 1;
+                        break;
+                    }
+                }
+                if (n3111 == 0)
+                {
+                    for (int j = 0; j < matr311.GetLength(1); j++)
+                    {
+                        matr3111[n3211, j] = matr311[i, j];
+                    }
+                    n3211 += 1;
+                }
+            }
+            for (int i = 0; i < n311; i++)
+            {
+                for (int j = 0; j < matr3111.GetLength(1); j++)
+                {
+                    Console.Write(matr3111[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+        }
+    }
+}
