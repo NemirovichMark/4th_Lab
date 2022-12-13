@@ -473,7 +473,7 @@ static void lvl3Task1()
             if (array[i, j] < temp)
             {
                 temp = array[i, j];
-                indexes[0,i] = array[i, j];
+                indexes[0, i] = array[i, j];
                 indexes[1, i] = i;
             }
         }
@@ -510,3 +510,50 @@ static void lvl3Task1()
 
     PrintArray(array);
 }
+
+
+static void lvl3Task11()
+{
+    bool Flag = false;
+    int k = 0;
+    double[,] array = CreateArray();
+    string indexes = "";
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (array[i, j] == 0)
+            {
+                indexes += Convert.ToString(i);
+                break;
+            }
+        }
+    }
+
+    double[,] newarray = new double[array.GetLength(0) - indexes.Length, array.GetLength(1)];
+
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (indexes.Contains(Convert.ToChar(i)))
+            {
+                Flag = false;
+                continue;
+            }
+            else
+            {
+                newarray[k, j] = array[i, j];
+                Flag = true;
+            }
+        }
+        if (Flag)
+        {
+            k++;
+        }
+    }
+    array = newarray;
+    PrintArray(array);
+
+}
+lvl3Task11();
