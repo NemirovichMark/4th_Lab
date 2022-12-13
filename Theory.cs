@@ -113,7 +113,8 @@ namespace ConsoleApp5
             for (int i = 0; i < Nums.GetLength(1); i++) (Nums[i, 3], Nums[i, Maxi_Index]) = (Nums[i, Maxi_Index], Nums[i, 3]);
             Printing_Matrix(Nums);
         }
-        static void Task_17_Level_1() {
+        static void Task_17_Level_1()
+        {
             double[,] Nums =
             {
                 { 1, 2, -3, 7, 7, 2, 8},
@@ -123,17 +124,19 @@ namespace ConsoleApp5
                 { - 1, 5, 5, 23, 6, 234, 4},
                 { 14, 5, 525, 643, 6, 23, 1 },
             };
-            double Mini = Nums[0, 0];
-            int[] Mini_Indexes = { 0, 0};
-            int Point = 0;
             for (int i = 0; i < Nums.GetLength(0); i++)
             {
+
+                double Mini = Nums[i, 0];
+                int Mini_Index = 0;
+
                 for (int x = 0; x < Nums.GetLength(1); x++)
                 {
-                    if (Nums[i, x] < Mini) { Mini = Nums[i, x]; Mini_Indexes[0] = i; Mini_Indexes[1] = x; }
+                    if (Nums[i, x] < Mini) { Mini = Nums[i, x]; Mini_Index = x; }
                 }
+
+                for (int x = Mini_Index; x > 0; x--) (Nums[i, x], Nums[i, x - 1]) = (Nums[i, x - 1], Nums[i, x]);
             }
-            (Nums[Mini_Indexes[0], 0], Nums[Mini_Indexes[0], Mini_Indexes[1]]) = (Nums[Mini_Indexes[0], Mini_Indexes[1]], Nums[Mini_Indexes[0], 0]);
             Printing_Matrix(Nums);
         }
         static void Task_29_Level_1() {
@@ -206,23 +209,31 @@ namespace ConsoleApp5
             }
             Printing_Matrix(Nums);
         }
-        static void Task_8_Level_2() {
+        static void Task_8_Level_2()
+        {
             double[,] Nums =
             {
-                { 1, 2, -3, 7, 7, 2, 1},
-                { 14, 120, 9, -1, 3, 5, 1},
-                { -1142, 3, 5, 2, 5, 7, 3},
-                { - 3, 914, 20, 1, 1412, 5, 5},
-                { - 1, 5, 5, 23, 6, 234, 7},
-                { 14, 5, 525, 643, 6, 23, 2},
+                { 1, 2, -3, 7, 7, 2},
+                { 14, 120, 9, -1, 3, 5},
+                { -1142, 3, 5, 2, 5, 7},
+                { - 3, 914, 20, 1, 1412, 5},
+                { - 1, 5, 5, 23, 6, 234},
+                { 14, 5, 525, 643, 6, 23},
             };
-            for(int i = 0; i<Nums.GetLength(0); i++)
+
+            for (int i = 0; i < Nums.GetLength(0); i += 2)
             {
-                for(int x = 0; x < Nums.GetLength(1)/2; x++)
-                {
-                    (Nums[i, x], Nums[i, Nums.GetLength(1) - 1 - x]) = (Nums[i, Nums.GetLength(1) - 1 - x], Nums[i, x]);
-                }
+                double Maxi_1 = Nums[i, 0];
+                double Maxi_2 = Nums[i + 1, 0];
+                int[] Maxi_1_Indexes = { i, 0 };
+                int[] Maxi_2_Indexes = { i, 0 };
+
+                for (int x = 0; x < Nums.GetLength(0); x++) if (Maxi_1 < Nums[i, x]) { Maxi_1 = Nums[i, x]; Maxi_1_Indexes[0] = i; Maxi_1_Indexes[1] = x; }
+                for (int x = 0; x < Nums.GetLength(0); x++) if (Maxi_2 < Nums[i + 1, x]) { Maxi_2 = Nums[i + 1, x]; Maxi_2_Indexes[0] = i + 1; Maxi_2_Indexes[1] = x; }
+
+                (Nums[Maxi_1_Indexes[0], Maxi_1_Indexes[1]], Nums[Maxi_2_Indexes[0], Maxi_2_Indexes[1]]) = (Nums[Maxi_2_Indexes[0], Maxi_2_Indexes[1]], Nums[Maxi_1_Indexes[0], Maxi_1_Indexes[1]]);
             }
+
             Printing_Matrix(Nums);
         }
         static void Task_9_Level_2() {
@@ -246,7 +257,7 @@ namespace ConsoleApp5
             Printing_Matrix(Nums);
         }
         //In the tasks for level 3, it was written in the output to represent a two-dimensional array in two versions. So I prescribed 2 different methods
-        static void Task_1_Level_3() 
+        static void Task_1_Level_3()
         {
             double[,] Nums =
             {
@@ -258,28 +269,42 @@ namespace ConsoleApp5
                 { 100, 5, 5, 23, 6},
                 { 18, 13, 14, 23, 6},
         };
+            double[,] Final_Nums = new double[7, 5];
 
-            int[] Indexes = new int[7];
+            double[,] Indexes = new double[7, 2];
 
-            for(int i = 0; i < Nums.GetLength(0); i++)
+            for (int i = 0; i < Nums.GetLength(0); i++)
             {
+                Indexes[i, 0] = Nums[i, 0];
+                Indexes[i, 1] = i;
                 for (int x = 1; x < Nums.GetLength(1); x++)
                 {
-                    if (Nums[i, Indexes[i]] > Nums[i, x]) Indexes[i] = x;
-                }
-                for(int x = i; x > 0; x--)
-                {
-                    if (Nums[x, Indexes[x]] < Nums[x - 1, Indexes[x - 1]]) 
-                    {
-                        (Indexes[x], Indexes[x - 1]) = (Indexes[x - 1], Indexes[x]);
-                        for (int j = 0; j < Nums.GetLength(1); j++) (Nums[x, j], Nums[x - 1, j]) = (Nums[x - 1, j], Nums[x, j]); 
-                    }
-                    else break;
+                    if (Indexes[i, 0] > Nums[i, x]) Indexes[i, 0] = Nums[i, x];
                 }
             }
 
-            Printing_Matrix(Nums);
+            for (int i = 0; i < Indexes.GetLength(0); i++)
+                for (int j = 0; j < Indexes.GetLength(0) - i - 1; j++)
+                {
+                    if (Indexes[j, 0] > Indexes[j + 1, 0])
+                    {
+                        (Indexes[j, 0], Indexes[j + 1, 0]) = (Indexes[j + 1, 0], Indexes[j, 0]);
+                        (Indexes[j, 1], Indexes[j + 1, 1]) = (Indexes[j + 1, 1], Indexes[j, 1]);
+                    }
+                }
+            
+            for(int i = 0; i<Indexes.GetLength(0); i++)
+            {
+                
+                for (int x = 0; x<Nums.GetLength(1); x++)
+                {
+                    Final_Nums[i, x] = Nums[Convert.ToInt32(Indexes[i, 1]), x];
+                }
+            }
+
+            Printing_Matrix(Final_Nums);
             Printing_Matrix_Diff_Way(Nums);
+
         }
         static void Task_2_Level_3()
         {
@@ -362,40 +387,55 @@ namespace ConsoleApp5
             Printing_Matrix(Nums);
             Printing_Matrix_Diff_Way(Nums);
         }
-        static void Task_8_Level_3() 
+        static void Task_8_Level_3()
         {
             double[,] Nums =
             {
-                { 1, -2, -3, -7, -7, 2, -1},
-                { 14, 120, 9, -1, -3, 5, 1},
-                { -1142, 3, 5, -2, -5, 7, 3},
-                { - 3, 914, 20, 1, 1412, 5, 5},
-                { - 1, 5, -5, 23,6, 234, 7},
-                { 14, 5, 525, 643, 6, 23, 2},
-            };
+                { 1, 2, -3, 7, 4},
+                { 14, 120, 9, -1, -1000},
+                { -1142, 3, 5, 2, 14},
+                { 200, 914, 20, 1, 5},
+                {1, 5, 5, 23, 6},
+                { 100, 5, 5, 23, 6},
+                { 18, 13, 14, 23, 6},
+        };
+            double[,] Final_Nums = new double[7, 5];
 
-            int[] Points = new int[7];
+            double[,] Indexes = new double[7, 2];
 
             for (int i = 0; i < Nums.GetLength(0); i++)
             {
-                for (int x = 0; x < Nums.GetLength(1); x++)
+                Indexes[i, 0] = 0;
+                Indexes[i, 1] = i;
+                for (int x = 1; x < Nums.GetLength(1); x++)
                 {
-                    if (Nums[i, x] >= 0) Points[i]++;
-                }
-                for (int x = i; x > 0; x--)
-                {
-                    if (Points[x] > Points[x-1])
-                    {
-                        (Points[x], Points[x - 1]) = (Points[x - 1], Points[x]);
-                        for (int j = 0; j < Nums.GetLength(1); j++) (Nums[x, j], Nums[x - 1, j]) = (Nums[x - 1, j], Nums[x, j]);
-                    }
-                    else break;
+                    if (Nums[i, x]>0) Indexes[i, 0]++;
                 }
             }
-            Printing_Matrix(Nums);
-            Printing_Matrix_Diff_Way(Nums);
+
+            for (int i = 0; i < Indexes.GetLength(0); i++)
+                for (int j = 0; j < Indexes.GetLength(0) - i - 1; j++)
+                {
+                    if (Indexes[j, 0] > Indexes[j + 1, 0])
+                    {
+                        (Indexes[j, 0], Indexes[j + 1, 0]) = (Indexes[j + 1, 0], Indexes[j, 0]);
+                        (Indexes[j, 1], Indexes[j + 1, 1]) = (Indexes[j + 1, 1], Indexes[j, 1]);
+                    }
+                }
+
+            for (int i = 0; i < Indexes.GetLength(0); i++)
+            {
+
+                for (int x = 0; x < Nums.GetLength(1); x++)
+                {
+                    Final_Nums[i, x] = Nums[Convert.ToInt32(Indexes[i, 1]), x];
+                }
+            }
+
+            Printing_Matrix(Final_Nums);
+            Printing_Matrix_Diff_Way(Final_Nums);
         }
-        static void Task_10_Level_3() 
+        static void Task_10_Level_3()
         {
             double[,] Nums =
             {
@@ -405,13 +445,13 @@ namespace ConsoleApp5
                 {55231, 431, 114, 1}
             };
 
-            for(int i = 0; i < Nums.GetLength(0); i++)
+            for (int i = 0; i < Nums.GetLength(0); i++) // I think it`s possible to use 3-loops cycle here. We can avoid it by using another method, but I think, it`s not important
             {
                 for (int x = 0; x < Nums.GetLength(1); x++)
                 {
-                    for(int j = x+1; j < Nums.GetLength(1); j++)
+                    for (int j = x + 1; j < Nums.GetLength(1); j++)
                     {
-                        if(i%2 == 0)
+                        if (i % 2 == 0)
                         {
                             if (Nums[i, x] > Nums[i, j]) (Nums[i, x], Nums[i, j]) = (Nums[i, j], Nums[i, x]);
                         }
@@ -427,6 +467,7 @@ namespace ConsoleApp5
         }
         static void Task_11_Level_3()
         {
+
             double[,] Nums =
             {
                 { 1, -2, -3, -7, -7, 2, -1},
@@ -436,14 +477,17 @@ namespace ConsoleApp5
                 { - 1, 5, 0, 23,6, 234, 7},
                 { 14, 5, 525, 643, 6, 23, 2},
             };
+
             List<int> Points = new List<int>();
             for (int i = 0; i < Nums.GetLength(0); i++)
             {
-                for (int x = 0; x < Nums.GetLength(1); x++) if (Nums[i, x] == 0) { Points.Add(x); break; }
+                for (int x = 0; x < Nums.GetLength(1); x++) if (Nums[i, x] == 0) { Points.Add(i); break; }
             }
+
             double[,] Final_Nums = new double[Nums.GetLength(0) - Points.Count, Nums.GetLength(1)];
             int revision = 0;
-            for(int i = 0; i < Nums.GetLength(0); i++)
+
+            for (int i = 0; i < Nums.GetLength(0); i++)
             {
                 if (Points.Contains(i)) { revision++; continue; }
                 else
@@ -451,8 +495,8 @@ namespace ConsoleApp5
                     for (int x = 0; x < Nums.GetLength(1); x++) Final_Nums[i - revision, x] = Nums[i, x];
                 }
             }
-            Printing_Matrix(Nums);
-            Printing_Matrix_Diff_Way(Nums);
+            Printing_Matrix(Final_Nums);
+            Printing_Matrix_Diff_Way(Final_Nums);
         }
 
 
