@@ -289,9 +289,6 @@ namespace ConsoleApp6
             }
             Console.WriteLine();
             #endregion
-
-            //2nd lvl (7, 8, 9)
-
             #region 2-7
             int[,] matr27 = new int[6, 6]
             {
@@ -406,9 +403,6 @@ namespace ConsoleApp6
             }
             Console.WriteLine();
             #endregion
-
-            // 3rd lvl (1, 2, 3, 4, 8, 10, 11)
-
             #region 3-1
             int[,] matr31 = new int[7, 5]
             {
