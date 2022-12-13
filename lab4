@@ -1,0 +1,979 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+namespace lab4<3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            #region 1.3
+            int n = 4, m = 4;
+            double[,] matrix = new double[n, m];
+            double x;
+            double summ = 0;
+            Console.WriteLine("Введите элементы массива:");
+            while (!double.TryParse(Console.ReadLine(), out x))
+            {
+                Console.WriteLine("Неверные входные данные");
+                Console.WriteLine("Введите элементы в массив");
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                    if (i == i1) summ += matrix[i, i1];
+                }
+            }
+            Console.WriteLine("Сумма элементов диагонали: {0}", summ);
+            #endregion
+
+            #region 1.6
+            
+            n = 4;
+            m = 7;
+
+            matrix = new double[4, 7];
+
+            Console.WriteLine("Введите элементы матрицы");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                }
+            }
+            double[] array = new double[n];
+            int inmin;
+            double wee;
+            for (int i = 0; i < n; i++)
+            {
+                wee = matrix[i, 0];
+                inmin = 0;
+
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (matrix[i, i1] < wee)
+                    {
+                        wee = matrix[i, i1];
+                        inmin = i1;
+                    }
+
+                }
+                array[i] = inmin;
+            }
+            Console.WriteLine("Массив:");
+            foreach (double el in array) Console.Write($"{el} ");
+            Console.WriteLine();
+            #endregion            
+            #region 1.9
+            int n12 = 6;
+            int m12 = 7;
+            matrix = new double[n12, m12];
+
+            Console.WriteLine("Введите элементы матрицы");
+            for (int i12 = 0; i12 < n12; i12++)
+            {
+                for (int i1 = 0; i1 < m12; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i12, i1] = x;
+                }
+            }
+            double vast = matrix[0, 0];
+            int indmax = 0, indmaxi1 = 0;
+            for (int i12 = 0; i12 < n12; i12++)
+            {
+                for (int i1 = 0; i1 < m12; i1++)
+                {
+                    if (matrix[i12, i1] > vast)
+                    {
+                        indmax = i12;
+                        indmaxi1 = i1;
+                        vast = matrix[i12, i1];//i1!!!! i12 не то
+                    }
+                }
+            }
+            for (int i12 = indmax; i12 < n - 1; i12++)
+            {
+                for (int i1 = 0; i1 < m12; i1++) matrix[i12, i1] = matrix[i12 + 1, i1];
+            }
+            for (int i12 = 0; i12 < n12 - 1; i12++)
+            {
+                for (int i1 = indmaxi1; i1 < m12 - 1; i1++) matrix[i12, i1] = matrix[i12, i1 + 1];
+            }
+            Console.WriteLine("Матрица:");
+            for (int i12 = 0; i12 < n12 - 1; i12++)
+            {
+                for (int i1 = 0; i1 < m12 - 1; i1++)
+                {
+                    Console.Write("{0} ", matrix[i12, i1]); ;
+                }
+                Console.WriteLine();
+            }
+            #endregion            
+            #region 1.12
+            n = 6;
+            m = 7;
+            matrix = new double[n, m];
+
+            Console.WriteLine("Элементы матрицы");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                }
+            }
+            double vast = matrix[0, 0];
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (matrix[i, i1] > vast)
+                    {
+                        indmax = i;
+                        indmaxi1 = i1;
+                        vast = matrix[i, i1];
+                    }
+                }
+            }
+            for (int i = indmax; i < n - 1; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++) matrix[i, i1] = matrix[i + 1, i1];
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int i1 = indmaxi1; i1 < m - 1; i1++) matrix[i, i1] = matrix[i, i1 + 1];
+            }
+            Console.WriteLine("Матрица:");
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int i1 = 0; i1 < m - 1; i1++)
+                {
+                    Console.Write("{0} ", matrix[i, i1]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 1.13
+            n = 5;
+            m = 5;
+            //макс элемент с 4 столбцом по диагонали
+            int inmax;
+            matrix = new double[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                }
+            }
+            vast = matrix[0, 0];
+            inmax = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (matrix[i, i] > vast)
+                {
+                    inmax = i;
+                    vast = matrix[i, i];
+                }
+            }
+            double uu;
+            for (int i = 0; i < n; i++)
+            {
+                uu = matrix[i, 3];
+                matrix[i, 3] = matrix[i, inmax];
+                matrix[i, inmax] = uu;
+            }
+            Console.WriteLine("Матрица:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write("{0} ", matrix[i, i1]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 1.17
+            Console.WriteLine("n=");
+            int.TryParse(Console.ReadLine(), out n);
+            Console.WriteLine("m=");
+            int.TryParse(Console.ReadLine(), out m);
+            while (n < 0 || m < 0)
+            {
+                Console.WriteLine("Введите n еще раз");
+                Console.WriteLine("Введите m еще раз");
+                int.TryParse(Console.ReadLine(), out n);
+                int.TryParse(Console.ReadLine(), out m);
+
+            }
+            matrix = new double[n, m];
+            Console.WriteLine("Введите матрицу");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                wee = matrix[i, 0];
+                inmin = 0;
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (wee > matrix[i, i1])
+                    {
+                        wee = matrix[i, i1];
+                        inmin = i1;
+                    }
+                }
+                for (int i1 = inmin; i1 > 0; i1--) matrix[i, i1] = matrix[i, i1 - 1];
+                matrix[i, 0] = wee;
+            }
+            Console.WriteLine("Матрица=:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write("{0} ", matrix[i, i1]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 1.29
+            n = 5;
+            m = 7;
+            matrix = new double[n, m];
+            Console.WriteLine("Введите матрицу:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                }
+            }
+            wee = Math.Abs(matrix[1, 0]);
+            inmin = 0;
+            for (int i1 = 0; i1 < m; i1++)//i1 i1 i1 i1 i1 !!!
+            {
+                if (wee > Math.Abs(matrix[1, i1]))
+                {
+                    wee = Math.Abs(matrix[1, i1]);
+                    inmin = i1;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = inmin + 1; i1 < m - 1; i1++) matrix[i, i1] = matrix[i, i1 + 1];
+            }
+            Console.WriteLine("Матрица=");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write("{0} ", matrix[i, i1]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 1.31
+            n = 5;
+            m = 8;
+            matrix = new double[n, m];
+            array = new double[n];
+            Console.WriteLine("Введите массив");
+            for (int i = 0; i < n; i++)
+            {
+                double.TryParse(Console.ReadLine(), out x);
+                array[i] = x;
+            }
+            Console.WriteLine("Введите матрицу");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m - 1; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                }
+            }
+            inmin = 0;
+            wee = matrix[4, 0];
+            for (int i = 1; i < m - 1; i++)
+            {
+                if (matrix[4, i] < wee)
+                {
+                    inmin = i;
+                    wee = matrix[4, i];
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = m - 1; i1 > inmin; i1--)
+                {
+                    if (i1 == inmin + 1)
+                    {
+                        matrix[i, i1] = array[i];
+                    }
+                    else
+                    {
+                        matrix[i, i1] = matrix[i, i1 - 1];
+                    }
+                }
+            }
+            Console.WriteLine("Массив:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write("{0} ", matrix[i, i1]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 2.7
+            n = 6;
+            m = 6;
+            matrix = new double[n, m];
+            Console.WriteLine("Введите матрицу");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                }
+            }
+            vast = matrix[0, 0];
+            indmax = 0;
+            for (int i = 1; i < n; i++)
+            {
+                if (matrix[i, i] > vast)
+                {
+                    vast = matrix[i, i];
+                    indmax = i;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = i + 1; i1 < m; i1++)
+                {
+                    if (i < indmax) matrix[i, i1] = 0;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write("{0} ", matrix[i, i1]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 2.8
+            int n = 6;
+            int m = 6;
+            Console.WriteLine("Матрица №1"); //эту без ввода
+            int[,] Boeing578 = new int[n, m];
+            Random p8 = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Boeing578[i, i1] = p8.Next(300);
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(Boeing578[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.WriteLine("Матрица №2");
+            int[] T34 = new int[n];
+            int[] Zone45 = new int[m];
+            for (int i = 0; i < n; i++)
+            {
+                int max888 = int.MinValue;
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (Boeing578[i, i1] > max888)
+                    {
+                        max888 = Boeing578[i, i1];
+                        Zone45[i] = max888;
+                        T34[i] = i1;
+                    }
+                }
+            }
+            for (int i = 0; i < n - 1; i = i + 2)
+            {
+                for (int i1 = T34[i]; i1 <= T34[i]; i1++)
+                {
+
+                    Boeing578[i, i1] = Zone45[i + 1];
+                    Boeing578[i + 1, T34[i + 1]] = Zone45[i];
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(Boeing578[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 2.9
+            int n9 = 6;
+            int m9 = 7;
+            Console.WriteLine("Матрица №1");
+            double[,] Shelly = new double[n9, m9];
+            Random r = new Random();
+            for (int i = 0; i < n9; i++)
+            {
+                for (int i1 = 0; i1 < m9; i1++)
+                {
+                    Shelly[i, i1] = r.Next(300);
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n9; i++)
+            {
+                for (int i1 = 0; i1 < m9; i1++)
+                {
+                    Console.Write(Shelly[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.WriteLine("Матрица №2");
+            int uu = 0;
+            for (int i = 0; i < n9; i++)
+            {
+                for (int i1 = m9 - 1; i1 > m9 - 1; i1--)
+                {
+                    uu = Shelly[i, i1];
+                    Shelly[i, i1] = Shelly[i, m9 - i1 - 1];
+                    Shelly[i, m9 - i1 - 1] = uu; //не с 1
+
+                }
+            }
+
+            Console.WriteLine();
+            for (int i = 0; i < n9; i++)
+            {
+                for (int i1 = 0; i1 < m9; i1++)
+                {
+                    Console.Write(Shelly[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 3.1
+            int n = 7;
+            int m = 5;
+            double uu = 0;
+            Console.WriteLine("Матрица №1");
+            int[,] edgar = new int[n, m];
+            Random r = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    edgar[i, i1] = r.Next(300);
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(edgar[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            double[] north = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                int shelly = int.MaxValue;
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (edgar[i, i1] < shelly)
+                    {
+                        shelly = edgar[i, i1];
+                        north[i] = shelly;
+                    }
+                }
+            }
+            int poko = 0;
+            while (poko < north.Length - 1)
+            {
+                if (north[poko] < north[poko + 1])
+                {
+                    north[poko] = north[poko + 1];
+                    for (int i = 0; i < m; i++)
+                    {
+                        int amber = edgar[poko, i];
+                        edgar[poko, i] = edgar[poko + 1, i];
+                        edgar[poko + 1, i] = amber;
+                    }
+                    if (poko > 0)
+                    {
+                        poko--;
+                    }
+                }
+                else
+                {
+                    poko++;
+                }
+
+            }
+            Console.WriteLine();
+            Console.WriteLine("Матрица №2");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(edgar[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+
+            #endregion
+            #region 3.2
+            int n = 4;
+            int m = 4;//нулями кв функцию
+            Console.WriteLine("Матрица №1");
+            int[,] karl = new int[n, n];
+            Random elprimo = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < n; i1++)
+                {
+                    karl[i, i1] = elprimo.Next(300);
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < n; i1++)
+                {
+                    Console.Write(karl[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("Матрица №2");
+            for (int i = 0; i < n; i++)
+            {
+                karl[i, 0] = 0;
+                karl[0, i] = 0;
+                karl[n - 1, i] = 0;
+                karl[i, n - 1] = 0;
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < n; i1++)
+                {
+                    Console.Write(karl[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+
+            }
+            #endregion     
+            #region 3.3
+            int n = 3;
+            Console.WriteLine("Матрица №1");
+            int[,] mas2 = new int[n, n];
+            Random newm = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < n; i1++)
+                {
+                    mas2[i, i1] = newm.Next(300);
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < n; i1++)
+                {
+                    Console.Write(mas2[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            int[] mas3 = new int[2 * n - 1];
+            int ww = 0;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                int dlina = n - i;
+                int sum = 0;
+                for (int i1 = 0; i1 < dlina; i1++)
+                {
+                    sum += mas2[i + i1, i1];
+                }
+                mas3[ww++] = sum;
+            }
+            for (int i = 1; i < n; i++)
+            {
+
+                int dlina = n - i;
+                int sum = 0;
+                for (int i1 = 0; i1 < dlina; i1++)
+                {
+                    sum += mas2[i1, i + i1];
+                }
+                mas3[ww++] = sum;
+            }
+            Console.WriteLine("Массив №2");
+            foreach (int element in mas3)
+            {
+                Console.WriteLine(element);
+            }
+            #endregion
+            #region 3.4
+            int n4;
+            Console.WriteLine("Введите n4");//проверку и как в прошлой
+            while (!int.TryParse(Console.ReadLine(), out n4))
+            {
+
+            }
+            Console.WriteLine("Матрица №1");
+            int[,] new4 = new int[n4, n4];
+            Random ww4 = new Random();
+            for (int i = 0; i < n4; i++)
+            {
+                for (int i1 = 0; i1 < n4; i1++)
+                {
+                    new4[i, i1] = ww4.Next(300);
+                }
+            }
+            for (int i = 0; i < n4; i++)
+            {
+                for (int i1 = 0; i1 < n4; i1++)
+                {
+                    Console.Write(new4[i, i1] + "\t");
+                }
+                Console.WriteLine();
+            }
+            if (n4 % 2 == 0)
+            {
+                int nachz = 0;
+                for (int i = n4 - 1; i >= n4 / 2; i--)
+                {
+
+                    for (int i1 = 0; i1 < n4 - nachz; i1++)
+                    {
+                        new4[i, i1] = 1;
+                    }
+                    nachz++;
+                }
+            }
+            else
+            {
+                int nachz = 0;
+                for (int i = n4 - 1; i >= n4 / 2; i--)
+                {
+
+                    for (int i1 = 0; i1 < n4 - nachz; i1++)
+                    {
+                        new4[i, i1] = 1;
+                    }
+                    nachz++;
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("Матрица №2");
+            for (int i = 0; i < n4; i++)
+            {
+                for (int i1 = 0; i1 < n4; i1++)
+                {
+                    Console.Write(new4[i, i1] + "\t");
+                }
+                Console.WriteLine();
+            }
+            #endregion     
+            #region 3.8
+            int n = 7, m = 5;
+            Console.WriteLine("Матрица 1");
+            int[,] matriza = new int[n, m];
+            Random vvod = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    matriza[i, i1] = vvod.Next(-300, 300);
+                }
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(matriza[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            int[] mat8 = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                int plus = 0;
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (matriza[i, i1] > 0)
+                    {
+                        plus++;
+                    }
+                }
+                mat8[i] = plus;
+            }
+            Console.WriteLine();
+            Console.WriteLine("Mатрица 2");
+            int cvc = 0;//мб -1
+            while (cvc < mat8.Length - 1)
+            {//while или if и от 0 до строк 
+                if (mat8[cvc] < mat8[cvc + 1])
+                {
+                    int ll = mat8[cvc];
+                    mat8[cvc] = mat8[cvc + 1];
+                    mat8[cvc + 1] = ll;
+                    for (int i = 0; i < m; i++)
+                    {
+                        int l = matriza[cvc, i];
+                        matriza[cvc, i] = matriza[cvc + 1, i];
+                        matriza[cvc + 1, i] = l;
+                    }
+                    if (cvc > 0)
+                    {
+                        cvc--;
+                    }
+                }
+                else
+                {
+                    cvc++;
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(matriza[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 3.10
+            int m, n;
+            int minin;
+            int malchely;
+            int bigchely;
+            int bigin;
+            int k;
+            Console.WriteLine("Введите n");
+            while (!int.TryParse(Console.ReadLine(), out n))
+            {
+                Console.WriteLine("Неверные входные данные");
+                Console.Write("n=");
+
+            }
+            Console.WriteLine("Введите m");
+            while (!int.TryParse(Console.ReadLine(), out m))
+            {
+                Console.WriteLine("Неверные входные данные");
+                Console.Write("m=");
+            }
+            int[,] mat10 = new int[n, m];
+            Random mou = new Random();
+            Console.WriteLine("Матрица 1");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    mat10[i, i1] = mou.Next(-40, 37);
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(mat10[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine(); ;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    for (int i1 = 0; i1 < m - 1; i1++)
+                    {
+                        bigchely = mat10[i, i1];
+                        bigin = i1;
+                        for (k = i1 + 1; k < m; k++)
+                        {
+                            if (mat10[i, k] > bigchely)
+                            {
+                                bigchely = mat10[i, k];
+                                bigin = k;
+                            }
+                        }
+                        mat10[i, bigin] = mat10[i, i1];
+                        mat10[i, i1] = bigchely;
+                    }
+                }
+                else
+                {
+                    for (int i1 = 0; i1 < m - 1; i1++)
+                    {
+                        malchely = mat10[i, i1];
+                        minin = i1;
+                        for (k = i1 + 1; k < m; k++)
+                        {
+                            if (mat10[i, k] < malchely)
+                            {
+                                malchely = mat10[i, k];
+                                minin = k;
+                            }
+                        }
+                        mat10[i, minin] = mat10[i, i1];
+                        mat10[i, i1] = malchely;
+                    }
+                }
+            }
+            Console.WriteLine("Матрица 2");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write("{0} ", mat10[i, i1]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+            #region 3.11
+            int n;
+            int m;
+            Console.WriteLine("Введите n");
+            while (!int.TryParse(Console.ReadLine(), out n))
+            {
+                Console.WriteLine("Неверные входные данные");
+                Console.Write("n=");
+
+            }
+            Console.WriteLine("Введите m");
+            while (!int.TryParse(Console.ReadLine(), out m))
+            {
+                Console.WriteLine("Неверные входные данные");
+                Console.Write("m=");
+            }
+            Console.WriteLine("Матрица 1");
+            int[,] meow = new int[n, m];
+            Random rand = new Random();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    meow[i, i1] = rand.Next(-20, 18);
+                }
+            }
+            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(meow[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            int pluss = 0;
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (meow[i, i1] == 0)
+                    {
+                        pluss++;
+                        break;
+                    }
+                }
+            }
+            //строки с 0
+            bool[] pravd = new bool[n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    if (meow[i, i1] == 0)
+                    {
+                        pravd[i] = true;
+                        break;
+                    }
+                }
+            }
+            Console.WriteLine("Mатрица 2");
+            int dlyanull = n - pluss;
+            int[,] prisvaivanie = new int[dlyanull, m];
+            int ii1 = 0;
+            for (int i = 0; i < n; i++)
+            {
+                if (pravd[i] == true)//просто нужен был континью!!
+                {
+                    continue;
+                }
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    prisvaivanie[ii1, i1] = meow[i, i1];
+                }
+                ii1++;
+            }
+            Console.WriteLine();
+            for (int i = 0; i < dlyanull; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    Console.Write(prisvaivanie[i, i1] + "\t");
+
+                }
+                Console.WriteLine();
+            }
+            #endregion
+        }
+
+    }
+}
