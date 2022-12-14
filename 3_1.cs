@@ -1,5 +1,6 @@
 using System;
 
+
 namespace _4th_defence
 {
     class Program
@@ -60,6 +61,18 @@ namespace _4th_defence
             }
         }
 
+        static double min(double[,] matrix, int row, int cols)
+        {
+            double min_val = Double.MaxValue;
+            for (int i=0; i<cols; i++)
+            {
+                if (matrix[row, i] < min_val)
+                {
+                    min_val = matrix[row, i];
+                }
+            }
+            return min_val;
+        }
         static void bubble_sort(ref double[,] matrix, int cols, int rows, ref bool sorted)
         {
             while (!sorted)
@@ -67,7 +80,7 @@ namespace _4th_defence
                 bool temp_sorted = true;
                 for (int i_row = 0; i_row < rows - 1; i_row++)
                 {
-                    if (matrix[i_row, 0] < matrix[i_row + 1, 0])
+                    if (min(matrix, i_row, cols) < min(matrix, i_row+1, cols))
                     {
                         temp_sorted = false;
                         swap(ref matrix, i_row, i_row + 1, cols);
