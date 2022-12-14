@@ -298,7 +298,7 @@ public class Program
         
         for (int i = 0; i < n_a5_7; i++)
         {
-            for (int k = 0; k < m_a5_7; k++)
+            for (int k = 0; k < m_a5_7 - 1; k++)
             {
                 Console.Write("{0,5} ", a5_7[i, k]);
             }
@@ -543,121 +543,131 @@ public class Program
         Console.WriteLine("level 3");
         
         // # 1
-        Console.WriteLine("# 1");
-        int n_a7_5 = 7;
-        int m_a7_5 = 5;
-        int[,] a7_5 = new int[7,5] {{4, 7, 10, 3, 54}, 
-                                          {3, 4, 50, -34, 2}, 
+            Console.WriteLine("# 1");
+            int n_a7_5 = 7;
+            int m_a7_5 = 5;
+            int[,] a7_5 = new int[7, 5] {{4, 7, 10, 3, 54},
+                                          {3, 4, 50, -24, 2},
                                           {-8, 7, 10, 354000, -7},
                                           {56, -4, 50, -24, 23},
                                           {21, 43, 2, -58, 3},
                                           {-56, 74, 50, 624, 23},
                                           {41, 33, 32, -78, 93}};
-                                          
-        
-        
-        
-        for (int i = 0; i < n_a7_5; i++)
-        {
-            for (int k = 0; k < m_a7_5; k++)
+
+
+
+
+            for (int i = 0; i < n_a7_5; i++)
             {
-                Console.Write("{0,5} ", a7_5[i, k]);
+                for (int k = 0; k < m_a7_5; k++)
+                {
+                    Console.Write("{0,5} ", a7_5[i, k]);
+                }
+                Console.WriteLine("");
             }
             Console.WriteLine("");
-        }
-        Console.WriteLine("");
-        
-        
-        int[,] min_a7_5 = new int[2,n_a7_5];
-        for (int i = 0; i < n_a7_5; i++)
-        {
-            int mi_a = a7_5[i, 0];
-            for (int k = 0; k < m_a7_5; k++)
+
+
+            int[,] min_a7_5 = new int[2, n_a7_5];
+            for (int i = 0; i < n_a7_5; i++)
             {
-                if (mi_a > a7_5[i, k])
+                int mi_a = a7_5[i, 0];
+                for (int k = 0; k < m_a7_5; k++)
                 {
-                    mi_a = a7_5[i, k];
-                    
+                    if (mi_a > a7_5[i, k])
+                    {
+                        mi_a = a7_5[i, k];
+
+
+                    }
+
+                }
+
+                min_a7_5[0, i] = mi_a;
+                min_a7_5[1, i] = i;
+
+            }
+
+
+
+
+            int hranilithe = 0;
+            for (int i = 0; i < n_a7_5; i++)
+            {
+                for (int k = i + 1; k < n_a7_5; k++)
+                {
+                    if (min_a7_5[0, i] < min_a7_5[0, k])
+                    {
+                        hranilithe = min_a7_5[0, k];
+                        min_a7_5[0, k] = min_a7_5[0, i];
+                        min_a7_5[0, i] = hranilithe;
+                        hranilithe = min_a7_5[1, k];
+                        min_a7_5[1, k] = min_a7_5[1, i];
+                        min_a7_5[1, i] = hranilithe;
+                    }
+                    else if (min_a7_5[0, i] == min_a7_5[0, k])
+                    {
+                        hranilithe = min_a7_5[0, k];
+                        min_a7_5[0, k] = min_a7_5[0, i + 1];
+                        min_a7_5[0, i + 1] = hranilithe;
+                        hranilithe = min_a7_5[1, k];
+                        min_a7_5[1, k] = min_a7_5[1, i + 1];
+                        min_a7_5[1, i + 1] = hranilithe;
+                    }
                     
                 }
-                
             }
-            
-            min_a7_5[0, i] = mi_a;
-            min_a7_5[1, i] = i;
-            
-        }
-        
-        
-        
-        
-        int hranilithe = 0;
-        for (int i = 0; i < n_a7_5; i++)
-        {
-            for (int k = i + 1; k < n_a7_5; k++)
+
+
+
+            int str_dla_zameni = 0;
+            hranilithe = 0;
+            int[] hranilithe_masiv = new int[m_a7_5];
+            for (int i = 0; i < n_a7_5; i++)
             {
-                if (min_a7_5[0, i] <= min_a7_5[0, k])
+                for (int k = i; k < n_a7_5; k++)
                 {
-                    hranilithe = min_a7_5[0, k];
-                    min_a7_5[0, k] = min_a7_5[0, i];
-                    min_a7_5[0, i] = hranilithe;
-                    hranilithe = min_a7_5[1, k];
-                    min_a7_5[1, k] = min_a7_5[1, i];
-                    min_a7_5[1, i] = hranilithe;
+                    if (min_a7_5[1, k] == i)
+                    {
+                        str_dla_zameni = min_a7_5[1, i];
+
+                        hranilithe = min_a7_5[1, k];
+                        min_a7_5[1, k] = min_a7_5[1, i];
+                        min_a7_5[1, i] = hranilithe;
+
+                        break;
+                    }
                 }
-            }
-        }
-        
-        
-        
-        int str_dla_zameni = 0;
-        hranilithe = 0;
-        int[] hranilithe_masiv = new int[m_a7_5];
-        for (int i = 0; i < n_a7_5; i++)
-        {
-            for (int k = i; k < n_a7_5; k++)
-            {
-                if (min_a7_5[1, k] == i)
+
+                for (int k = 0; k < m_a7_5; k++)
                 {
-                    str_dla_zameni = min_a7_5[1, i];
-                    
-                    hranilithe = min_a7_5[1, k];
-                    min_a7_5[1, k] = min_a7_5[1, i];
-                    min_a7_5[1, i] = hranilithe;
-                    
-                    break;
+                    hranilithe_masiv[k] = a7_5[str_dla_zameni, k];
                 }
+                for (int k = 0; k < m_a7_5; k++)
+                {
+                    a7_5[str_dla_zameni, k] = a7_5[i, k];
+                }
+                for (int k = 0; k < m_a7_5; k++)
+                {
+                    a7_5[i, k] = hranilithe_masiv[k];
+                }
+
+
             }
-            
-            for (int k = 0; k < m_a7_5; k++)
+
+
+
+
+
+            for (int i = 0; i < n_a7_5; i++)
             {
-                hranilithe_masiv[k] = a7_5[str_dla_zameni, k];
-            }
-            for (int k = 0; k < m_a7_5; k++)
-            {
-                a7_5[str_dla_zameni, k] = a7_5[i, k];
-            }
-            for (int k = 0; k < m_a7_5; k++)
-            {
-                a7_5[i, k] = hranilithe_masiv[k];
-            }
-            
-            
-        }
-        
-        
-        
-        
-        
-        for (int i = 0; i < n_a7_5; i++)
-        {
-            for (int k = 0; k < m_a7_5; k++)
-            {
-                Console.Write("{0,5} ", a7_5[i, k]);
+                for (int k = 0; k < m_a7_5; k++)
+                {
+                    Console.Write("{0,5} ", a7_5[i, k]);
+                }
+                Console.WriteLine("");
             }
             Console.WriteLine("");
-        }
-        Console.WriteLine("");          
 
         // # 2
         Console.WriteLine("# 2");
