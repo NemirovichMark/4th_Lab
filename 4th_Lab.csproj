@@ -1,9 +1,1040 @@
-<Project Sdk="Microsoft.NET.Sdk">
+using System;
+using System.Collections.Generic;
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // level 1
+        Console.WriteLine("level 1");
+        
+        // # 3
+        Console.WriteLine("# 3");
+        int n = 4;
+        double[,] a = new double[,] {{4, 7, 10, 3}, {54, -7, 23, 65}, {3, 4, 50, -24}, {34, 2, -3, 6}};
+        
+        for (int i = 0; i < n; i++)
+        {
+            for (int k = 0; k < n; k++)
+            {
+                Console.Write("{0,5} ", a[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        double sum = 0;
+        for (int i = 0; i < n; i++)
+        {
+            sum = sum + a[i,i];
+        }
+        
+        Console.WriteLine(sum);
+        
+        
+        // # 6
+        Console.WriteLine("# 6");
+        int n1 = 4;
+        int n2 = 7;
+        double[,] a4_7 = new double[4,7] {{4, 7, 10, 3, 54, -7, 23}, 
+                                          {3, 4, 50, -34, 2, -3, 6}, 
+                                          {-8, 7, 10, 354, -7, -23, 65},
+                                          {56, -4, 50, -24, 23, -1, -4}};
+        double[] mi = new double[n1];
+        
+        for (int i = 0; i < n1; i++)
+        {
+            for (int k = 0; k < n2; k++)
+            {
+                Console.Write("{0,5} ", a4_7[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        for (int i = 0; i < n1; i++)
+        {
+            double min = a4_7[i, 0];
+            for (int k = 0; k < n2; k++)
+            {
+                if (min > a4_7[i, k])
+                {
+                    min = a4_7[i, k];
+                }
+            mi[i] = min;
+            }
+        }
+        
+        
+        for (int i = 0; i < n1; i++)
+        {
+            Console.Write("{0:f} ", mi[i]);
+        }
+        Console.WriteLine("");
+        
+        
+        // # 12
+        Console.WriteLine("#12");
+        n1 = 6;
+        n2 = 7;
+        double[,] a6_7 = new double[6,7] {{4, 7, 10, 3, 54, -7, 23}, 
+                                          {3, 4, 50, -34, 2, -3, 6}, 
+                                          {-8, 7, 10, 354000, -7, -23, 65},
+                                          {56, -4, 50, -24, 23, -1, -4},
+                                          {21, 43, 2, -58, 3, -61, 64},
+                                          {-56, 74, 50, 624, 23, -1, -94}};
+        for (int i = 0; i < n1; i++)
+        {
+            for (int k = 0; k < n2; k++)
+            {
+                Console.Write("{0,5} ", a6_7[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        int min_n1 = 0;
+        int min_n2 = 0;
+        double max = a6_7[0,0];
+        for (int i = 0; i < n1; i++)
+        {
+            for (int k = 0; k < n2; k++)
+            {
+                if ( max < a6_7[i,k])
+                {
+                    max = a6_7[i,k];
+                    min_n1 = i;
+                    min_n2 = k;
+                }
+            }
+        }
+        
+        for (int i = min_n1; i < n1; i++)
+        {
+            for (int k = 0; k < n2; k++)
+            {
+                
+                if (i == n1 - 1)
+                {
+                    a6_7[i, k] = 0;
+                }
+                else
+                {
+                    a6_7[i, k] = a6_7[i + 1, k];
+                }
+            }
+            
+        }
+        
+        for (int i = 0; i < n1; i++)
+        {
+            for (int k = min_n2; k < n2; k++)
+            {
+                if (k == n2 - 1)
+                {
+                    a6_7[i, k] = 0;
+                }
+                else
+                {
+                    a6_7[i, k] = a6_7[i, k + 1];
+                }
+            }
+            
+        }
+        
+        for (int i = 0; i < n1 - 1; i++)
+        {
+            for (int k = 0; k < n2 - 1; k++)
+            {
+                Console.Write("{0,5} ", a6_7[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+       // # 13
+        Console.WriteLine("#13");
+        n = 5;
+        double[,] a5_5 = new double[,] {{4, 7, 10, 3, 3}, {54, -7, 23, 65, -4}, {3, 4, 50, -24, 45}, {34, 2, -3, 6, 22}, {-44, 34, 3, 33, 23}};
+        
+        for (int i = 0; i < n; i++)
+        {
+            for (int k = 0; k < n; k++)
+            {
+                Console.Write("{0,5} ", a5_5[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        double max_d_a5_5 = a5_5[0, 0];
+        int max_d_a5_5_index = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (a5_5[i, i] > max_d_a5_5)
+            {
+                max_d_a5_5 = a5_5[i, i];
+                max_d_a5_5_index = i;
+            }
+        }
+        
+        double time_znath = 0;
+        for (int i = 0; i < n; i++)
+        {
+            time_znath = a5_5[i, 3];
+            a5_5[i, 3] = a5_5[i, max_d_a5_5_index];
+            a5_5[i, max_d_a5_5_index] = time_znath;
+        }
+        
+        for (int i = 0; i < n; i++)
+        {
+            for (int k = 0; k < n; k++)
+            {
+                Console.Write("{0,5} ", a5_5[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");        
+        
+        
+        
+        // # 17
+        Console.WriteLine("#17");
+        double[,] a3_4 = new double[,] {{4, 7, 10, 3}, {54, -7, 23, 65}, {3, 4, 50, -24}};
+        int n_a3_4 = 3;
+        int m_a3_4 = 4;
+        
+        for (int i = 0; i < n_a3_4; i++)
+        {
+            for (int k = 0; k < m_a3_4; k++)
+            {
+                Console.Write("{0,5} ", a3_4[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");        
+        
+        for (int i = 0; i < n_a3_4; i++)
+        {
+            double min_el = a3_4[i,0];
+            int min_el_k = 0;
+            for (int k = 0; k < m_a3_4; k++)
+            {
+                if (min_el > a3_4[i,k])
+                {
+                    min_el = a3_4[i,k];
+                    min_el_k = k;
+                }
+            }
+            
+            for (int k = min_el_k; k > 0; k--)
+            {
+                a3_4[i,k] = a3_4[i, k - 1];
+            }
+            a3_4[i,0] = min_el;
+        }
+        
+        for (int i = 0; i < n_a3_4; i++)
+        {
+            for (int k = 0; k < m_a3_4; k++)
+            {
+                Console.Write("{0,5} ", a3_4[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");   
+        
+        
+        
+        // # 29
+        Console.WriteLine("#29");
+        int n_a5_7 = 5;
+        int m_a5_7 = 7;
+        double[,] a5_7 = new double[5,7] {{4, 7, 10, 3, 54, -7, 23}, 
+                                          {3, 4, 50, -34, 2, -3, 6}, 
+                                          {-8, 7, 10, 354, -7, -23, 65},
+                                          {56, -4, 50, -24, 23, -1, -4},
+                                          {21, 43, 2, -58, 3, -61, 64}};
+        
+        
+        for (int i = 0; i < n_a5_7; i++)
+        {
+            for (int k = 0; k < m_a5_7; k++)
+            {
+                Console.Write("{0,5} ", a5_7[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        double min_el_a = Math.Abs(a5_7[1, 0]);
+        int min_el_a_i = 0;
+        for (int i = 0; i < n_a5_7; i++)
+        {
+            if (min_el_a > Math.Abs(a5_7[1, i]))
+            {
+                min_el_a = Math.Abs(a5_7[1, i]);
+                min_el_a_i = i + 1;
+            }
+        }
+        
+        for (int i = 0; i < n_a5_7; i++)
+        {
+            for (int k = min_el_a_i; k < m_a5_7; k++)
+            {
+                if (k == m_a5_7 - 1)
+                {
+                    a5_7[i,k] = 0;
+                }
+                else
+                {
+                    a5_7[i,k] = a5_7[i,k + 1];
+                }
+            }
+            
+        }
+        
+        
+        for (int i = 0; i < n_a5_7; i++)
+        {
+            for (int k = 0; k < m_a5_7; k++)
+            {
+                Console.Write("{0,5} ", a5_7[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        // # 31
+        Console.WriteLine("#31");
+        int n_a5_8 = 5;
+        int m_a5_8 = 8;
+        double[,] a5_8 = new double[5,8] {{4, 7, 10, 3, 54, -7, 23, 0}, 
+                                          {3, 4, 50, -34, 2, -3, 6, 0}, 
+                                          {-8, 7, 10, 354, -7, -23, 65, 0},
+                                          {56, -4, 50, -24, 23, -1, -4, 0},
+                                          {21, 43, 2, -58, 3, -61, 64, 0}};
+                                          
+        double[] B = new double[] {1, 1, 1, 1, 1};
+        
+        
+        for (int i = 0; i < n_a5_8; i++)
+        {
+            for (int k = 0; k < m_a5_8; k++)
+            {
+                Console.Write("{0,5} ", a5_8[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        double min_el_a5_8 = a5_8[4, 0];
+        int min_el_a5_8_i = 0;
+        for (int i = 0; i < m_a5_8; i++)
+        {
+            if (min_el_a5_8 > a5_8[4, i])
+            {
+                min_el_a5_8 = a5_8[4, i];
+                min_el_a5_8_i = i;
+            }
+        }
+        
+        
+        for (int i = 0; i < n_a5_8; i++)
+        {
+            for (int k = m_a5_8 - 1; k > min_el_a5_8_i; k--)
+            {
+                if (k == min_el_a5_8_i + 1)
+                {
+                    a5_8[i,k] = B[i];
+                }
+                else
+                {
+                    a5_8[i,k] = a5_8[i,k - 1];
+                }
+            }
+            
+        }
+        
+        
+        for (int i = 0; i < n_a5_8; i++)
+        {
+            for (int k = 0; k < m_a5_8; k++)
+            {
+                Console.Write("{0,5} ", a5_8[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        
+        // level 2
+        Console.WriteLine("level 2");
+        
+        // # 7
+        Console.WriteLine("# 7");
+        int n_a6_6 = 6;
+        double[,] a6_6 = new double[6,6] {{4, 7, 10, 3, 54, -7}, 
+                                          {3, 4, 50, -34, 2, -3}, 
+                                          {-8, 7, 10, 354000, -7, -23},
+                                          {56, -4, 50, -24, 23, -1},
+                                          {21, 43, 2, -58, 3, -61},
+                                          {-56, 74, 50, 624, 23, -1}};
+        
+        for (int i = 0; i < n_a6_6; i++)
+        {
+            for (int k = 0; k < n_a6_6; k++)
+            {
+                Console.Write("{0,5} ", a6_6[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        double max_diag = a6_6[0,0];
+        int max_diag_i = 0;
+        for (int i = 0; i < n_a6_6; i++)
+        {
+            if (max_diag < a6_6[i, i])
+            {
+                max_diag = a6_6[i, i];
+                max_diag_i = i;
+            }
+        }
+        
+        int finih = 0;
+        for (int i = 0; i < max_diag_i; i++)
+        {
+            for (int k = n_a6_6 - 1; k > finih; k--)
+            {
+                a6_6[i,k] = 0;
+            }
+            finih++;
+        }
+        Console.WriteLine("");
+        
+        
+        for (int i = 0; i < n_a6_6; i++)
+        {
+            for (int k = 0; k < n_a6_6; k++)
+            {
+                Console.Write("{0,5} ", a6_6[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        // # 8
+        Console.WriteLine("# 8");
+        
+        int n_a6_6_v2 = 6;
+        int[,] a6_6_v2 = new int[6,6] {{4, 7, 10, 3, 54, -7}, 
+                                          {3, 4, 50, -34, 2, -3}, 
+                                          {-8, 7, 10, 354, -7, -23},
+                                          {56, -4, 50, -24, 23, -1},
+                                          {21, 43, 2, -58, 3, -61},
+                                          {-56, 74, 50, 624, 23, -1}};
+        
+        for (int i = 0; i < n_a6_6_v2; i++)
+        {
+            for (int k = 0; k < n_a6_6_v2; k++)
+            {
+                Console.Write("{0,5} ", a6_6_v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        int[,] maxx = new int[2,6];
+        for (int i = 0; i < n_a6_6_v2; i++)
+        {
+            int max_a6_6_v2 = a6_6_v2[i,0];
+            int max_a6_6_v2_i = 0;
+            for (int k = 0; k < n_a6_6_v2; k++)
+            {
+                if (max_a6_6_v2 < a6_6_v2[i, k])
+                {
+                    max_a6_6_v2 = a6_6_v2[i, k];
+                    max_a6_6_v2_i = k;
+                }
+                
+            }
+            maxx[0, i] = max_a6_6_v2;
+            maxx[1, i] = max_a6_6_v2_i;
+            
+        }
+        
+        for (int i = 0; i < n_a6_6_v2; i = i + 2)
+        {
+            a6_6_v2[i, maxx[1, i]] = maxx[0, i + 1];
+            a6_6_v2[i + 1, maxx[1, i + 1]] = maxx[0, i];
+        }
+        
+        for (int i = 0; i < n_a6_6_v2; i++)
+        {
+            for (int k = 0; k < n_a6_6_v2; k++)
+            {
+                Console.Write("{0,5} ", a6_6_v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        
+        // # 9
+        Console.WriteLine("# 9");
+        
+        int n_a6_7 = 6;
+        int m_a6_7 = 7;
+        double[,] a6_7_v2 = new double[6,7] {      {4, 7, 10, 3, 54, -7, 3}, 
+                                          {3, 4, 50, -34, 2, -3, 6}, 
+                                          {-8, 7, 10, 354, -7, -23, 5},
+                                          {56, -4, 50, -24, 23, -1, 5},
+                                          {21, 43, 2, -58, 3, -61, 5},
+                                          {-56, 74, 50, 624, 23, -1, 4}};
+        
+        double[] stroca = new double[7];
+        
+        for (int i = 0; i < n_a6_7; i++)
+        {
+            for (int k = 0; k < m_a6_7; k++)
+            {
+                Console.Write("{0,5} ", a6_7_v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        for (int i = 0; i < n_a6_7; i++)
+        {
+            for (int k = 0; k < m_a6_7; k++)
+            {
+                stroca[k] = a6_7_v2[i, k];
+            }
+            int d = 0;
+            for (int k = m_a6_7 - 1; k > -1; k--)
+            {
+                a6_7_v2[i, d] = stroca[k];
+                d++;
+            }
+        }
+        
+        
+        for (int i = 0; i < n_a6_7; i++)
+        {
+            for (int k = 0; k < m_a6_7; k++)
+            {
+                Console.Write("{0,5} ", a6_7_v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        
+        // level 3
+        Console.WriteLine("level 3");
+        
+        // # 1
+        Console.WriteLine("# 1");
+        int n_a7_5 = 7;
+        int m_a7_5 = 5;
+        int[,] a7_5 = new int[7,5] {{4, 7, 10, 3, 54}, 
+                                          {3, 4, 50, -34, 2}, 
+                                          {-8, 7, 10, 354000, -7},
+                                          {56, -4, 50, -24, 23},
+                                          {21, 43, 2, -58, 3},
+                                          {-56, 74, 50, 624, 23},
+                                          {41, 33, 32, -78, 93}};
+                                          
+        
+        
+        
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                Console.Write("{0,5} ", a7_5[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        int[,] min_a7_5 = new int[2,n_a7_5];
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            int mi_a = a7_5[i, 0];
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                if (mi_a > a7_5[i, k])
+                {
+                    mi_a = a7_5[i, k];
+                    
+                    
+                }
+                
+            }
+            
+            min_a7_5[0, i] = mi_a;
+            min_a7_5[1, i] = i;
+            
+        }
+        
+        
+        
+        
+        int hranilithe = 0;
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = i + 1; k < n_a7_5; k++)
+            {
+                if (min_a7_5[0, i] <= min_a7_5[0, k])
+                {
+                    hranilithe = min_a7_5[0, k];
+                    min_a7_5[0, k] = min_a7_5[0, i];
+                    min_a7_5[0, i] = hranilithe;
+                    hranilithe = min_a7_5[1, k];
+                    min_a7_5[1, k] = min_a7_5[1, i];
+                    min_a7_5[1, i] = hranilithe;
+                }
+            }
+        }
+        
+        
+        
+        int str_dla_zameni = 0;
+        hranilithe = 0;
+        int[] hranilithe_masiv = new int[m_a7_5];
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = i; k < n_a7_5; k++)
+            {
+                if (min_a7_5[1, k] == i)
+                {
+                    str_dla_zameni = min_a7_5[1, i];
+                    
+                    hranilithe = min_a7_5[1, k];
+                    min_a7_5[1, k] = min_a7_5[1, i];
+                    min_a7_5[1, i] = hranilithe;
+                    
+                    break;
+                }
+            }
+            
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                hranilithe_masiv[k] = a7_5[str_dla_zameni, k];
+            }
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                a7_5[str_dla_zameni, k] = a7_5[i, k];
+            }
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                a7_5[i, k] = hranilithe_masiv[k];
+            }
+            
+            
+        }
+        
+        
+        
+        
+        
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                Console.Write("{0,5} ", a7_5[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");          
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>_4th_Lab</RootNamespace>
-  </PropertyGroup>
+        // # 2
+        Console.WriteLine("# 2");
+        int n_a4_4v2 = 4;
+        double[,] a4_4v2 = new double[,] {{4, 7, 10, 3}, {54, -7, 23, 65}, {3, 4, 50, -24}, {34, 2, -3, 6}};
+        
+        
+        for (int i = 0; i < n_a4_4v2; i++)
+        {
+            for (int k = 0; k < n_a4_4v2; k++)
+            {
+                Console.Write("{0,5} ", a4_4v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        for (int i = 0; i < n_a4_4v2; i++)
+        {
+            a4_4v2[i, 0] = 0;
+            a4_4v2[0, i] = 0;
+            a4_4v2[n_a4_4v2 - 1, i] = 0;
+            a4_4v2[i, n_a4_4v2 - 1] = 0;
+        }
+        
+        for (int i = 0; i < n_a4_4v2; i++)
+        {
+            for (int k = 0; k < n_a4_4v2; k++)
+            {
+                Console.Write("{0,5} ", a4_4v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        
+        // # 3
+        Console.WriteLine("# 3");
+        
+        int n_a4_4v3 = 4;
+        double[,] a4_4v3 = new double[,] {{4, 7, 10, 3}, {54, -7, 23, 65}, {3, 4, 50, -24}, {34, 2, -3, 6}};
+        
+        
+        for (int i = 0; i < n_a4_4v3; i++)
+        {
+            for (int k = 0; k < n_a4_4v3; k++)
+            {
+                Console.Write("{0,5} ", a4_4v3[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        double[] vektor = new double[n_a4_4v3 * 2 - 1];
+        
+        for (int i = 0; i < n_a4_4v3; i++)
+        {
+            for (int k = 0; k <= i; k++)
+            {
+                if (i == n_a4_4v3 - 1)
+                {
+                    vektor[i] = a4_4v3[k, k] + vektor[i];
+                }
+                
+                else
+                {
+                    vektor[i] = vektor[i] + a4_4v3[n_a4_4v3 - i - 1 + k, k];
+                    vektor[n_a4_4v3 * 2 - 2 - i] = vektor[n_a4_4v3 * 2 - 2 - i] + a4_4v3[k, n_a4_4v3 - i - 1 +  k];
+                }
+            }
+        }
+        
+        for (int i = 0; i < n_a4_4v3 * 2 - 1; i++)
+            {
+                Console.Write("{0,5} ", vektor[i]);
+            }
+        Console.WriteLine("");        
+        
+        
+        // # 4
+        Console.WriteLine("# 4");
+        
+        int n_a5_5 = 5;
+        double[,] a5_5vv = new double[,] {{4, 7, 10, 3, 4}, {54, -7, 23, 65, 6}, {3, 4, 50, -24, -5}, {34, 2, -3, 6, 5}, {7, 6, 40, -44, 45}};
+        
+        for (int i = 0; i < n_a5_5; i++)
+        {
+            for (int k = 0; k < n_a5_5; k++)
+            {
+                Console.Write("{0,5} ", a5_5vv[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        for (int i = n_a5_5 / 2; i < n_a5_5; i++)
+        {
+            for (int k = 0; k < i; k++)
+            {
+                a5_5vv[i, k] = 1;
+            }
+        }
+        
+        for (int i = 0; i < n_a5_5; i++)
+        {
+            for (int k = 0; k < n_a5_5; k++)
+            {
+                Console.Write("{0,5} ", a5_5vv[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        
+        
+    // # 8
+        Console.WriteLine("# 8");
+        
+        n_a7_5 = 7;
+        m_a7_5 = 5;
+        int[,] a7_5v2 = new int[7,5] {{4, 7, 10, 3, 4}, 
+                                        {54, -7, 23, 65, 6}, 
+                                        {-3, -4, -50, -24, -5}, 
+                                        {34, 2, -3, 6, 5}, 
+                                        {7, -6, -40, -44, 45},
+                                        {4, -56, -60, -74, -3},
+                                        {6, 3, 30, -4, -4}};
+        
+        int[,] colich = new int[2, n_a7_5];
+        
+        
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                Console.Write("{0,5} ", a7_5v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+        
+        int colich_v_stroke = 0;
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                if (a7_5v2[i, k] > 0)
+                {
+                    colich_v_stroke++;
+                }
+            }
+            colich[0, i] = colich_v_stroke;
+            colich[1, i] = i;
+            colich_v_stroke = 0;
+        }
+        
 
-</Project>
+        
+        
+        int mixi = 0;
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = i + 1; k < n_a7_5; k++)
+            {
+                if (colich[0, i] <= colich[0, k])
+                {
+                    mixi = colich[0, k];
+                    colich[0, k] = colich[0, i];
+                    colich[0, i] = mixi;
+                    mixi = colich[1, k];
+                    colich[1, k] = colich[1, i];
+                    colich[1, i] = mixi;
+                }
+            }
+        }
+
+
+        
+        
+        
+        mixi = 0;
+        
+        int nomer_dla_zameni = -1;
+        
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = i; k < n_a7_5; k++)
+            {
+                if (colich[1, k] == i)
+                {
+                    nomer_dla_zameni = colich[1, i];
+                    mixi = colich[1, k];
+                    colich[1, k] = colich[1, i];
+                    colich[1, i] = mixi;
+                }
+            }
+            int[] hran = new int[m_a7_5];
+            
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                hran[k] = a7_5v2[nomer_dla_zameni, k];
+            }
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                a7_5v2[nomer_dla_zameni, k] = a7_5v2[i, k];
+            }
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                a7_5v2[i, k] = hran[k];
+            }
+        }
+
+        
+        
+        
+        for (int i = 0; i < n_a7_5; i++)
+        {
+            for (int k = 0; k < m_a7_5; k++)
+            {
+                Console.Write("{0,5} ", a7_5v2[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        
+        
+        // # 10
+        Console.WriteLine("# 10");
+        
+        int n_a5_5v = 5;
+        int m_a5_5v = 5;
+        double[,] a5_5v = new double[5,5] {{4, 7, 10, 3, 4}, 
+                                        {54, -7, 23, 65, 6}, 
+                                        {-3, -4, -50, -24, -5}, 
+                                        {34, 2, -3, 6, 5},
+                                        {44, 52, -63, 4, 9}};
+        
+        double[] q = new double[m_a5_5v];
+        
+
+        for (int i = 0; i < n_a5_5v; i++)
+        {
+            for (int k = 0; k < m_a5_5v; k++)
+            {
+                Console.Write("{0,5} ", a5_5v[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        for (int i = 0; i < n_a5_5v; i++)
+        {
+            for (int k = 0; k < m_a5_5v; k++)
+            {
+                q[k] = a5_5v[i, k];
+            }
+            
+            Array.Sort(q);
+            if (m_a5_5v / 2 * 2 == 0)
+            {
+                for (int k = 0; k < m_a5_5v; k = k + 2)
+                {
+                    a5_5v[i, k] = q[m_a5_5v - k - 1];
+                    a5_5v[i, k + 1] = q[k + 1];
+                }
+            }
+            else
+            {
+                for (int k = 0; k < m_a5_5v - 1; k = k + 2)
+                {
+                    a5_5v[i, k] = q[m_a5_5v - k - 1];
+                    a5_5v[i, k + 1] = q[k + 1];
+                }
+                a5_5v[i, m_a5_5v - 1] = q[0];
+            }
+        }
+        
+        
+        for (int i = 0; i < n_a5_5v; i++)
+        {
+            for (int k = 0; k < m_a5_5v; k++)
+            {
+                Console.Write("{0,5} ", a5_5v[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        
+
+// # 11
+        Console.WriteLine("# 11");
+        
+        int n_a4_4 = 4;
+        int m_a4_4 = 4;
+        double[,] a4_4 = new double[4,4]{{4, 7, 0, 3}, 
+                                        {54, -7, 23, 65}, 
+                                        {-3, 0, -50, -24}, 
+                                        {34, 2, -3, 6}};
+        
+       for (int i = 0; i < n_a4_4; i++)
+        {
+            for (int k = 0; k < m_a4_4; k++)
+            {
+                Console.Write("{0,5} ", a4_4[i, k]);
+            }
+            Console.WriteLine("");
+        } 
+        Console.WriteLine("");
+        
+        List<int> dla_0 = new List<int>(n_a4_4) {};
+       
+        
+        for (int i = 0; i < n_a4_4; i++)
+        {
+            for (int k = 0; k < m_a4_4; k++)
+            {
+                if (a4_4[i, k] == 0)
+                {
+                    dla_0.Add(i);
+                }
+            }
+        }
+        int len = dla_0.Count;
+        
+        for (int i = 0; i < len; i++)
+        {
+            for (int k = 0; k < m_a4_4; k++)
+            {
+                a4_4[dla_0[i], k] = 0;
+            }
+        }
+        
+        
+        
+        
+        int col_vo_0 = 0;
+        int nomer_ne_0 = 0;
+        for (int i = 0; i < n_a4_4 - 1; i++)
+        {
+            if (a4_4[i, 0] == 0)
+            {
+                for (int k = 0; k < m_a4_4; k++)
+                {
+                    a4_4[i, k] = a4_4[i + 1, k];
+                    a4_4[i + 1, k] = 0;
+                }
+            }
+            if (a4_4[i, 0] == 0 && a4_4[i + 1, 0] == 0)
+            {
+                col_vo_0++;
+            }
+            else if (col_vo_0 > 0)
+            {
+                nomer_ne_0 = i;
+                i = i - col_vo_0;
+                for (int k = 0; k < m_a4_4; k++)
+                {
+                    a4_4[i, k] = a4_4[nomer_ne_0, k];
+                    a4_4[nomer_ne_0, k] = 0;
+                }
+            }
+        }
+        
+        
+        for (int i = 0; i < n_a4_4; i++)
+        {
+            for (int k = 0; k < m_a4_4; k++)
+            {
+                Console.Write("{0,5} ", a4_4[i, k]);
+            }
+            Console.WriteLine("");
+        }
+        Console.WriteLine("");
+        
+
+
+
+    }
+}
