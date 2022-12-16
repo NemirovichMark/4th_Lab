@@ -560,15 +560,19 @@ namespace ConsoleApp1
                 arr.Add(temp);
                 input = Console.ReadLine().Split();
             }
-
-            for (var i = 0; i < n; i++)
+            var element = 1;
+            var pointer = 2;
+            while (element < n)
             {
-                for (var j = n - 1; j > i; j--)
+                if (element == 0 || arr[element].Min() >= arr[element - 1].Min())
                 {
-                    if (arr[j].Min() > arr[j - 1].Min())
-                    {
-                        (arr[j], arr[j - 1]) = (arr[j - 1], arr[j]);
-                    }
+                    element = pointer;
+                    pointer++;
+                }
+                else
+                {
+                    (arr[element], arr[element - 1]) = (arr[element - 1], arr[element]);
+                    element--;
                 }
             }
 
@@ -759,29 +763,25 @@ namespace ConsoleApp1
                 arr.Add(temp);
                 input = Console.ReadLine().Split();
             }
-
+            var sums = new int[n];
+            for (var i = 0; i < n; i++)
+            {
+                for (var j = 0; j < m; j++)
+                {
+                    if (arr[i][j] > 0)
+                    {
+                        sums[i]++;
+                    }
+                }
+            }
             for (var i = 0; i < n; i++)
             {
                 for (var j = n - 1; j > i; j--)
                 {
-                    var sumA = 0;
-                    var sumB = 0;
-                    for (var k = 0; k < m; k++)
-                    {
-                        if (arr[j][k] > 0)
-                        {
-                            sumA++;
-                        }
-
-                        if (arr[j - 1][k] > 0)
-                        {
-                            sumB++;
-                        }
-                    }
-
-                    if (sumA > sumB)
+                    if (sums[j] > sums[j - 1])
                     {
                         (arr[j], arr[j - 1]) = (arr[j - 1], arr[j]);
+                        (sums[j], sums[j - 1]) = (sums[j - 1], sums[j]);
                     }
                 }
             }
@@ -824,36 +824,43 @@ namespace ConsoleApp1
 
             for (var k = 0; k < n; k++)
             {
-                if (k % 2 == 0)
+                element = 1;
+                pointer = 2;
+                while (element < m)
                 {
-                    for (var i = 0; i < m; i++)
+                    if (k % 2 == 1)
                     {
-                        for (var j = 0; j < m - i - 1; j++)
+                        if (element == 0 || arr[k][element] > arr[k][element - 1])
                         {
-                            if (arr[k][j] > arr[k][j + 1])
-                            {
-                                (arr[k][j], arr[k][j + 1]) = (arr[k][j + 1], arr[k][j]);
-                            }
+                            element = pointer;
+                            pointer++;
+                        }
+                        else
+                        {
+                            (arr[k][element], arr[k][element - 1]) = (arr[k][element - 1], arr[k][element]);
+                            element--;
                         }
                     }
-                }
-                else
-                {
-                    for (var i = 0; i < m; i++)
+                    else
                     {
-                        for (var j = m - 1; j > i; j--)
+                        if (element == 0 || arr[k][element] < arr[k][element - 1])
                         {
-                            if (arr[k][j] > arr[k][j - 1])
-                            {
-                                (arr[k][j], arr[k][j - 1]) = (arr[k][j - 1], arr[k][j]);
-                            }
+                            element = pointer;
+                            pointer++;
+                        }
+                        else
+                        {
+                            (arr[k][element], arr[k][element - 1]) = (arr[k][element - 1], arr[k][element]);
+                            element--;
                         }
                     }
                 }
             }
 
             Console.WriteLine("Output matrix: ");
-            for (var i = 0; i < n; i++)
+            for (var i = 0;
+                 i < n;
+                 i++)
             {
                 for (var j = 0; j < m; j++)
                 {
@@ -888,12 +895,32 @@ namespace ConsoleApp1
                 input = Console.ReadLine().Split();
             }
 
+            var zeros = new List<Boolean>(n);
             for (var i = 0; i < n; i++)
             {
-                while (arr[i].Contains(0))
+                zeros.Add(false);
+            }
+
+            for (var i = 0; i < n; i++)
+            {
+                for (var j = 0; j < m; j++)
+                {
+                    if (arr[i][j] == 0)
+                    {
+                        zeros[i] = true;
+                        break;
+                    }
+                }
+            }
+
+            for (var i = 0; i < n; i++)
+            {
+                if (zeros[i])
                 {
                     arr.RemoveAt(i);
+                    zeros.RemoveAt(i);
                     n--;
+                    i--;
                 }
             }
 
