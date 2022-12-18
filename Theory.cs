@@ -1,254 +1,221 @@
-﻿using System;
-
-namespace _4th_Lab
+using System;
+namespace laba_4
 {
-    class Theory
+    class Program
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int AMOUNT = ROWS * COLUMNS;
-        static void ShowArray(int[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (i % COLUMNS == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write($"{array[i],5}");
-            }
-        }
-        static void ShowMatrix(int[,] matrix)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                Console.WriteLine();
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write($"{matrix[i, j],5}");
-                }
-            }
-        }
         static void Main(string[] args)
         {
-            #region Difference between array and matrix
-            // Init array with random and show it as a matrix
-            int[] array = new int[AMOUNT];
-            Random randomizer = new Random();
-            Console.Write("Your array as a matrix:");
-            for (int i = 0; i < AMOUNT; i++)
+             #region Task 1_29
+            int n = 5, m = 7, index = 0, x;
+            int[,] f = new int[n, m];
+            for (int i = 0; i < n; i++)
             {
-                array[i] = randomizer.Next(0, 100);
-                if (i % COLUMNS == 0)
+                for (int j = 0; j < m; j++)
                 {
-                    Console.WriteLine();
+                    Console.WriteLine("Enter the element y: " + i + " x: " + j);
+                    f[i, j] = int.Parse(Console.ReadLine());
                 }
-                Console.Write($"{array[i],5}");
             }
-
-            // Init array with random and show it as a matrix
-            int[,] matrix = new int[ROWS, COLUMNS];
-            Console.Write("\n\nYour matrix:");
-            for (int i = 0; i < ROWS; i++)
+            for (int i = 0; i < n; i++)
             {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0,5:d} ", f[i, j]);
+
+                }
                 Console.WriteLine();
-                for (int j = 0; j < COLUMNS; j++)
+            }
+            int min = f[1, 0];
+            for (int j = 0; j < m; j++)
+            {
+                if (Math.Abs(min) > Math.Abs(f[1, j]))
                 {
-                    matrix[i, j] = randomizer.Next(0, 100);
-                    Console.Write($"{matrix[i, j],5}");
+                    min = f[1, j];
+                    index = j;
                 }
             }
-
-            // What is solution better, how do you think? So, if you would use better variant, I will accept. But on the exam you would HAVE TO use it as a matrix[,].
-            #endregion
-
-            // Below are presented different algorithms of ascending sorting
-            // Example made for int matrix. For an array it is much easier. You HAVE to solve it as an array. Not as a matrix. But the princip is common.
-
-            // For swop I will use a Tuple. You can read what is it here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples
-            (int value, int row, int column) min;
-
-            #region Selection sort
-            // Find the min element in the matrix and place it at the begin. Repeat excluding 1st element. And so on.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
+            if (index == m - 1)
             {
-                min = (Int32.MaxValue, count / COLUMNS, count % COLUMNS);
-                for (int i = count / COLUMNS; i < ROWS; i++)
+                Console.WriteLine("Error");
+                return;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = index + 1; j < m - 1; j++)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    f[i, j] = f[i, j + 1];
+                }
+            }
+            Console.WriteLine("Answer: ");
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m - 1; j++)
+                {
+                    Console.Write("{0,5:d} ", f[i, j]);
+                }
+                Console.WriteLine();
+            }
+            #endregion
+                
+            #region Task 3_1
+            int n = 7, m = 5, x;
+            int[,] a = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.WriteLine("Enter the element y: " + i + " x: " + j);
+                    a[i, j] = int.Parse(Console.ReadLine());
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0,5:d} ", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                int min_f = a[i, 0];
+                int min_s = a[i + 1, 0];
+                for (int j = 0; j < m; j++)
+                {
+                    if (min_f > a[i, j])
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (matrix[i, j] < min.value)
-                        {
-                            min = (matrix[i, j], i, j);
-                        }
+                        min_f = a[i, j];
+                    }
+                    if (min_s > a[i + 1, j])
+                    {
+                        min_s = a[i + 1, j];
                     }
                 }
-                var temp = matrix[count / COLUMNS, count % COLUMNS];
-                matrix[count / COLUMNS, count % COLUMNS] = min.value;
-                matrix[min.row, min.column] = temp;
-            }
-            Console.WriteLine("\n\nSelectionSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            #region Bubble sort
-            // Comapair element and the next one. Swap, if next less than current. Max will rise to the end.
-            for (int count = 0; count < ROWS * COLUMNS; count++)
-            {
-                for (int i = 0 / COLUMNS; i < ROWS; i++)
+                if (min_f < min_s)
                 {
-                    for (int j = 0; j < COLUMNS; j++)
+                    for (int j = 0; j < m; j++)
                     {
-                        if (i == count / COLUMNS && j < count % COLUMNS)
-                            continue;
-                        if (i == ROWS - 1 && j == COLUMNS - 1)
-                            break;
-                        var next = matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS];
-                        if (matrix[i, j] > next)
-                        {
-                            matrix[i + (j + 1) / COLUMNS, (j + 1) % COLUMNS] = matrix[i, j];
-                            matrix[i, j] = next;
-                        }
+                        x = a[i, j];
+                        a[i, j] = a[i + 1, j];
+                        a[i + 1, j] = x;
                     }
+                    i = -1;
                 }
             }
-            Console.WriteLine("\n\nBubbleSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I won't accept work with such method. It has O(n^3) difficulty
-
-            #endregion
-
-            // Next algorithms too hard make with matrix and no sence to do it. Previous methods don't use at practice even with arrays.
-            #region Coctail sort
-            int left = 0;
-            int right = ROWS * COLUMNS;
-            int swop = 0;
-            while (left < right)
+            Console.WriteLine("The answer is output as a matrix: ");
+            for (int i = 0; i < n; i++)
             {
-                for (int i = left; i < right; i++)
+                for (int j = 0; j < m; j++)
                 {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row + (column + 1) / COLUMNS;
-                    var nextColumn = (column + 1) % COLUMNS;
-                    if (nextRow == ROWS)
-                        break;
-                    if (matrix[row, column] > matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
+                    Console.Write("{0,5:d} ", a[i, j]);
                 }
-                right--;
-
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
-                swop = 0;
-                for (int i = right; i > left; i--)
-                {
-                    var row = i / COLUMNS;
-                    var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
-                    if (nextRow < 0)
-                        break;
-                    if (matrix[row, column] < matrix[nextRow, nextColumn])
-                    {
-                        var temp = matrix[nextRow, nextColumn];
-                        matrix[nextRow, nextColumn] = matrix[row, column];
-                        matrix[row, column] = temp;
-                        swop++;
-                    }
-                }
-                left++;
-                if (swop == 0)
-                {
-                    break; // if no swops were done, than all sorted
-                }
+                Console.WriteLine();
             }
-            Console.WriteLine("\n\nCoctailSort:");
-            ShowMatrix(matrix); // Method for display
-
-            // I will accept work with such method (or selected and bubble for arrays). But in the class I will ask you to solve task using faster algorithm
-            #endregion
-
-            // Next algorithms would required on the defend!!! (also it is realized for array, not matrix)
-
-            #region Gnome sort
-            var element = 1;
-            while (element < array.Length)
+            Console.WriteLine("The answer is output as a one-dimensional sequence: ");
+            for (int j = 0; j < m; j++)
             {
-                if (element == 0 || array[element] >= array[element - 1])
+                for (int i = 0; i < n; i++)
                 {
-                    element++;
-                }
-                else
-                {
-                    var temp = array[element - 1];
-                    array[element - 1] = array[element];
-                    array[element] = temp;
-                    element--;
+                    Console.Write($"{a[i, j]} ");
                 }
             }
-            Console.WriteLine("\n\nGnomeSort:");
-            ShowArray(array); // Method for display
-            // It is upgraded version of bubble sort
-            #endregion
-
-            #region Insert sort
-            for (int i = 1; i < array.Length; i++)
-            {
-                var remembered = array[i];
-                var j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
-                    j--;
-                }
-                array[j] = remembered;
-            }
-            Console.WriteLine("\n\nInsertSort:");
-            ShowArray(array); // Method for display
-
-            // It is very good algorithm for partically-sorted arrays O(nlog(n)) - where log(n) on the base = 2
-            #endregion
-
-            #region Shell sort
-            var step = array.Length / 2;
-
-            while (step > 0)
-            {
-                for (int i = step; i < array.Length; i++)
-                {
-                    int j = i;
-                    while ((j >= step) && array[j - step] > array[j])
-                    {
-                        var temp = array[j - step];
-                        array[j - step] = array[j];
-                        array[j] = temp;
-                        j -= step;
-                    }
-                }
-                step /= 2;
-            }
-            Console.WriteLine("\n\nShellSort:");
-            ShowArray(array); // Method for display
-
             #endregion
             
-            // There is another faster methods, but they are for advanced programists. You can learn them further if you want to work in that sphere.
+            #region Task 3_11
+            int n, m, index_i = 0, x = 0, index_j = 0;
+            Console.WriteLine("Enter the size n of the matrix: ");
+            string vvod1 = Console.ReadLine();
+            if (int.TryParse(vvod1, out n) & n > 1)
+            {
+                int.TryParse(vvod1, out n);
+            }
+            else
+            {
+                Console.WriteLine("Enter an integer > 1");
+                return;
+            }
+            Console.WriteLine("Enter the size m of the matrix: ");
+            string vvod2 = Console.ReadLine();
+            if (int.TryParse(vvod2, out m) & m > 1)
+            {
+                int.TryParse(vvod2, out m);
+            }
+            else
+            {
+                Console.WriteLine("Enter an integer > 1");
+                return;
+            }
+            int[] p = new int[n];
+            int[,] a = new int[n, m];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.WriteLine("Enter the element y: " + i + " x: " + j);
+                    a[i, j] = int.Parse(Console.ReadLine());
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0,5:d} ", a[i, j]);
+                }
+                Console.WriteLine();
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (a[i, j] == 0)
+                    {
+                        p[i] = -1;
+                        index_i += 1;
+                        break;
+                    }
+                }
+            }
+            if (index_i == 0)
+            {
+                Console.WriteLine("There are no zero rows");
+                return;
+            }
+            if (index_i == n)
+            {
+                Console.WriteLine("All lines contain zero");
+                return;
+            }
+            int[,] b = new int[n - index_i, m];
+            for (int i = 0; i < n; i++)
+            {
+                if (p[i] != -1)
+                {
+                    for (int j = 0; j < m; j++)
+                    {
+                        b[x, j] = a[i, j];
+                    }
+                    x++;
+                }
+
+            }
+            Console.WriteLine("The answer is output as a matrix: ");
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    Console.Write("{0,5:d} ", b[i, j]);
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("The answer is output as a one-dimensional sequence: ");
+            for (int j = 0; j < m; j++)
+            {
+                for (int i = 0; i < x; i++)
+                {
+                    Console.Write($"{b[i, j]} ");
+                }
+            }
+            #endregion
         }
     }
 }
