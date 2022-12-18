@@ -444,26 +444,53 @@ namespace ConsoleApp5
                 {11, 12124, 2351, 1},
                 {55231, 431, 114, 1}
             };
-
-            for (int i = 0; i < Nums.GetLength(0); i++) // I think it`s possible to use 3-loops cycle here. We can avoid it by using another method, but I think, it`s not important
+            
+            double[] Arry = new double[Nums.GetLength(0)*Nums.GetLength(1)];
+            int point = 0;
+            
+            for (int i = 0; i < Nums.GetLength(0); i++)
             {
                 for (int x = 0; x < Nums.GetLength(1); x++)
                 {
-                    for (int j = x + 1; j < Nums.GetLength(1); j++)
+                    Arry[point] = Nums[i, x];
+                    point++;
+                }
+            }
+            
+            double temp = 0;
+            
+            for(int i = 0; i < Arry.Length; i++)
+            {
+                int limit = i/Nums.GetLength(0);
+                
+                if(limit%2==0){
+                    for (int j = i + 1; j < (limit+1)*Nums.GetLength(0); j++)
                     {
-                        if (i % 2 == 0)
+                        if (Arry[i] > Arry[j]) 
                         {
-                            if (Nums[i, x] > Nums[i, j]) (Nums[i, x], Nums[i, j]) = (Nums[i, j], Nums[i, x]);
-                        }
-                        else
-                        {
-                            if (Nums[i, x] < Nums[i, j]) (Nums[i, x], Nums[i, j]) = (Nums[i, j], Nums[i, x]);
+                           temp = Arry[i];
+                           Arry[i] = Arry[j];
+                           Arry[j] = temp; 
                         }
                     }
                 }
+                else{
+                    for (int j = i + 1; j < (limit+1)*Nums.GetLength(0); j++)
+                    {
+                    if (Arry[i] < Arry[j]) 
+                    {
+                        temp = Arry[i];
+                        Arry[i] = Arry[j];
+                        Arry[j] = temp;
+                    }
+                    }
+                }
             }
-            Printing_Matrix(Nums);
-            Printing_Matrix_Diff_Way(Nums);
+            
+            for(int i =0; i < Arry.Length; i++)
+            {
+                Console.Write($"{Arry[i]} ");
+            }
         }
         static void Task_11_Level_3()
         {
