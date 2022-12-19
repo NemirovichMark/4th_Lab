@@ -511,6 +511,54 @@ static void lvl3Task1()
     PrintArray(array);
 }
 
+static void lvl3Task8()
+{
+    int f;
+    double temp = double.PositiveInfinity;
+    double[,] array = CreateArray();
+    double[,] array1 = new double[array.GetLength(0), array.GetLength(1)];
+    double[,] positive_count = new double[2, array.GetLength(0)];
+    int positive = 0;
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        positive = 0;
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (array[i, j] > 0)
+            {
+                positive++;
+            }
+        }
+        positive_count[0,i] = positive;
+        positive_count[1, i] = i;
+    }
+    for (int i = 0; i < array.GetLength(0) - 1; i++)
+    {
+        for (int j = 0; j < array.GetLength(0) - 1; j++)
+        {
+            if (positive_count[0, j + 1] > positive_count[0, j])
+            {
+                temp = positive_count[0, j + 1];
+                positive_count[0, j + 1] = positive_count[0, j];
+                positive_count[0, j] = temp;
+
+                temp = positive_count[1, j + 1];
+                positive_count[1, j + 1] = positive_count[1, j];
+                positive_count[1, j] = temp;
+            }
+        }
+    }
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        f = Convert.ToInt32(positive_count[1, i]);
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array1[i, j] = array[f, j];
+        }
+    }
+    array = array1;
+    PrintArray(array);
+}
 
 static void lvl3Task11()
 {
@@ -536,7 +584,7 @@ static void lvl3Task11()
     {
         for (int j = 0; j < array.GetLength(1); j++)
         {
-            if (indexes.Contains(Convert.ToChar(i)))
+            if (indexes.Contains(Convert.ToString(i)))
             {
                 Flag = false;
                 continue;
@@ -556,4 +604,56 @@ static void lvl3Task11()
     PrintArray(array);
 
 }
+
+static void lvl3Task10()
+{
+    double[,] array = CreateArray();
+    double temp = 0;
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int k = 0; k < array.GetLength(1) / 2; k++)
+        {
+            for (int j = 0; j < array.GetLength(1) - 2; j++)
+            {
+                if (j % 2 == 0)
+                {
+                    if (array[i, j] < array[i, j + 2])
+                    {
+                        temp = array[i, j];
+                        array[i, j] = array[i, j + 2];
+                        array[i, j + 2] = temp;
+                    }
+                }
+                else
+                {
+                    if (array[i, j] > array[i, j + 2])
+                    {
+                        temp = array[i, j];
+                        array[i, j] = array[i, j + 2];
+                        array[i, j + 2] = temp;
+                    }
+                }
+            }
+        }
+    }
+    PrintArray(array);
+}
+
+
+lvl1Task3();
+lvl1Task6();
+lvl1Task12();
+lvl1Task13();
+lvl1Task17();
+lvl1Task29();
+lvl1Task31();
+lvl2Task7();
+lvl2Task8();
+lvl2Task9();
+lvl3Task1();
+lvl3Task2();
+lvl3Task3();
+lvl3Task4();
+lvl3Task8();
+lvl3Task10();
 lvl3Task11();
