@@ -1,0 +1,55 @@
+double[,] mas;
+            int n, m;
+            Console.WriteLine("Введите высоту матрицы n");
+            while (!int.TryParse(Console.ReadLine(), out n))
+            {
+                Console.WriteLine("Неверные данные");
+                Console.WriteLine("Введите высоту матрицы");
+            }
+
+            Console.WriteLine("Введите размер матрицы m");
+            while (!int.TryParse(Console.ReadLine(), out m))
+            {
+                Console.WriteLine("Неверные данные");
+                Console.WriteLine("Введите размер массива");
+            }
+            Console.WriteLine("Введите массив");
+            mas = new double[n, m];
+            double dop;
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++)
+                {
+                    while (!double.TryParse(Console.ReadLine(), out mas[i, j]))
+                    {
+                        Console.WriteLine("Неверные данные");
+                        Console.WriteLine("Введите массив");
+                    }
+                }
+            for(int j=0;j<n;j++)
+                for(int i=0;i<m-2;i++)
+                {
+                        if (i% 2 == 0)
+                        {
+                            if (mas[j,i] < mas[j,i + 2])
+                            {
+                                dop = mas[j,i];
+                                mas[j,i] = mas[j,i + 2];
+                                mas[j,i + 2] = dop;
+                                i=-1;
+                            }
+                        }
+                        else
+                            if (mas[j,i] > mas[j,i + 2])
+                        {
+                            dop = mas[j,i];
+                            mas[j,i] = mas[j,i + 2];
+                            mas[j,i + 2] = dop;
+                            i=-1;
+                        }
+                    }
+            for (int i = 0; i < n; i++)
+            {
+                for(int j=0;j<m;j++)
+                Console.Write($"{mas[i,j]} ");
+                Console.WriteLine();
+            }
