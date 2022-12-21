@@ -1,0 +1,42 @@
+ int n = 5;
+           int m = 7;
+            double [,] matrix = new double[n, m];
+            double x;
+            Console.WriteLine("Введите матрицу:");
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = 0; i1 < m; i1++)
+                {
+                    double.TryParse(Console.ReadLine(), out x);
+                    matrix[i, i1] = x;
+                }
+            }
+            
+            double wee = Math.Abs(matrix[1, 0]);
+            int inmin = 0;
+            for (int i1 = 0; i1 < m; i1++)//i1 i1 i1 i1 i1 !!!
+            {
+                if (wee > Math.Abs(matrix[1, i1]))
+                {
+                    wee = Math.Abs(matrix[1, i1]);
+                    inmin = i1;
+                }
+            }
+            for (int i = 0; i < n; i++)
+            {
+                for (int i1 = inmin + 1; i1 < m - 1; i1++) matrix[i, i1] = matrix[i, i1 + 1];
+            }
+            if (inmin != m-1)
+            {
+                Console.WriteLine("Матрица=");
+                for (int i = 0; i < n; i++)
+                {
+                    for (int i1 = 0; i1 < m - 1; i1++)
+                    {
+                        Console.Write("{0} ", matrix[i, i1]);
+                    }
+                    Console.WriteLine();
+                }
+            }
+            else
+                Console.WriteLine("Наименьший элемент в последнем столбце");
