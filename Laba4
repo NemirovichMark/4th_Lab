@@ -733,15 +733,15 @@ internal class Program
                 int sort = 0;
                 while (sort < n)
                 {
-                    if (sort == 0 || A[i, sort - 1] <= A[i, sort])
+                    if (sort == 0 || m14[i, sort - 1] <= m14[i, sort])
                     {
                         sort++;
                     }
                     else
                     {
-                        int swapit = A[i, sort];
-                        A[i, sort] = A[i, sort - 1];
-                        A[i, sort - 1] = swapit;
+                        int swapit = m14[i, sort];
+                        m14[i, sort] = m14[i, sort - 1];
+                        m14[i, sort - 1] = swapit;
 
                         sort--;
                     }
@@ -752,15 +752,15 @@ internal class Program
                 int sort = 0;
                 while (sort < n)
                 {
-                    if (sort == 0 || A[i, sort - 1] >= A[i, sort])
+                    if (sort == 0 || m14[i, sort - 1] >= m14[i, sort])
                     {
                         sort++;
                     }
                     else
                     {
-                        int swapit = A[i, sort];
-                        A[i, sort] = A[i, sort - 1];
-                        A[i, sort - 1] = swapit;
+                        int swapit = m14[i, sort];
+                        m14[i, sort] = m14[i, sort - 1];
+                        m14[i, sort - 1] = swapit;
 
                         sort--;
                     }
