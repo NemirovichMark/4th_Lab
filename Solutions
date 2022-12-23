@@ -1,0 +1,178 @@
+//Part 1
+/*
+    #region 3
+    int[,] a = new int[4, 4];
+    int sum = 0;
+    for (int i = 0; i < a.GetLength(0); i++)
+    {
+        sum += a[i, i];
+    }            
+    #endregion 
+
+    #region 6
+    int[,] A = new int[4, 7];
+    List<int> minimal = new List<int>(4);
+    int min;
+    for (int i = 0; i < A.GetLength(0); i++)
+    {
+        min = A[i, 0];
+        for (int i1 = 1; i1 < A.GetLength(1); i1++)
+        {
+            if (A[i, i1] < min) 
+                min = A[i, i1];
+        }
+        minimal.Add(min);
+    }
+    #endregion
+
+    #region 12
+    int[,] A = new int[6, 7];
+    int max, строка = 0, столбец = 0;
+    int a0 = A.GetLength(0), a1 = A.GetLength(1);
+
+    max = A[0, 0];
+    for (int i = 0; i < a0; i++)
+    {
+        for (int i1 = 0; i1 < a1; i1++)
+        {
+            if (A[i, i1] < max)
+            {
+                max = A[i, i1];
+                строка = i;
+                столбец = i1;
+            }
+        }
+    }
+
+    for (int i = строка; i < a0 - 1; i++)
+    {
+        for (int i1 = столбец; i1 < a1 - 1; i1++)
+        {
+            A[i, i1] = A[i + 1, i1 + 1];
+        }
+    }
+
+    for (int i = 0; i < a0; i++)
+        A[i, a1 - 1] = 0;
+
+    for (int i = 0; i < a1; i++)
+        A[a0 - 1, i] = 0;
+    #endregion
+            
+            
+#region 13
+int[,] a = new int[5, 5];
+int max = a[0,0];
+int row_index = 0;
+for (int i = 1; i < a.GetLength(1); i++)            
+    if (a[i, i] > max)
+    {
+        max = a[i, i];
+        row_index = i;
+    }
+
+if (row_index != 4)
+{
+    int row_4th = 4;
+    int intermediate_value;
+    for (int i = 0; i < a.GetLength(0); i++)
+    {
+        intermediate_value = a[row_index, i]; // записал значение из столбца с максимальным значением 
+        a[row_index, i] = a[row_4th, i];
+        a[row_4th, i] = intermediate_value;
+    }
+}    
+#endregion
+            
+
+#region 17
+int n = 5, m = 7;
+int[,] B = new int[n, m];
+
+int local_min, local_min_index;
+//цикл, перебирающий индексы всех строк массива
+for (int row_index = 0; row_index < n; row_index++)
+{
+    local_min = B[row_index, 0];
+    local_min_index = 0;
+    //поиск индекса минимального элемента в конкретной строке
+    for (int row_element_index = 0; row_element_index < m; row_element_index++)
+    {
+        if (B[row_index, row_element_index] < local_min)
+        {
+            local_min = B[row_index, row_element_index];
+            local_min_index = row_element_index;
+        }
+    }
+
+    int[] intermediate_values = new int[m - 1];
+    //формирование массива из всех значений конкретной строки, кроме минимального
+    for (int row_element_index = 0; row_element_index < m -1; row_element_index++)
+        if (row_element_index != local_min_index)
+            intermediate_values[row_element_index] = B[row_index, row_element_index];
+
+    //присвоение первому элементу конкретной строки значения минимального
+    B[row_index, 0] = B[row_index, local_min_index];
+    //присвоение остальным элементам конкретной строки всех значений кроме минимального, с сохранением упорядоченности
+    for (int row_element_index = 1; row_element_index < m; row_element_index++)
+        B[row_index, row_element_index] = intermediate_values[row_element_index - 1];
+}
+#endregion
+            
+
+#region 29
+int[,] F = new int[5,7];
+int row_2nd = 1;
+int min = Math.Abs(F[row_2nd, 0]);
+int min_index = 0;
+
+//находим индекс минимального значения по модулю во втором ряду
+for (int i = 1; i < F.GetLength(1); i++) 
+{
+    if (Math.Abs(F[1, i]) < min)
+    {
+        min = F[row_2nd, i];
+        min_index = i;
+    }
+}
+
+//сдвиг столбцов после столбца с минимальным элементом на шаг влево, не включая столбец после столбца с минимальным элементом
+if (min_index != F.GetLength(1))
+    for (int column_index = min_index + 1; column_index < F.GetLength(1) - 1; column_index++) //перебор столбцов                
+        for (int row_index = 0; row_index < F.GetLength(0); row_index++) //перебор рядов                    
+            F[row_index, column_index] = F[row_index, column_index + 1];
+
+//обращение последнего стобца в нули
+int column_index1 = F.GetLength(1) - 1;
+for (int row_index = 0; row_index < F.GetLength(0); row_index++)
+    F[row_index, column_index1] = 0;
+#endregion
+            
+
+#region 31
+int[] B = { 2, 4, 6, 7, 5 };
+int[,] A = new int[5, 8];
+
+int row_5th = 4;
+int min = A[row_5th, 0];
+int min_index = 0;
+//находим индекс стобца с минимальным элементом в 5 строке
+for (int i = 1; i < A.GetLength(0); i++)
+{
+    if (A[row_5th, i] < min)
+    {
+        min = A[row_5th, i];
+        min_index = i;
+    }
+}
+
+//сдвиг всех стобцов до стобца с минимальным значением вправо
+if (min_index != A.GetLength(1))
+    for (int column_index = A.GetLength(1) - 1; column_index > min_index; column_index--)
+        for (int row_index = 0; row_index < A.GetLength(0); row_index++)
+            A[row_index, column_index] = A[row_index, column_index - 1];
+
+//помещения вектора В после столбца с минимальным значением в пятой строке
+for (int row_index = 0; row_index < A.GetLength(0); row_index++)
+    A[row_index, min_index + 1] = B[row_index];
+#endregion*/
