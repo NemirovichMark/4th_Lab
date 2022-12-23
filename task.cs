@@ -205,24 +205,33 @@ static void lvl1Task29()
             min_index = j;
         }
     }
-    for (int i = 0; i < array.GetLength(0); i++)
+    if (array[1, array.GetLength(1) - 1] != min)
     {
-        for (int j = min_index + 1; j < array.GetLength(1) - 1; j++)
+        for (int i = 0; i < array.GetLength(0); i++)
         {
-            temp = array[i, j];
-            array[i, j] = array[i, j + 1];
-            array[i, j + 1] = temp;
+            for (int j = min_index + 1; j < array.GetLength(1) - 1; j++)
+            {
+                temp = array[i, j];
+                array[i, j] = array[i, j + 1];
+                array[i, j + 1] = temp;
+            }
         }
+        for (int i = 0; i < array.GetLength(0); i++)
+        {
+            for (int j = 0; j < array.GetLength(1) - 1; j++)
+            {
+                array1[i, j] = array[i, j];
+            }
+        }
+        PrintArray(array1);
     }
-    for (int i = 0; i < array.GetLength(0); i++)
+    else
     {
-        for (int j = 0; j < array.GetLength(1) - 1; j++)
-        {
-            array1[i, j] = array[i, j];
-        }
+        PrintArray(array);
     }
-    PrintArray(array1);
+
 }
+
 
 static void lvl1Task31()
 {
@@ -361,38 +370,7 @@ static void lvl2Task9()
 }
 //1-4,8,10,11
 
-/**
-static void lvl3Task1()
-{
-    double[,] array = CreateArray();
-    int min = 0;
-    double temp = double.PositiveInfinity;
-    int temp_1 = 0;
-    double[,] min_index = new double[2, array.GetLength(0)];
-    for (int i = 0; i < array.GetLength(0); i++)
-    {
-        for (int j = 0; j < array.GetLength(1); j++)
-        {
-            if (array[i, j] < temp)
-            {
-                temp = array[i, j];
-                min_index[1, i] = array[i, j];
-                min_index[2, i] = i;
-            }
-        }
-    }
 
-    for (int j = 0; j < min_index.GetLength(1) - 1; j++)
-    {
-        if (min_index[1, j] < min_index[1, j + 1])
-        {
-            temp = min_index[1, j];
-            temp_1 = min_index[2, j];
-        }
-    }
-
-}
-**/
 
 static void lvl3Task2()
 {
@@ -529,7 +507,7 @@ static void lvl3Task8()
                 positive++;
             }
         }
-        positive_count[0,i] = positive;
+        positive_count[0, i] = positive;
         positive_count[1, i] = i;
     }
     for (int i = 0; i < array.GetLength(0) - 1; i++)
@@ -562,6 +540,8 @@ static void lvl3Task8()
 
 static void lvl3Task11()
 {
+    int l = 0;
+    int count = 0;
     bool Flag = false;
     int k = 0;
     double[,] array = CreateArray();
@@ -572,33 +552,39 @@ static void lvl3Task11()
         {
             if (array[i, j] == 0)
             {
-                indexes += Convert.ToString(i);
+                indexes += 0;
+                count++;
+                break;
+            }
+            else
+            {
+                indexes += 2;
                 break;
             }
         }
     }
 
-    double[,] newarray = new double[array.GetLength(0) - indexes.Length, array.GetLength(1)];
-
-    for (int i = 0; i < array.GetLength(0); i++)
+    double[,] newarray = new double[array.GetLength(0) - count, array.GetLength(1)];
+    
+    foreach (char i in indexes)
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        if (i != '0')
         {
-            if (indexes.Contains(Convert.ToString(i)))
+            for (int j = 0; j < array.GetLength(1); j++)
             {
-                Flag = false;
-                continue;
-            }
-            else
-            {
-                newarray[k, j] = array[i, j];
                 Flag = true;
+                newarray[k, j] = array[l, j];
             }
+        }
+        else
+        {
+            Flag = false;
         }
         if (Flag)
         {
             k++;
         }
+        l++;
     }
     array = newarray;
     PrintArray(array);
@@ -608,33 +594,60 @@ static void lvl3Task11()
 static void lvl3Task10()
 {
     double[,] array = CreateArray();
+    int a;
+    int b;
+    if (array.GetLength(1) % 2 == 0)
+    {
+        a = array.GetLength(1) / 2;
+        b = array.GetLength(1) / 2;
+    }
+    else
+    {
+        a = array.GetLength(1) / 2 + 1;
+        b = array.GetLength(1) / 2;
+    }
+
     double temp = 0;
+    int n;
+    int o;
+    double[] chetnii = new double[a] ;
+    double[] nechetnii = new double[b] ;
     for (int i = 0; i < array.GetLength(0); i++)
     {
-        for (int k = 0; k < array.GetLength(1) / 2; k++)
+        n = 0;
+        o = 0;
+        for (int j = 0; j < array.GetLength(1); j++)
         {
-            for (int j = 0; j < array.GetLength(1) - 2; j++)
+            if (j % 2 == 0)
             {
-                if (j % 2 == 0)
-                {
-                    if (array[i, j] < array[i, j + 2])
-                    {
-                        temp = array[i, j];
-                        array[i, j] = array[i, j + 2];
-                        array[i, j + 2] = temp;
-                    }
-                }
-                else
-                {
-                    if (array[i, j] > array[i, j + 2])
-                    {
-                        temp = array[i, j];
-                        array[i, j] = array[i, j + 2];
-                        array[i, j + 2] = temp;
-                    }
-                }
+                chetnii[n] = array[i, j];
+                n++;
+            }
+            else
+            {
+                nechetnii[o] = array[i, j];
+                o++;
             }
         }
+        Array.Sort(chetnii);
+        Array.Reverse(chetnii);
+        Array.Sort(nechetnii);
+        n = 0;
+        o = 0;
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (j % 2 == 0)
+            {
+                array[i,j] = chetnii[n];
+                n++;
+            }
+            else
+            {
+                array[i, j] = nechetnii[o];
+                o++;
+            }
+        }
+
     }
     PrintArray(array);
 }
