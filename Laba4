@@ -1,0 +1,844 @@
+internal class Program
+{
+    static void Main(string[] args)
+    {
+        // LEVEL 1
+        // 1.3
+        int temp;
+        int sum = 0;
+        int[,] m = new int[4, 4]
+        {
+                {2,1,3,5 },
+                {3,4,5,6},
+                {4,5,6,7},
+                {5,6,7,8}
+        };
+        for (int i = 0; i < m.GetLength(0); i++)
+        {
+            sum += m[i, i] + m[i, 3 - i];
+        }
+        Console.WriteLine(sum);
+        Console.WriteLine();
+
+
+        //1.6
+        int t = 4;
+        int g = 7;
+        int[,] m1 = new int[4, 7];
+        int[] b = new int[4];
+        Random r = new Random();
+
+        Console.WriteLine("Исходная матрица:1.6 ");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m1[i, j] = r.Next(0, 40);
+                Console.Write("{0,-5}", m1[i, j]);
+            }
+            Console.WriteLine();
+        }
+        for (int i = 0; i < m1.GetLength(0); i++)
+        {
+            int min = m1[i, 0];
+            int min_num = 0;
+            for (int j = 0; j < m1.GetLength(1); j++)
+            {
+                if (m1[i, j] < min)
+                {
+                    min = m1[i, j];
+                    min_num = j;
+                }
+
+                b[i] = min_num;
+            }
+        }
+
+        Console.WriteLine("Получившийся массив: ");
+        for (int i = 0; i < b.Length; i++)
+        {
+            Console.WriteLine(b[i]);
+        }
+
+
+
+        //1.12
+        int[,] m2 = new int[6, 7];
+        int line = 0, col = 0;
+        Random r1 = new Random();
+        int max = 0;
+        t = 6;
+        Console.WriteLine("Исходная матрица: 1.12 ");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m2[i, j] = r1.Next(0, 40);
+                Console.Write("{0,-5}", m2[i, j]);
+            }
+            Console.WriteLine();
+        }
+        for (int i = 0; i < t; i++)
+        {
+            if (m2[i, 0] > max)
+            {
+                max = m2[i, 0];
+                line = i;
+            }
+            for (int j = 0; j < g; j++)
+            {
+                if (m2[i, j] > max)
+                {
+                    max = m2[i, j];
+                    line = i;
+                    col = j;
+                }
+            }
+        }
+        Console.WriteLine($"Строка макс {line}");
+        Console.WriteLine($"Столбец макс {col}");
+
+
+        //1.13
+        col = 0;
+        max = 0;
+        t = 5;
+        int[,] m3 = new int[5, 5];
+        Random r2 = new Random();
+        Console.WriteLine("Исходная матрица: 1.13 ");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < t; j++)
+            {
+                m3[i, j] = r2.Next(0, 40);
+                Console.Write("{0,-5}", m3[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+        for (int i = 0; i < t; i++)
+        {
+            if (m3[i, i] > max)
+            {
+                max = m3[i, i];
+                col = i;
+            }
+        }
+        if (col == 4)
+            Console.WriteLine("Макс столбец совпадает с 4 столбцом");
+        for (int k = 0; k < t; k++)
+        {
+            temp = m3[k, 4];
+            m3[k, 4] = m3[k, col];
+            m3[k, col] = temp;
+        }
+
+        Console.WriteLine();
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < t; j++)
+            {
+                Console.Write("{0,-5}", m3[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+        //1.17
+        int x, y;
+        int min1 = 40;
+        Console.WriteLine("Введите значение х и у");
+        Int32.TryParse(Console.ReadLine(), out x);
+        Int32.TryParse(Console.ReadLine(), out y);
+        int[,] m4 = new int[x, y];
+        Console.WriteLine("Исходная матрица: 1.17 ");
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                m4[i, j] = r.Next(0, 40);
+                Console.Write("{0,-5}", m4[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+        for (int i = 0; i < x; i++)
+        {
+            min1 = m4[i, 0];
+            int minin = 0;
+            for (int j = 0; j < y; j++)
+            {
+                if (m4[i, j] < min1)
+                {
+                    min1 = m4[i, j];
+                    minin = j;
+                }
+            }
+            for (int k = minin; k > 0; k--)
+            {
+                m4[i, k] = m4[i, k - 1];
+            }
+            m4[i, 0] = min1;
+        }
+        Console.WriteLine();
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                Console.Write("{0,-5}", m4[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+        //1.29
+        Console.WriteLine("Исходная матрица: 1.29 ");
+        t = 5;
+        int[,] m5 = new int[5, 7];
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m5[i, j] = r.Next(-40, 40);
+                Console.Write("{0,-5}", m5[i, j]);
+            }
+            Console.WriteLine();
+        }
+        min1 = Math.Abs(m5[1, 0]);
+        int minin1 = 0;
+        for (int j = 0; j < g; j++)
+        {
+            int j_abs = Math.Abs(m5[1, j]);
+            if (j_abs < min1)
+            {
+                min1 = j_abs;
+                minin1 = j;
+            }
+        }
+        if (minin1 == g-1)
+        {
+            Console.WriteLine("\t Матрица не изменилась! \t");
+            for (int i = 0; i < t; i++)
+            {
+                for (int j = 0; j < g; j++)
+                {
+                    Console.Write("{0,-5}", m5[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < t; i++)
+            {
+                for (int j = minin1 + 1; j < g-1; j++)
+                {
+                    m5[i, j] = m5[i, j + 1];
+                }
+            }
+
+            Console.WriteLine("\n Итоговая матрица: \n");
+            for (int i = 0; i < t; i++)
+            {
+                for (int j = 0; j < g; j++)
+                {
+                    Console.Write("{0,-5}", m5[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+
+
+
+        //1.31
+        Console.WriteLine("Исходная матрица: 1.31 ");
+        g = 8;
+        int[,] m6 = new int[5, 8];
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m6[i, j] = r.Next(0, 40);
+                Console.Write("{0,-5}", m6[i, j]);
+            }
+            Console.WriteLine();
+        }
+        int[] bb = new int[5];
+        Console.WriteLine("Исходный вектор");
+        for (int i = 0; i < t; i++)
+        {
+            bb[i] = r.Next(0, 40);
+            Console.WriteLine(bb[i]);
+        }
+        min1 = m6[4, 0];
+        minin1 = 0;
+        for (int j = 0; j < g-1; j++)
+        {
+            if (m6[4, j] < min1)
+            {
+                min1 = m6[4, j];
+                minin1 = j;
+            }
+        }
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = minin1 + 1; j < g-1; j++)
+            {
+                m6[i, j + 1] = m6[i, j];
+            }
+        }
+        for (int i = 0; i < t; i++)
+        {
+            m6[i, minin1 + 1] = bb[i];
+        }
+
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                Console.Write("{0,-5}", m6[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+
+        //2.7
+        t = 6;
+        Console.WriteLine("Исходная матрица: 2.7 ");
+        int[,] m7 = new int[6, 6];
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < t; j++)
+            {
+                m7[i, j] = r.Next(0, 40);
+                Console.Write("{0,-5}", m7[i, j]);
+            }
+            Console.WriteLine();
+        }
+        int maxin=0;
+        for (int i = 0; i < t; i++)
+        {
+            if (m7[i, i] > max)
+            {
+                max = m7[i, i];
+                maxin = i;
+
+            }
+        }
+        for (int i = 0; i < maxin; i++)
+        {
+            for (int j = i + 1; j < t; j++)
+            {
+                m7[i, j] = 0;
+            }
+        }
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < t; j++)
+            {
+                Console.Write("{0,-5}", m7[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+        //2.8
+        Console.WriteLine("Исходная матрица: 2.8 ");
+        int[,] m8 = new int[6, 6];
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < t; j++)
+            {
+                m8[i, j] = r.Next(0, 40);
+                Console.Write("{0,-5}", m8[i, j]);
+            }
+            Console.WriteLine();
+        }
+        int max_before = 0;
+        int j_max_before = 0;
+        int counter = 0;
+        int forswap = 0;
+
+        for (int i = 0; i < t; i++)
+        {
+            int max2 = m8[i, 0];
+            int j_max = 0;
+
+            for (int j = 0; j < t; j++)
+            {
+                if (m8[i, j] > max2)
+                {
+                    max2 = m8[i, j];
+                    j_max = j;
+                }
+            }
+
+            counter++;
+
+            if (counter % 2 == 0)
+            {
+                forswap = m8[i, j_max];
+                m8[i, j_max] = max_before;
+                m8[i - 1, j_max_before] = forswap;
+            }
+            else
+            {
+                max_before = max2;
+                j_max_before = j_max;
+            }
+
+        }
+
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < t; j++)
+            {
+                Console.Write("{0,-5}",m8[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+
+        //2.9
+        Console.WriteLine("Исходная матрица: 2.9 ");
+        int[,] m9 = new int[6, 7];
+        g = 7;
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m9[i, j] = r.Next(0, 40);
+                Console.Write("{0,-5}", m9[i, j]);
+            }
+            Console.WriteLine();
+        }
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < (g / 2); j++)
+            {
+                forswap = m9[i, j];
+                m9[i, j] = m9[i, g - (j + 1)];
+                m9[i, g - (j + 1)] = forswap;
+            }
+        }
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                Console.Write("{0,-5}", m9[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+
+
+        //3.1
+        Console.WriteLine("Исходная матрица: 3.1 ");
+        t = 7;
+        g = 5;
+        int[] arrmin = new int[7];
+        int[,] m10 = new int[7, 5];
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m10[i, j] = r.Next(0, 40);
+                Console.Write("{0,-5}", m10[i, j]);
+            }
+            Console.WriteLine();
+        }
+        for (int i = 0; i < t; i++)
+        {
+            min1 = m10[i, 0];
+            for (int j = 0; j < g; j++)
+            {
+                if (m10[i,j]<min1)
+                   min1 = m10[i,j];
+                arrmin[i] = min1;
+            }
+        }
+        int ForSort_i = 1;
+        while (ForSort_i < arrmin.Length)
+        {
+            if (ForSort_i == 0 || arrmin[ForSort_i] <= arrmin[ForSort_i - 1])
+            {
+                ForSort_i++;
+            }
+            else
+            {
+                int ForSwap = arrmin[ForSort_i - 1];
+
+                arrmin[ForSort_i - 1] = arrmin[ForSort_i];
+                arrmin[ForSort_i] = ForSwap;
+
+                for (int j = 0; j < g; j++)
+                {
+                    ForSwap = m10[ForSort_i - 1, j];
+                    m10[ForSort_i - 1, j] = m10[ForSort_i, j];
+                    m10[ForSort_i, j] = ForSwap;
+                }
+
+                ForSort_i--;
+            }
+            
+        }
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                Console.Write("{0,-5}", m10[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+
+        //3.2
+        Console.WriteLine("Введите значение х");
+        Int32.TryParse(Console.ReadLine(), out x);
+        int[,] m11 = new int[x, x];
+        Console.WriteLine("Исходная матрица: 3.2 ");
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                m11[i, j] = r.Next(1, 40);
+                Console.Write("{0,-5}", m11[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+        for (int i = 0; i<x;i++)
+        {
+            m11[0, i] = 0;
+            m11[i, 0] = 0;
+            m11[x-1,i] = 0;
+            m11[i, x - 1] = 0;
+        }
+
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                Console.Write("{0,-5}", m11[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+        //3.3
+        int n, sum1 = 0, sum2 = 0;
+        Console.WriteLine("Введите сторону квадратной матрицы (n): ");
+        Int32.TryParse(Console.ReadLine(), out n);
+
+        int[,] A = new int[n, n];
+
+        Console.WriteLine("Исходная матрица: \n");
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                A[i, j] = r.Next(0, 30);
+                Console.Write("{0,-5}", A[i, j]);
+            }
+            Console.WriteLine();
+        }
+        int[] mass = new int[2 * n - 1];
+
+        // {1  2  3  4  5      Главная:    1 + 7 + 13 + 19 + 25     Побочная 5: 16 + 22
+        //  6  7  8  9  10     Побочная 1: 6 + 12 + 18 + 19         Побочная 6: 4 + 10
+        //  11 12 13 14 15     Побочная 2: 2 + 8 + 14 + 20          Побочная 7: 21
+        //  16 17 18 19 20     Побочная 3: 11 + 17 + 23             Побочная 8: 5
+        //  21 22 23 24 25}    Побочная 4: 3 + 9 + 15
+
+        int Add_i = 0;
+        int mass_i = 0;
+
+        while (Add_i < n)
+        {
+            sum1 = 0;
+            sum2 = 0;
+            for (int i = 0; i < n - Add_i; i++)
+            {
+                if (Add_i == 0)
+                {
+                    sum1 += A[i, i];
+                }
+                else
+                {
+                    sum1 += A[i + Add_i, i];
+
+                    sum2 += A[i, i + Add_i];
+                }
+            }
+
+            if (mass_i == 0)
+            {
+                mass[0] = sum1;
+                mass_i++;
+            }
+            else
+            {
+                mass[mass_i] = sum1;
+                mass_i++;
+
+                mass[mass_i] = sum2;
+                mass_i++;
+
+            }
+
+            Add_i++;
+        }
+
+        Console.WriteLine("\n Итоговый массив : \n");
+        for (int i = 0; i < 2 * n - 1; i++)
+        {
+            Console.Write($"{mass[i]}, ");
+        }
+
+
+        //3.4
+        Console.WriteLine("Введите значение х");
+        Int32.TryParse(Console.ReadLine(), out x);
+        int[,] m12 = new int[x, x];
+        Console.WriteLine("Исходная матрица: 3.4 ");
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                m12[i, j] = r.Next(1, 40);
+                Console.Write("{0,-5}", m12[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+        for (int i = x / 2; i < x; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                if (i == j) break;
+                m12[i, j] = 1;
+            }
+        }
+
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                Console.Write("{0,-5}", m12[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+
+
+        //3.8
+        int[,] m13 = new int[7, 5];
+        Console.WriteLine("Исходная матрица: 3.8 ");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m13[i, j] = r.Next(-40, 20);
+                Console.Write("{0,-5}", m13[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+        int max_count = 0;
+        int[] ArrayOfPos_count = new int[7];
+
+        for (int i = 0; i < t; i++)       // Количество положительных элементов в каждой строке
+        {
+            max_count = 0;
+
+            for (int j = 0; j < g; j++)
+            {
+                if (m13[i, j] > 0)
+                {
+                    max_count++;
+                }
+            }
+
+            ArrayOfPos_count[i] = max_count;
+        }
+
+        int ForSort = 1;
+        while (ForSort < ArrayOfPos_count.Length)
+        {
+            if (ForSort == 0 || ArrayOfPos_count[ForSort - 1] >= ArrayOfPos_count[ForSort])
+            {
+                ForSort++;
+            }
+            else
+            {
+                int ForSwap = ArrayOfPos_count[ForSort];
+
+                ArrayOfPos_count[ForSort] = ArrayOfPos_count[ForSort - 1];
+                ArrayOfPos_count[ForSort - 1] = ForSwap;
+
+                for (int j = 0; j < g; j++)
+                {
+                    ForSwap = m13[ForSort - 1, j];
+                    m13[ForSort - 1, j] = m13[ForSort, j];
+                    m13[ForSort, j] = ForSwap;
+                }
+
+                ForSort--;
+            }
+        }
+
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < t; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                Console.Write("{0,-5}", m13[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+        //3.10
+        Console.WriteLine("Введите значение х");
+        Int32.TryParse(Console.ReadLine(), out x);
+        int[,] m14 = new int[x, x];
+        Console.WriteLine("Исходная матрица: 3.4 ");
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                m14[i, j] = r.Next(1, 40);
+                Console.Write("{0,-5}", m14[i, j]);
+            }
+            Console.WriteLine();
+        }
+        for (int i = 0; i < n; i++)
+        {
+            if ((i + 1) % 2 != 0) //nechetniy
+            {
+                int sort = 0;
+                while (sort < n)
+                {
+                    if (sort == 0 || m14[i, sort - 1] <= m14[i, sort])
+                    {
+                        sort++;
+                    }
+                    else
+                    {
+                        int swapit = m14[i, sort];
+                        m14[i, sort] = m14[i, sort - 1];
+                        m14[i, sort - 1] = swapit;
+
+                        sort--;
+                    }
+                }
+            }
+            else //chetniy
+            {
+                int sort = 0;
+                while (sort < n)
+                {
+                    if (sort == 0 || m14[i, sort - 1] >= m14[i, sort])
+                    {
+                        sort++;
+                    }
+                    else
+                    {
+                        int swapit = m14[i, sort];
+                        m14[i, sort] = m14[i, sort - 1];
+                        m14[i, sort - 1] = swapit;
+
+                        sort--;
+                    }
+                }
+            }
+
+        }
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < x; j++)
+            {
+                Console.Write("{0,-5}", m14[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+
+
+        //3.11
+        int[,] m15 = new int[5, 5];
+        Console.WriteLine("Исходная матрица: 3.11 ");
+        for (int i = 0; i < g; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                m15[i, j] = r.Next(0, 10);
+                Console.Write("{0,-5}", m15[i, j]);
+            }
+            Console.WriteLine();
+        }
+
+        int z = 0;
+
+        for (int i = 0; i < g; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                if (m15[i, j] == 0)
+                {
+                    z++;
+                }
+            }
+        }
+
+        int[,] B = new int[5 - z, 5];
+        int flag = 0;
+        int swap = 0;
+
+        for (int i = 0; i < g; i++)
+        {
+            flag = 0;
+            for (int j = 0; j < g; j++)
+            {
+                if (m15[i, j] == 0)
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0)
+            {
+                for (int j = 0; j < g; j++)
+                {
+                    B[swap, j] = m15[i, j];
+                }
+                swap++;
+            }
+        }
+
+        Console.WriteLine("\n Итоговая матрица: \n");
+        for (int i = 0; i < g - z; i++)
+        {
+            for (int j = 0; j < g; j++)
+            {
+                Console.Write("{0,-5}", B[i, j]);
+            }
+            Console.WriteLine();
+        }
+    } 
+}
