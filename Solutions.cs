@@ -311,3 +311,148 @@ namespace Lab_4
             ShowMatrix(A);
             #endregion
             */
+            
+            
+            //Part 3
+            /*
+            #region 1
+            int[,] matrix = CreateMatrix(7, 5);
+            var dict = new Dictionary<int, int>();            
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index++)
+            {
+                int local_min = Int32.MaxValue;
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)                
+                    if (matrix[row_index, column_index] < local_min)                    
+                        local_min = matrix[row_index, column_index];
+
+                dict.Add(row_index, local_min);
+            }
+            
+            int[] row_indexes = new int[matrix.GetLength(0)];
+            for (int i = 0; i < row_indexes.Length; i++)
+            {
+                int max = dict.Values.Max();
+                row_indexes[i] = dict.FirstOrDefault(x => x.Value == max).Key;
+                dict.Remove(row_indexes[i]);
+            }
+
+            int row_index1;
+            int[,] tempArray = new int[matrix.GetLength(0), matrix.GetLength(1)];
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index++)
+            {
+                row_index1 = row_indexes[row_index];
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)
+                    tempArray[row_index, column_index] = matrix[row_index1, column_index];
+            }
+
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index++)            
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)                
+                    matrix[row_index, column_index] = tempArray[row_index, column_index];
+
+            ShowMatrix(matrix);
+            foreach (int el in row_indexes)
+                Console.WriteLine(el);
+            #endregion
+            
+            #region 2
+            int[,] matrix = CreateMatrix(6, 6);
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index += matrix.GetLength(0) - 1)
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++) //+= matrix.GetLength(1) - 1)
+                {
+                    matrix[row_index, column_index] = 0;
+                    matrix[column_index, row_index] = 0;
+                }
+            ShowMatrix(matrix);
+            #endregion
+            
+            #region 3
+            int n = 3;
+            int[,] matrix = CreateMatrix(n, n);
+            int amount = 0;
+            for (int index = 0; index < matrix.GetLength(1); index++)
+            {
+                amount += matrix[index, index];
+                if (index != matrix.GetLength(1) - 1)
+                    amount += matrix[index, index + 1] + matrix[index + 1, index];
+            }
+            Console.WriteLine(amount);
+            #endregion
+            
+            #region 4
+            int n = 15;
+            int lenght = n / 2;
+            //if (n % 2 != 0)
+                //lenght--;
+            int[,] matrix = CreateMatrix(n, n);
+            for (int row_index = lenght; row_index < matrix.GetLength(0); row_index++)
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)                
+                    if (column_index <= row_index)
+                        matrix[row_index, column_index] = 1;                
+            ShowMatrix(matrix);
+            #endregion                      
+
+            #region 8
+            int[,] matrix = CreateMatrix(7, 5);
+            var dict = new Dictionary<int, int>();
+            int positive_amount;
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index++)
+            {
+                positive_amount = 0;
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)
+                    if (matrix[row_index, column_index] > 0)
+                        positive_amount++;
+
+                dict.Add(row_index, positive_amount);
+            }
+
+            int[] row_indexes = new int[matrix.GetLength(0)];
+            for (int i = 0; i < row_indexes.Length; i++)
+            {
+                int max = dict.Values.Max();
+                row_indexes[i] = dict.FirstOrDefault(x => x.Value == max).Key;
+                dict.Remove(row_indexes[i]);
+            }
+
+            int row_index1;
+            int[,] tempArray = new int[matrix.GetLength(0), matrix.GetLength(1)];
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index++)
+            {
+                row_index1 = row_indexes[row_index];
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)
+                    tempArray[row_index, column_index] = matrix[row_index1, column_index];
+            }
+
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index++)
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)
+                    matrix[row_index, column_index] = tempArray[row_index, column_index];
+
+            ShowMatrix(matrix);
+            #endregion
+            */
+            #region 10
+            int[,] matrix = CreateMatrix(7, 9);
+            #endregion
+            /*
+            #region 11
+            int[,] matrix = CreateMatrix(7, 6);
+            //matrix[1, 2] = 0;
+            //matrix[2, 2] = 0;
+            //matrix[3, 4] = 0;
+            //matrix[5, 0] = 0;
+            ShowMatrix(matrix);
+            for (int row_index = matrix.GetLength(0) - 1; row_index > 0; row_index--)
+                for (int column_index = 0; column_index < matrix.GetLength(1); column_index++)
+                {
+                    if (matrix[row_index, column_index] == 0)
+                    {
+                        for (int row_index1 = row_index; row_index1 < matrix.GetLength(0) - 1; row_index1++)
+                            for (int column_index1 = 0; column_index1 < matrix.GetLength(1); column_index1++)
+                                matrix[row_index1, column_index1] = matrix[row_index1 + 1, column_index1];
+                        int row_index2 = matrix.GetLength(0) - 1;
+                        for (int column_index2 = 0; column_index2 < matrix.GetLength(1); column_index2++)
+                            matrix[row_index2, column_index2] = 0;
+                    }
+                }
+            ShowMatrix(matrix);
+            #endregion
+            */
