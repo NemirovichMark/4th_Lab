@@ -167,90 +167,98 @@ namespace kaf
 
             #endregion
 
-            #region task1_17
+           #region task1_17
 
-            int[,] a = new int[5, 6] {{10, 1, 3, 4, 7,8},
+        int[,] a = new int[5, 6] {{10, 3, 1, 4, 7,8},
                                   {5, 6, 7, 8, 1,6},
                                   {3, 5, 1, 9, 4,2},
                                   {2, 7, 3, 1, 7,3},
                                   {6, 7, 1, 5, 3,4}};
 
-            for (int i = 0; i < a.GetLength(0); i++)
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+            int min = 111;
+            int p = 0;
+            int ind1 = 0;
+            for (int j = 0; j < a.GetLength(1); j++)
             {
-                int min = 111;
-                int p = 0;
-                int ind1 = 0;
-                for (int j = 0; j < a.GetLength(1); j++)
+                if (a[i, j] < min)
                 {
-                    if (a[i, j] < min)
-                    {
-                        min = a[i, j];
-                        ind1 = j;
-                    }
-
+                    min = a[i, j];
+                    ind1 = j;
                 }
-                p = a[i, 0];
-                a[i, 0] = min;
-                a[i, ind1] = p;
+                
+            }
+            for(int l = ind1; l > 0  ; l--)
+            {
+                a[i,l] = a[i,l-1]; 
+            }
+            a[i, 0] = min;
+        }
+        
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+
+            for (int j = 0; j < a.GetLength(1); j++)
+            {
+                Console.Write(" " + a[i, j]);
+
+
 
             }
+            Console.WriteLine();
 
-            for (int i = 0; i < a.GetLength(0); i++)
-            {
-
-                for (int j = 0; j < a.GetLength(1); j++)
-                {
-                    Console.Write(" " + a[i, j]);
+        }
 
 
+        #endregion
 
-                }
-                Console.WriteLine();
-
-            }
-
-
-            #endregion
-
-            #region task1_29
-            int min = 99; int ind1 = 0;
-            int[,] a = new int[5, 7] {{5, 1, 3, 4, 7, 8,9},
-                                  {5, 6, 7, 8, 1, 6,7},
-                                  {3, 1, 7, -9, 4, 4, 6},
+           #region task1_29
+        int min = 99; int ind1 = 0;int k = 0;
+        int[,] a = new int[5, 7] {{5, 1, 3, 4, 7, 8,9},
+                                  {5, 6, 7, 8, 5, 1,2},
+                                  {3, 1, 7, 9, 4, 4, 6},
                                   {2, 7, 3, 1, 7, 3, 4},
                                   {6, 7, 1, 5, 3, 4, 2}};
 
-            for (int i = 2; i < 3; i++)
+        
+            for (int j = 0; j < a.GetLength(1); j++)
             {
-                for (int j = 0; j < a.GetLength(1); j++)
+                if (Math.Abs(a[1, j]) < min)
                 {
-                    if (Math.Abs(a[i, j]) < min)
-                    {
-                        min = a[i, j];
-                        ind1 = j;
-                    }
+                    min = a[1, j];
+                    ind1 = j;
                 }
             }
 
+        if (ind1 != a.GetLength(1) - 1)
+        {
             for (int i = 0; i < a.GetLength(0); i++)
             {
+
+
                 for (int j = ind1 + 1; j < a.GetLength(1) - 1; j++)
                 {
+
                     a[i, j] = a[i, j + 1];
+
                 }
             }
+            k = 1;
+        }
+        else k = 0; 
 
-            for (int i = 0; i < a.GetLength(0); i++)
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+
+            for (int j = 0; j < a.GetLength(1) - k; j++)
             {
-
-                for (int j = 0; j < a.GetLength(1) - 1; j++)
-                {
-                    Console.Write(" " + a[i, j]);
-                }
-                Console.WriteLine();
+                Console.Write(" " + a[i, j]);
             }
+            Console.WriteLine();
+        }
 
-            #endregion
+        #endregion
 
             #region task1_31
             int min = 99; int ind1 = 0;
@@ -614,58 +622,54 @@ namespace kaf
             #endregion
 
             #region task3_10
-            int[,] a = new int[4, 6] {{1,6,3,4,5,2},
+
+        int[,] a = new int[4, 6] {{1,6,3,4,5,2},
                              {1,6,3,4,5,2},
                              {1,6,3,4,5,2},
                              {1,6,3,4,5,2}};
 
-            for (int i = 0; i < a.GetLength(0); i++)
+        int f = 0;
+        int f1 = 0;
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+            for (int j = 0; j < a.GetLength(1); j += 2)
             {
-
-                for (int k = 0; k < a.GetLength(1); k = k + 2)
+                int imax = j;
+                int max = a[i, j];
+                int imax1 = j + 1;
+                int max1 = a[i, j + 1];
+                for (int k = j + 2; k < a.GetLength(1); k += 2)
                 {
-                    int max = 0;
-                    int ind = 0;
-
-                    for (int j = k; j < a.GetLength(1); j = j + 2)
+                    if (max < a[i, k])
                     {
-                        if (a[i, j] > max)
-                        {
-                            max = a[i, j];
-                            ind = j;
-                        }
+                        imax = k;
+                        max = a[i, k];
                     }
-                    a[i, ind] = a[i, k];
-                    a[i, k] = max;
-                }
-                for (int k = 1; k <= a.GetLength(1); k = k + 2)
-                {
-                    int min = 99;
-                    int ind = 0;
-
-                    for (int j = k; j <= a.GetLength(1); j = j + 2)
+                    if (max1 > a[i, k + 1])
                     {
-                        if (a[i, j] < min)
-                        {
-                            min = a[i, j];
-                            ind = j;
-                        }
+                        imax1 = k + 1;
+                        max1 = a[i, k + 1];
                     }
-                    a[i, ind] = a[i, k];
-                    a[i, k] = min;
                 }
-
+                f = a[i, imax];
+                a[i, imax] = a[i, j];
+                a[i, j] = f;
+                f1 = a[i, imax1];
+                a[i, imax1] = a[i, j + 1];
+                a[i, j + 1] = f1;
             }
-            for (int i = 0; i < a.GetLength(0); i++)
+        }
+        Console.WriteLine();
+        for (int i = 0; i < a.GetLength(0); i++)
+        {
+            for (int k = 0; k < a.GetLength(1); k++)
             {
-                for (int j = 0; j < a.GetLength(1); j++)
-                {
-                    Console.Write(" " + a[i, j]);
-
-                }
-                Console.WriteLine(" ");
+                Console.Write(a[i, k] + " ");
             }
-            #endregion
+            Console.WriteLine();
+        }
+
+        #endregion
 
             #region task3_11 
 
