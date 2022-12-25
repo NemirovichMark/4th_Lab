@@ -236,17 +236,17 @@ namespace Lab_4
                 }
                 Console.WriteLine();
             }
-            int min = M[1, 0];
+            int min = Math.Abs(M[1, 0]);
             int minj = 0;
             for (int j = 0; j < m; j++)
             {
-                if (Math.Abs(M[1, j]) < min)
+                if ((Math.Abs(M[1, j]) < Math.Abs(min)))
                 {
                     min = M[1, j];
                     minj = j;
                 }
             }
-            Console.WriteLine($"The minimal element is {min}");
+            Console.WriteLine($"The minimal abs element is {min}");
 
             m -= 1;
             for (int i = 0; i < k; i++)
