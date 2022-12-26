@@ -158,8 +158,8 @@ namespace _4th_Lab
                 {
                     var row = i / COLUMNS;
                     var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
+                    var nextRow = row - (COLUMNS - column) / COLUMNS;
+                    var nextColumn = (i - 1) % COLUMNS;
                     if (nextRow < 0)
                         break;
                     if (matrix[row, column] < matrix[nextRow, nextColumn])
@@ -212,11 +212,9 @@ namespace _4th_Lab
             {
                 var remembered = array[i];
                 var j = i;
-                while (j > 0 && array[j - 1] > array[j])
+                while (j > 0 && array[j - 1] > remembered)
                 {
-                    var temp = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = temp;
+                    array[j] = array[j - 1];
                     j--;
                 }
                 array[j] = remembered;
