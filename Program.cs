@@ -248,7 +248,7 @@ namespace Lab_4
             }
             Console.WriteLine($"The minimal abs element is {min}");
 
-            m -= 1;
+            if (minj < 6) { m -= 1; } else { m = m; }
             for (int i = 0; i < k; i++)
             {
                 for (int j = minj + 1; j < m; j++)
