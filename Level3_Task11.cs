@@ -10,27 +10,28 @@ class HelloWorld{
                 a[row,i]=a[row,i]+a[row,m]-(a[row,m++]=a[row,i]);
         int p=l,q=l;
         for(;a[row,p]<pivot;p++);
-        for(;q<5&&a[row,q]<=pivot;q++);
+        for(;q<a.GetLength(1)&&a[row,q]<=pivot;q++);
         Qsort(l,p,row,a);
         Qsort(q,r,row,a);
     }
     static void Main (){
-        double[,] a = new double[7,5];
-        for(int i=0; i<7; i++)
-            for(int j=0; j<5; j++)
+        int n=7,m=5;
+        double[,] a = new double[n,m];
+        for(int i=0; i<n; i++)
+            for(int j=0; j<m; j++)
                 a[i,j]=rnd.Next()%21-10;
         Console.Write("There is your random matrix:\n");
-        for(int i=0; i<7; i++){
-            for(int j=0; j<5; j++){
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
                 Console.Write($"{a[i,j]} ");
             }
             Console.WriteLine();
         }
         bool flag=true;
         int[] non_zero_rows = new int[0];
-        for(int i=0; i<7; i++){
+        for(int i=0; i<n; i++){
             flag=true;
-            for(int j=0; j<5; j++){
+            for(int j=0; j<m; j++){
                 if(a[i,j]==0) flag=false;
             }
             if(flag){
@@ -39,17 +40,17 @@ class HelloWorld{
             }
         }
         
-        double[,] b = new double[non_zero_rows.Length,5];
+        double[,] b = new double[non_zero_rows.Length,m];
         int counter=0;
         foreach(var i in non_zero_rows){
-            for(int j=0; j<5; j++)
+            for(int j=0; j<m; j++)
                 b[counter,j]=a[i,j];
             counter++;
         }
         
         Console.WriteLine("There is your answer matrix:");
         for(int i=0; i<non_zero_rows.Length; i++){
-            for(int j=0; j<5; j++){
+            for(int j=0; j<m; j++){
                 Console.Write($"{b[i,j]} ");
             }
             Console.WriteLine();
