@@ -430,7 +430,42 @@ namespace Lab_4
             #endregion
             */
             #region 10
-            int[,] matrix = CreateMatrix(7, 9);
+            int[,] matrix = CreateMatrix(5, 5);
+            int count = 0;
+            if (matrix.GetLength(1) % 2 != 0)
+                count++; 
+            int[,] chet_matrix = new int [matrix.GetLength(0), matrix.GetLength(1) / 2 + count];
+
+            //забираем чётные индексы
+            for (int row_index = 0; row_index < chet_matrix.GetLength(0); row_index++)
+            {
+                count = 0;
+                for (int column_index = 0; column_index < chet_matrix.GetLength(1); column_index++)
+                {
+                    chet_matrix[row_index, column_index] = matrix[row_index, count];
+                    count += 2;
+                }                
+            }
+
+            int[,] nechet_matrix = new int[matrix.GetLength(0), matrix.GetLength(1) / 2];
+            //забираем нечётные индексы
+            for (int row_index = 0; row_index < nechet_matrix.GetLength(0); row_index++)
+            {
+                count = 1;
+                for (int column_index = 0; column_index < nechet_matrix.GetLength(1); column_index++)
+                {
+                    nechet_matrix[row_index, column_index] = matrix[row_index, count];
+                    count += 2;
+                }
+            }
+
+
+            //упорядочеваем нечётные индексы по возрастанию
+            nechet_matrix = CoctailSort(nechet_matrix);
+            ShowMatrix(nechet_matrix);
+            Console.WriteLine($"{nechet_matrix.GetLength(0)}, {nechet_matrix.GetLength(1)}");
+            #endregion
+
             #endregion
             /*
             #region 11
