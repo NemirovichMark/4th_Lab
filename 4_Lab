@@ -1,0 +1,939 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LAB_4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //LAB 4 
+            //LEVEL 1
+
+            //Task 3
+            #region
+            int[,] A = new int[4, 4] {{1, 2, 3, 4},
+                                      {5, 6, 7, 8},
+                                      {9, 5, 4, 3},
+                                      {2, 1, 6, 9}};
+            int stb, sum = 0;
+            for (stb = 0; stb < A.GetLength(0); stb++)
+            {
+                sum = sum + A[stb, stb];
+            }
+            Console.WriteLine(sum);
+            #endregion
+
+            //Task 6 
+            #region
+            int matr, x, minA;
+            int[,] matrA = new int[4, 7]
+            {
+                {1, 2, 3, 4, 5, 6, 7 },
+                {7, 6, 5, 4, 3, 2, 1 },
+                {1, 2, 3, 4, 5, 6, 7 },
+                {7, 6, 5, 4, 3, 2, 1 }
+            };
+            int[] arrayA = new int[4];
+            for (x = 0; x < arrayA.Length; x++)
+            {
+                minA = matrA[x, 0];
+                for (matr = 0; matr < matrA.GetLength(1); matr++)
+                {
+                    if (matrA[x, matr] <= minA)
+                    {
+                        minA = matrA[x, matr];
+                        arrayA[x] = minA;
+                    }
+                }
+            }
+            x = 0;
+            for (x = 0; x < arrayA.Length; x++)
+            {
+                Console.WriteLine(arrayA[x]);
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 12 
+            #region
+            Random random = new Random();
+            int[,] big = new int[6, 7];
+            int[,] small = new int[5, 6];
+            int max = 0, y, big_stb = 0, big_str = 0, z;
+            string n;
+            for (y = 0; y < big.GetLength(0); y++) //заполняем первоначальный массив
+            {
+                for (z = 0; z < big.GetLength(1); z++)
+                {
+                    big[y, z] = random.Next(-10, 10);
+                }
+            }
+            y = 0;
+            z = 0;
+            for (y = 0; y < big.GetLength(0); y++)//выводим первоначальный массив
+            {
+                for (z = 0; z < big.GetLength(1); z++)
+                {
+                    Console.Write(big[y, z] + "\t");
+                }
+                Console.WriteLine();
+            }
+            y = 0;
+            z = 0;
+            for (y = 0; y < big.GetLength(0); y++) //находим стоолбец и строку с максимальным числом
+            {
+                for (z = 0; z < big.GetLength(1); z++)
+                {
+                    if (big[y, z] > max)
+                    {
+                        max = big[y, z];
+                        big_stb = y;
+                        big_str = z;
+                    }
+                }
+            }
+            y = 0;
+            z = 0;
+            for (y = 0; y < small.GetLength(0); y++) //заполняем новую матрицу
+            {
+                if (y != big_stb)
+                {
+                    for (z = 0; z < small.GetLength(1); z++)
+                    {
+                        if (z != big_str)
+                        {
+                            small[y, z] = big[y, z];
+                        }
+                        else
+                        {
+                            z = z + 1;
+                        }
+                    }
+                }
+                else
+                {
+                    y = y + 1;
+                }
+            }
+            y = 0;
+            z = 0;
+            Console.WriteLine("here we go");
+            for (y = 0; y < small.GetLength(0); y++)
+            {
+                for (z = 0; z < small.GetLength(1); z++)
+                {
+                    Console.Write(small[y, z] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 13 
+            #region
+            Random rand = new Random();
+            int[,] bibika = new int[5, 5];
+            int[,] new_bibika = new int[5, 5];
+            int bib_max = 0, bib = 0, bib2 = 0, bib_zp;
+            for (bib = 0; bib < bibika.GetLength(0); bib++) //заполняем матрицу
+            {
+                for (bib2 = 0; bib2 < bibika.GetLength(1); bib2++)
+                {
+                    bibika[bib, bib2] = rand.Next(-5, 5);
+                }
+            }
+            bib = 0;
+            bib2 = 0;
+            for (bib = 0; bib < bibika.GetLength(0); bib++) //выводим для наглядности
+            {
+                for (bib2 = 0; bib2 < bibika.GetLength(1); bib2++)
+                {
+                    Console.Write(bibika[bib, bib2] + "\t");
+                }
+                Console.WriteLine();
+            }
+            bib = 0;
+            for (bib = 0; bib < bibika.GetLength(0); bib++) //ищем столбец с максимальным значением 
+            {
+                if (bibika[bib, bib] > bib_max)
+                {
+                    bib_max = bibika[bib, bib];
+                    bib_zp = bib;
+                }
+            }
+            bib = 0;
+            bib2 = 0;
+            for (bib = 0; bib < bibika.GetLength(0); bib++) //меняем местами
+            {
+                if (bib == bib_max)
+                {
+                    for (bib2 = 0; bib2 < bibika.GetLength(1); bib2++)
+                    {
+                        new_bibika[bib, bib2] = bibika[4, bib2];
+                    }
+                }
+                else if (bib == 4)
+                {
+                    new_bibika[bib, bib2] = bibika[bib_max, bib2];
+                }
+            }
+            Console.WriteLine("HERE WE GO");
+            bib = 0;
+            bib2 = 0;
+            for (bib = 0; bib < new_bibika.GetLength(0); bib++)
+            {
+                for (bib2 = 0; bib2 < new_bibika.GetLength(1); bib2++)
+                {
+                    Console.Write(new_bibika[bib, bib2] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 17 
+            #region
+            Console.WriteLine("количество столбцов?");
+            string stol = Console.ReadLine();
+            Console.WriteLine("количество строк?");
+            string strok = Console.ReadLine();
+            string chisl;
+            int stolb, stroka, chisl2, minBro;
+            int.TryParse(stol, out stolb);
+            int.TryParse(strok, out stroka);
+            int[,] Bro = new int[stolb, stroka];
+            int stl, stk;
+            Console.WriteLine("Задайте значения внутри матрицы");
+            for (stl = 0; stl < Bro.GetLength(0); stl++)
+            {
+                for (stk = 0; stk < Bro.GetLength(1); stk++)
+                {
+                    chisl = Console.ReadLine();
+                    int.TryParse(chisl, out chisl2);
+                    Bro[stl, stk] = chisl2;
+                }
+            }
+            stl = 0;
+            stk = 0;
+            for (stl = 0; stl < Bro.GetLength(0); stl++)
+            {
+                minBro = Bro[stl, 0];
+                for (stk = 0; stk < Bro.GetLength(1); stk++)
+                {
+                    if (Bro[stl, stk] < minBro)
+                    {
+                        minBro = (Bro[stl, stk]);
+                        Bro[stl, 0] = minBro;
+                    }
+                }
+            }
+            stl = 0;
+            stk = 0;
+            for (stl = 0; stl < Bro.GetLength(0); stl++)
+            {
+                for (stk = 0; stk < Bro.GetLength(1); stk++)
+                {
+                    Console.Write(Bro[stl, stk] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 29
+            #region
+            Random Ff = new Random();
+            int[,] F = new int[5, 7];
+            int[,] new_F = new int[5, 6];
+            int Fmin, f, f2, ff = 0;
+            for (f = 0; f < F.GetLength(0); f++)//заполнение массива 
+            {
+                for (f2 = 0; f2 < F.GetLength(1); f2++)
+                {
+                    F[f, f2] = Ff.Next(-10, 10);
+                }
+            }
+            f = 0;
+            f2 = 0;
+            for (f = 0; f < F.GetLength(0); f++) 
+            {
+                for (f2 = 0; f2 < F.GetLength(1); f2++)
+                {
+                    Console.Write(F[f, f2] + "\t");
+                }
+                Console.WriteLine();
+            }
+            f2 = 0;
+            Fmin = F[1, 0];
+            for (f2 = 0; f2 < F.GetLength(1); f2++)//нахождение минимального массива
+            {
+                if (Math.Abs(F[1, f2]) < Fmin)
+                {
+                    Fmin = F[1, f2];
+                    ff = f2 + 1;
+                }
+            }
+            f2 = 0;
+            f = 0;
+            for (f = 0; f < new_F.GetLength(0); f++)//заполнение нового
+            {
+                for (f2 = 0; f2 < new_F.GetLength(1); f2++)
+                {
+                    if (f != ff)
+                    {
+                        new_F[f, f2] = F[f, f2];
+                    }
+                    else
+                    {
+                        f2 = f2 + 1;
+                    }
+                }
+            }
+            f2 = 0;
+            f = 0;
+            for (f = 0; f < new_F.GetLength(0); f++)//вывод (крайне хуевый) 
+            {
+                for (f2 = 0; f2 < new_F.GetLength(1); f2++)
+                {
+                    Console.Write(F[f, f2] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 31 
+            #region
+            int[,] S10 = new int[5, 8]
+       {
+                {2, 3, 1, 5, 0, 5, 1, 0},
+                {5, 4, 8, 6, 1, -3, 13, 0},
+                {2, 2, 9, 1, -5, -4, 2, 0},
+                {0, 4, 1, 5, 23, 7, 12, 0},
+                {14,-2, 1,-12,1,  5, 5, 0},
+       };
+            int[] B = new int[5] { 1, 2, 3, 4, 5 };
+            int min4 = S10[4, 0], ind11 = 0;
+            for (int i = 0; i < S10.GetLength(1) - 1; i++)
+            {
+                if (min4 > Math.Abs(S10[4, i]))
+                {
+                    min4 = Math.Abs(S10[4, i]);
+                    ind11 = i;
+                }
+            }
+            for (int i = 0; i < S10.GetLength(0); i++)
+            {
+                for (int j = S10.GetLength(1) - 1; j > ind11; j--)
+                {
+                    S10[i, j] = S10[i, j - 1];
+                }
+                S10[i, ind11 + 1] = B[i];
+            }
+            for (int i = 0; i < S10.GetLength(0); i++)
+            {
+                for (int j = 0; j < S10.GetLength(1); j++)
+                {
+                    Console.Write(S10[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            #endregion
+
+            //LEVEL 2
+
+            //Task 7
+            #region
+            int[,] Natsu = new int[6, 6]
+            {
+                {1, 2 , 3, 4, 5, 6 },
+                {10, 3, 56, 34, 11, 1 },
+                {8, 9, 23, 13, 11, 14 },
+                {4, 5, 6, 7, 8, 2, },
+                {3, 4, 5, 2, 78, 45 },
+                {23, 6, 8, 9, 12, 11 }
+            };
+            int Batsu, Maru, NatsuMax = 0, Lusy = 0;
+            for (Batsu = 0; Batsu < Natsu.GetLength(0) - 1; Batsu++)
+            {
+                if (Natsu[Batsu, Batsu] > Natsu[Batsu + 1, Batsu + 1])
+                {
+                    NatsuMax = Natsu[Batsu, Batsu];
+                    Lusy = Batsu;
+                }
+            }
+            Batsu = 0;
+            Maru = 0;
+            for (Batsu = 0; Batsu < Lusy; Batsu++)
+            {
+                for (Maru = Batsu; Maru < Natsu.GetLength(1) - 1; Maru++)
+                {
+                    Natsu[Batsu, Maru + 1] = 0;
+                }
+            }
+            Batsu = 0;
+            Maru = 0;
+            for (Batsu = 0; Batsu < Natsu.GetLength(0); Batsu++)
+            {
+                for (Maru = 0; Maru < Natsu.GetLength(1); Maru++)
+                {
+                    Console.Write(Natsu[Batsu, Maru] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 8 
+            #region
+            Random bro = new Random();
+            int[,] luffy = new int[6, 6];
+            int luffy_max = 0;
+            int luffy_maxmax = 0;
+            int zoro, nami, usop, vivi = 0;
+            for (zoro = 0; zoro < luffy.GetLength(0); zoro++)//заполнение
+            {
+                for (nami = 0; nami < luffy.GetLength(1); nami++)
+                {
+                    luffy[zoro, nami] = bro.Next(1, 5);
+                }
+            }
+            zoro = 0;
+            nami = 0;
+            for (zoro = 0; zoro < luffy.GetLength(0); zoro++)//вывод первоначального массива
+            {
+                for (nami = 0; nami < luffy.GetLength(1); nami++)
+                {
+                    Console.Write(luffy[zoro, nami] + "\t");
+                }
+                Console.WriteLine();
+            }
+            zoro = 0;//for searching index of max. element
+            nami = 0;
+            for (usop = 0; usop < luffy.GetLength(0); usop++)
+            {
+                luffy_max = luffy[usop, 0];
+                for (nami = 0; nami < luffy.GetLength(1); nami++)
+                {
+                    if (luffy[usop, nami] > luffy_max)
+                    {
+                        luffy_max = luffy[usop, nami];
+                        zoro = nami;
+                    }
+                }
+                if (usop % 2 != 0)
+                {
+                    luffy[usop, zoro] = luffy_maxmax;
+                    luffy[usop - 1, vivi] = luffy_max;
+                }
+                else
+                {
+                    luffy_maxmax = luffy_max;
+                    vivi = zoro;
+                }
+            }
+            Console.WriteLine("Here we go"); //вывод получившегося массива
+            for (zoro = 0; zoro < luffy.GetLength(0); zoro++)
+            {
+                for (nami = 0; nami < luffy.GetLength(1); nami++)
+                {
+                    Console.Write(luffy[zoro, nami] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 9 
+            #region
+            Random tee = new Random();
+            int[,] armstrong = new int[6, 7];
+            int ed, al, roy;
+            for (ed = 0; ed < armstrong.GetLength(0); ed++)
+            {
+                for (al = 0; al < armstrong.GetLength(1); al++)
+                {
+                    armstrong[ed, al] = tee.Next(-5, 5);
+                }
+            }
+            ed = 0;
+            al = 0;
+            for (ed = 0; ed < armstrong.GetLength(0); ed++)
+            {
+                for (al = 0; al < armstrong.GetLength(1); al++)
+                {
+                    Console.Write(armstrong[ed, al] + "\t");
+                }
+                Console.WriteLine();
+            }
+            ed = 0;
+            al = 0;
+            for (ed = 0; ed < armstrong.GetLength(0); ed++) // новая расстановка
+            {
+                roy = 6;
+                for (al = 0; al < armstrong.GetLength(1); al++)
+                {
+                    armstrong[ed, al] = armstrong[ed, roy];
+                    roy--;
+                }
+            }
+            Console.WriteLine("here we go");
+            ed = 0;
+            al = 0;
+            for (ed = 0; ed < armstrong.GetLength(0); ed++)
+            {
+                for (al = 0; al < armstrong.GetLength(1); al++)
+                {
+                    Console.Write(armstrong[ed, al] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //LEVEL 3 
+            //task 1 
+            #region
+            Random ryu = new Random();
+            int[,] makima = new int[7, 5];
+            int[] pochito = new int[7];
+            int aki, power, hime, demon = 0, demon_2 = 0;
+            for (aki = 0; aki < makima.GetLength(0); aki++)
+            {
+                for (hime = 0; hime < makima.GetLength(1); hime++)
+                {
+                    makima[aki, hime] = ryu.Next(-20, 20);
+                }
+            }
+            aki = 0;
+            hime = 0;
+            for (aki = 0; aki < makima.GetLength(0); aki++)
+            {
+                for (hime = 0; hime < makima.GetLength(1); hime++)
+                {
+                    Console.Write(makima[aki, hime] + "\t");
+                }
+                Console.WriteLine();
+            }
+            aki = 0;
+            hime = 0;
+            for (aki = 0; aki < makima.GetLength(0); aki++) //поиск минимального 
+            {
+                power = makima[aki, 0];
+                for (hime = 0; hime < makima.GetLength(1); hime++)
+                {
+                    if (makima[aki, hime] < power)
+                    {
+                        power = makima[aki, hime];
+                    }
+                }
+                pochito[aki] = power;
+            }
+            Console.WriteLine();
+            Console.WriteLine("min numbers"); //убрать
+            hime = 0;
+            for (hime = 0; hime < 7; hime++)
+            {
+                Console.WriteLine(pochito[hime]);
+            }
+            hime = 0;
+            aki = 0;
+            for (hime = 0; hime < 7 - 1; hime++)
+            {
+                if (pochito[hime] < pochito[hime + 1])
+                {
+                    for (aki = 0; aki < makima.GetLength(1); aki++)
+                    {
+                        demon = makima[hime + 1, aki];
+                        makima[hime + 1, aki] = makima[hime, aki];
+                        makima[hime, aki] = demon;
+                    }
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("go!");
+            aki = 0;
+            hime = 0;
+            for (aki = 0; aki < makima.GetLength(0); aki++)
+            {
+                for (hime = 0; hime < makima.GetLength(1); hime++)
+                {
+                    Console.Write(makima[aki, hime] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 2
+            #region
+            Random tdd = new Random();
+            int[,] mha = new int[4, 4];
+            int bakugo, todoroki, midoria;
+            for (bakugo = 0; bakugo < mha.GetLength(0); bakugo++)
+            {
+                for (midoria = 0; midoria < mha.GetLength(1); midoria++)
+                {
+                    mha[bakugo, midoria] = tdd.Next(-20, 20);
+                }
+            }
+            bakugo = 0;
+            midoria = 0;
+            for (bakugo = 0; bakugo < mha.GetLength(0); bakugo++)
+            {
+                for (midoria = 0; midoria < mha.GetLength(1); midoria++)
+                {
+                    Console.Write(mha[bakugo, midoria] + "\t");
+                }
+                Console.WriteLine();
+            }
+            bakugo = 0;
+            midoria = 0;
+            for (bakugo = 0; bakugo < mha.GetLength(0); bakugo++)
+            {
+                if (bakugo != 0 & bakugo != mha.GetLength(0) - 1)
+                {
+                    for (midoria = 0; midoria < mha.GetLength(1); midoria++)
+                    {
+                        if (midoria != 0 & midoria != mha.GetLength(1) - 1)
+                        {
+                            mha[bakugo, midoria] = mha[bakugo, midoria];
+                        }
+                        else
+                        {
+                            mha[bakugo, midoria] = 0;
+                        }
+                    }
+                }
+                else
+                {
+                    for (midoria = 0; midoria < mha.GetLength(1); midoria++)
+                    {
+                        mha[bakugo, midoria] = 0;
+                    }
+                }
+            }
+            Console.WriteLine("GO");
+            bakugo = 0;
+            midoria = 0;
+            for (bakugo = 0; bakugo < mha.GetLength(0); bakugo++)
+            {
+                for (midoria = 0; midoria < mha.GetLength(1); midoria++)
+                {
+                    Console.Write(mha[bakugo, midoria] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+
+
+            //Task 3
+            #region 
+            Random crow = new Random();
+            int[,] karasuno = new int[5, 5];
+            int hin, kage, daichi;
+            daichi = karasuno.GetLength(0);
+            for (hin = 0; hin < daichi; hin++)
+            {
+                for (kage = 0; kage < karasuno.GetLength(1); kage++)
+                {
+                    karasuno[hin, kage] = crow.Next(-10, 10);
+                }
+            }
+            hin = 0;
+            kage = 0;
+            for (hin = 0; hin < daichi; hin++)
+            {
+                for (kage = 0; kage < karasuno.GetLength(1); kage++)
+                {
+                    Console.Write(karasuno[hin, kage] + "\t");
+                }
+                Console.WriteLine();
+            }
+            int[] karasuno_2 = new int[2 * daichi - 1];
+            for (int i = daichi - 1; i > -1; i--)
+            {
+                hin = 0;
+                kage = 0;
+                int crrr = i;
+                for (int j = daichi - 1; j > i - 1; j--)
+                {
+                    hin += karasuno[crrr, daichi - 1 - j];
+                    kage += karasuno[daichi - 1 - crrr, j];
+                    crrr += 1;
+                }
+                karasuno_2[daichi - 1 - i] = hin;
+                karasuno_2[i + daichi - 1] = kage;
+            }
+            Console.Write("B = ");
+            for (int i = 0; i < karasuno_2.Length; i++)
+            {
+                Console.Write(karasuno_2[i] + " ");
+            }
+            Console.WriteLine();
+            Console.ReadLine();
+            #endregion
+
+            //Task 4 
+            #region 
+            Random obsydia = new Random();
+            int niji = obsydia.Next(3, 6);
+            int[,] selen = new int[niji, niji];
+            int vox, ike, shu;
+            if (niji % 2 == 0)
+            {
+                shu = niji % 2;
+            }
+            else
+            {
+                shu = (niji + 1) % 2;
+            }
+            for (vox = 0; vox < selen.GetLength(0); vox++)
+            {
+                for (ike = 0; ike < selen.GetLength(1); ike++)
+                {
+                    selen[vox, ike] = obsydia.Next(-10, 10);
+                    Console.Write(selen[vox, ike] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("here");
+            vox = 0;
+            ike = 0;
+            if (niji % 2 != 0)
+            {
+                for (vox = 0; vox < selen.GetLength(0); vox++)
+                {
+                    for (ike = 0; ike < selen.GetLength(1); ike++)
+                    {
+                        if (vox == ike & vox >= shu)
+                        {
+                            selen[vox, ike] = 1;
+                        }
+                        else if (vox > ike & vox >= shu)
+                        {
+                            selen[vox, vox - 1] = 1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (vox = 0; vox < selen.GetLength(0); vox++)
+                {
+                    for (ike = 0; ike < selen.GetLength(1); ike++)
+                    {
+                        if (vox >= shu & vox > ike)
+                        {
+                            selen[vox, ike] = 1;
+                        }
+                    }
+                }
+            }
+            vox = 0;
+            ike = 0;
+            for (vox = 0; vox < selen.GetLength(0); vox++)
+            {
+                for (ike = 0; ike < selen.GetLength(1); ike++)
+                {
+                    Console.Write(selen[vox, ike] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 8
+            #region
+            Random ppl = new Random();
+            int[,] people = new int[7, 5];
+            int[] people_2 = new int[7];
+            int white, black, mulat, mulat_2 = 0, boobies, boobies_2 = 0;
+            for (white = 0; white < people.GetLength(0); white++)
+            {
+                for (black = 0; black < people.GetLength(1); black++)
+                {
+                    people[white, black] = ppl.Next(-10, 10);
+                    Console.Write(people[white, black] + "\t");
+                }
+                Console.WriteLine();
+            }
+            white = 0;
+            black = 0;
+            for (white = 0; white < 7; white++)
+            {
+                mulat = 0;
+                for (black = 0; black < 5; black++)
+                {
+                    if (people[white, black] > 0)
+                    {
+                        mulat = mulat + 1;
+                    }
+                    mulat_2 = mulat;
+                    people_2[white] = mulat_2;
+                }
+            }
+            white = 0;
+            black = 0;
+            for (white = 0; white < people_2.Length - 1; white++)
+            {
+                if (people_2[white] > people_2[white + 1])
+                {
+                    for (boobies = 0; boobies < 5; boobies++)
+                    {
+                        black = people[white, boobies];
+                        people[white, boobies] = people[white + 1, boobies];
+                        people[white + 1, boobies] = black;
+
+                    }
+                }
+            }
+            Console.WriteLine();
+            Console.WriteLine("GO! GO! GO!");
+            black = 0;
+            white = 0;
+            for (white = 0; white < people.GetLength(0); white++)
+            {
+                for (black = 0; black < people.GetLength(1); black++)
+                {
+                    Console.Write(people[white, black] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 10 
+            #region
+            Random lib = new Random();
+            int bing, bong, bung = 0, bung_2, smena;
+            bing = lib.Next(4, 6);
+            int[,] libbo = new int[bing, bing];
+            bing = 0;
+            for (bing = 0; bing < libbo.GetLength(0); bing++)
+            {
+                for (bong = 0; bong < libbo.GetLength(1); bong++)
+                {
+                    libbo[bing, bong] = lib.Next(-20, 20);
+                    Console.Write(libbo[bing, bong] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.WriteLine("okaaaaay, let's go");
+            Console.WriteLine();
+            for (bing = 0; bing < libbo.GetLength(0); bing++)
+            {
+                if (bing % 2 == 0)
+                {
+                    for (bong = 0; bong < libbo.GetLength(1) - 1; bong++)
+                    {
+                        if (libbo[bing, bong] < libbo[bing, bong + 1])
+                        {
+                            bung = libbo[bing, bong];
+                            libbo[bing, bong] = libbo[bing, bong + 1];
+                            libbo[bing, bong + 1] = bung;
+                        }
+                    }
+                }
+                else
+                {
+                    for (bong = 0; bong < libbo.GetLength(1) - 1; bong++)
+                    {
+                        if (libbo[bing, bong] > libbo[bing, bong + 1])
+                        {
+                            bung = libbo[bing, bong];
+                            libbo[bing, bong] = libbo[bing, bong + 1];
+                            libbo[bing, bong + 1] = bung;
+                        }
+                    }
+                }
+            }
+            bing = 0;
+            bong = 0;
+            for (bing = 0; bing < libbo.GetLength(0); bing++)
+            {
+                for (bong = 0; bong < libbo.GetLength(1); bong++)
+                {
+                    Console.Write(libbo[bing, bong] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
+            #endregion
+
+            //Task 11 
+            #region
+            Random brr = new Random();
+            int[,] vom = new int[7, 5];
+            int fear, happy;
+            for (fear = 0; fear < vom.GetLength(0); fear++)
+            {
+                for (happy = 0; happy < vom.GetLength(1); happy++)
+                {
+                    vom[fear, happy] = brr.Next(-10, 10);
+                    Console.Write(vom[fear, happy] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("brrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            int n1 = vom.GetLength(0);
+            for (int i = 0; i < vom.GetLength(0); i++)
+            {
+                for (int j = 0; j < vom.GetLength(1); j++)
+                {
+                    if (vom[i, j] == 0)
+                    {
+                        n1 -= 1;
+                        break;
+                    }
+                }
+            }
+            int[,] S22 = new int[n1, 5];
+            int f5, c6 = 0;
+            for (int i = 0; i < vom.GetLength(0); i++)
+            {
+                f5 = 0;
+                for (int j = 0; j < vom.GetLength(1); j++)
+                {
+                    if (vom[i, j] == 0)
+                    {
+                        f5 = 1;
+                        break;
+                    }
+                }
+                if (f5 == 0)
+                {
+                    for (int j = 0; j < vom.GetLength(1); j++)
+                    {
+                        S22[c6, j] = vom[i, j];
+                    }
+                    c6 += 1;
+                }
+            }
+            for (int i = 0; i < n1; i++)
+            {
+                for (int j = 0; j < S22.GetLength(1); j++)
+                {
+                    Console.Write(S22[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.ReadLine();
+            #endregion
+        }
+
+    }
+}
+
