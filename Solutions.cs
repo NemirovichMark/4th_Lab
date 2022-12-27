@@ -36,6 +36,124 @@ namespace Lab_4
             }
             Console.WriteLine();
         }
+        
+        static void SortDown(int[,] matrix)
+        {
+            int ROWS = matrix.GetLength(0);
+            int COLUMNS = matrix.GetLength(1);
+            int left = 0;
+            int right = ROWS * COLUMNS;
+            int swop = 0;
+            int row, column, nextRow, nextColumn, temp = 0;
+            while (left < right)
+            {
+                for (int i = left; i < right; i++)
+                {
+                    row = i / COLUMNS;
+                    column = i % COLUMNS;
+                    nextRow = row + (column + 1) / COLUMNS;
+                    nextColumn = (column + 1) % COLUMNS;
+                    if (nextRow == ROWS)
+                        break;
+                    if (matrix[row, column] < matrix[nextRow, nextColumn])
+                    {
+                        temp = matrix[nextRow, nextColumn];
+                        matrix[nextRow, nextColumn] = matrix[row, column];
+                        matrix[row, column] = temp;
+                        swop++;
+                    }
+                }
+                right--;
+
+                if (swop == 0)
+                {
+                    break;
+                }
+                swop = 0;
+                for (int i = right; i > left; i--)
+                {
+                    row = i / COLUMNS;
+                    column = i % COLUMNS;
+                    nextRow = row - (COLUMNS - column) / COLUMNS;
+                    nextColumn = (i - 1) % COLUMNS;
+                    if (nextRow < 0)
+                        break;
+                    if (matrix[row, column] > matrix[nextRow, nextColumn])
+                    {
+                        temp = matrix[nextRow, nextColumn];
+                        matrix[nextRow, nextColumn] = matrix[row, column];
+                        matrix[row, column] = temp;
+                        swop++;
+                    }
+                }
+                left++;
+                if (swop == 0)
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("\n\nCoctailSort:");
+            ShowMatrix(matrix);
+        }
+        
+        static void SortUp(int[,] matrix)
+        {
+            int ROWS = matrix.GetLength(0);
+                int COLUMNS = matrix.GetLength(1);
+                int left = 0;
+                int right = ROWS * COLUMNS;
+                int swop = 0;
+                int row, column, nextRow, nextColumn, temp = 0;
+                while (left < right)
+                {
+                    for (int i = left; i < right; i++)
+                    {
+                        row = i / COLUMNS;
+                        column = i % COLUMNS;
+                        nextRow = row + (column + 1) / COLUMNS;
+                        nextColumn = (column + 1) % COLUMNS;
+                        if (nextRow == ROWS)
+                            break;
+                        if (matrix[row, column] > matrix[nextRow, nextColumn])
+                        {
+                            temp = matrix[nextRow, nextColumn];
+                            matrix[nextRow, nextColumn] = matrix[row, column];
+                            matrix[row, column] = temp;
+                            swop++;
+                        }
+                    }
+                    right--;
+
+                    if (swop == 0)
+                    {
+                        break;
+                    }
+                    swop = 0;
+                    for (int i = right; i > left; i--)
+                    {
+                        row = i / COLUMNS;
+                        column = i % COLUMNS;
+                        nextRow = row - (COLUMNS - column) / COLUMNS;
+                        nextColumn = (i - 1) % COLUMNS;
+                        if (nextRow < 0)
+                            break;
+                        if (matrix[row, column] < matrix[nextRow, nextColumn])
+                        {
+                            temp = matrix[nextRow, nextColumn];
+                            matrix[nextRow, nextColumn] = matrix[row, column];
+                            matrix[row, column] = temp;
+                            swop++;
+                        }
+                    }
+                    left++;
+                    if (swop == 0)
+                    {
+                        break;
+                    }
+                }
+                Console.WriteLine("\n\nCoctailSort:");
+                ShowMatrix(matrix);
+        }
 
         static void Main(string[] args)
         {
@@ -461,7 +579,14 @@ namespace Lab_4
 
 
             //упорядочеваем нечётные индексы по возрастанию
-            nechet_matrix = CoctailSort(nechet_matrix);
+            chet_matrix = SortDown(nechet_matrix);
+            nechet_matrix = SortUp(nechet_matrix);
+            for (int row_index = 0; row_index < matrix.GetLength(0); row_index++)            
+                for (int column_index = 0; column_index < matrix.GetLength(1) - 1; column_index++)
+                {
+                    matrix[row_index, colomn_index] = chet_matrix[row_index, colomn_index]
+                    matrix[row_index, colomn_index + 1] = nechet_matrix[row_index, colomn_index]
+                }
             ShowMatrix(nechet_matrix);
             Console.WriteLine($"{nechet_matrix.GetLength(0)}, {nechet_matrix.GetLength(1)}");
             #endregion
