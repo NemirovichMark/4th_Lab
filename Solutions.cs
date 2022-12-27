@@ -301,14 +301,22 @@ namespace Lab_4
                     for (int row_index = 0; row_index < F.GetLength(0); row_index++) //перебор рядов                    
                         F[row_index, column_index] = F[row_index, column_index + 1];
 
+            int row_index2 = matrix.GetLength(0) - 1;
             //обращение последнего стобца в нули
-            if (min_index != F.GetLength(1) - 1)
-            {
-                int column_index1 = F.GetLength(1) - 1;
-                for (int row_index = 0; row_index < F.GetLength(0); row_index++)
-                    F[row_index, column_index1] = 0;
+            if (min_index != F.GetLength(1) - 1)            
+            {                
+                for (int column_index2 = 0; column_index2 < matrix.GetLength(1); column_index2++)
+                    matrix[row_index2, column_index2] = 0;
+            
+                for (int i = 0; i < matrix.GetLength(0); i++)
+                {
+                    Console.WriteLine();
+                    for (int j = 0; j < matrix.GetLength(1) - 1; j++)
+                    {
+                        Console.Write($"{matrix[i, j],5}");
+                    }
+                }
             }
-            ShowMatrix(F);
             #endregion
             
             #region 31
@@ -613,6 +621,13 @@ namespace Lab_4
                             matrix[row_index2, column_index2] = 0;
                     }
                 }
-            ShowMatrix(matrix);
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                Console.WriteLine();
+                for (int j = 0; j < matrix.GetLength(1) - 1; j++)
+                {
+                    Console.Write($"{matrix[i, j],5}");
+                }
+            }
             #endregion
             */
