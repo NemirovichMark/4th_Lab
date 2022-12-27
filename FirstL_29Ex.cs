@@ -3,7 +3,7 @@ class FirstL_29Ex {
   static void Main() {
             double minElement;
             double[,] f = new double[5,7] {     {1,2,3,4,5,6,7},
-                                                {9,5,6,4,5,1,7}, //second row
+                                                {9,5,6,4,5,1,0}, //second row
                                                 {0,0,0,0,0,0,0},
                                                 {0,0,0,0,0,0,0},
                                                 {0,0,0,0,0,0,0}};
@@ -25,11 +25,12 @@ class FirstL_29Ex {
                     IndexMinElement = i;
                 }
             }
-            
+            if(IndexMinElement != 7 ){
             for (int i = 0; i < 5; i++){
                 for (int j = IndexMinElement + 1; j < 6; j++){
                     f[i,j] = f[i,j + 1];
                 }
+            }
             }
             Console.WriteLine($"new array: ");
             for (int i = 0; i < 5; i++)
