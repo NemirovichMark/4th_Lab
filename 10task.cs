@@ -1,98 +1,112 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.Intrinsics.X86;
 
-static void Main()
+namespace LABA_4
 {
-
-    static double[][] AAA()
+    internal class Program
     {
-        double[][] flag = new double[1][];
-
-        try
+        static void Main()
         {
-            Console.WriteLine("Enter str");
-            int x = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter stlb");
-            int y = int.Parse(Console.ReadLine());
 
-            double[][] arr = new double[x][];
-
-            for (int i = 0; i < x; i++)
+            static double[][] AAA()
             {
-                double[] a = new double[y];
-                for (int j = 0; j < y; j++)
-                {
-                    a[j] = double.Parse(Console.ReadLine());
-                }
+                double[][] flag = new double[1][];
 
-                arr[i] = a;
-            }
-            return arr;
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("Error");
-            return flag;
-        }
-    }
-    double[][] b = AAA();
-    int index = 1;
-    int next = index + 1;
-    double temp = 0;
-    for (int i = 0; i < b.Length; i++)
-    {
-        if (i % 2 != 0)
-        {
-            while (index < b.Length)
-            {
-                if (b[i][index - 1] < b[i][index])
+                try
                 {
-                    index = next;
-                    next++;
-                }
-                else
-                {
-                    temp = b[i][index - 1];
-                    b[i][index - 1] = b[i][index];
-                    b[i][index] = temp;
-                    index--;
-                    if (index == 0)
+                    Console.WriteLine("Enter str");
+                    int x = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter stlb");
+                    int y = int.Parse(Console.ReadLine());
+
+                    double[][] arr = new double[x][];
+
+                    for (int i = 0; i < x; i++)
                     {
-                        index = next;
-                        next++;
+                        double[] a = new double[y];
+                        for (int j = 0; j < y; j++)
+                        {
+                            a[j] = double.Parse(Console.ReadLine());
+                        }
+
+                        arr[i] = a;
                     }
-
+                    return arr;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Error");
+                    return flag;
                 }
             }
-        }
-        if (i % 2 == 0)
-        {
-            while (index < b.Length)
+            double[][] b = AAA();
+            int index = 1;
+            int next = index + 1;
+            double temp = 0;
+            for (int i = 0; i < b.Length; i++)
             {
-                if (b[i][index - 1] > b[i][index])
+                if (i % 2 != 0)
                 {
-                    index = next;
-                    next++;
-                }
-                else
-                {
-                    temp = b[i][index - 1];
-                    b[i][index - 1] = b[i][index];
-                    b[i][index] = temp;
-                    index--;
-                    if (index == 0)
+                    while (index < b.Length)
                     {
-                        index = next;
-                        next++;
+                        if (b[i][index - 1] < b[i][index])
+                        {
+                            index = next;
+                            next++;
+                        }
+                        else
+                        {
+                            temp = b[i][index - 1];
+                            b[i][index - 1] = b[i][index];
+                            b[i][index] = temp;
+                            index--;
+                            if (index == 0)
+                            {
+                                index = next;
+                                next++;
+                            }
+
+                        }
                     }
                 }
+                if (i % 2 == 0)
+                {
+                    while (index < b.Length)
+                    {
+                        if (b[i][index - 1] > b[i][index])
+                        {
+                            index = next;
+                            next++;
+                        }
+                        else
+                        {
+                            temp = b[i][index - 1];
+                            b[i][index - 1] = b[i][index];
+                            b[i][index] = temp;
+                            index--;
+                            if (index == 0)
+                            {
+                                index = next;
+                                next++;
+                            }
+
+                        }
+                    }
+                }
             }
-        }
-        for (int ii = 0; ii < b.Length; ii++)
-        {
-            for (int j = 0; j < b[ii].Length; j++)
+            for (int i = 0; i < b.Length; i++)
             {
-                Console.Write(b[ii][j] + " ");
+                for (int j = 0; j < b[i].Length; j++)
+                {
+                    Console.Write(b[i][j] + " ");
+                }
+                Console.WriteLine();
             }
-            Console.WriteLine();
         }
     }
 }
