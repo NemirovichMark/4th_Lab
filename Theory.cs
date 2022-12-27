@@ -158,8 +158,8 @@ namespace _4th_Lab
                 {
                     var row = i / COLUMNS;
                     var column = i % COLUMNS;
-                    var nextRow = row - (column - 1) / COLUMNS;
-                    var nextColumn = (column - 1) % COLUMNS;
+                    var nextRow = row - (COLUMNS - column) / COLUMNS;
+                    var nextColumn = (i - 1) % COLUMNS;
                     if (nextRow < 0)
                         break;
                     if (matrix[row, column] < matrix[nextRow, nextColumn])
